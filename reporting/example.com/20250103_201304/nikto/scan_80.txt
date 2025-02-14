@@ -1,4 +1,0 @@
-- Nikto v2.5.0/
-+ Target Host: example.com
-+ Target Port: 80
-+ GET Unable to connect to example.com:80.
