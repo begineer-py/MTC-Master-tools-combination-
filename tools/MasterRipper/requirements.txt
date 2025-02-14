@@ -1,0 +1,34 @@
+# --- Core Libraries ---
+aiohttp        # Asynchronous HTTP client for making GET requests to original and injected URLs.
+asyncio        # Python's native async library for managing concurrency.
+httpx 
+aiofiles
+bs4 
+
+# --- File and Temp Management ---
+# tempfile       # Used for handling temporary directories and files during the URL testing process.
+
+# --- String and Response Diffing ---
+# difflib        # Built-in library for comparing original and injected responses to detect subtle changes.
+
+# --- Terminal Output ---
+colorama       # Provides color support for terminal output (e.g., Success = Green, Errors = Red).
+
+# --- URL Parsing and Query Management ---
+urllib3        # Provides advanced URL handling and request capabilities.
+requests       # A user-friendly library for making HTTP requests, fallback for aiohttp if needed.
+yarl           # URL library that integrates well with aiohttp for building and parsing URLs.
+
+# --- Regular Expressions ---
+# re             # Used to search for SQL error patterns and other response anomalies (built-in).
+
+# --- Debugging and Logging ---
+loguru         # A flexible and developer-friendly logging library for detailed log outputs.
+
+# --- Optional Extensions ---
+tqdm           # Adds progress bars to batch processing and verbose output during script execution.
+pytest         # Optional: For creating and running unit tests to ensure the tool works reliably.
+
+# --- Bonus Enhancements (Future Additions) ---
+# flask          # For potentially creating a web-based interface for SQLRipper in the future.
+# sqlite3        # Optional: To store and manage results or logs locally in a lightweight database.

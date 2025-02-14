@@ -1,0 +1,9 @@
+# aiohttp for asynchronous HTTP requests
+aiohttp==3.8.1           # Allows us to handle multiple requests concurrently without blocking
+
+# Additional requirements for aiohttp's performance (optional but recommended)
+aiohttp[speedups]        # Speeds up aiohttp with optimized parsers
+cchardet==2.1.7          # Improves encoding detection with aiohttp
+
+# Additional Tools
+colorama

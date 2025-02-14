@@ -1,0 +1,1413 @@
+2025-02-08 18:15:05,145 - INFO - 開始數據庫遷移流程
+2025-02-08 18:15:05,147 - INFO - 數據庫連接測試成功
+2025-02-08 18:15:05,147 - INFO - 數據庫已備份到: instance\backups\c2_20250208_181505.db
+2025-02-08 18:15:05,147 - INFO - 創建遷移腳本
+2025-02-08 18:15:08,403 - WARNING - 命令執行失敗 (嘗試 1/3)
+2025-02-08 18:15:08,404 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+ERROR [flask_migrate] Error: Target database is not up to date.
+
+2025-02-08 18:15:12,433 - WARNING - 命令執行失敗 (嘗試 2/3)
+2025-02-08 18:15:12,434 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+ERROR [flask_migrate] Error: Target database is not up to date.
+
+2025-02-08 18:15:17,580 - WARNING - 命令執行失敗 (嘗試 3/3)
+2025-02-08 18:15:17,580 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+ERROR [flask_migrate] Error: Target database is not up to date.
+
+2025-02-08 18:15:17,580 - ERROR - 遷移過程出錯: 創建遷移腳本失敗: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+ERROR [flask_migrate] Error: Target database is not up to date.
+
+2025-02-08 18:15:17,580 - INFO - 嘗試恢復最新備份
+2025-02-08 18:15:17,582 - INFO - 已恢復最新備份: instance\backups\c2_20250208_181505.db
+2025-02-08 18:15:17,582 - INFO - 成功恢復到最新備份
+2025-02-08 18:15:17,582 - ERROR - 數據庫更新失敗
+2025-02-08 18:17:00,468 - INFO - 開始數據庫遷移流程
+2025-02-08 18:17:00,470 - INFO - 數據庫連接測試成功
+2025-02-08 18:17:00,472 - INFO - 數據庫已備份到: instance\backups\c2_20250208_181700.db
+2025-02-08 18:17:03,505 - INFO - 創建遷移腳本
+2025-02-08 18:17:06,492 - WARNING - 命令執行失敗 (嘗試 1/3)
+2025-02-08 18:17:06,492 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+ERROR [flask_migrate] Error: Target database is not up to date.
+
+2025-02-08 18:17:10,426 - WARNING - 命令執行失敗 (嘗試 2/3)
+2025-02-08 18:17:10,426 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+ERROR [flask_migrate] Error: Target database is not up to date.
+
+2025-02-08 18:17:15,305 - WARNING - 命令執行失敗 (嘗試 3/3)
+2025-02-08 18:17:15,306 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+ERROR [flask_migrate] Error: Target database is not up to date.
+
+2025-02-08 18:17:15,306 - ERROR - 遷移過程出錯: 創建遷移腳本失敗: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+ERROR [flask_migrate] Error: Target database is not up to date.
+
+2025-02-08 18:17:15,306 - INFO - 嘗試恢復最新備份
+2025-02-08 18:17:15,308 - INFO - 已恢復最新備份: instance\backups\c2_20250208_181700.db
+2025-02-08 18:17:15,309 - INFO - 成功恢復到最新備份
+2025-02-08 18:17:15,309 - ERROR - 數據庫更新失敗
+2025-02-08 18:18:03,829 - INFO - 開始數據庫遷移流程
+2025-02-08 18:18:03,830 - INFO - 數據庫連接測試成功
+2025-02-08 18:18:03,831 - INFO - 數據庫已備份到: instance\backups\c2_20250208_181803.db
+2025-02-08 18:18:07,077 - INFO - 命令執行成功: flask db current
+2025-02-08 18:18:07,077 - WARNING - 數據庫版本不是最新的，執行強制更新
+2025-02-08 18:18:10,377 - INFO - 命令執行成功: flask db stamp head
+2025-02-08 18:18:13,440 - INFO - 命令執行成功: flask db migrate -m "Reset migration"
+2025-02-08 18:18:16,797 - INFO - 命令執行成功: flask db upgrade
+2025-02-08 18:18:16,798 - INFO - 創建遷移腳本
+2025-02-08 18:18:18,962 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-08 18:18:18,962 - INFO - 應用遷移
+2025-02-08 18:18:20,979 - INFO - 命令執行成功: flask db upgrade
+2025-02-08 18:18:20,979 - INFO - 數據庫遷移完成
+2025-02-08 18:18:20,979 - INFO - 數據庫更新成功完成
+2025-02-08 20:20:18,183 - INFO - 開始數據庫遷移流程
+2025-02-08 20:20:18,184 - INFO - 數據庫連接測試成功
+2025-02-08 20:20:18,323 - INFO - 數據庫已備份到: instance\backups\c2_20250208_202018.db
+2025-02-08 20:20:20,393 - INFO - 命令執行成功: flask db current
+2025-02-08 20:20:20,394 - INFO - 創建遷移腳本
+2025-02-08 20:20:22,545 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-08 20:20:22,545 - INFO - 應用遷移
+2025-02-08 20:20:24,934 - INFO - 命令執行成功: flask db upgrade
+2025-02-08 20:20:24,934 - INFO - 數據庫遷移完成
+2025-02-08 20:20:24,934 - INFO - 數據庫更新成功完成
+2025-02-09 11:34:39,383 - INFO - 開始數據庫遷移流程
+2025-02-09 11:34:39,383 - INFO - 數據庫連接測試成功
+2025-02-09 11:34:39,488 - INFO - 數據庫已備份到: instance\backups\c2_20250209_113439.db
+2025-02-09 11:34:41,350 - INFO - 命令執行成功: flask db current
+2025-02-09 11:34:41,350 - WARNING - 數據庫版本不是最新的，執行強制更新
+2025-02-09 11:34:43,350 - INFO - 命令執行成功: flask db stamp head
+2025-02-09 11:34:45,295 - INFO - 命令執行成功: flask db migrate -m "Reset migration"
+2025-02-09 11:34:47,185 - INFO - 命令執行成功: flask db upgrade
+2025-02-09 11:34:47,185 - INFO - 創建遷移腳本
+2025-02-09 11:34:49,127 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-09 11:34:49,127 - INFO - 應用遷移
+2025-02-09 11:34:51,013 - INFO - 命令執行成功: flask db upgrade
+2025-02-09 11:34:51,013 - INFO - 數據庫遷移完成
+2025-02-09 11:34:51,013 - INFO - 數據庫更新成功完成
+2025-02-09 11:37:04,515 - INFO - 開始數據庫遷移流程
+2025-02-09 11:37:04,515 - INFO - 數據庫連接測試成功
+2025-02-09 11:37:04,615 - INFO - 數據庫已備份到: instance\backups\c2_20250209_113704.db
+2025-02-09 11:37:06,626 - INFO - 命令執行成功: flask db current
+2025-02-09 11:37:06,627 - INFO - 創建遷移腳本
+2025-02-09 11:37:08,576 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-09 11:37:08,576 - INFO - 應用遷移
+2025-02-09 11:37:10,484 - INFO - 命令執行成功: flask db upgrade
+2025-02-09 11:37:10,484 - INFO - 數據庫遷移完成
+2025-02-09 11:37:10,484 - INFO - 數據庫更新成功完成
+2025-02-09 12:56:59,170 - INFO - 開始數據庫遷移流程
+2025-02-09 12:56:59,170 - INFO - 數據庫連接測試成功
+2025-02-09 12:56:59,192 - INFO - 數據庫已備份到: instance\backups\c2_20250209_125659.db
+2025-02-09 12:57:01,258 - INFO - 命令執行成功: flask db current
+2025-02-09 12:57:01,259 - WARNING - 數據庫版本不是最新的，執行強制更新
+2025-02-09 12:57:03,104 - INFO - 命令執行成功: flask db stamp head
+2025-02-09 12:57:05,064 - INFO - 命令執行成功: flask db migrate -m "Reset migration"
+2025-02-09 12:57:06,942 - INFO - 命令執行成功: flask db upgrade
+2025-02-09 12:57:06,942 - INFO - 創建遷移腳本
+2025-02-09 12:57:08,847 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-09 12:57:08,847 - INFO - 應用遷移
+2025-02-09 12:57:10,705 - INFO - 命令執行成功: flask db upgrade
+2025-02-09 12:57:10,705 - INFO - 數據庫遷移完成
+2025-02-09 12:57:10,706 - INFO - 數據庫更新成功完成
+2025-02-09 13:39:34,742 - INFO - 開始數據庫遷移流程
+2025-02-09 13:39:34,746 - INFO - 數據庫連接測試成功
+2025-02-09 13:39:34,748 - INFO - 數據庫已備份到: instance\backups\c2_20250209_133934.db
+2025-02-09 13:41:25,664 - INFO - 命令執行成功: flask db current
+2025-02-09 13:41:25,664 - WARNING - 數據庫版本不是最新的，執行強制更新
+2025-02-09 13:42:18,886 - INFO - 命令執行成功: flask db stamp head
+2025-02-13 16:23:41,397 - INFO - 開始數據庫遷移流程
+2025-02-13 16:23:41,397 - INFO - 數據庫連接測試成功
+2025-02-13 16:23:41,529 - INFO - 數據庫已備份到: instance\backups\c2_20250213_162341.db
+2025-02-13 16:23:43,464 - INFO - 命令執行成功: flask db current
+2025-02-13 16:23:43,465 - INFO - 創建遷移腳本
+2025-02-13 16:23:45,507 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-13 16:23:45,507 - INFO - 應用遷移
+2025-02-13 16:23:47,724 - WARNING - 命令執行失敗 (嘗試 1/3)
+2025-02-13 16:23:47,724 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 662af39ccb14 -> e18768969344, Auto migration
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 388, in decorator
+    return ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\cli.py", line 154, in upgrade
+    _upgrade(directory, revision, sql, tag, x_arg)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\command.py", line 406, in upgrade
+    script.run_env()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\script\base.py", line 582, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\migration.py", line 628, in run_migrations
+    step.migration_fn(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\versions\e18768969344_auto_migration.py", line 21, in upgrade
+    with op.batch_alter_table('target', schema=None) as batch_op:
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\base.py", line 398, in batch_alter_table
+    impl.flush()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 162, in flush
+    fn(*arg, **kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 669, in add_constraint
+    raise ValueError("Constraint must have a name")
+ValueError: Constraint must have a name
+
+2025-02-13 16:23:50,560 - WARNING - 命令執行失敗 (嘗試 2/3)
+2025-02-13 16:23:50,560 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 662af39ccb14 -> e18768969344, Auto migration
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 388, in decorator
+    return ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\cli.py", line 154, in upgrade
+    _upgrade(directory, revision, sql, tag, x_arg)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\command.py", line 406, in upgrade
+    script.run_env()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\script\base.py", line 582, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\migration.py", line 628, in run_migrations
+    step.migration_fn(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\versions\e18768969344_auto_migration.py", line 21, in upgrade
+    with op.batch_alter_table('target', schema=None) as batch_op:
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\base.py", line 398, in batch_alter_table
+    impl.flush()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 162, in flush
+    fn(*arg, **kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 669, in add_constraint
+    raise ValueError("Constraint must have a name")
+ValueError: Constraint must have a name
+
+2025-02-13 16:23:54,484 - WARNING - 命令執行失敗 (嘗試 3/3)
+2025-02-13 16:23:54,485 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 662af39ccb14 -> e18768969344, Auto migration
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 388, in decorator
+    return ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\cli.py", line 154, in upgrade
+    _upgrade(directory, revision, sql, tag, x_arg)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\command.py", line 406, in upgrade
+    script.run_env()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\script\base.py", line 582, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\migration.py", line 628, in run_migrations
+    step.migration_fn(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\versions\e18768969344_auto_migration.py", line 21, in upgrade
+    with op.batch_alter_table('target', schema=None) as batch_op:
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\base.py", line 398, in batch_alter_table
+    impl.flush()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 162, in flush
+    fn(*arg, **kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 669, in add_constraint
+    raise ValueError("Constraint must have a name")
+ValueError: Constraint must have a name
+
+2025-02-13 16:23:54,486 - ERROR - 遷移過程出錯: 應用遷移失敗: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 662af39ccb14 -> e18768969344, Auto migration
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 388, in decorator
+    return ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\cli.py", line 154, in upgrade
+    _upgrade(directory, revision, sql, tag, x_arg)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\command.py", line 406, in upgrade
+    script.run_env()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\script\base.py", line 582, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\migration.py", line 628, in run_migrations
+    step.migration_fn(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\versions\e18768969344_auto_migration.py", line 21, in upgrade
+    with op.batch_alter_table('target', schema=None) as batch_op:
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\base.py", line 398, in batch_alter_table
+    impl.flush()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 162, in flush
+    fn(*arg, **kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 669, in add_constraint
+    raise ValueError("Constraint must have a name")
+ValueError: Constraint must have a name
+
+2025-02-13 16:23:54,487 - INFO - 嘗試恢復最新備份
+2025-02-13 16:23:54,643 - INFO - 已恢復最新備份: instance\backups\c2_20250213_162341.db
+2025-02-13 16:23:54,643 - INFO - 成功恢復到最新備份
+2025-02-13 16:23:54,643 - ERROR - 數據庫更新失敗
+2025-02-13 16:27:21,428 - INFO - 開始數據庫遷移流程
+2025-02-13 16:27:21,428 - INFO - 數據庫連接測試成功
+2025-02-13 16:27:21,547 - INFO - 數據庫已備份到: instance\backups\c2_20250213_162721.db
+2025-02-13 16:27:23,524 - INFO - 命令執行成功: flask db current
+2025-02-13 16:27:23,525 - WARNING - 數據庫版本不是最新的，執行強制更新
+2025-02-13 16:27:25,393 - INFO - 命令執行成功: flask db stamp head
+2025-02-13 16:27:27,264 - INFO - 命令執行成功: flask db migrate -m "Reset migration"
+2025-02-13 16:27:29,259 - WARNING - 命令執行失敗 (嘗試 1/3)
+2025-02-13 16:27:29,259 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade e18768969344 -> 1ba40399b4d0, Reset migration
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 388, in decorator
+    return ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\cli.py", line 154, in upgrade
+    _upgrade(directory, revision, sql, tag, x_arg)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\command.py", line 406, in upgrade
+    script.run_env()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\script\base.py", line 582, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\migration.py", line 628, in run_migrations
+    step.migration_fn(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\versions\1ba40399b4d0_reset_migration.py", line 30, in upgrade
+    with op.batch_alter_table('target', schema=None) as batch_op:
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\base.py", line 398, in batch_alter_table
+    impl.flush()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 162, in flush
+    fn(*arg, **kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 669, in add_constraint
+    raise ValueError("Constraint must have a name")
+ValueError: Constraint must have a name
+
+2025-02-13 16:27:32,152 - WARNING - 命令執行失敗 (嘗試 2/3)
+2025-02-13 16:27:32,152 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade e18768969344 -> 1ba40399b4d0, Reset migration
+Traceback (most recent call last):
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: table change_urls_into_payloads already exists
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 388, in decorator
+    return ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\cli.py", line 154, in upgrade
+    _upgrade(directory, revision, sql, tag, x_arg)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\command.py", line 406, in upgrade
+    script.run_env()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\script\base.py", line 582, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\migration.py", line 628, in run_migrations
+    step.migration_fn(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\versions\1ba40399b4d0_reset_migration.py", line 21, in upgrade
+    op.create_table('change_urls_into_payloads',
+  File "<string>", line 8, in create_table
+  File "<string>", line 3, in create_table
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\ops.py", line 1311, in create_table
+    return operations.invoke(op)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\base.py", line 442, in invoke
+    return fn(self, operation)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\toimpl.py", line 131, in create_table
+    operations.impl.create_table(table)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\ddl\impl.py", line 369, in create_table
+    self._exec(schema.CreateTable(table))
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\ddl\impl.py", line 210, in _exec
+    return conn.execute(construct, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\sql\ddl.py", line 180, in _execute_on_connection
+    return connection._execute_ddl(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1529, in _execute_ddl
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) table change_urls_into_payloads already exists
+[SQL: 
+CREATE TABLE change_urls_into_payloads (
+	id INTEGER NOT NULL, 
+	url VARCHAR(255) NOT NULL, 
+	payload VARCHAR(255) NOT NULL, 
+	created_at DATETIME, 
+	target_id INTEGER NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(target_id) REFERENCES target (id)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2025-02-13 16:27:35,985 - WARNING - 命令執行失敗 (嘗試 3/3)
+2025-02-13 16:27:35,985 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade e18768969344 -> 1ba40399b4d0, Reset migration
+Traceback (most recent call last):
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: table change_urls_into_payloads already exists
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 388, in decorator
+    return ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\cli.py", line 154, in upgrade
+    _upgrade(directory, revision, sql, tag, x_arg)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\command.py", line 406, in upgrade
+    script.run_env()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\script\base.py", line 582, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\migration.py", line 628, in run_migrations
+    step.migration_fn(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\versions\1ba40399b4d0_reset_migration.py", line 21, in upgrade
+    op.create_table('change_urls_into_payloads',
+  File "<string>", line 8, in create_table
+  File "<string>", line 3, in create_table
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\ops.py", line 1311, in create_table
+    return operations.invoke(op)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\base.py", line 442, in invoke
+    return fn(self, operation)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\toimpl.py", line 131, in create_table
+    operations.impl.create_table(table)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\ddl\impl.py", line 369, in create_table
+    self._exec(schema.CreateTable(table))
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\ddl\impl.py", line 210, in _exec
+    return conn.execute(construct, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\sql\ddl.py", line 180, in _execute_on_connection
+    return connection._execute_ddl(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1529, in _execute_ddl
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) table change_urls_into_payloads already exists
+[SQL: 
+CREATE TABLE change_urls_into_payloads (
+	id INTEGER NOT NULL, 
+	url VARCHAR(255) NOT NULL, 
+	payload VARCHAR(255) NOT NULL, 
+	created_at DATETIME, 
+	target_id INTEGER NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(target_id) REFERENCES target (id)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2025-02-13 16:27:35,986 - ERROR - 遷移過程出錯: 應用初始遷移失敗
+2025-02-13 16:27:35,986 - INFO - 嘗試恢復最新備份
+2025-02-13 16:27:36,140 - INFO - 已恢復最新備份: instance\backups\c2_20250213_162721.db
+2025-02-13 16:27:36,140 - INFO - 成功恢復到最新備份
+2025-02-13 16:27:36,141 - ERROR - 數據庫更新失敗
+2025-02-14 18:52:22,499 - INFO - 開始數據庫遷移流程
+2025-02-14 18:52:22,499 - INFO - 數據庫連接測試成功
+2025-02-14 18:52:22,621 - INFO - 數據庫已備份到: instance\backups\c2_20250214_185222.db
+2025-02-14 18:52:22,622 - INFO - 已刪除舊備份: instance\backups\c2_20250208_181505.db
+2025-02-14 18:53:08,674 - INFO - 命令執行成功: flask db current
+2025-02-14 18:53:08,674 - WARNING - 數據庫版本不是最新的，執行強制更新
+2025-02-14 18:53:51,324 - INFO - 命令執行成功: flask db stamp head
+2025-02-14 18:53:53,422 - INFO - 命令執行成功: flask db migrate -m "Reset migration"
+2025-02-14 18:53:55,835 - WARNING - 命令執行失敗 (嘗試 1/3)
+2025-02-14 18:53:55,835 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 1ba40399b4d0 -> a920245aa323, Reset migration
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 388, in decorator
+    return ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\cli.py", line 154, in upgrade
+    _upgrade(directory, revision, sql, tag, x_arg)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\command.py", line 406, in upgrade
+    script.run_env()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\script\base.py", line 582, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\migration.py", line 628, in run_migrations
+    step.migration_fn(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\versions\a920245aa323_reset_migration.py", line 30, in upgrade
+    with op.batch_alter_table('target', schema=None) as batch_op:
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\base.py", line 398, in batch_alter_table
+    impl.flush()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 162, in flush
+    fn(*arg, **kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 669, in add_constraint
+    raise ValueError("Constraint must have a name")
+ValueError: Constraint must have a name
+
+2025-02-14 18:53:59,238 - WARNING - 命令執行失敗 (嘗試 2/3)
+2025-02-14 18:53:59,239 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 1ba40399b4d0 -> a920245aa323, Reset migration
+Traceback (most recent call last):
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: table change_urls_into_payloads already exists
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 388, in decorator
+    return ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\cli.py", line 154, in upgrade
+    _upgrade(directory, revision, sql, tag, x_arg)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\command.py", line 406, in upgrade
+    script.run_env()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\script\base.py", line 582, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\migration.py", line 628, in run_migrations
+    step.migration_fn(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\versions\a920245aa323_reset_migration.py", line 21, in upgrade
+    op.create_table('change_urls_into_payloads',
+  File "<string>", line 8, in create_table
+  File "<string>", line 3, in create_table
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\ops.py", line 1311, in create_table
+    return operations.invoke(op)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\base.py", line 442, in invoke
+    return fn(self, operation)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\toimpl.py", line 131, in create_table
+    operations.impl.create_table(table)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\ddl\impl.py", line 369, in create_table
+    self._exec(schema.CreateTable(table))
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\ddl\impl.py", line 210, in _exec
+    return conn.execute(construct, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\sql\ddl.py", line 180, in _execute_on_connection
+    return connection._execute_ddl(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1529, in _execute_ddl
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) table change_urls_into_payloads already exists
+[SQL: 
+CREATE TABLE change_urls_into_payloads (
+	id INTEGER NOT NULL, 
+	url VARCHAR(255) NOT NULL, 
+	payload VARCHAR(255) NOT NULL, 
+	created_at DATETIME, 
+	target_id INTEGER NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(target_id) REFERENCES target (id)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2025-02-14 18:54:03,456 - WARNING - 命令執行失敗 (嘗試 3/3)
+2025-02-14 18:54:03,456 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 1ba40399b4d0 -> a920245aa323, Reset migration
+Traceback (most recent call last):
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: table change_urls_into_payloads already exists
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 388, in decorator
+    return ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\cli.py", line 154, in upgrade
+    _upgrade(directory, revision, sql, tag, x_arg)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\command.py", line 406, in upgrade
+    script.run_env()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\script\base.py", line 582, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\migration.py", line 628, in run_migrations
+    step.migration_fn(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\versions\a920245aa323_reset_migration.py", line 21, in upgrade
+    op.create_table('change_urls_into_payloads',
+  File "<string>", line 8, in create_table
+  File "<string>", line 3, in create_table
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\ops.py", line 1311, in create_table
+    return operations.invoke(op)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\base.py", line 442, in invoke
+    return fn(self, operation)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\toimpl.py", line 131, in create_table
+    operations.impl.create_table(table)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\ddl\impl.py", line 369, in create_table
+    self._exec(schema.CreateTable(table))
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\ddl\impl.py", line 210, in _exec
+    return conn.execute(construct, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\sql\ddl.py", line 180, in _execute_on_connection
+    return connection._execute_ddl(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1529, in _execute_ddl
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) table change_urls_into_payloads already exists
+[SQL: 
+CREATE TABLE change_urls_into_payloads (
+	id INTEGER NOT NULL, 
+	url VARCHAR(255) NOT NULL, 
+	payload VARCHAR(255) NOT NULL, 
+	created_at DATETIME, 
+	target_id INTEGER NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(target_id) REFERENCES target (id)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2025-02-14 18:54:03,456 - ERROR - 遷移過程出錯: 應用初始遷移失敗
+2025-02-14 18:54:03,456 - INFO - 嘗試恢復最新備份
+2025-02-14 18:54:03,642 - INFO - 已恢復最新備份: instance\backups\c2_20250214_185222.db
+2025-02-14 18:54:03,642 - INFO - 成功恢復到最新備份
+2025-02-14 18:54:03,643 - ERROR - 數據庫更新失敗
+2025-02-14 18:56:11,348 - INFO - 開始數據庫遷移流程
+2025-02-14 18:56:11,348 - INFO - 數據庫連接測試成功
+2025-02-14 18:56:11,440 - INFO - 數據庫已備份到: instance\backups\c2_20250214_185611.db
+2025-02-14 18:56:11,441 - INFO - 已刪除舊備份: instance\backups\c2_20250208_181700.db
+2025-02-14 18:56:13,316 - INFO - 命令執行成功: flask db current
+2025-02-14 18:56:13,317 - WARNING - 數據庫版本不是最新的，執行強制更新
+2025-02-14 18:56:15,190 - INFO - 命令執行成功: flask db stamp head
+2025-02-14 18:56:17,099 - INFO - 命令執行成功: flask db migrate -m "Reset migration"
+2025-02-14 18:56:19,161 - WARNING - 命令執行失敗 (嘗試 1/3)
+2025-02-14 18:56:19,161 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade a920245aa323 -> ff4f695ab10d, Reset migration
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 388, in decorator
+    return ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\cli.py", line 154, in upgrade
+    _upgrade(directory, revision, sql, tag, x_arg)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\command.py", line 406, in upgrade
+    script.run_env()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\script\base.py", line 582, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\migration.py", line 628, in run_migrations
+    step.migration_fn(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\versions\ff4f695ab10d_reset_migration.py", line 30, in upgrade
+    with op.batch_alter_table('target', schema=None) as batch_op:
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\base.py", line 398, in batch_alter_table
+    impl.flush()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 162, in flush
+    fn(*arg, **kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\batch.py", line 669, in add_constraint
+    raise ValueError("Constraint must have a name")
+ValueError: Constraint must have a name
+
+2025-02-14 18:56:22,037 - WARNING - 命令執行失敗 (嘗試 2/3)
+2025-02-14 18:56:22,038 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade a920245aa323 -> ff4f695ab10d, Reset migration
+Traceback (most recent call last):
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: table change_urls_into_payloads already exists
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 388, in decorator
+    return ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\cli.py", line 154, in upgrade
+    _upgrade(directory, revision, sql, tag, x_arg)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\command.py", line 406, in upgrade
+    script.run_env()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\script\base.py", line 582, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\migration.py", line 628, in run_migrations
+    step.migration_fn(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\versions\ff4f695ab10d_reset_migration.py", line 21, in upgrade
+    op.create_table('change_urls_into_payloads',
+  File "<string>", line 8, in create_table
+  File "<string>", line 3, in create_table
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\ops.py", line 1311, in create_table
+    return operations.invoke(op)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\base.py", line 442, in invoke
+    return fn(self, operation)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\toimpl.py", line 131, in create_table
+    operations.impl.create_table(table)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\ddl\impl.py", line 369, in create_table
+    self._exec(schema.CreateTable(table))
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\ddl\impl.py", line 210, in _exec
+    return conn.execute(construct, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\sql\ddl.py", line 180, in _execute_on_connection
+    return connection._execute_ddl(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1529, in _execute_ddl
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) table change_urls_into_payloads already exists
+[SQL: 
+CREATE TABLE change_urls_into_payloads (
+	id INTEGER NOT NULL, 
+	url VARCHAR(255) NOT NULL, 
+	payload VARCHAR(255) NOT NULL, 
+	created_at DATETIME, 
+	target_id INTEGER NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(target_id) REFERENCES target (id)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2025-02-14 18:56:25,893 - WARNING - 命令執行失敗 (嘗試 3/3)
+2025-02-14 18:56:25,893 - WARNING - 錯誤信息: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade a920245aa323 -> ff4f695ab10d, Reset migration
+Traceback (most recent call last):
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: table change_urls_into_payloads already exists
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 388, in decorator
+    return ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\cli.py", line 154, in upgrade
+    _upgrade(directory, revision, sql, tag, x_arg)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\command.py", line 406, in upgrade
+    script.run_env()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\script\base.py", line 582, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 95, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\util\pyfiles.py", line 113, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\runtime\migration.py", line 628, in run_migrations
+    step.migration_fn(**kw)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\migrations\versions\ff4f695ab10d_reset_migration.py", line 21, in upgrade
+    op.create_table('change_urls_into_payloads',
+  File "<string>", line 8, in create_table
+  File "<string>", line 3, in create_table
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\ops.py", line 1311, in create_table
+    return operations.invoke(op)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\base.py", line 442, in invoke
+    return fn(self, operation)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\operations\toimpl.py", line 131, in create_table
+    operations.impl.create_table(table)
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\ddl\impl.py", line 369, in create_table
+    self._exec(schema.CreateTable(table))
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\alembic\ddl\impl.py", line 210, in _exec
+    return conn.execute(construct, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\sql\ddl.py", line 180, in _execute_on_connection
+    return connection._execute_ddl(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1529, in _execute_ddl
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 2353, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\sqlalchemy\engine\default.py", line 924, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) table change_urls_into_payloads already exists
+[SQL: 
+CREATE TABLE change_urls_into_payloads (
+	id INTEGER NOT NULL, 
+	url VARCHAR(255) NOT NULL, 
+	payload VARCHAR(255) NOT NULL, 
+	created_at DATETIME, 
+	target_id INTEGER NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(target_id) REFERENCES target (id)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2025-02-14 18:56:25,894 - ERROR - 遷移過程出錯: 應用初始遷移失敗
+2025-02-14 18:56:25,894 - INFO - 嘗試恢復最新備份
+2025-02-14 18:56:26,039 - INFO - 已恢復最新備份: instance\backups\c2_20250214_185611.db
+2025-02-14 18:56:26,039 - INFO - 成功恢復到最新備份
+2025-02-14 18:56:26,039 - ERROR - 數據庫更新失敗

