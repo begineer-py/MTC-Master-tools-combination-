@@ -11,7 +11,7 @@ import requests
 import json
 import logging
 from datetime import datetime, UTC
-from instance.models import db, crawler_each_url, crawler_each_form, crawler_each_js, crawler_each_image, crawler_each_html, crawler_each_security, FormParameter
+from instance.models import db, crawler_each_url, crawler_each_form, crawler_each_js, crawler_each_image, crawler_each_html, crawler_each_security, FormParameter, HarvesterResult
 import random
 from reconnaissance.scanner_flaresolverr.html_parser import HtmlParser
 import argparse
@@ -20,6 +20,7 @@ import time
 from reconnaissance.scanner_flaresolverr.deduplication import HTMLDeduplicator
 from bs4 import BeautifulSoup
 from contextlib import contextmanager
+from reconnaissance.theHarvester.harvester import HarvesterScanner
 
 @contextmanager
 def session_scope():
@@ -395,6 +396,83 @@ class CloudflareBypass:
         except Exception as e:
             self.logger.error(f"保存安全信息時出錯: {str(e)}")
 
+    def call_harvester_api(self, target_domain, target_id, limit=100, sources='all'):
+        """直接調用 theHarvester API
+        
+        Args:
+            target_domain: 目標域名
+            target_id: 目標ID
+            limit: 結果限制數（默認100）
+            sources: 數據源（默認'all'）
+            
+        Returns:
+            tuple: (success, message)
+        """
+        try:
+            # 準備 API 請求
+            api_url = f"http://localhost:5000/api/harvester/scan/{target_id}"
+            payload = {
+                'domain': target_domain,
+                'limit': limit,
+                'sources': sources
+            }
+            
+            # 發送 API 請求
+            self.logger.info(f"正在調用 theHarvester API: {api_url}")
+            response = requests.post(
+                api_url,
+                json=payload,
+                headers={'Content-Type': 'application/json'}
+            )
+            
+            if response.status_code != 200:
+                raise Exception(f"API 請求失敗，狀態碼: {response.status_code}")
+            
+            # 解析響應
+            result = response.json()
+            if not result.get('success'):
+                raise Exception(result.get('message', '未知錯誤'))
+                
+            self.logger.info("theHarvester API 調用完成")
+            return True, "掃描請求已發送"
+
+        except Exception as e:
+            error_msg = f"執行 theHarvester API 調用時出錯: {str(e)}"
+            self.logger.error(error_msg)
+            return False, error_msg
+
+    def _clean_data(self, data):
+        """清理掃描結果數據
+        
+        Args:
+            data: 原始數據
+            
+        Returns:
+            清理後的數據
+        """
+        if isinstance(data, str):
+            # 移除分隔線
+            if '---' in data:
+                return ''
+            # 移除空行
+            return data.strip()
+        elif isinstance(data, list):
+            # 清理列表中的每個元素
+            cleaned = []
+            for item in data:
+                if isinstance(item, str):
+                    item = item.strip()
+                    # 跳過分隔線和空行
+                    if item and '---' not in item and '[*]' not in item:
+                        cleaned.append(item)
+                else:
+                    cleaned.append(item)
+            return cleaned
+        elif isinstance(data, dict):
+            # 清理字典中的每個值
+            return {k: self._clean_data(v) for k, v in data.items()}
+        return data
+
 def main():
     parser = argparse.ArgumentParser(description='Cloudflare 繞過工具')
     parser.add_argument('url', help='要訪問的 URL')
@@ -418,4 +496,6 @@ def main():
         return 1
     
 if __name__ == "__main__":
-    sys.exit(main()) 
+    sys.exit(main())
+
+__all__ = ['CloudflareBypass'] 

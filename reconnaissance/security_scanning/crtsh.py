@@ -5,11 +5,10 @@ import time
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
-def crtsh_scan_target(domain, user_id, target_id):
+def crtsh_scan_target(domain, target_id):
     """
     使用 crt.sh 進行子域名掃描
     :param domain: 目標域名
-    :param user_id: 用戶ID
     :param target_id: 目標ID
     :return: (domains, success, message)
     """

@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     const targetList = document.getElementById('targetList');
     const userId = targetList.dataset.userId;
+    const generateApiKeyBtn = document.getElementById('generateApiKey');
+    const revokeApiKeyBtn = document.getElementById('revokeApiKey');
+    const userApiKeySpan = document.getElementById('userApiKey');
+    const apiKeyExpirySpan = document.getElementById('apiKeyExpiry');
 
     targetList.addEventListener('click', function(event) {
         const targetId = event.target.getAttribute('data-target-id');
@@ -116,5 +120,65 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error:', error);
             alert('檢查 API Key 時發生錯誤');
         }
+    }
+
+    // API Key 管理
+    if (generateApiKeyBtn) {
+        generateApiKeyBtn.addEventListener('click', async function() {
+            try {
+                const response = await fetch('/api/key/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ expires_in: 30 })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    userApiKeySpan.textContent = data.data.api_key;
+                    apiKeyExpirySpan.textContent = data.data.expires_at;
+                    generateApiKeyBtn.style.display = 'none';
+                    revokeApiKeyBtn.style.display = 'inline-block';
+                    alert('API Key 生成成功！');
+                } else {
+                    alert('生成 API Key 失敗：' + data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('生成 API Key 時發生錯誤');
+            }
+        });
+    }
+
+    if (revokeApiKeyBtn) {
+        revokeApiKeyBtn.addEventListener('click', async function() {
+            if (!confirm('確定要撤銷此 API Key 嗎？')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/key/revoke', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    userApiKeySpan.textContent = '未生成';
+                    apiKeyExpirySpan.textContent = '無';
+                    generateApiKeyBtn.style.display = 'inline-block';
+                    revokeApiKeyBtn.style.display = 'none';
+                    alert('API Key 已撤銷！');
+                } else {
+                    alert('撤銷 API Key 失敗：' + data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('撤銷 API Key 時發生錯誤');
+            }
+        });
     }
 }); 

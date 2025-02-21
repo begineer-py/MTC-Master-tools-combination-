@@ -1,7 +1,5 @@
 from flask import Blueprint, jsonify, render_template
 from instance.models import (
-    ParamSpiderResult, 
-    db, 
     Target, 
     crawler_each_url, 
     crawler_each_form, 

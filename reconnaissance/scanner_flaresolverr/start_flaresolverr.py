@@ -29,9 +29,8 @@ def start_docker_service():
     print("正在啟動 Docker 服務...")
     # 使用 runas 以管理員權限執行命令
     commands = [
-        'powershell -Command "Start-Process -FilePath \'net\' -ArgumentList \'start\', \'com.docker.service\' -Verb RunAs"',
-        'powershell -Command "Start-Process -FilePath \'net\' -ArgumentList \'start\', \'Docker Desktop Service\' -Verb RunAs"'
-    ]
+        'powershell -Command "Start-Process -FilePath \'C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\' -Verb RunAs"'
+        ]
     
     for cmd in commands:
         success, output = run_command(cmd)

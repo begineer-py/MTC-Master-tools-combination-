@@ -1,3 +1,12 @@
 *.db
 *.db-wal
 *.db-shm
+node_modules/
+static/js/dist/
+*.log
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

@@ -32,6 +32,7 @@ def login():
                     db.session.commit()
                 login_user(admin_user)
                 session['is_admin'] = True
+                session.permanent = True  # 設置 session 持久化
                 flash("登入成功")
                 return redirect(url_for('admin.admin'))
             elif user is None:  # 用戶不存在
@@ -42,6 +43,7 @@ def login():
             else:  # 用戶登入
                 login_user(user)
                 session['is_admin'] = user.is_admin
+                session.permanent = True  # 設置 session 持久化
                 flash("登入成功")
                 return redirect(url_for('user.dashboard', user_id=user.id))
         except Exception as e:

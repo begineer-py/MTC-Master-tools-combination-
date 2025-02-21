@@ -1,15 +1,6 @@
 import logging
-from flask import Flask
-from instance.models import db, migrate
-from routes.zombie_routes import zombie_bp
-from routes.user_dashboard_routes import user_bp
-from routes.index_routes import index_bp
-from routes.admin_routes import admin_bp
-from routes.reconnaissance_route.attack_route import attack_bp
-from routes.result_route import result_bp
-from routes.attack_vulnerability_route import attack_vulnerability_route   
-from routes.api_setting.API_ROUTE import api_route
-
+from flask import Flask, request
+from instance.models import db, migrate, Target
 import secrets
 from datetime import timedelta
 from flask_session import Session
@@ -18,15 +9,51 @@ from sqlalchemy.exc import OperationalError
 from flask_login import LoginManager
 from reconnaissance.scanner_flaresolverr.start_flaresolverr import start_flaresolverr
 import sys
-import waitress
 import os
+from app.blueprint_set import register_blueprints
+from flask_cors import CORS
 
+def check_harvester_environment():
+    """檢查 theHarvester 環境"""
+    harvester_path = os.path.join(os.getcwd(), 'tools', 'theHarvester')
+    
+    # 檢查 theHarvester 目錄是否存在
+    if not os.path.exists(harvester_path):
+        try:
+            # 如果不存在，克隆倉庫
+            import subprocess
+            clone_cmd = f"git clone https://github.com/laramies/theHarvester.git {harvester_path}"
+            subprocess.run(clone_cmd, shell=True, check=True)
+            
+            # 安裝依賴
+            install_cmd = f"pip install -r {os.path.join(harvester_path, 'requirements.txt')}"
+            subprocess.run(install_cmd, shell=True, check=True)
+            
+            return True
+        except subprocess.CalledProcessError as e:
+            raise RuntimeError(f"安裝 theHarvester 失敗: {str(e)}")
+        except Exception as e:
+            raise RuntimeError(f"設置 theHarvester 環境時出錯: {str(e)}")
+    
+    return True
 
 def create_app():
+    try:
+        # 檢查 theHarvester 環境
+        check_harvester_environment()
+    except Exception as e:
+        print(f"環境檢查失敗: {str(e)}")
+        sys.exit(1)
+    
+    # 啟動 FlareSolverr
     start_flaresolverr()
+    
     app = Flask(__name__, 
                 template_folder=os.path.join(os.path.dirname(os.path.dirname(__file__)), 'templates'),
                 static_folder=os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static'))
+    
+    # 启用 CORS
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     
     # 基本配置
     app.config['SECRET_KEY'] = secrets.token_hex(16)
@@ -43,7 +70,7 @@ def create_app():
         'connect_args': {
             'check_same_thread': False,
             'timeout': 30,
-            'isolation_level': None  # 允許手動控制事務
+            'isolation_level': None  # 允许手动控制事务
         }
     }
     
@@ -62,7 +89,7 @@ def create_app():
     # 初始化 Flask-Session
     Session(app)
     
-    # 初始化數據庫
+    # 初始化数据库
     db.init_app(app)
     migrate.init_app(app, db)
     
@@ -89,26 +116,43 @@ def create_app():
     # 初始化 Flask-Login
     login_manager = LoginManager()
     login_manager.init_app(app)
-    login_manager.login_view = 'index.login'  # 設置登入頁面的端點
+    login_manager.login_view = 'index.login'  # 设置登入页面的端点
     
+    @login_manager.request_loader
+    def load_user_from_request(request):
+        from instance.models import User
+        
+        # 首先，尝试从 Authorization header 中获取 API Key
+        api_key = request.headers.get('X-API-Key')
+        if api_key:
+            # 查找具有此 API Key 的目标
+            target = Target.query.filter_by(api_key=api_key).first()
+            if target:
+                # 返回目标关联的用户
+                user = User.query.get(target.user_id)
+                if user:
+                    # 设置 API 认证状态
+                    user.set_api_auth(api_key)
+                    # 将用户保存到 session 中
+                    from flask_login import login_user
+                    login_user(user)
+                    return user
+        
+        # 如果没有 API Key 或验证失败，返回 None
+        return None
+
     @login_manager.user_loader
     def load_user(user_id):
         from instance.models import User
         return db.session.get(User, int(user_id))
     
-    # 註冊藍圖
-    app.register_blueprint(zombie_bp, url_prefix='/api/zombie')
-    app.register_blueprint(user_bp, url_prefix='/user')
-    app.register_blueprint(index_bp, url_prefix='/')
-    app.register_blueprint(admin_bp, url_prefix='/admin')
-    app.register_blueprint(attack_bp)
-    app.register_blueprint(result_bp, url_prefix='/result')
-    app.register_blueprint(attack_vulnerability_route, url_prefix='/attack/vulnerability')
-    app.register_blueprint(api_route, url_prefix='/api')
-    # 設置日誌配置
+    # 注册蓝图
+    register_blueprints(app)
+    
+    # 设置日志配置
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     
-    # 確保日誌目錄存在
+    # 确保日志目录存在
     os.makedirs('logs', exist_ok=True)
     
     file_handler = logging.FileHandler('logs/app.txt', encoding='utf-8')
@@ -116,7 +160,6 @@ def create_app():
     file_handler.setFormatter(formatter)
     app.logger.addHandler(file_handler)
     
-
     stream_handler = logging.StreamHandler(sys.stdout)
     stream_handler.setLevel(logging.DEBUG)
     stream_handler.setFormatter(formatter)

@@ -1,10 +1,12 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, UTC
+from datetime import datetime, UTC, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
 from threading import Lock
 from flask_login import UserMixin
+import json
+import secrets
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -24,17 +26,82 @@ class User(db.Model, UserMixin):
     client_ip = db.Column(db.String(39))
     is_admin = db.Column(db.Boolean, default=False)
     
+    # API Key 相關字段
+    api_key = db.Column(db.String(64), unique=True, nullable=True)
+    api_key_created_at = db.Column(db.DateTime, nullable=True)
+    api_key_expires_at = db.Column(db.DateTime, nullable=True)
+    is_api_authenticated = db.Column(db.Boolean, default=False)
+    
     # 關聯定義
     commands = db.relationship('Command_User', backref='user', lazy='dynamic')
     targets = db.relationship('Target', backref='user', lazy='dynamic')
 
     def set_password(self, password):
-        """設置用戶密碼的哈希值"""
+        """設置密碼"""
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
-        """檢查用戶輸入的密碼是否正確"""
+        """檢查密碼"""
         return check_password_hash(self.password_hash, password)
+        
+    def generate_api_key(self, expires_in=30):
+        """生成新的 API Key
+        
+        Args:
+            expires_in: API Key 的有效期（天數）
+            
+        Returns:
+            str: 生成的 API Key
+        """
+        self.api_key = secrets.token_hex(32)
+        self.api_key_created_at = datetime.now(UTC)
+        self.api_key_expires_at = self.api_key_created_at + timedelta(days=expires_in)
+        return self.api_key
+        
+    def revoke_api_key(self):
+        """撤銷當前的 API Key"""
+        self.api_key = None
+        self.api_key_created_at = None
+        self.api_key_expires_at = None
+        self.is_api_authenticated = False
+        
+    def check_api_key(self, api_key):
+        """檢查 API Key 是否有效
+        
+        Args:
+            api_key: 要檢查的 API Key
+            
+        Returns:
+            bool: API Key 是否有效
+        """
+        if not self.api_key or not api_key:
+            return False
+            
+        if self.api_key != api_key:
+            return False
+            
+        if not self.api_key_expires_at:
+            return False
+            
+        if datetime.now(UTC) > self.api_key_expires_at:
+            return False
+            
+        return True
+
+    def set_api_auth(self, api_key):
+        """設置 API 認證狀態"""
+        self.is_api_authenticated = self.check_api_key(api_key)
+        return self.is_api_authenticated
+
+    @property
+    def is_active(self):
+        """用戶是否活躍"""
+        return True
+
+    @property
+    def is_authenticated(self):
+        """用戶是否已認證"""
+        return True if self.is_api_authenticated else super().is_authenticated
 
 class ZOMBIE(db.Model):
     """肉雞模型"""
@@ -75,41 +142,50 @@ class Target(db.Model):
     target_status = db.Column(db.String(50), default='pending')
     deep_scan = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    api_key = db.Column(db.String(255), nullable=True, unique=True)
+    
     # 關聯定義
     nmap_results = db.relationship('nmap_Result', backref='target', lazy='dynamic')
     crtsh_results = db.relationship('crtsh_Result', backref='target', lazy='dynamic')
     webtech_results = db.relationship('webtech_Result', backref='target', lazy='dynamic')
     crawler_each_urls = db.relationship('crawler_each_url', backref=db.backref('target', lazy='joined'), lazy='dynamic')
-    paramspider_results = db.relationship('ParamSpiderResult', backref='target', lazy='dynamic')
-    change_urls_into_payloads = db.relationship('change_urls_into_payloads', backref='target', lazy='dynamic')
+    harvester_results = db.relationship('HarvesterResult', backref='target', lazy='dynamic')
 
 class nmap_Result(db.Model):
     """掃描結果模型"""
     __tablename__ = 'nmap_result'
     id = db.Column(db.Integer, primary_key=True)
-    target_id = db.Column(db.Integer, db.ForeignKey('target.id'), nullable=False)
+    target_id = db.Column(db.Integer, db.ForeignKey('target.id', name='fk_nmap_target'), nullable=False, unique=True)
     scan_result = db.Column(db.Text)
     scan_time = db.Column(db.DateTime)
+    scan_type = db.Column(db.String(10), default='common')  # 'common' 或 'full'
     
-    def __init__(self, target_id, scan_result, scan_time):
+    def __init__(self, target_id, scan_result, scan_time, scan_type='common'):
         self.target_id = target_id
         self.scan_result = scan_result
         self.scan_time = scan_time
+        self.scan_type = scan_type
+        
+    def to_dict(self):
+        """將結果轉換為字典格式"""
+        return {
+            'id': self.id,
+            'target_id': self.target_id,
+            'scan_result': json.loads(self.scan_result) if self.scan_result else None,
+            'scan_time': self.scan_time.strftime('%Y-%m-%d %H:%M:%S') if self.scan_time else None,
+            'scan_type': self.scan_type
+        }
 
 class crtsh_Result(db.Model):
     """crtsh掃描結果模型"""
     id = db.Column(db.Integer, primary_key=True)
     target_id = db.Column(db.Integer, db.ForeignKey('target.id', name='fk_crtsh_target'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_crtsh_user'), nullable=False)
     domains = db.Column(db.JSON, nullable=True)  # 存儲域名列表
     total_domains = db.Column(db.Integer, default=0)  # 域名總數
     status = db.Column(db.String(20), nullable=False, default='pending')  # 掃描狀態
     error_message = db.Column(db.Text, nullable=True)  # 錯誤信息
     scan_time = db.Column(db.DateTime, nullable=False, default=datetime.now)  # 掃描時間
     
-    def __init__(self, user_id, target_id, domains=None, total_domains=0, status='pending', error_message=None, scan_time=None):
-        self.user_id = user_id
+    def __init__(self, target_id, domains=None, total_domains=0, status='pending', error_message=None, scan_time=None):
         self.target_id = target_id
         self.domains = domains or []
         self.total_domains = total_domains
@@ -117,13 +193,49 @@ class crtsh_Result(db.Model):
         self.error_message = error_message
         self.scan_time = scan_time or datetime.now()
 
+    def to_dict(self):
+        """將結果轉換為字典格式"""
+        return {
+            'id': self.id,
+            'target_id': self.target_id,
+            'domains': self.domains or [],
+            'total_domains': self.total_domains,
+            'status': self.status,
+            'error_message': self.error_message,
+            'scan_time': self.scan_time.timestamp() if self.scan_time else None
+        }
+
 class webtech_Result(db.Model):
     """webtech掃描結果模型"""
+    __tablename__ = 'webtech_result'
+    
     id = db.Column(db.Integer, primary_key=True)
-    target_id = db.Column(db.Integer, db.ForeignKey('target.id'), nullable=False)
+    target_id = db.Column(db.Integer, db.ForeignKey('target.id', name='fk_webtech_target'), nullable=False)
     webtech_result = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    web_tech = db.Column(db.String(255), nullable=False)
+    web_tech = db.Column(db.String(255), nullable=False, default='沒有掃描到')
+    web_base_on = db.Column(db.Text, nullable=False, default='沒有掃描到')
+    if_cloudflare = db.Column(db.Boolean, default=False)
+    scan_time = db.Column(db.DateTime, nullable=False, default=datetime.now)  # 掃描時間
+    
+    def to_dict(self):
+        """將結果轉換為字典格式"""
+        return {
+            'id': self.id,
+            'target_id': self.target_id,
+            'webtech_result': json.loads(self.webtech_result) if self.webtech_result else None,
+            'web_tech': self.web_tech,
+            'web_base_on': self.web_base_on,
+            'if_cloudflare': self.if_cloudflare,
+            'scan_time': self.scan_time.timestamp() if self.scan_time else None
+        }
+    
+    def __init__(self, target_id, webtech_result, web_tech='沒有掃描到', web_base_on='沒有掃描到', if_cloudflare=False):
+        self.target_id = target_id
+        self.webtech_result = webtech_result
+        self.web_tech = web_tech
+        self.web_base_on = web_base_on
+        self.if_cloudflare = if_cloudflare
+        self.scan_time = datetime.now()
 
 class crawler_each_url(db.Model):
     """crawler每個url掃描結果模型"""
@@ -210,50 +322,81 @@ class if_sql_injection(db.Model):
     # 關聯定義
     url = db.relationship('crawler_each_url', backref=db.backref('sql_injections', lazy='dynamic'))
 
-class ParamSpiderResult(db.Model):
-    """ParamSpider 爬取結果模型"""
-    __tablename__ = 'paramspider_results'
+class HarvesterResult(db.Model):
+    """theHarvester 扫描结果模型"""
+    __tablename__ = 'harvester_results'
     
     id = db.Column(db.Integer, primary_key=True)
-    target_id = db.Column(db.Integer, db.ForeignKey('target.id'), nullable=False, unique=True)
-    exclude = db.Column(db.String(255))
-    threads = db.Column(db.Integer)
+    target_id = db.Column(db.Integer, db.ForeignKey('target.id'), nullable=False)
     
-    status = db.Column(db.String(50))
-    error_message = db.Column(db.Text)
-    result_text = db.Column(db.Text)
-    total_urls = db.Column(db.Integer, default=0)
-    unique_parameters = db.Column(db.Integer, default=0)
-    created_at = db.Column(db.DateTime, default=datetime.now)
-    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
-    @classmethod
-    def get_by_target_id(cls, target_id):
-        """通過 target_id 獲取掃描結果"""
-        return cls.query.filter_by(target_id=target_id).first()
+    # 基本信息
+    scan_time = db.Column(db.DateTime, default=datetime.now)
+    status = db.Column(db.String(50), default='pending')  # pending, running, completed, error
+    error = db.Column(db.Text)
+    
+    # IP 相关信息
+    direct_ips = db.Column(db.JSON)  # 直接关联的 IP 地址
+    ip_ranges = db.Column(db.JSON)   # IP 地址段
+    cdn_ips = db.Column(db.JSON)     # CDN IP 地址
+    
+    # DNS 信息
+    dns_records = db.Column(db.JSON)  # DNS 记录
+    reverse_dns = db.Column(db.JSON)  # 反向 DNS 记录
+    asn_info = db.Column(db.JSON)     # ASN 信息
+    
+    # 域名信息
+    subdomains = db.Column(db.JSON)   # 子域名列表
+    hosts = db.Column(db.JSON)        # 主机信息
+    
+    # 其他发现
+    urls = db.Column(db.JSON)         # 发现的 URL
+    emails = db.Column(db.JSON)       # 电子邮件地址
+    social_media = db.Column(db.JSON) # 社交媒体信息
+    
+    # 扫描配置
+    scan_sources = db.Column(db.String(255))  # 使用的数据源
+    limit = db.Column(db.Integer)             # 结果限制数
+    
     def to_dict(self):
-        """將結果轉換為字典格式"""
+        """转换为字典格式"""
         return {
             'id': self.id,
             'target_id': self.target_id,
-            'user_id': self.user_id,
-            'crawler_id': self.crawler_id,
-            'exclude': self.exclude,
-            'threads': self.threads,
+            'scan_time': self.scan_time.isoformat() if self.scan_time else None,
             'status': self.status,
-            'error_message': self.error_message,
-            'result_text': self.result_text,
-            'total_urls': self.total_urls,
-            'unique_parameters': self.unique_parameters,
-            'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-            'updated_at': self.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+            'error': self.error,
+            
+            # IP 相关信息
+            'ip_data': {
+                'direct_ips': self.direct_ips or [],
+                'ip_ranges': self.ip_ranges or [],
+                'cdn_ips': self.cdn_ips or []
+            },
+            
+            # DNS 信息
+            'dns_data': {
+                'dns_records': self.dns_records or [],
+                'reverse_dns': self.reverse_dns or [],
+                'asn_info': self.asn_info or []
+            },
+            
+            # 域名信息
+            'domain_data': {
+                'subdomains': self.subdomains or [],
+                'hosts': self.hosts or []
+            },
+            
+            # 其他发现
+            'discovery_data': {
+                'urls': self.urls or [],
+                'emails': self.emails or [],
+                'social_media': self.social_media or []
+            },
+            
+            # 扫描配置
+            'scan_config': {
+                'sources': self.scan_sources,
+                'limit': self.limit
+            }
         }
-
-class change_urls_into_payloads(db.Model):
-    """將urls轉換為payloads"""
-    id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(255), nullable=False)
-    payload = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.now)
-    target_id = db.Column(db.Integer, db.ForeignKey('target.id'), nullable=False)
-
-
+    

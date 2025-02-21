@@ -10,7 +10,14 @@
 <ul>
     <li>用戶名: {{ current_user.username }}</li>
     <li>註冊日期: {{ current_user.registered_on }}</li>
+    <li>API Key: <span id="userApiKey">{{ current_user.api_key if current_user.api_key else '未生成' }}</span></li>
+    <li>過期時間: <span id="apiKeyExpiry">{{ current_user.api_key_expires_at if current_user.api_key_expires_at else '無' }}</span></li>
 </ul>
+
+<div class="api-key-management">
+    <button id="generateApiKey" class="button" {% if current_user.api_key %}style="display:none"{% endif %}>生成用戶 API Key</button>
+    <button id="revokeApiKey" class="button" {% if not current_user.api_key %}style="display:none"{% endif %}>撤銷 API Key</button>
+</div>
 
 <h3>修改用戶名</h3>
 <form method="post" action="{{ url_for('user.update_username') }}">
@@ -46,9 +53,6 @@
         </div>
         <div class="target-actions">
             <button class="select-target" data-target-id="{{ target.id }}">選擇</button>
-            <button class="generate-api" data-target-id="{{ target.id }}" {% if target.api_key %}style="display:none"{% endif %}>生成 API</button>
-            <button class="delete-api" data-target-id="{{ target.id }}" {% if not target.api_key %}style="display:none"{% endif %}>刪除 API</button>
-            <button class="check-api" data-target-id="{{ target.id }}" {% if not target.api_key %}style="display:none"{% endif %}>檢查 API</button>
         </div>
     </li>
     {% endfor %}

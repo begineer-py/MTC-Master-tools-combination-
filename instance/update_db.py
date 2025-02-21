@@ -6,6 +6,8 @@ from datetime import datetime
 import sqlite3
 import logging
 from pathlib import Path
+from flask import Flask
+from models import db, HarvesterResult
 
 # 設置日誌
 def setup_logging():
@@ -240,6 +242,28 @@ def migrate_database():
             logger.error("恢復備份失敗，請手動檢查數據庫狀態")
         
         return False
+
+def update_database():
+    """更新数据库结构"""
+    try:
+        app = Flask(__name__)
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        
+        db.init_app(app)
+        
+        with app.app_context():
+            # 删除旧的 harvester_results 表
+            db.engine.execute('DROP TABLE IF EXISTS harvester_results')
+            
+            # 创建新的表结构
+            db.create_all()
+            
+            print("数据库更新成功！")
+            
+    except Exception as e:
+        print(f"数据库更新失败: {str(e)}")
+        logging.error(f"数据库更新错误: {str(e)}")
 
 if __name__ == "__main__":
     try:

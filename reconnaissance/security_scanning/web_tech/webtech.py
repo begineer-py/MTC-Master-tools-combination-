@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from datetime import datetime
 
-def webtech_scan_target(domain, user_id, target_id):
+def webtech_scan_target(domain, target_id):
     """
     分析网站使用的技术
     :param domain: 目标域名
@@ -40,7 +40,6 @@ def webtech_scan_target(domain, user_id, target_id):
             
             # 将结果保存到数据库
             db.session.add(webtech_Result(
-                user_id=user_id,
                 target_id=target_id,
                 webtech_result=result_json
             ))

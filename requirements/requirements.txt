@@ -1,4 +1,62 @@
-boxes
-flask
-lolcat
-requests
+# 核心依賴
+Flask==3.0.2
+Flask-SQLAlchemy==3.1.1
+Flask-Session==0.7.0
+Flask-Migrate==4.0.5
+Flask-CORS==4.0.0
+Flask-Login==0.6.3
+
+# 異步和網絡
+aiohttp==3.11.11
+aiodns==3.2.0
+aiofiles==24.1.0
+aiomultiprocess==0.9.1
+aiosqlite==0.20.0
+requests==2.32.3
+websocket-client==1.7.0
+urllib3==2.2.1
+httpx==0.27.0
+yarl==1.9.4
+
+# 數據處理和解析
+beautifulsoup4==4.12.3
+lxml==5.3.0
+PyYAML==6.0.2
+ujson==5.10.0
+python-dateutil==2.9.0.post0
+netaddr==1.3.0
+
+# 安全和掃描
+censys==2.2.16
+shodan==1.31.0
+dnspython==2.7.0
+cryptography==42.0.5
+pyOpenSSL==24.0.0
+dnslib==0.9.24
+
+# Web服務和性能
+fastapi==0.115.7
+uvicorn==0.34.0
+uvloop==0.21.0; platform_system != "Windows"
+winloop==0.1.8; platform_system == "Windows"
+slowapi==0.1.9
+
+# 開發和測試工具
+pytest==8.3.4
+pytest-asyncio==0.25.2
+mypy==1.14.1
+black==24.2.0
+flake8==7.0.0
+ruff==0.9.3
+
+# 工具和實用程序
+colorama==0.4.6
+tqdm==4.66.2
+retrying==1.3.4
+loguru==0.7.2
+certifi==2024.12.14
+func-timeout==4.3.5
+rich==13.7.0
+
+# WSL相關
+python-certifi-win32==1.6.1

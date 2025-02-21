@@ -6,11 +6,10 @@ from instance.models import db, webtech_Result
 import json
 
 class WebTechScanThread(threading.Thread):
-    def __init__(self, app, target_ip, user_id, target_id):
+    def __init__(self, app, target_ip, target_id):
         threading.Thread.__init__(self)
         self.app = app._get_current_object()  # 获取真实的 Flask 应用对象
         self.target_ip = target_ip
-        self.user_id = user_id
         self.target_id = target_id
         self.result = None
         self.success = False
@@ -24,7 +23,7 @@ class WebTechScanThread(threading.Thread):
             ctx.push()  # 推送上下文
 
             try:
-                scan_result, success, code = webtech_scan_target(self.target_ip, self.user_id, self.target_id)
+                scan_result, success, code = webtech_scan_target(self.target_ip, self.target_id)
                 self.result = scan_result
                 self.success = success
                 self.code = code
@@ -48,7 +47,6 @@ class WebTechScanThread(threading.Thread):
                             # 将字典转换为JSON字符串
                             result_json = json.dumps(scan_result) if isinstance(scan_result, dict) else scan_result
                             new_result = webtech_Result(
-                                user_id=self.user_id,
                                 target_id=self.target_id,
                                 webtech_result=result_json
                             )

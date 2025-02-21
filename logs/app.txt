@@ -5031,3 +5031,560 @@ with app.app_context(). See the documentation for more information.
 2025-02-09 13:53:42,992 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
 2025-02-13 15:09:44,627 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
 2025-02-14 19:00:38,519 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-14 23:02:52,453 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-14 23:55:23,920 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-14 23:57:26,409 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-14 23:59:37,932 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-14 23:59:40,600 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-14 23:59:40,601 - DEBUG - Processing target IP: hackerone.com
+2025-02-14 23:59:40,601 - DEBUG - 掃描線程已啟動
+2025-02-14 23:59:44,451 - DEBUG - 用戶 1 正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-02-14 23:59:44,453 - DEBUG - 開始 crtsh 掃描: hackerone.com
+2025-02-14 23:59:44,453 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.hackerone.com&output=json
+2025-02-14 23:59:49,812 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.hackerone.com&output=json
+2025-02-14 23:59:49,815 - INFO - 找到 15 個域名
+2025-02-14 23:59:49,815 - DEBUG - 域名列表: ['*.hackerone.com', 'api.hackerone.com', 'design.hackerone.com', 'docs.hackerone.com', 'events.hackerone.com', 'go.hackerone.com', 'gslink.hackerone.com', 'hackerone.com', 'info.hackerone.com', 'links.hackerone.com', 'mta-sts.forwarding.hackerone.com', 'mta-sts.hackerone.com', 'mta-sts.managed.hackerone.com', 'support.hackerone.com', 'www.hackerone.com']
+2025-02-14 23:59:49,816 - INFO - 掃描完成，找到 15 個域名
+2025-02-14 23:59:49,819 - INFO - 成功保存掃描結果到數據庫，包含 15 個域名
+2025-02-14 23:59:54,678 - DEBUG - 用戶 1 正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-02-14 23:59:54,680 - INFO - 已刪除舊的掃描結果: target_id=1
+2025-02-14 23:59:54,682 - DEBUG - 開始 crtsh 掃描: hackerone.com
+2025-02-14 23:59:54,683 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.hackerone.com&output=json
+2025-02-14 23:59:59,796 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.hackerone.com&output=json
+2025-02-14 23:59:59,799 - INFO - 找到 15 個域名
+2025-02-14 23:59:59,799 - DEBUG - 域名列表: ['*.hackerone.com', 'api.hackerone.com', 'design.hackerone.com', 'docs.hackerone.com', 'events.hackerone.com', 'go.hackerone.com', 'gslink.hackerone.com', 'hackerone.com', 'info.hackerone.com', 'links.hackerone.com', 'mta-sts.forwarding.hackerone.com', 'mta-sts.hackerone.com', 'mta-sts.managed.hackerone.com', 'support.hackerone.com', 'www.hackerone.com']
+2025-02-14 23:59:59,800 - INFO - 掃描完成，找到 15 個域名
+2025-02-14 23:59:59,802 - INFO - 成功保存掃描結果到數據庫，包含 15 個域名
+2025-02-15 00:04:40,608 - ERROR - Nmap scan error: 掃描失敗
+2025-02-15 00:06:52,898 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 00:14:36,762 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 00:14:38,491 - DEBUG - 用戶 1 正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-02-15 00:14:38,493 - INFO - 已刪除舊的掃描結果: target_id=1
+2025-02-15 00:14:38,496 - DEBUG - 開始 crtsh 掃描: hackerone.com
+2025-02-15 00:14:38,496 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.hackerone.com&output=json
+2025-02-15 00:14:50,917 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.hackerone.com&output=json
+2025-02-15 00:14:50,919 - INFO - 找到 15 個域名
+2025-02-15 00:14:50,919 - DEBUG - 域名列表: ['*.hackerone.com', 'api.hackerone.com', 'design.hackerone.com', 'docs.hackerone.com', 'events.hackerone.com', 'go.hackerone.com', 'gslink.hackerone.com', 'hackerone.com', 'info.hackerone.com', 'links.hackerone.com', 'mta-sts.forwarding.hackerone.com', 'mta-sts.hackerone.com', 'mta-sts.managed.hackerone.com', 'support.hackerone.com', 'www.hackerone.com']
+2025-02-15 00:14:50,919 - INFO - 掃描完成，找到 15 個域名
+2025-02-15 00:14:50,921 - INFO - 成功保存掃描結果到數據庫，包含 15 個域名
+2025-02-15 00:15:54,025 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 1 127.0.0.1
+2025-02-15 00:15:54,027 - DEBUG - 开始网站技术扫描: hackerone.com
+2025-02-15 00:15:54,027 - DEBUG - 掃描線程已啟動
+2025-02-15 00:16:01,619 - ERROR - 保存到数据库时发生错误: (sqlite3.IntegrityError) NOT NULL constraint failed: webtech__result.web_tech
+[SQL: INSERT INTO webtech__result (target_id, webtech_result, user_id, web_tech) VALUES (?, ?, ?, ?)]
+[parameters: (1, '{"technologies": [{"name": "Cloudflare", "version": "", "categories": ["CDN"], "confidence": 100}, {"name": "Drupal", "version": "", "categories": [" ... (702 characters truncated) ... rigin-when-cross-origin", "categories": ["Security"], "confidence": 100}], "target_url": "https://hackerone.com", "scan_time": "2025-02-15 00:16:01"}', 1, None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-02-15 00:16:01,621 - DEBUG - 掃描已完成
+2025-02-15 00:16:01,621 - ERROR - Webtech scan error: 数据库错误
+2025-02-15 15:24:52,349 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 15:24:54,343 - DEBUG - 用戶 1 正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:24:54,349 - INFO - 已刪除舊的掃描結果: target_id=1
+2025-02-15 15:24:54,352 - DEBUG - 開始 crtsh 掃描: hackerone.com
+2025-02-15 15:24:54,352 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.hackerone.com&output=json
+2025-02-15 15:24:57,057 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.hackerone.com&output=json
+2025-02-15 15:24:57,060 - INFO - 找到 15 個域名
+2025-02-15 15:24:57,061 - DEBUG - 域名列表: ['*.hackerone.com', 'api.hackerone.com', 'design.hackerone.com', 'docs.hackerone.com', 'events.hackerone.com', 'go.hackerone.com', 'gslink.hackerone.com', 'hackerone.com', 'info.hackerone.com', 'links.hackerone.com', 'mta-sts.forwarding.hackerone.com', 'mta-sts.hackerone.com', 'mta-sts.managed.hackerone.com', 'support.hackerone.com', 'www.hackerone.com']
+2025-02-15 15:24:57,063 - INFO - 掃描完成，找到 15 個域名
+2025-02-15 15:24:57,066 - INFO - 成功保存掃描結果到數據庫，包含 15 個域名
+2025-02-15 15:24:59,655 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:24:59,657 - DEBUG - Processing target IP: hackerone.com
+2025-02-15 15:24:59,657 - DEBUG - 掃描線程已啟動
+2025-02-15 15:25:48,138 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:25:48,139 - DEBUG - 开始网站技术扫描: hackerone.com
+2025-02-15 15:25:48,139 - DEBUG - 掃描線程已啟動
+2025-02-15 15:26:28,167 - ERROR - 扫描过程中发生错误: HTTPSConnectionPool(host='hackerone.com', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x0000018344CDDF10>, 'Connection to hackerone.com timed out. (connect timeout=10)'))
+2025-02-15 15:26:28,171 - DEBUG - 掃描已完成
+2025-02-15 15:26:28,173 - ERROR - Webtech scan error: 扫描错误: HTTPSConnectionPool(host='hackerone.com', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x0000018344CDDF10>, 'Connection to hackerone.com timed out. (connect timeout=10)'))
+2025-02-15 15:29:14,085 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 15:29:15,598 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:29:15,598 - DEBUG - 开始网站技术扫描: hackerone.com
+2025-02-15 15:29:15,598 - DEBUG - 掃描線程已啟動
+2025-02-15 15:29:18,127 - ERROR - 保存到数据库时发生错误: (sqlite3.IntegrityError) NOT NULL constraint failed: webtech__result.web_tech
+[SQL: INSERT INTO webtech__result (target_id, webtech_result, user_id, web_tech) VALUES (?, ?, ?, ?)]
+[parameters: (1, '{"technologies": [{"name": "Cloudflare", "version": "", "categories": ["CDN"], "confidence": 100}, {"name": "Drupal", "version": "", "categories": [" ... (702 characters truncated) ... rigin-when-cross-origin", "categories": ["Security"], "confidence": 100}], "target_url": "https://hackerone.com", "scan_time": "2025-02-15 15:29:18"}', 1, None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-02-15 15:29:18,127 - DEBUG - 掃描已完成
+2025-02-15 15:29:18,128 - ERROR - Webtech scan error: 数据库错误
+2025-02-15 15:29:59,669 - ERROR - Nmap scan error: 掃描失敗
+2025-02-15 15:32:37,915 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:32:37,915 - DEBUG - 开始网站技术扫描: hackerone.com
+2025-02-15 15:32:37,915 - DEBUG - 掃描線程已啟動
+2025-02-15 15:32:38,437 - ERROR - 保存到数据库时发生错误: (sqlite3.IntegrityError) NOT NULL constraint failed: webtech__result.web_tech
+[SQL: INSERT INTO webtech__result (target_id, webtech_result, user_id, web_tech) VALUES (?, ?, ?, ?)]
+[parameters: (1, '{"technologies": [{"name": "Cloudflare", "version": "", "categories": ["CDN"], "confidence": 100}, {"name": "Drupal", "version": "", "categories": [" ... (702 characters truncated) ... rigin-when-cross-origin", "categories": ["Security"], "confidence": 100}], "target_url": "https://hackerone.com", "scan_time": "2025-02-15 15:32:38"}', 1, None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-02-15 15:32:38,438 - DEBUG - 掃描已完成
+2025-02-15 15:32:38,438 - ERROR - Webtech scan error: 数据库错误
+2025-02-15 15:33:14,230 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:33:14,230 - DEBUG - 开始网站技术扫描: hackerone.com
+2025-02-15 15:33:14,230 - DEBUG - 掃描線程已啟動
+2025-02-15 15:33:22,374 - ERROR - 保存到数据库时发生错误: (sqlite3.IntegrityError) NOT NULL constraint failed: webtech__result.web_tech
+[SQL: INSERT INTO webtech__result (target_id, webtech_result, user_id, web_tech) VALUES (?, ?, ?, ?)]
+[parameters: (1, '{"technologies": [{"name": "Cloudflare", "version": "", "categories": ["CDN"], "confidence": 100}, {"name": "Drupal", "version": "", "categories": [" ... (702 characters truncated) ... rigin-when-cross-origin", "categories": ["Security"], "confidence": 100}], "target_url": "https://hackerone.com", "scan_time": "2025-02-15 15:33:22"}', 1, None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-02-15 15:33:22,375 - DEBUG - 掃描已完成
+2025-02-15 15:33:22,376 - ERROR - Webtech scan error: 数据库错误
+2025-02-15 15:38:19,357 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 15:38:20,918 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:38:20,920 - DEBUG - 开始网站技术扫描: my.wyze.com
+2025-02-15 15:38:20,920 - DEBUG - 掃描線程已啟動
+2025-02-15 15:38:21,521 - DEBUG - 扫描结果已保存到数据库
+2025-02-15 15:38:21,523 - DEBUG - 掃描已完成
+2025-02-15 15:38:21,526 - INFO - 成功保存掃描結果到數據庫
+2025-02-15 15:38:52,443 - DEBUG - 用戶 1 正在訪問 paramspider 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:38:52,444 - DEBUG - 掃描線程已啟動
+2025-02-15 15:39:01,942 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:39:01,943 - DEBUG - Processing target IP: my.wyze.com
+2025-02-15 15:39:01,943 - DEBUG - 掃描線程已啟動
+2025-02-15 15:42:40,098 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:42:40,099 - DEBUG - Processing target IP: my.wyze.com
+2025-02-15 15:42:40,099 - DEBUG - 掃描線程已啟動
+2025-02-15 15:42:40,166 - ERROR - Invalid scan result format
+2025-02-15 15:42:40,171 - DEBUG - 掃描已完成
+2025-02-15 15:49:56,970 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 15:50:00,865 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:50:00,865 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 15:50:08,063 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 15:50:09,098 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:50:09,098 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 15:53:21,502 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:53:21,502 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 15:53:36,728 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 15:53:46,552 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:53:46,553 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 15:55:00,932 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:55:00,932 - ERROR - Nmap scan error: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-02-15 15:55:00,932 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 15:55:00,933 - ERROR - Nmap scan error: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-02-15 15:55:38,141 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:55:38,141 - ERROR - Nmap scan error: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-02-15 15:55:38,141 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 15:55:38,141 - ERROR - Nmap scan error: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2025-02-15 15:57:03,511 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:57:03,511 - DEBUG - Processing target IP: my.wyze.com
+2025-02-15 15:57:03,511 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 15:57:03,576 - ERROR - Invalid scan result format
+2025-02-15 15:57:03,588 - DEBUG - 掃描已完成
+2025-02-15 15:59:02,081 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 15:59:02,081 - DEBUG - Processing target IP: my.wyze.com
+2025-02-15 15:59:02,081 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 16:01:45,742 - DEBUG - Formatted scan result: {"host": "52.43.248.204", "hostname": "my.wyze.com", "state": "up", "ports": {"21": {"state": "open", "name": "ftp", "product": "", "version": ""}, "22": {"state": "filtered", "name": "ssh", "product": "", "version": ""}, "23": {"state": "filtered", "name": "telnet", "product": "", "version": ""}, "25": {"state": "filtered", "name": "smtp", "product": "", "version": ""}, "53": {"state": "filtered", "name": "domain", "product": "", "version": ""}, "80": {"state": "filtered", "name": "http", "product": "", "version": ""}, "110": {"state": "filtered", "name": "pop3", "product": "", "version": ""}, "135": {"state": "filtered", "name": "msrpc", "product": "", "version": ""}, "139": {"state": "filtered", "name": "netbios-ssn", "product": "", "version": ""}, "143": {"state": "filtered", "name": "imap", "product": "", "version": ""}, "443": {"state": "open", "name": "http", "product": "nginx", "version": ""}, "445": {"state": "filtered", "name": "microsoft-ds", "product": "", "version": ""}, "993": {"state": "filtered", "name": "imaps", "product": "", "version": ""}, "995": {"state": "filtered", "name": "pop3s", "product": "", "version": ""}, "1723": {"state": "filtered", "name": "pptp", "product": "", "version": ""}, "3306": {"state": "filtered", "name": "mysql", "product": "", "version": ""}, "3389": {"state": "filtered", "name": "ms-wbt-server", "product": "", "version": ""}, "5900": {"state": "filtered", "name": "vnc", "product": "", "version": ""}, "8080": {"state": "filtered", "name": "http-proxy", "product": "", "version": ""}}, "scan_time": "2025-02-15 16:01:45"}
+2025-02-15 16:01:45,762 - DEBUG - 掃描已完成
+2025-02-15 16:06:58,479 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 16:06:58,480 - DEBUG - Processing target IP: my.wyze.com
+2025-02-15 16:06:58,480 - DEBUG - 掃描線程已啟動，類型: full
+2025-02-15 16:06:59,824 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 16:07:03,722 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 16:07:03,724 - DEBUG - Processing target IP: my.wyze.com
+2025-02-15 16:07:03,725 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 16:07:17,061 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 16:07:18,398 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 16:07:18,400 - DEBUG - Processing target IP: my.wyze.com
+2025-02-15 16:07:18,400 - DEBUG - 掃描線程已啟動，類型: full
+2025-02-15 16:16:47,845 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 16:16:47,852 - DEBUG - Processing target IP: my.wyze.com, Scan Type: full
+2025-02-15 16:16:47,852 - DEBUG - 掃描線程已啟動，類型: full
+2025-02-15 16:16:47,871 - INFO - 執行完整端口掃描
+2025-02-15 16:18:53,032 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 16:18:53,032 - DEBUG - Processing target IP: my.wyze.com, Scan Type: full
+2025-02-15 16:18:53,032 - DEBUG - 掃描線程已啟動，類型: full
+2025-02-15 16:18:53,046 - INFO - 執行完整端口掃描
+2025-02-15 16:23:53,042 - ERROR - Nmap scan error: 掃描超時
+2025-02-15 16:28:13,061 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 16:28:13,062 - DEBUG - Processing target IP: my.wyze.com, Scan Type: full
+2025-02-15 16:28:13,062 - DEBUG - 掃描線程已啟動，類型: full
+2025-02-15 16:28:13,082 - INFO - 執行常見100端口掃描
+2025-02-15 16:28:22,032 - DEBUG - Formatted scan result: {"host": "52.43.248.204", "hostname": "my.wyze.com", "state": "up", "ports": {}, "scan_time": "2025-02-15 16:28:22"}
+2025-02-15 16:28:22,032 - ERROR - Nmap scan error: (sqlite3.OperationalError) no such column: nmap_result.scan_type
+[SQL: SELECT nmap_result.id AS nmap_result_id, nmap_result.target_id AS nmap_result_target_id, nmap_result.scan_result AS nmap_result_scan_result, nmap_result.scan_time AS nmap_result_scan_time, nmap_result.scan_type AS nmap_result_scan_type 
+FROM nmap_result 
+WHERE nmap_result.target_id = ?
+ LIMIT ? OFFSET ?]
+[parameters: (1, 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-02-15 16:28:22,032 - ERROR - Nmap scan error: 掃描失敗
+2025-02-15 16:29:38,382 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 16:29:38,382 - DEBUG - Processing target IP: my.wyze.com, Scan Type: full
+2025-02-15 16:29:38,382 - DEBUG - 掃描線程已啟動，類型: full
+2025-02-15 16:29:38,402 - INFO - 執行常見100端口掃描
+2025-02-15 16:30:19,074 - DEBUG - Formatted scan result: {"host": "35.167.237.53", "hostname": "my.wyze.com", "state": "up", "ports": {"21": {"state": "open", "name": "ftp", "product": "", "version": ""}}, "scan_time": "2025-02-15 16:30:19"}
+2025-02-15 16:30:19,078 - DEBUG - 掃描已完成
+2025-02-15 16:32:31,421 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 16:32:31,421 - DEBUG - Processing target IP: my.wyze.com, Scan Type: full
+2025-02-15 16:32:31,421 - DEBUG - 掃描線程已啟動，類型: full
+2025-02-15 16:32:31,438 - INFO - 執行常見100端口掃描
+2025-02-15 16:37:31,423 - ERROR - Nmap scan error: 掃描超時
+2025-02-15 16:41:42,125 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 16:41:42,125 - DEBUG - Processing target IP: my.wyze.com, Scan Type: full
+2025-02-15 16:41:42,125 - DEBUG - 掃描線程已啟動，類型: full
+2025-02-15 16:41:42,147 - INFO - 執行常見100端口掃描
+2025-02-15 16:49:08,063 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 16:49:32,113 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 16:49:32,115 - DEBUG - Processing target IP: my.wyze.com, Scan Type: common
+2025-02-15 16:49:32,115 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 16:49:32,135 - INFO - 執行常見端口掃描
+2025-02-15 16:52:23,433 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 16:52:26,730 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 16:53:42,613 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 16:53:42,694 - ERROR - Error getting Nmap result: 'nmap_Result' object has no attribute 'to_dict'
+2025-02-15 16:53:47,344 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 16:53:47,383 - ERROR - Error getting Nmap result: 'nmap_Result' object has no attribute 'to_dict'
+2025-02-15 16:53:47,856 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 16:53:47,886 - ERROR - Error getting Nmap result: 'nmap_Result' object has no attribute 'to_dict'
+2025-02-15 16:55:38,363 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 16:56:08,952 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 16:56:08,952 - DEBUG - Processing target IP: my.wyze.com, Scan Type: common
+2025-02-15 16:56:08,952 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 16:56:08,974 - INFO - 執行常見端口掃描
+2025-02-15 16:59:59,122 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 16:59:59,122 - DEBUG - Processing target IP: my.wyze.com, Scan Type: common
+2025-02-15 16:59:59,122 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 16:59:59,138 - INFO - 執行常見端口掃描
+2025-02-15 17:01:19,219 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 17:01:19,220 - DEBUG - Processing target IP: my.wyze.com, Scan Type: common
+2025-02-15 17:01:19,221 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 17:01:19,239 - INFO - 執行常見端口掃描
+2025-02-15 17:02:06,483 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 17:02:06,484 - DEBUG - Processing target IP: my.wyze.com, Scan Type: common
+2025-02-15 17:02:06,484 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 17:02:06,499 - INFO - 執行常見端口掃描
+2025-02-15 17:03:09,887 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-15 17:03:09,887 - DEBUG - Processing target IP: my.wyze.com, Scan Type: common
+2025-02-15 17:03:09,887 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-15 17:03:09,902 - INFO - 執行常見端口掃描
+2025-02-15 17:04:05,862 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 1 127.0.0.1
+2025-02-15 17:04:05,865 - DEBUG - 开始网站技术扫描: my.wyze.com
+2025-02-15 17:04:05,865 - DEBUG - 掃描線程已啟動
+2025-02-15 17:04:06,450 - DEBUG - 扫描结果已保存到数据库
+2025-02-15 17:04:06,453 - DEBUG - 掃描已完成
+2025-02-15 17:04:06,454 - INFO - 成功保存掃描結果到數據庫
+2025-02-15 17:04:10,059 - DEBUG - 用戶 1 正在訪問 paramspider 路由，目標 ID: 1 127.0.0.1
+2025-02-15 17:04:10,060 - DEBUG - 掃描線程已啟動
+2025-02-15 17:09:20,287 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 17:09:51,589 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 17:10:52,419 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 17:10:52,563 - ERROR - Error getting latest ParamSpider result: 'ParamSpiderResult' object has no attribute 'user_id'
+2025-02-15 17:10:54,162 - ERROR - Error getting latest ParamSpider result: 'ParamSpiderResult' object has no attribute 'user_id'
+2025-02-15 17:10:54,669 - ERROR - Error getting latest ParamSpider result: 'ParamSpiderResult' object has no attribute 'user_id'
+2025-02-15 17:10:55,252 - ERROR - Error getting latest ParamSpider result: 'ParamSpiderResult' object has no attribute 'user_id'
+2025-02-15 22:34:02,282 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 22:35:33,515 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 22:43:40,212 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 22:44:07,701 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 22:44:07,804 - DEBUG - 用戶 1 正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-02-15 22:44:07,807 - DEBUG - 開始 crtsh 掃描: my.wyze.com
+2025-02-15 22:44:07,807 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.my.wyze.com&output=json
+2025-02-15 22:44:09,485 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.my.wyze.com&output=json
+2025-02-15 22:44:09,485 - INFO - 找到 3 個域名
+2025-02-15 22:44:09,485 - DEBUG - 域名列表: ['*.my.wyze.com', 'beta.my.wyze.com', 'my.wyze.com']
+2025-02-15 22:44:09,485 - INFO - 掃描完成，找到 3 個域名
+2025-02-15 22:44:09,485 - INFO - 成功保存掃描結果到數據庫，包含 3 個域名
+2025-02-15 22:44:48,208 - DEBUG - 用戶 1 正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-02-15 22:44:48,213 - INFO - 已刪除舊的掃描結果: target_id=1
+2025-02-15 22:44:48,215 - DEBUG - 開始 crtsh 掃描: my.wyze.com
+2025-02-15 22:44:48,215 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.my.wyze.com&output=json
+2025-02-15 22:44:49,519 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.my.wyze.com&output=json
+2025-02-15 22:44:49,523 - INFO - 找到 3 個域名
+2025-02-15 22:44:49,526 - DEBUG - 域名列表: ['*.my.wyze.com', 'beta.my.wyze.com', 'my.wyze.com']
+2025-02-15 22:44:49,532 - INFO - 掃描完成，找到 3 個域名
+2025-02-15 22:44:49,546 - INFO - 成功保存掃描結果到數據庫，包含 3 個域名
+2025-02-15 22:47:44,647 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 22:48:34,400 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 1 127.0.0.1
+2025-02-15 22:48:34,400 - DEBUG - 开始网站技术扫描: my.wyze.com
+2025-02-15 22:48:34,400 - DEBUG - 掃描線程已啟動
+2025-02-15 22:48:35,013 - DEBUG - 扫描结果已保存到数据库
+2025-02-15 22:48:35,013 - DEBUG - 掃描已完成
+2025-02-15 22:48:35,013 - INFO - 成功保存掃描結果到數據庫
+2025-02-15 23:46:29,854 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-15 23:54:55,300 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-15 23:54:55,303 - ERROR - 找不到掃描結果: target_id=1
+2025-02-15 23:57:33,358 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-15 23:57:33,358 - ERROR - 找不到掃描結果: target_id=1
+2025-02-15 23:57:46,431 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-15 23:57:46,432 - ERROR - 找不到掃描結果: target_id=1
+2025-02-16 00:03:18,570 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 00:03:47,397 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-16 00:03:47,400 - ERROR - 找不到掃描結果: target_id=1
+2025-02-16 00:05:30,304 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-16 00:05:30,308 - ERROR - 找不到掃描結果: target_id=1
+2025-02-16 00:08:29,417 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-16 00:08:29,420 - DEBUG - 數據庫中找到 0 條結果記錄
+2025-02-16 00:08:29,421 - ERROR - 找不到掃描結果: target_id=1
+2025-02-16 00:08:50,248 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-16 00:08:50,252 - DEBUG - 數據庫中找到 0 條結果記錄
+2025-02-16 00:08:50,254 - ERROR - 找不到掃描結果: target_id=1
+2025-02-16 00:09:37,615 - DEBUG - 用戶 1 正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-02-16 00:09:37,626 - INFO - 已刪除舊的掃描結果: target_id=1
+2025-02-16 00:09:37,627 - DEBUG - 開始 crtsh 掃描: my.wyze.com
+2025-02-16 00:09:37,628 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.my.wyze.com&output=json
+2025-02-16 00:09:39,389 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.my.wyze.com&output=json
+2025-02-16 00:09:39,390 - INFO - 找到 3 個域名
+2025-02-16 00:09:39,390 - DEBUG - 域名列表: ['*.my.wyze.com', 'beta.my.wyze.com', 'my.wyze.com']
+2025-02-16 00:09:39,394 - INFO - 掃描完成，找到 3 個域名
+2025-02-16 00:09:39,404 - INFO - 成功保存掃描結果到數據庫，包含 3 個域名
+2025-02-16 00:09:41,847 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 1 127.0.0.1
+2025-02-16 00:09:41,849 - ERROR - 扫描过程中发生错误: webtech_scan_target() missing 1 required positional argument: 'target_id'
+2025-02-16 00:09:41,850 - DEBUG - 掃描線程已啟動
+2025-02-16 00:09:41,851 - DEBUG - 掃描已完成
+2025-02-16 00:09:41,851 - ERROR - Webtech scan error: 扫描过程中发生错误: webtech_scan_target() missing 1 required positional argument: 'target_id'
+2025-02-16 00:10:20,667 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 1 127.0.0.1
+2025-02-16 00:10:20,669 - ERROR - 扫描过程中发生错误: webtech_scan_target() missing 1 required positional argument: 'target_id'
+2025-02-16 00:10:20,669 - DEBUG - 掃描線程已啟動
+2025-02-16 00:10:20,670 - DEBUG - 掃描已完成
+2025-02-16 00:10:20,670 - ERROR - Webtech scan error: 扫描过程中发生错误: webtech_scan_target() missing 1 required positional argument: 'target_id'
+2025-02-16 00:11:03,534 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-16 00:11:03,536 - DEBUG - 數據庫中找到 0 條結果記錄
+2025-02-16 00:11:03,537 - ERROR - 找不到掃描結果: target_id=1
+2025-02-16 00:11:08,257 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-16 00:11:08,258 - DEBUG - 數據庫中找到 0 條結果記錄
+2025-02-16 00:11:08,258 - ERROR - 找不到掃描結果: target_id=1
+2025-02-16 00:12:09,532 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-16 00:12:09,535 - DEBUG - 數據庫中找到 0 條結果記錄
+2025-02-16 00:12:09,536 - ERROR - 找不到掃描結果: target_id=1
+2025-02-16 00:12:09,537 - ERROR - 下載掃描結果時發生錯誤: Invalid URL '/api/webtech/scan/1/1': No scheme supplied. Perhaps you meant https:///api/webtech/scan/1/1?
+2025-02-16 00:14:56,102 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 00:14:57,698 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 1 127.0.0.1
+2025-02-16 00:14:57,698 - DEBUG - 开始网站技术扫描: my.wyze.com
+2025-02-16 00:14:57,698 - DEBUG - 掃描線程已啟動
+2025-02-16 00:14:58,418 - DEBUG - 扫描结果已保存到数据库
+2025-02-16 00:14:58,422 - DEBUG - 掃描已完成
+2025-02-16 00:14:58,425 - INFO - 成功保存掃描結果到數據庫
+2025-02-16 00:15:07,468 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-16 00:15:07,470 - DEBUG - 數據庫中找到 1 條結果記錄
+2025-02-16 00:15:07,470 - DEBUG - 結果 1:
+2025-02-16 00:15:07,470 - DEBUG - - ID: 1
+2025-02-16 00:15:07,471 - DEBUG - - Target ID: 1
+2025-02-16 00:15:07,471 - DEBUG - - Scan Time: 2025-02-16 00:14:58.416400
+2025-02-16 00:15:07,471 - DEBUG - - Web Tech: Frame Protection,XSS Protection,HSTS
+2025-02-16 00:15:07,472 - ERROR - 下載掃描結果時發生錯誤: cannot access local variable 'response' where it is not associated with a value
+2025-02-16 00:15:08,182 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-16 00:15:08,183 - DEBUG - 數據庫中找到 1 條結果記錄
+2025-02-16 00:15:08,183 - DEBUG - 結果 1:
+2025-02-16 00:15:08,183 - DEBUG - - ID: 1
+2025-02-16 00:15:08,184 - DEBUG - - Target ID: 1
+2025-02-16 00:15:08,184 - DEBUG - - Scan Time: 2025-02-16 00:14:58.416400
+2025-02-16 00:15:08,184 - DEBUG - - Web Tech: Frame Protection,XSS Protection,HSTS
+2025-02-16 00:15:08,184 - ERROR - 下載掃描結果時發生錯誤: cannot access local variable 'response' where it is not associated with a value
+2025-02-16 00:16:35,273 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-16 00:16:35,276 - DEBUG - 數據庫中找到 1 條結果記錄
+2025-02-16 00:16:35,277 - DEBUG - 結果 1:
+2025-02-16 00:16:35,277 - DEBUG - - ID: 1
+2025-02-16 00:16:35,277 - DEBUG - - Target ID: 1
+2025-02-16 00:16:35,278 - DEBUG - - Scan Time: 2025-02-16 00:14:58.416400
+2025-02-16 00:16:35,279 - DEBUG - - Web Tech: Frame Protection,XSS Protection,HSTS
+2025-02-16 00:16:35,280 - DEBUG - 請求的文件格式: json
+2025-02-16 00:16:35,280 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-16 00:16:35,280 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Frame Protection', 'version': 'SAMEORIGIN', 'categories': ['Security'], 'confidence': 100}, {'name': 'XSS Protection', 'version': '1; mode=block', 'categories': ['Security'...
+2025-02-16 00:16:35,281 - DEBUG - 正在轉換為 JSON 格式
+2025-02-16 00:16:35,281 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.json
+2025-02-16 00:16:46,577 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=csv
+2025-02-16 00:16:46,578 - DEBUG - 數據庫中找到 1 條結果記錄
+2025-02-16 00:16:46,579 - DEBUG - 結果 1:
+2025-02-16 00:16:46,579 - DEBUG - - ID: 1
+2025-02-16 00:16:46,579 - DEBUG - - Target ID: 1
+2025-02-16 00:16:46,579 - DEBUG - - Scan Time: 2025-02-16 00:14:58.416400
+2025-02-16 00:16:46,579 - DEBUG - - Web Tech: Frame Protection,XSS Protection,HSTS
+2025-02-16 00:16:46,580 - DEBUG - 請求的文件格式: csv
+2025-02-16 00:16:46,580 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-16 00:16:46,580 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Frame Protection', 'version': 'SAMEORIGIN', 'categories': ['Security'], 'confidence': 100}, {'name': 'XSS Protection', 'version': '1; mode=block', 'categories': ['Security'...
+2025-02-16 00:16:46,580 - DEBUG - 正在轉換為 CSV 格式
+2025-02-16 00:16:46,580 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.csv
+2025-02-16 00:16:52,664 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-16 00:16:52,666 - DEBUG - 數據庫中找到 1 條結果記錄
+2025-02-16 00:16:52,666 - DEBUG - 結果 1:
+2025-02-16 00:16:52,666 - DEBUG - - ID: 1
+2025-02-16 00:16:52,666 - DEBUG - - Target ID: 1
+2025-02-16 00:16:52,666 - DEBUG - - Scan Time: 2025-02-16 00:14:58.416400
+2025-02-16 00:16:52,666 - DEBUG - - Web Tech: Frame Protection,XSS Protection,HSTS
+2025-02-16 00:16:52,667 - DEBUG - 請求的文件格式: json
+2025-02-16 00:16:52,667 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-16 00:16:52,667 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Frame Protection', 'version': 'SAMEORIGIN', 'categories': ['Security'], 'confidence': 100}, {'name': 'XSS Protection', 'version': '1; mode=block', 'categories': ['Security'...
+2025-02-16 00:16:52,667 - DEBUG - 正在轉換為 JSON 格式
+2025-02-16 00:16:52,668 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.json
+2025-02-16 00:16:58,775 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=csv
+2025-02-16 00:16:58,776 - DEBUG - 數據庫中找到 1 條結果記錄
+2025-02-16 00:16:58,776 - DEBUG - 結果 1:
+2025-02-16 00:16:58,776 - DEBUG - - ID: 1
+2025-02-16 00:16:58,776 - DEBUG - - Target ID: 1
+2025-02-16 00:16:58,776 - DEBUG - - Scan Time: 2025-02-16 00:14:58.416400
+2025-02-16 00:16:58,777 - DEBUG - - Web Tech: Frame Protection,XSS Protection,HSTS
+2025-02-16 00:16:58,777 - DEBUG - 請求的文件格式: csv
+2025-02-16 00:16:58,777 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-16 00:16:58,777 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Frame Protection', 'version': 'SAMEORIGIN', 'categories': ['Security'], 'confidence': 100}, {'name': 'XSS Protection', 'version': '1; mode=block', 'categories': ['Security'...
+2025-02-16 00:16:58,777 - DEBUG - 正在轉換為 CSV 格式
+2025-02-16 00:16:58,778 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.csv
+2025-02-16 00:17:20,815 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=csv
+2025-02-16 00:17:20,819 - DEBUG - 數據庫中找到 1 條結果記錄
+2025-02-16 00:17:20,819 - DEBUG - 結果 1:
+2025-02-16 00:17:20,819 - DEBUG - - ID: 1
+2025-02-16 00:17:20,820 - DEBUG - - Target ID: 1
+2025-02-16 00:17:20,820 - DEBUG - - Scan Time: 2025-02-16 00:14:58.416400
+2025-02-16 00:17:20,820 - DEBUG - - Web Tech: Frame Protection,XSS Protection,HSTS
+2025-02-16 00:17:20,821 - DEBUG - 請求的文件格式: csv
+2025-02-16 00:17:20,821 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-16 00:17:20,822 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Frame Protection', 'version': 'SAMEORIGIN', 'categories': ['Security'], 'confidence': 100}, {'name': 'XSS Protection', 'version': '1; mode=block', 'categories': ['Security'...
+2025-02-16 00:17:20,822 - DEBUG - 正在轉換為 CSV 格式
+2025-02-16 00:17:20,822 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.csv
+2025-02-16 00:20:50,309 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 00:24:07,605 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 00:24:44,095 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 1 127.0.0.1
+2025-02-16 00:24:44,095 - DEBUG - 开始网站技术扫描: my.wyze.com
+2025-02-16 00:24:44,095 - DEBUG - 掃描線程已啟動
+2025-02-16 00:24:45,495 - DEBUG - 扫描结果已保存到数据库
+2025-02-16 00:24:45,495 - DEBUG - 掃描已完成
+2025-02-16 00:24:45,504 - INFO - 成功保存掃描結果到數據庫
+2025-02-16 00:27:17,060 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 00:28:54,259 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 00:30:57,589 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 00:33:28,659 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 00:33:32,745 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-16 00:33:32,747 - DEBUG - 數據庫中找到 2 條結果記錄
+2025-02-16 00:33:32,747 - DEBUG - 結果 1:
+2025-02-16 00:33:32,748 - DEBUG - - ID: 1
+2025-02-16 00:33:32,748 - DEBUG - - Target ID: 1
+2025-02-16 00:33:32,749 - DEBUG - - Scan Time: 2025-02-16 00:14:58.416400
+2025-02-16 00:33:32,749 - DEBUG - - Web Tech: Frame Protection,XSS Protection,HSTS
+2025-02-16 00:33:32,750 - DEBUG - 結果 2:
+2025-02-16 00:33:32,750 - DEBUG - - ID: 2
+2025-02-16 00:33:32,751 - DEBUG - - Target ID: 1
+2025-02-16 00:33:32,751 - DEBUG - - Scan Time: 2025-02-16 00:24:45.495043
+2025-02-16 00:33:32,752 - DEBUG - - Web Tech: 沒有掃描到
+2025-02-16 00:33:32,753 - DEBUG - 請求的文件格式: json
+2025-02-16 00:33:32,753 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-16 00:33:32,753 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Frame Protection', 'version': 'SAMEORIGIN', 'categories': ['Security'], 'confidence': 100}, {'name': 'XSS Protection', 'version': '1; mode=block', 'categories': ['Security'...
+2025-02-16 00:33:32,754 - DEBUG - 正在轉換為 JSON 格式
+2025-02-16 00:33:32,755 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.json
+2025-02-16 00:33:34,969 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=txt
+2025-02-16 00:33:34,970 - DEBUG - 數據庫中找到 2 條結果記錄
+2025-02-16 00:33:34,971 - DEBUG - 結果 1:
+2025-02-16 00:33:34,971 - DEBUG - - ID: 1
+2025-02-16 00:33:34,972 - DEBUG - - Target ID: 1
+2025-02-16 00:33:34,972 - DEBUG - - Scan Time: 2025-02-16 00:14:58.416400
+2025-02-16 00:33:34,972 - DEBUG - - Web Tech: Frame Protection,XSS Protection,HSTS
+2025-02-16 00:33:34,973 - DEBUG - 結果 2:
+2025-02-16 00:33:34,973 - DEBUG - - ID: 2
+2025-02-16 00:33:34,973 - DEBUG - - Target ID: 1
+2025-02-16 00:33:34,973 - DEBUG - - Scan Time: 2025-02-16 00:24:45.495043
+2025-02-16 00:33:34,973 - DEBUG - - Web Tech: 沒有掃描到
+2025-02-16 00:33:34,974 - DEBUG - 請求的文件格式: txt
+2025-02-16 00:33:34,974 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-16 00:33:34,975 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Frame Protection', 'version': 'SAMEORIGIN', 'categories': ['Security'], 'confidence': 100}, {'name': 'XSS Protection', 'version': '1; mode=block', 'categories': ['Security'...
+2025-02-16 00:33:34,975 - DEBUG - 正在轉換為 TXT 格式
+2025-02-16 00:33:34,976 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.txt
+2025-02-16 00:33:35,899 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=csv
+2025-02-16 00:33:35,900 - DEBUG - 數據庫中找到 2 條結果記錄
+2025-02-16 00:33:35,901 - DEBUG - 結果 1:
+2025-02-16 00:33:35,901 - DEBUG - - ID: 1
+2025-02-16 00:33:35,901 - DEBUG - - Target ID: 1
+2025-02-16 00:33:35,902 - DEBUG - - Scan Time: 2025-02-16 00:14:58.416400
+2025-02-16 00:33:35,902 - DEBUG - - Web Tech: Frame Protection,XSS Protection,HSTS
+2025-02-16 00:33:35,902 - DEBUG - 結果 2:
+2025-02-16 00:33:35,903 - DEBUG - - ID: 2
+2025-02-16 00:33:35,903 - DEBUG - - Target ID: 1
+2025-02-16 00:33:35,903 - DEBUG - - Scan Time: 2025-02-16 00:24:45.495043
+2025-02-16 00:33:35,904 - DEBUG - - Web Tech: 沒有掃描到
+2025-02-16 00:33:35,904 - DEBUG - 請求的文件格式: csv
+2025-02-16 00:33:35,905 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-16 00:33:35,905 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Frame Protection', 'version': 'SAMEORIGIN', 'categories': ['Security'], 'confidence': 100}, {'name': 'XSS Protection', 'version': '1; mode=block', 'categories': ['Security'...
+2025-02-16 00:33:35,906 - DEBUG - 正在轉換為 CSV 格式
+2025-02-16 00:33:35,906 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.csv
+2025-02-16 00:33:52,959 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 00:41:37,469 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 16:51:50,998 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 16:51:51,156 - DEBUG - 用戶 1 正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-02-16 16:51:51,158 - DEBUG - 開始 crtsh 掃描: hackerone.com
+2025-02-16 16:51:51,160 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.hackerone.com&output=json
+2025-02-16 16:51:51,167 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 1 127.0.0.1
+2025-02-16 16:51:51,168 - DEBUG - 开始网站技术扫描: hackerone.com
+2025-02-16 16:51:51,169 - DEBUG - 掃描線程已啟動
+2025-02-16 16:51:51,713 - DEBUG - 扫描结果已保存到数据库
+2025-02-16 16:51:51,715 - DEBUG - 掃描已完成
+2025-02-16 16:51:51,715 - INFO - 成功保存掃描結果到數據庫
+2025-02-16 16:51:56,368 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.hackerone.com&output=json
+2025-02-16 16:51:56,370 - INFO - 找到 15 個域名
+2025-02-16 16:51:56,370 - DEBUG - 域名列表: ['*.hackerone.com', 'api.hackerone.com', 'design.hackerone.com', 'docs.hackerone.com', 'events.hackerone.com', 'go.hackerone.com', 'gslink.hackerone.com', 'hackerone.com', 'info.hackerone.com', 'links.hackerone.com', 'mta-sts.forwarding.hackerone.com', 'mta-sts.hackerone.com', 'mta-sts.managed.hackerone.com', 'support.hackerone.com', 'www.hackerone.com']
+2025-02-16 16:51:56,372 - INFO - 掃描完成，找到 15 個域名
+2025-02-16 16:51:56,375 - INFO - 成功保存掃描結果到數據庫，包含 15 個域名
+2025-02-16 16:55:38,685 - DEBUG - 用戶 1 正在訪問 paramspider 路由，目標 ID: 1 127.0.0.1
+2025-02-16 16:55:38,686 - DEBUG - 掃描線程已啟動
+2025-02-16 16:56:46,531 - DEBUG - 用戶 1 正在訪問 paramspider 路由，目標 ID: 1 127.0.0.1
+2025-02-16 16:56:46,532 - DEBUG - 掃描線程已啟動
+2025-02-16 16:58:59,890 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 16:59:14,356 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 16:59:14,445 - ERROR - Error getting latest ParamSpider result: Invalid URL '/api/paramspider/scan/1/1': No scheme supplied. Perhaps you meant https:///api/paramspider/scan/1/1?
+2025-02-16 17:00:20,323 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 17:01:16,723 - DEBUG - 用戶 1 正在訪問 paramspider 路由，目標 ID: 1 127.0.0.1
+2025-02-16 17:01:16,723 - DEBUG - 掃描線程已啟動
+2025-02-16 17:03:51,833 - DEBUG - 用戶 1 正在訪問 paramspider 路由，目標 ID: 1 127.0.0.1
+2025-02-16 17:03:51,833 - DEBUG - 掃描線程已啟動
+2025-02-16 17:05:55,211 - DEBUG - 用戶 1 正在訪問 paramspider 路由，目標 ID: 1 127.0.0.1
+2025-02-16 17:05:55,216 - DEBUG - 掃描線程已啟動，使用 50 個線程
+2025-02-16 17:07:55,216 - ERROR - 掃描失敗: 掃描超時
+2025-02-16 17:16:46,828 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 17:16:50,411 - ERROR - 扫描过程中发生错误: (sqlite3.IntegrityError) UNIQUE constraint failed: paramspider_results.target_id
+[SQL: INSERT INTO paramspider_results (target_id, exclude, threads, status, error_message, result_text, total_urls, unique_parameters, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, '', 20, 'running', None, None, 0, 0, '2025-02-16 17:16:50.410751', '2025-02-16 17:16:50.410751')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-02-16 17:20:21,184 - ERROR - 扫描过程中发生错误: ParamSpiderThread.__init__() got an unexpected keyword argument 'max_retries'
+2025-02-16 17:35:00,499 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 17:41:51,821 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 17:41:54,105 - ERROR - 扫描过程中发生错误: ParamSpiderThread.__init__() got an unexpected keyword argument 'max_retries'
+2025-02-16 18:46:25,326 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 19:07:59,206 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 19:26:25,484 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 19:39:27,437 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 19:39:57,025 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 19:43:57,172 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 19:45:05,350 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 19:52:59,345 - DEBUG - 用戶 1 正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-02-16 19:52:59,345 - INFO - 已刪除舊的掃描結果: target_id=1
+2025-02-16 19:52:59,345 - DEBUG - 開始 crtsh 掃描: hackerone.com
+2025-02-16 19:52:59,345 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.hackerone.com&output=json
+2025-02-16 19:53:03,845 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.hackerone.com&output=json
+2025-02-16 19:53:03,849 - INFO - 找到 15 個域名
+2025-02-16 19:53:03,849 - DEBUG - 域名列表: ['*.hackerone.com', 'api.hackerone.com', 'design.hackerone.com', 'docs.hackerone.com', 'events.hackerone.com', 'go.hackerone.com', 'gslink.hackerone.com', 'hackerone.com', 'info.hackerone.com', 'links.hackerone.com', 'mta-sts.forwarding.hackerone.com', 'mta-sts.hackerone.com', 'mta-sts.managed.hackerone.com', 'support.hackerone.com', 'www.hackerone.com']
+2025-02-16 19:53:03,849 - INFO - 掃描完成，找到 15 個域名
+2025-02-16 19:53:03,860 - INFO - 成功保存掃描結果到數據庫，包含 15 個域名
+2025-02-16 19:56:52,337 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 20:06:18,886 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 20:12:09,530 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 20:15:54,520 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 20:17:43,237 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 20:20:59,682 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 20:23:25,738 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 20:25:03,720 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 20:57:42,825 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-16 20:57:51,056 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 20:10:05,849 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 20:11:51,042 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 20:13:47,352 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 20:15:33,759 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 20:17:05,381 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-21 20:17:05,383 - DEBUG - 數據庫中找到 1 條結果記錄
+2025-02-21 20:17:05,383 - DEBUG - 結果 1:
+2025-02-21 20:17:05,384 - DEBUG - - ID: 1
+2025-02-21 20:17:05,384 - DEBUG - - Target ID: 1
+2025-02-21 20:17:05,384 - DEBUG - - Scan Time: 2025-02-16 16:51:51.703803
+2025-02-21 20:17:05,386 - DEBUG - - Web Tech: Cloudflare,Drupal,Frame Protection,XSS Protection,CSP,HSTS,Content Type Options,Referrer Policy
+2025-02-21 20:17:05,387 - DEBUG - 請求的文件格式: json
+2025-02-21 20:17:05,387 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-21 20:17:05,387 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Cloudflare', 'version': '', 'categories': ['CDN'], 'confidence': 100}, {'name': 'Drupal', 'version': '', 'categories': ['CMS/Framework'], 'confidence': 30}, {'name': 'Frame...
+2025-02-21 20:17:05,388 - DEBUG - 正在轉換為 JSON 格式
+2025-02-21 20:17:05,388 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.json
+2025-02-21 20:21:07,206 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
