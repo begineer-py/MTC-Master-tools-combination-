@@ -5,7 +5,6 @@ import useScan from '../../hooks/useScan';
 
 const HarvesterScan = ({ userId, targetId }) => {
     const [limit, setLimit] = useState(100000);
-    const [sources, setSources] = useState('all');
     const scanEndpoint = (userId, targetId) => `/api/harvester/scan/${userId}/${targetId}`;
     
     const {
@@ -20,7 +19,7 @@ const HarvesterScan = ({ userId, targetId }) => {
             await startScan(userId, targetId, {
                 body: {
                     limit,
-                    sources
+                    sources: 'all'  // 直接使用所有搜索源
                 }
             });
         } catch (error) {
@@ -41,18 +40,6 @@ const HarvesterScan = ({ userId, targetId }) => {
                             min="1"
                             max="100000"
                         />
-                    </label>
-                </div>
-                <div className="option-group">
-                    <label>
-                        数据源:
-                        <select value={sources} onChange={(e) => setSources(e.target.value)}>
-                            <option value="all">所有源</option>
-                            <option value="baidu">百度</option>
-                            <option value="bing">必应</option>
-                            <option value="google">谷歌</option>
-                            <option value="yahoo">雅虎</option>
-                        </select>
                     </label>
                 </div>
             </div>

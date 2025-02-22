@@ -48,7 +48,7 @@ mypy==1.14.1
 black==24.2.0
 flake8==7.0.0
 ruff==0.9.3
-
+playwright
 # 工具和實用程序
 colorama==0.4.6
 tqdm==4.66.2

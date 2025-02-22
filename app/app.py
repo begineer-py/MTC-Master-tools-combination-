@@ -12,6 +12,8 @@ import sys
 import os
 from app.blueprint_set import register_blueprints
 from flask_cors import CORS
+import requests
+from requests.exceptions import RequestException
 
 def check_harvester_environment():
     """檢查 theHarvester 環境"""
@@ -37,16 +39,41 @@ def check_harvester_environment():
     
     return True
 
+def check_flaresolverr():
+    """檢查 FlareSolverr 服務是否正在運行"""
+    try:
+        response = requests.post('http://localhost:8191/v1', 
+                               json={
+                                   "cmd": "sessions.list"
+                               },
+                               timeout=5)
+        return response.status_code == 200
+    except RequestException:
+        return False
+
 def create_app():
     try:
         # 檢查 theHarvester 環境
         check_harvester_environment()
+        
+        # 檢查並啟動 FlareSolverr
+        if not check_flaresolverr():
+            print("正在啟動 FlareSolverr 服務...")
+            start_flaresolverr()
+            # 等待服務啟動
+            max_retries = 5
+            for i in range(max_retries):
+                if check_flaresolverr():
+                    print("FlareSolverr 服務已啟動")
+                    break
+                if i < max_retries - 1:
+                    print(f"等待 FlareSolverr 服務啟動 ({i+1}/{max_retries})...")
+                    time.sleep(3)
+            else:
+                print("警告: FlareSolverr 服務可能未正確啟動")
     except Exception as e:
         print(f"環境檢查失敗: {str(e)}")
         sys.exit(1)
-    
-    # 啟動 FlareSolverr
-    start_flaresolverr()
     
     app = Flask(__name__, 
                 template_folder=os.path.join(os.path.dirname(os.path.dirname(__file__)), 'templates'),
@@ -173,4 +200,4 @@ if __name__ == '__main__':
     app = create_app()
     with app.app_context():
         db.create_all()
-    app.run(port=5000,debug=True)
+    app.run(port=5000, debug=True, use_reloader=False)  # 禁用重載器

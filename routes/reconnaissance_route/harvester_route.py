@@ -25,7 +25,6 @@ def harvester_scan(user_id, target_id):
     try:
         # 获取请求参数
         data = request.get_json() or {}
-        limit = min(data.get('limit', 100000), 100000)  # 限制最大结果数为 100000
         sources = data.get('sources', 'all')
         
         # 创建并启动扫描线程
@@ -33,7 +32,6 @@ def harvester_scan(user_id, target_id):
             target_domain=target.target_ip_no_https,
             target_id=target_id,
             app=current_app,
-            limit=limit,
             sources=sources
         )
         logger.info(f"开始扫描目标: {target.target_ip_no_https}")
@@ -41,7 +39,7 @@ def harvester_scan(user_id, target_id):
         
         return jsonify({
             'status': 'success',
-            'message': '扫描已启动'
+            'message': '掃描已啟動'
         })
         
     except Exception as e:

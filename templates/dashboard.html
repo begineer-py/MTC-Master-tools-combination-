@@ -49,7 +49,6 @@
             <p>目標端口: {{ target.target_port }}</p>
             <p>目標用戶名: {{ target.target_username }}</p>
             <p>目標密碼: {{ target.target_password }}</p>
-            <p>API Key: <span class="api-key">{{ target.api_key if target.api_key else '未生成' }}</span></p>
         </div>
         <div class="target-actions">
             <button class="select-target" data-target-id="{{ target.id }}">選擇</button>

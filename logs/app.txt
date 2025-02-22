@@ -5588,3 +5588,67 @@ WHERE nmap_result.target_id = ?
 2025-02-21 20:17:05,388 - DEBUG - 正在轉換為 JSON 格式
 2025-02-21 20:17:05,388 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.json
 2025-02-21 20:21:07,206 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 20:52:03,009 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 20:57:39,797 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 21:06:36,887 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 21:48:22,115 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 21:48:22,116 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 21:48:53,446 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 22:00:11,235 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 22:11:19,551 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 22:22:28,330 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 22:27:23,111 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 22:32:03,356 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-21 22:32:03,357 - DEBUG - 數據庫中找到 1 條結果記錄
+2025-02-21 22:32:03,358 - DEBUG - 結果 1:
+2025-02-21 22:32:03,358 - DEBUG - - ID: 1
+2025-02-21 22:32:03,358 - DEBUG - - Target ID: 1
+2025-02-21 22:32:03,358 - DEBUG - - Scan Time: 2025-02-16 16:51:51.703803
+2025-02-21 22:32:03,358 - DEBUG - - Web Tech: Cloudflare,Drupal,Frame Protection,XSS Protection,CSP,HSTS,Content Type Options,Referrer Policy
+2025-02-21 22:32:03,360 - DEBUG - 請求的文件格式: json
+2025-02-21 22:32:03,360 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-21 22:32:03,360 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Cloudflare', 'version': '', 'categories': ['CDN'], 'confidence': 100}, {'name': 'Drupal', 'version': '', 'categories': ['CMS/Framework'], 'confidence': 30}, {'name': 'Frame...
+2025-02-21 22:32:03,361 - DEBUG - 正在轉換為 JSON 格式
+2025-02-21 22:32:03,361 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.json
+2025-02-21 22:37:55,025 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-21 22:37:55,028 - DEBUG - 數據庫中找到 1 條結果記錄
+2025-02-21 22:37:55,028 - DEBUG - 結果 1:
+2025-02-21 22:37:55,029 - DEBUG - - ID: 1
+2025-02-21 22:37:55,029 - DEBUG - - Target ID: 1
+2025-02-21 22:37:55,029 - DEBUG - - Scan Time: 2025-02-16 16:51:51.703803
+2025-02-21 22:37:55,029 - DEBUG - - Web Tech: Cloudflare,Drupal,Frame Protection,XSS Protection,CSP,HSTS,Content Type Options,Referrer Policy
+2025-02-21 22:37:55,030 - DEBUG - 請求的文件格式: json
+2025-02-21 22:37:55,030 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-21 22:37:55,030 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Cloudflare', 'version': '', 'categories': ['CDN'], 'confidence': 100}, {'name': 'Drupal', 'version': '', 'categories': ['CMS/Framework'], 'confidence': 30}, {'name': 'Frame...
+2025-02-21 22:37:55,031 - DEBUG - 正在轉換為 JSON 格式
+2025-02-21 22:37:55,031 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.json
+2025-02-21 22:37:55,922 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=csv
+2025-02-21 22:37:55,922 - DEBUG - 數據庫中找到 1 條結果記錄
+2025-02-21 22:37:55,922 - DEBUG - 結果 1:
+2025-02-21 22:37:55,922 - DEBUG - - ID: 1
+2025-02-21 22:37:55,922 - DEBUG - - Target ID: 1
+2025-02-21 22:37:55,922 - DEBUG - - Scan Time: 2025-02-16 16:51:51.703803
+2025-02-21 22:37:55,922 - DEBUG - - Web Tech: Cloudflare,Drupal,Frame Protection,XSS Protection,CSP,HSTS,Content Type Options,Referrer Policy
+2025-02-21 22:37:55,922 - DEBUG - 請求的文件格式: csv
+2025-02-21 22:37:55,922 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-21 22:37:55,922 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Cloudflare', 'version': '', 'categories': ['CDN'], 'confidence': 100}, {'name': 'Drupal', 'version': '', 'categories': ['CMS/Framework'], 'confidence': 30}, {'name': 'Frame...
+2025-02-21 22:37:55,922 - DEBUG - 正在轉換為 CSV 格式
+2025-02-21 22:37:55,922 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.csv
+2025-02-21 22:37:56,634 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=txt
+2025-02-21 22:37:56,634 - DEBUG - 數據庫中找到 1 條結果記錄
+2025-02-21 22:37:56,634 - DEBUG - 結果 1:
+2025-02-21 22:37:56,634 - DEBUG - - ID: 1
+2025-02-21 22:37:56,640 - DEBUG - - Target ID: 1
+2025-02-21 22:37:56,640 - DEBUG - - Scan Time: 2025-02-16 16:51:51.703803
+2025-02-21 22:37:56,640 - DEBUG - - Web Tech: Cloudflare,Drupal,Frame Protection,XSS Protection,CSP,HSTS,Content Type Options,Referrer Policy
+2025-02-21 22:37:56,641 - DEBUG - 請求的文件格式: txt
+2025-02-21 22:37:56,641 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-21 22:37:56,642 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Cloudflare', 'version': '', 'categories': ['CDN'], 'confidence': 100}, {'name': 'Drupal', 'version': '', 'categories': ['CMS/Framework'], 'confidence': 30}, {'name': 'Frame...
+2025-02-21 22:37:56,643 - DEBUG - 正在轉換為 TXT 格式
+2025-02-21 22:37:56,643 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.txt
+2025-02-21 22:55:34,855 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-21 23:01:21,165 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-22 10:55:54,701 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-22 10:57:21,513 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-22 10:57:31,317 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-22 11:09:01,852 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
