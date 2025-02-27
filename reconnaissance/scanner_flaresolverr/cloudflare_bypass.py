@@ -15,12 +15,8 @@ from instance.models import db, crawler_each_url, crawler_each_form, crawler_eac
 import random
 from reconnaissance.scanner_flaresolverr.html_parser import HtmlParser
 import argparse
-from urllib.parse import urlparse, urljoin, parse_qs
-import time
-from reconnaissance.scanner_flaresolverr.deduplication import HTMLDeduplicator
-from bs4 import BeautifulSoup
+from urllib.parse import urlparse, parse_qs
 from contextlib import contextmanager
-from reconnaissance.theHarvester.harvester import HarvesterScanner
 
 @contextmanager
 def session_scope():
@@ -410,7 +406,7 @@ class CloudflareBypass:
         """
         try:
             # 準備 API 請求
-            api_url = f"http://localhost:5000/api/harvester/scan/{target_id}"
+            api_url = f"http://localhost:5000/api/harvester/result/{target_id}"
             payload = {
                 'domain': target_domain,
                 'limit': limit,

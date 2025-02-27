@@ -5652,3 +5652,53 @@ WHERE nmap_result.target_id = ?
 2025-02-22 10:57:21,513 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
 2025-02-22 10:57:31,317 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
 2025-02-22 11:09:01,852 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-23 00:16:58,282 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-23 10:55:33,961 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-23 10:58:42,953 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 2
+2025-02-23 10:58:43,027 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 2 127.0.0.1
+2025-02-23 10:58:43,028 - DEBUG - 开始网站技术扫描: my.wyze.com
+2025-02-23 10:58:43,028 - DEBUG - 掃描線程已啟動
+2025-02-23 10:58:43,042 - DEBUG - 用戶 1 正在訪問 crtsh 路由，目標 ID: 2 127.0.0.1
+2025-02-23 10:58:43,045 - DEBUG - 開始 crtsh 掃描: my.wyze.com
+2025-02-23 10:58:43,046 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.my.wyze.com&output=json
+2025-02-23 10:58:43,636 - DEBUG - 扫描结果已保存到数据库
+2025-02-23 10:58:43,638 - DEBUG - 掃描已完成
+2025-02-23 10:58:43,639 - INFO - 成功保存掃描結果到數據庫
+2025-02-23 10:58:43,646 - DEBUG - 用戶 1 正在訪問 webtech 路由，目標 ID: 2 127.0.0.1
+2025-02-23 10:58:45,192 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.my.wyze.com&output=json
+2025-02-23 10:58:45,193 - INFO - 找到 3 個域名
+2025-02-23 10:58:45,193 - DEBUG - 域名列表: ['*.my.wyze.com', 'beta.my.wyze.com', 'my.wyze.com']
+2025-02-23 10:58:45,193 - INFO - 掃描完成，找到 3 個域名
+2025-02-23 10:58:45,195 - INFO - 成功保存掃描結果到數據庫，包含 3 個域名
+2025-02-23 10:58:45,207 - DEBUG - 用戶 1 正在訪問 crtsh 路由，目標 ID: 2 127.0.0.1
+2025-02-23 10:58:45,211 - INFO - 已刪除舊的掃描結果: target_id=2
+2025-02-23 10:58:45,212 - DEBUG - 開始 crtsh 掃描: my.wyze.com
+2025-02-23 10:58:45,212 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.my.wyze.com&output=json
+2025-02-23 10:58:46,828 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.my.wyze.com&output=json
+2025-02-23 10:58:46,828 - INFO - 找到 3 個域名
+2025-02-23 10:58:46,828 - DEBUG - 域名列表: ['*.my.wyze.com', 'beta.my.wyze.com', 'my.wyze.com']
+2025-02-23 10:58:46,828 - INFO - 掃描完成，找到 3 個域名
+2025-02-23 10:58:46,832 - INFO - 成功保存掃描結果到數據庫，包含 3 個域名
+2025-02-23 11:00:48,824 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 2
+2025-02-23 11:00:53,294 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 2
+2025-02-23 11:00:56,736 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-23 11:03:54,862 - DEBUG - 用戶 1 正在訪問 nmap 路由，目標 ID: 1 127.0.0.1
+2025-02-23 11:03:54,862 - DEBUG - Processing target IP: hackerone.com, Scan Type: common
+2025-02-23 11:03:54,862 - DEBUG - 掃描線程已啟動，類型: common
+2025-02-23 11:03:54,955 - INFO - 執行常見端口掃描
+2025-02-23 11:13:20,410 - DEBUG - Formatted scan result: {"host": "104.18.36.214", "hostname": "hackerone.com", "state": "up", "ports": {"21": {"state": "open", "name": "ftp", "product": "", "version": ""}, "22": {"state": "filtered", "name": "ssh", "product": "", "version": ""}, "23": {"state": "filtered", "name": "telnet", "product": "", "version": ""}, "25": {"state": "filtered", "name": "smtp", "product": "", "version": ""}, "53": {"state": "filtered", "name": "domain", "product": "", "version": ""}, "80": {"state": "open", "name": "http", "product": "Cloudflare http proxy", "version": ""}, "110": {"state": "filtered", "name": "pop3", "product": "", "version": ""}, "135": {"state": "filtered", "name": "msrpc", "product": "", "version": ""}, "139": {"state": "filtered", "name": "netbios-ssn", "product": "", "version": ""}, "143": {"state": "filtered", "name": "imap", "product": "", "version": ""}, "443": {"state": "open", "name": "http", "product": "Cloudflare http proxy", "version": ""}, "445": {"state": "filtered", "name": "microsoft-ds", "product": "", "version": ""}, "993": {"state": "filtered", "name": "imaps", "product": "", "version": ""}, "995": {"state": "filtered", "name": "pop3s", "product": "", "version": ""}, "1723": {"state": "filtered", "name": "pptp", "product": "", "version": ""}, "3306": {"state": "filtered", "name": "mysql", "product": "", "version": ""}, "3389": {"state": "filtered", "name": "ms-wbt-server", "product": "", "version": ""}, "5900": {"state": "filtered", "name": "vnc", "product": "", "version": ""}, "8080": {"state": "open", "name": "http", "product": "Cloudflare http proxy", "version": ""}}, "scan_time": "2025-02-23 11:13:20"}
+2025-02-23 11:13:20,413 - DEBUG - 掃描已完成
+2025-02-23 11:16:50,582 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-23 12:39:00,919 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-02-23 13:34:42,511 - DEBUG - 接收到下載請求: user_id=1, target_id=1, format=json
+2025-02-23 13:34:42,513 - DEBUG - 數據庫中找到 1 條結果記錄
+2025-02-23 13:34:42,514 - DEBUG - 結果 1:
+2025-02-23 13:34:42,514 - DEBUG - - ID: 1
+2025-02-23 13:34:42,514 - DEBUG - - Target ID: 1
+2025-02-23 13:34:42,515 - DEBUG - - Scan Time: 2025-02-16 16:51:51.703803
+2025-02-23 13:34:42,515 - DEBUG - - Web Tech: Cloudflare,Drupal,Frame Protection,XSS Protection,CSP,HSTS,Content Type Options,Referrer Policy
+2025-02-23 13:34:42,516 - DEBUG - 請求的文件格式: json
+2025-02-23 13:34:42,516 - DEBUG - 解析後的數據類型: <class 'dict'>
+2025-02-23 13:34:42,516 - DEBUG - 解析後的數據內容: {'technologies': [{'name': 'Cloudflare', 'version': '', 'categories': ['CDN'], 'confidence': 100}, {'name': 'Drupal', 'version': '', 'categories': ['CMS/Framework'], 'confidence': 30}, {'name': 'Frame...
+2025-02-23 13:34:42,516 - DEBUG - 正在轉換為 JSON 格式
+2025-02-23 13:34:42,517 - DEBUG - 文件轉換完成，準備返回響應，文件名: webtech_result_1.json

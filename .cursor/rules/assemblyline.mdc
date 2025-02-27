@@ -1,0 +1,5 @@
+---
+description: assembly line
+globs: 
+---
+我的每個工具有個流程 1前端路由使用node.js html 2 路由中如果是掃描路由 有檔案發送功能 掃描功能 直接json回傳功能 3 後端使用多線程掃描 資料庫使用sqlite3 4 多線程-掃描機制-存入sqlite3邏輯 5 資料掃瞄之後存入sqlite3 

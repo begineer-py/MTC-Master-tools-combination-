@@ -25,4 +25,17 @@ class Config:
     FLARESOLVERR_START_TIMEOUT = int(os.environ.get('FLARESOLVERR_START_TIMEOUT', 20))  # 秒
     FLARESOLVERR_CONTAINER_NAME = os.environ.get('FLARESOLVERR_CONTAINER_NAME', 'relaxed_cray')  # Docker 容器名稱
     FLARESOLVERR_AUTO_START = os.environ.get('FLARESOLVERR_AUTO_START', 'True').lower() == 'true'
+class FlaresolverrConfig:
+    """Flaresolverr 配置類"""
+    FLARESOLVERR_URL = os.environ.get('FLARESOLVERR_URL', 'http://localhost:8191/v1')
+    FLARESOLVERR_TIMEOUT = int(os.environ.get('FLARESOLVERR_TIMEOUT', 60000))  # 毫秒
+    FLARESOLVERR_START_TIMEOUT = int(os.environ.get('FLARESOLVERR_START_TIMEOUT', 20))  # 秒
+    FLARESOLVERR_CONTAINER_NAME = os.environ.get('FLARESOLVERR_CONTAINER_NAME', 'relaxed_cray')  # Docker 容器名稱
+    FLARESOLVERR_AUTO_START = os.environ.get('FLARESOLVERR_AUTO_START', 'True').lower() == 'true'
+class TheHarvesterConfig:
+    """TheHarvester 配置類"""
+    THEHARVESTER_PATH = os.path.join(os.path.dirname(__file__), '..', 'tools', 'theHarvester', 'theHarvester.py')
+    THEHARVESTER_TIMEOUT = int(os.environ.get('THEHARVESTER_TIMEOUT', 60000))  # 毫秒
+    THEHARVESTER_START_TIMEOUT = int(os.environ.get('THEHARVESTER_START_TIMEOUT', 20))  # 秒
+    
 

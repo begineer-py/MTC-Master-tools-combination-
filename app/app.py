@@ -89,15 +89,15 @@ def create_app():
     
     # SQLite 配置
     app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
-        'pool_size': 10,
-        'max_overflow': 20,
-        'pool_timeout': 30,
-        'pool_recycle': 1800,
+        'pool_size': 5,  # 減少連接池大小
+        'max_overflow': 10,
+        'pool_timeout': 60,  # 增加超時時間
+        'pool_recycle': 3600,  # 增加回收時間
         'pool_pre_ping': True,
         'connect_args': {
             'check_same_thread': False,
-            'timeout': 30,
-            'isolation_level': None  # 允许手动控制事务
+            'timeout': 60,  # 增加超時時間
+            'isolation_level': 'IMMEDIATE'  # 使用立即事務隔離級別
         }
     }
     

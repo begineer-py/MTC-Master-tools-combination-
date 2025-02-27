@@ -30,7 +30,7 @@ def register_blueprints(app):
         (crtsh_route, '/api/crtsh'),
         (webtech_route, '/api/webtech'),
         (flaresolverr_route, '/api/flaresolverr'),
-        (harvester_route, '/api/harvester'),
+        (harvester_route, '/api/harvester')
     ]
     
     # 註冊藍圖

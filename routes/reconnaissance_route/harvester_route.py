@@ -8,6 +8,7 @@ from flask import current_app
 import json
 from datetime import datetime
 from io import BytesIO
+from reconnaissance.theHarvester.harvester_integration import create_harvester_integration
 
 harvester_route = Blueprint('harvester', __name__)
 logger = logging.getLogger(__name__)
@@ -26,13 +27,15 @@ def harvester_scan(user_id, target_id):
         # 获取请求参数
         data = request.get_json() or {}
         sources = data.get('sources', 'all')
+        limit = data.get('limit', 1000)
         
         # 创建并启动扫描线程
         scan_thread = HarvesterScanThread(
             target_domain=target.target_ip_no_https,
             target_id=target_id,
             app=current_app,
-            sources=sources
+            sources=sources,
+            limit=limit
         )
         logger.info(f"开始扫描目标: {target.target_ip_no_https}")
         scan_thread.start()
@@ -108,62 +111,43 @@ def download_harvester_result(user_id, target_id):
             }), 404
         
         # 创建结果字典
-        result_dict = {
-            'scan_time': result.scan_time.strftime('%Y-%m-%d %H:%M:%S'),
-            'status': result.status,
-            'error': result.error,
-            
-            # IP 相关信息
-            'ip_data': {
-                'direct_ips': result.direct_ips or [],
-                'ip_ranges': result.ip_ranges or [],
-                'cdn_ips': result.cdn_ips or []
-            },
-            
-            # DNS 信息
-            'dns_data': {
-                'dns_records': result.dns_records or [],
-                'reverse_dns': result.reverse_dns or [],
-                'asn_info': result.asn_info or []
-            },
-            
-            # 域名信息
-            'domain_data': {
-                'subdomains': result.subdomains or [],
-                'hosts': result.hosts or []
-            },
-            
-            # 其他发现
-            'discovery_data': {
-                'urls': result.urls or [],
-                'emails': result.emails or [],
-                'social_media': result.social_media or []
-            },
-            
-            # 扫描配置
-            'scan_config': {
-                'sources': result.scan_sources,
-                'limit': result.limit
-            }
-        }
+        result_dict = result.to_dict()
         
-        # 转换为 JSON 字符串
-        result_json = json.dumps(result_dict, indent=2, ensure_ascii=False)
+        # 获取下载格式
+        format_type = request.args.get('format', 'json')
         
-        # 创建内存文件
-        mem_file = BytesIO()
-        mem_file.write(result_json.encode('utf-8'))
-        mem_file.seek(0)
-        
-        # 生成文件名
-        filename = f'harvester_result_{target_id}_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json'
-        
-        return send_file(
-            mem_file,
-            mimetype='application/json',
-            as_attachment=True,
-            download_name=filename
-        )
+        if format_type == 'json':
+            # JSON 格式
+            result_json = json.dumps(result_dict, indent=2, ensure_ascii=False)
+            mem_file = BytesIO()
+            mem_file.write(result_json.encode('utf-8'))
+            mem_file.seek(0)
+            
+            filename = f'harvester_result_{target_id}_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json'
+            
+            return send_file(
+                mem_file,
+                mimetype='application/json',
+                as_attachment=True,
+                download_name=filename
+            )
+        else:
+            # 文本格式
+            output_parser = create_harvester_integration().output_parser
+            temp_file = output_parser.save_to_file(result_dict)
+            
+            if temp_file:
+                return send_file(
+                    temp_file,
+                    mimetype='text/plain',
+                    as_attachment=True,
+                    download_name=f'harvester_result_{target_id}_{datetime.now().strftime("%Y%m%d_%H%M%S")}.txt'
+                )
+            
+            return jsonify({
+                'status': 'error',
+                'message': '生成文本文件失敗'
+            }), 500
         
     except Exception as e:
         logger.error(f"下载结果失败: {str(e)}")

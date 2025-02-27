@@ -7,7 +7,7 @@ import sqlite3
 import logging
 from pathlib import Path
 from flask import Flask
-from models import db, HarvesterResult
+from models import db
 
 # 設置日誌
 def setup_logging():

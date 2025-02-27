@@ -60,3 +60,8 @@ rich==13.7.0
 
 # WSL相關
 python-certifi-win32==1.6.1
+nmap==7.94
+
+# 其他
+pyinstaller==6.2.0
+

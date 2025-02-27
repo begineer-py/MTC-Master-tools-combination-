@@ -5,7 +5,7 @@ from datetime import datetime
 from flask import current_app
 from instance.models import db, HarvesterResult
 import queue
-from reconnaissance.theHarvester.harvester import HarvesterScanner
+from reconnaissance.theHarvester.harvester_integration import create_harvester_integration
 
 class HarvesterScanThread(threading.Thread):
     """theHarvester 掃描線程類"""
@@ -76,12 +76,16 @@ class HarvesterScanThread(threading.Thread):
         try:
             # 創建應用上下文
             with self.app.app_context():
-                scanner = HarvesterScanner()
-                success, result = scanner.run_harvester(
-                    self.target_domain,
-                    self.target_id,
-                    self.limit,
-                    self.sources
+                # 創建整合實例
+                integration = create_harvester_integration()
+                
+                # 運行掃描
+                success, result = integration.run_scan(
+                    domain=self.target_domain,
+                    target_id=self.target_id,
+                    sources=self.sources,
+                    limit=self.limit,
+                    save_output=True
                 )
                 
                 if success:

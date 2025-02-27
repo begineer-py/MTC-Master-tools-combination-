@@ -399,4 +399,37 @@ class HarvesterResult(db.Model):
                 'limit': self.limit
             }
         }
+class vulnerability_scanning_result(db.Model):
+    """漏洞掃描結果模型"""
+    id = db.Column(db.Integer, primary_key=True)
+    crawler_each_url_id = db.Column(db.Integer, db.ForeignKey('crawler_each_url.id'), nullable=False,unique=True)
+    vulnerability_scanning_result = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    def __init__(self, crawler_each_url_id, vulnerability_scanning_result,xss_result):
+        self.crawler_each_url_id = crawler_each_url_id
+        self.vulnerability_scanning_result = vulnerability_scanning_result
+        self.xss_result = xss_result.to_dict()
+    def to_dict(self):
+        """转换为字典格式"""
+        return {
+            'id': self.id,
+            'crawler_each_url_id': self.crawler_each_url_id,
+            'vulnerability_scanning_result': self.vulnerability_scanning_result,
+            'xss_result': self.xss_result
+        }
+    #子表漏洞模塊
+    xss_result = db.relationship('xss_result', backref='vulnerability_scanning_result', lazy='dynamic')
+class xss_result(db.Model):
+    """xss掃描結果模型"""
+    id = db.Column(db.Integer, primary_key=True)
+    xss_result = db.Column(db.JSON, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    vulnerability_scanning_result_id = db.Column(db.Integer, db.ForeignKey('vulnerability_scanning_result.id'), nullable=False,unique=True)
+    if_xss = db.Column(db.Boolean, default=False)
+    def to_dict(self):
+        """转换为字典格式"""
+        return {
+            'id': self.id,
+            'xss_result': self.xss_result
+        }
     
