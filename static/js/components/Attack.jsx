@@ -2,8 +2,9 @@ import React from 'react';
 import NmapScan from './scanners/NmapScan';
 import CrtshScan from './scanners/CrtshScan';
 import WebtechScan from './scanners/WebtechScan';
-import HarvesterScan from './scanners/HarvesterScan';
 import FlareSolverr from './scanners/FlareSolverr';
+import LinksFinderScan from './scanners/LinksFinderScan';
+import GauScan from './scanners/GauScan';
 
 const Attack = ({ targetId, target = {}, currentUser = {} }) => {
   // 添加数据验证
@@ -55,12 +56,17 @@ const Attack = ({ targetId, target = {}, currentUser = {} }) => {
           targetId={targetId}
         />
 
-        <HarvesterScan 
+        <FlareSolverr 
           userId={currentUser.id}
           targetId={targetId}
         />
 
-        <FlareSolverr 
+        <GauScan 
+          userId={currentUser.id}
+          targetId={targetId}
+        />
+
+        <LinksFinderScan 
           userId={currentUser.id}
           targetId={targetId}
         />

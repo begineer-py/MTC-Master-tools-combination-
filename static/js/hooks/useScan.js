@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-const useScan = (scanEndpoint, formatResults) => {
+const useScan = () => {
   const [isScanning, setIsScanning] = useState(false);
   const [status, setStatus] = useState('');
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
-  const startScan = async (userId, targetId, options = {}) => {
+  const startScan = async (endpoint, options = {}) => {
     if (isScanning) {
       throw new Error('掃描已在進行中');
     }
@@ -16,7 +16,8 @@ const useScan = (scanEndpoint, formatResults) => {
       setStatus('掃描中，預計需要3-5分鐘...');
       setError(null);
 
-      const url = scanEndpoint(userId, targetId);
+      // endpoint 现在是字符串，直接使用
+      const url = endpoint;
       console.log('請求 URL:', url);
       console.log('請求選項:', options);
 
@@ -27,7 +28,7 @@ const useScan = (scanEndpoint, formatResults) => {
           'Accept': 'application/json'
         },
         credentials: 'same-origin',
-        ...(options.body && { body: JSON.stringify(options.body) })
+        body: JSON.stringify(options)
       };
 
       console.log('完整請求配置:', {
@@ -68,8 +69,7 @@ const useScan = (scanEndpoint, formatResults) => {
       }
 
       setStatus('掃描完成');
-      const formattedResult = formatResults ? formatResults(data.result) : data.result;
-      setResult(formattedResult);
+      setResult(data.result || data);
       
       return data;
     } catch (error) {

@@ -1,10 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  entry: './static/js/attack.js',
+  entry: {
+    bundle: './static/js/attack.js',
+    result: './static/js/result.js'
+  },
   output: {
     path: path.resolve(__dirname, 'static/js/dist'),
-    filename: 'bundle.js',
+    filename: '[name].js',
   },
   module: {
     rules: [
@@ -13,6 +16,8 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
+
+          
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react']
           }

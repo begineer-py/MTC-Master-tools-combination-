@@ -8,8 +8,13 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.4.6",
+    "axios": "^1.8.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-toastify": "^11.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",
@@ -21,4 +26,4 @@
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   }
-} 
+}

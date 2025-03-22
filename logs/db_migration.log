@@ -2360,3 +2360,827 @@ KeyError: 'api_key'
 2025-02-16 20:17:16,259 - INFO - 命令執行成功: flask db upgrade
 2025-02-16 20:17:16,259 - INFO - 數據庫遷移完成
 2025-02-16 20:17:16,260 - INFO - 數據庫更新成功完成
+2025-02-27 23:29:37,289 - INFO - 開始數據庫遷移流程
+2025-02-27 23:29:37,289 - INFO - 數據庫連接測試成功
+2025-02-27 23:29:37,289 - INFO - 數據庫已備份到: instance\backups\c2_20250227_232937.db
+2025-02-27 23:29:37,289 - INFO - 已刪除舊備份: instance\backups\c2_20250215_165505.db
+2025-02-27 23:29:38,290 - INFO - 命令執行成功: flask db current
+2025-02-27 23:29:38,290 - WARNING - 數據庫版本不是最新的，執行強制更新
+2025-02-27 23:29:39,135 - INFO - 命令執行成功: flask db stamp head
+2025-02-27 23:29:39,956 - WARNING - 命令執行失敗 (嘗試 1/3)
+2025-02-27 23:29:39,956 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 14, in <module>
+    from routes.reconnaissance_route.flaresolverr_route import flaresolverr_route
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\flaresolverr_route.py", line 7, in <module>
+    from reconnaissance.scanner_flaresolverr.run_cloudflare_pass import CloudflareHarvester
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\reconnaissance\scanner_flaresolverr\run_cloudflare_pass.py", line 6, in <module>
+    from instance.models import db, HarvesterResult
+ImportError: cannot import name 'HarvesterResult' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py)
+
+2025-02-27 23:29:41,803 - WARNING - 命令執行失敗 (嘗試 2/3)
+2025-02-27 23:29:41,803 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 14, in <module>
+    from routes.reconnaissance_route.flaresolverr_route import flaresolverr_route
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\flaresolverr_route.py", line 7, in <module>
+    from reconnaissance.scanner_flaresolverr.run_cloudflare_pass import CloudflareHarvester
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\reconnaissance\scanner_flaresolverr\run_cloudflare_pass.py", line 6, in <module>
+    from instance.models import db, HarvesterResult
+ImportError: cannot import name 'HarvesterResult' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py)
+
+2025-02-27 23:29:44,651 - WARNING - 命令執行失敗 (嘗試 3/3)
+2025-02-27 23:29:44,651 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 14, in <module>
+    from routes.reconnaissance_route.flaresolverr_route import flaresolverr_route
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\flaresolverr_route.py", line 7, in <module>
+    from reconnaissance.scanner_flaresolverr.run_cloudflare_pass import CloudflareHarvester
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\reconnaissance\scanner_flaresolverr\run_cloudflare_pass.py", line 6, in <module>
+    from instance.models import db, HarvesterResult
+ImportError: cannot import name 'HarvesterResult' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py)
+
+2025-02-27 23:29:44,651 - ERROR - 遷移過程出錯: 重新初始化遷移失敗
+2025-02-27 23:29:44,651 - INFO - 嘗試恢復最新備份
+2025-02-27 23:29:44,651 - INFO - 已恢復最新備份: instance\backups\c2_20250227_232937.db
+2025-02-27 23:29:44,651 - INFO - 成功恢復到最新備份
+2025-02-27 23:29:44,651 - ERROR - 數據庫更新失敗
+2025-02-27 23:30:20,120 - INFO - 開始數據庫遷移流程
+2025-02-27 23:30:20,120 - INFO - 數據庫連接測試成功
+2025-02-27 23:30:20,120 - INFO - 數據庫已備份到: instance\backups\c2_20250227_233020.db
+2025-02-27 23:30:20,120 - INFO - 已刪除舊備份: instance\backups\c2_20250215_224328.db
+2025-02-27 23:30:20,989 - INFO - 命令執行成功: flask db current
+2025-02-27 23:30:20,989 - WARNING - 數據庫版本不是最新的，執行強制更新
+2025-02-27 23:30:21,880 - INFO - 命令執行成功: flask db stamp head
+2025-02-27 23:30:22,724 - WARNING - 命令執行失敗 (嘗試 1/3)
+2025-02-27 23:30:22,725 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 14, in <module>
+    from routes.reconnaissance_route.flaresolverr_route import flaresolverr_route
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\flaresolverr_route.py", line 7, in <module>
+    from reconnaissance.scanner_flaresolverr.run_cloudflare_pass import CloudflareHarvester
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\reconnaissance\scanner_flaresolverr\run_cloudflare_pass.py", line 6, in <module>
+    from instance.models import db, HarvesterResult
+ImportError: cannot import name 'HarvesterResult' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py)
+
+2025-02-27 23:30:24,619 - WARNING - 命令執行失敗 (嘗試 2/3)
+2025-02-27 23:30:24,619 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 15, in <module>
+    from routes.reconnaissance_route.harvester_route import harvester_route
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\harvester_route.py", line 3, in <module>
+    from instance.models import Target, HarvesterResult
+ImportError: cannot import name 'HarvesterResult' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py)
+
+2025-02-27 23:30:27,532 - WARNING - 命令執行失敗 (嘗試 3/3)
+2025-02-27 23:30:27,533 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 15, in <module>
+    from routes.reconnaissance_route.harvester_route import harvester_route
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\harvester_route.py", line 3, in <module>
+    from instance.models import Target, HarvesterResult
+ImportError: cannot import name 'HarvesterResult' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py)
+
+2025-02-27 23:30:27,533 - ERROR - 遷移過程出錯: 重新初始化遷移失敗
+2025-02-27 23:30:27,533 - INFO - 嘗試恢復最新備份
+2025-02-27 23:30:27,535 - INFO - 已恢復最新備份: instance\backups\c2_20250227_233020.db
+2025-02-27 23:30:27,535 - INFO - 成功恢復到最新備份
+2025-02-27 23:30:27,535 - ERROR - 數據庫更新失敗
+2025-02-27 23:31:17,675 - INFO - 開始數據庫遷移流程
+2025-02-27 23:31:17,675 - INFO - 數據庫連接測試成功
+2025-02-27 23:31:17,675 - INFO - 數據庫已備份到: instance\backups\c2_20250227_233117.db
+2025-02-27 23:31:17,675 - INFO - 已刪除舊備份: instance\backups\c2_20250215_230744.db
+2025-02-27 23:31:18,577 - INFO - 命令執行成功: flask db current
+2025-02-27 23:31:18,577 - WARNING - 數據庫版本不是最新的，執行強制更新
+2025-02-27 23:31:19,470 - INFO - 命令執行成功: flask db stamp head
+2025-02-27 23:31:20,278 - WARNING - 命令執行失敗 (嘗試 1/3)
+2025-02-27 23:31:20,278 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 15, in <module>
+    from routes.reconnaissance_route.harvester_route import harvester_route
+ModuleNotFoundError: No module named 'routes.reconnaissance_route.harvester_route'
+
+2025-02-27 23:31:22,174 - WARNING - 命令執行失敗 (嘗試 2/3)
+2025-02-27 23:31:22,174 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 15, in <module>
+    from routes.reconnaissance_route.harvester_route import harvester_route
+ModuleNotFoundError: No module named 'routes.reconnaissance_route.harvester_route'
+
+2025-02-27 23:31:25,016 - WARNING - 命令執行失敗 (嘗試 3/3)
+2025-02-27 23:31:25,016 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 15, in <module>
+    from routes.reconnaissance_route.harvester_route import harvester_route
+ModuleNotFoundError: No module named 'routes.reconnaissance_route.harvester_route'
+
+2025-02-27 23:31:25,016 - ERROR - 遷移過程出錯: 重新初始化遷移失敗
+2025-02-27 23:31:25,016 - INFO - 嘗試恢復最新備份
+2025-02-27 23:31:25,018 - INFO - 已恢復最新備份: instance\backups\c2_20250227_233117.db
+2025-02-27 23:31:25,018 - INFO - 成功恢復到最新備份
+2025-02-27 23:31:25,018 - ERROR - 數據庫更新失敗
+2025-02-27 23:31:31,554 - INFO - 開始數據庫遷移流程
+2025-02-27 23:31:31,554 - INFO - 數據庫連接測試成功
+2025-02-27 23:31:31,569 - INFO - 數據庫已備份到: instance\backups\c2_20250227_233131.db
+2025-02-27 23:31:31,569 - INFO - 已刪除舊備份: instance\backups\c2_20250215_232704.db
+2025-02-27 23:31:32,477 - INFO - 命令執行成功: flask db current
+2025-02-27 23:31:32,477 - INFO - 創建遷移腳本
+2025-02-27 23:31:33,438 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-27 23:31:33,438 - INFO - 應用遷移
+2025-02-27 23:31:34,358 - INFO - 命令執行成功: flask db upgrade
+2025-02-27 23:31:34,358 - INFO - 數據庫遷移完成
+2025-02-27 23:31:34,358 - INFO - 數據庫更新成功完成
+2025-02-27 23:45:13,444 - INFO - 開始數據庫遷移流程
+2025-02-27 23:45:13,444 - INFO - 數據庫連接測試成功
+2025-02-27 23:45:13,444 - INFO - 數據庫已備份到: instance\backups\c2_20250227_234513.db
+2025-02-27 23:45:13,444 - INFO - 已刪除舊備份: instance\backups\c2_20250216_164430.db
+2025-02-27 23:45:14,340 - INFO - 命令執行成功: flask db current
+2025-02-27 23:45:14,340 - INFO - 創建遷移腳本
+2025-02-27 23:45:15,234 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-27 23:45:15,234 - INFO - 應用遷移
+2025-02-27 23:45:16,154 - INFO - 命令執行成功: flask db upgrade
+2025-02-27 23:45:16,154 - INFO - 數據庫遷移完成
+2025-02-27 23:45:16,154 - INFO - 數據庫更新成功完成
+2025-02-27 23:49:30,441 - INFO - 開始數據庫遷移流程
+2025-02-27 23:49:30,441 - INFO - 數據庫連接測試成功
+2025-02-27 23:49:30,443 - INFO - 數據庫已備份到: instance\backups\c2_20250227_234930.db
+2025-02-27 23:49:30,444 - INFO - 已刪除舊備份: instance\backups\c2_20250216_190352.db
+2025-02-27 23:49:31,392 - INFO - 命令執行成功: flask db current
+2025-02-27 23:49:31,392 - INFO - 創建遷移腳本
+2025-02-27 23:49:32,380 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-27 23:49:32,380 - INFO - 應用遷移
+2025-02-27 23:49:33,365 - INFO - 命令執行成功: flask db upgrade
+2025-02-27 23:49:33,365 - INFO - 數據庫遷移完成
+2025-02-27 23:49:33,365 - INFO - 數據庫更新成功完成
+2025-02-27 23:50:17,558 - INFO - 開始數據庫遷移流程
+2025-02-27 23:50:17,558 - INFO - 數據庫連接測試成功
+2025-02-27 23:50:17,558 - INFO - 數據庫已備份到: instance\backups\c2_20250227_235017.db
+2025-02-27 23:50:17,558 - INFO - 已刪除舊備份: instance\backups\c2_20250216_190624.db
+2025-02-27 23:50:18,492 - INFO - 命令執行成功: flask db current
+2025-02-27 23:50:18,492 - INFO - 創建遷移腳本
+2025-02-27 23:50:19,473 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-27 23:50:19,473 - INFO - 應用遷移
+2025-02-27 23:50:20,356 - INFO - 命令執行成功: flask db upgrade
+2025-02-27 23:50:20,356 - INFO - 數據庫遷移完成
+2025-02-27 23:50:20,356 - INFO - 數據庫更新成功完成
+2025-02-28 00:22:02,773 - INFO - 開始數據庫遷移流程
+2025-02-28 00:22:02,773 - INFO - 數據庫連接測試成功
+2025-02-28 00:22:02,773 - INFO - 數據庫已備份到: instance\backups\c2_20250228_002202.db
+2025-02-28 00:22:02,781 - INFO - 已刪除舊備份: instance\backups\c2_20250216_190743.db
+2025-02-28 00:22:03,684 - INFO - 命令執行成功: flask db current
+2025-02-28 00:22:03,684 - WARNING - 數據庫版本不是最新的，執行強制更新
+2025-02-28 00:22:04,603 - INFO - 命令執行成功: flask db stamp head
+2025-02-28 00:22:05,429 - WARNING - 命令執行失敗 (嘗試 1/3)
+2025-02-28 00:22:05,429 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 14, in <module>
+    from routes.reconnaissance_route.flaresolverr_route import flaresolverr_route
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\flaresolverr_route.py", line 7, in <module>
+    from reconnaissance.scanner_flaresolverr.run_cloudflare_pass import CloudflareHarvester
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\reconnaissance\scanner_flaresolverr\run_cloudflare_pass.py", line 6, in <module>
+    from instance.models import db,paramspider_result
+ImportError: cannot import name 'paramspider_result' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py). Did you mean: 'ParamSpiderResult'?
+
+2025-02-28 00:22:07,317 - WARNING - 命令執行失敗 (嘗試 2/3)
+2025-02-28 00:22:07,317 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 14, in <module>
+    from routes.reconnaissance_route.flaresolverr_route import flaresolverr_route
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\flaresolverr_route.py", line 7, in <module>
+    from reconnaissance.scanner_flaresolverr.run_cloudflare_pass import CloudflareHarvester
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\reconnaissance\scanner_flaresolverr\run_cloudflare_pass.py", line 6, in <module>
+    from instance.models import db,paramspider_result
+ImportError: cannot import name 'paramspider_result' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py). Did you mean: 'ParamSpiderResult'?
+
+2025-02-28 00:22:10,217 - WARNING - 命令執行失敗 (嘗試 3/3)
+2025-02-28 00:22:10,217 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 14, in <module>
+    from routes.reconnaissance_route.flaresolverr_route import flaresolverr_route
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\flaresolverr_route.py", line 7, in <module>
+    from reconnaissance.scanner_flaresolverr.run_cloudflare_pass import CloudflareHarvester
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\reconnaissance\scanner_flaresolverr\run_cloudflare_pass.py", line 6, in <module>
+    from instance.models import db,paramspider_result
+ImportError: cannot import name 'paramspider_result' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py). Did you mean: 'ParamSpiderResult'?
+
+2025-02-28 00:22:10,217 - ERROR - 遷移過程出錯: 重新初始化遷移失敗
+2025-02-28 00:22:10,217 - INFO - 嘗試恢復最新備份
+2025-02-28 00:22:10,217 - INFO - 已恢復最新備份: instance\backups\c2_20250228_002202.db
+2025-02-28 00:22:10,217 - INFO - 成功恢復到最新備份
+2025-02-28 00:22:10,217 - ERROR - 數據庫更新失敗
+2025-02-28 00:22:27,328 - INFO - 開始數據庫遷移流程
+2025-02-28 00:22:27,343 - INFO - 數據庫連接測試成功
+2025-02-28 00:22:27,344 - INFO - 數據庫已備份到: instance\backups\c2_20250228_002227.db
+2025-02-28 00:22:27,346 - INFO - 已刪除舊備份: instance\backups\c2_20250216_190750.db
+2025-02-28 00:22:28,248 - INFO - 命令執行成功: flask db current
+2025-02-28 00:22:28,248 - INFO - 創建遷移腳本
+2025-02-28 00:22:29,185 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-28 00:22:29,185 - INFO - 應用遷移
+2025-02-28 00:22:30,159 - INFO - 命令執行成功: flask db upgrade
+2025-02-28 00:22:30,159 - INFO - 數據庫遷移完成
+2025-02-28 00:22:30,159 - INFO - 數據庫更新成功完成
+2025-02-28 20:16:35,305 - INFO - 開始數據庫遷移流程
+2025-02-28 20:16:35,306 - INFO - 數據庫連接測試成功
+2025-02-28 20:16:35,308 - INFO - 數據庫已備份到: instance\backups\c2_20250228_201635.db
+2025-02-28 20:16:35,308 - INFO - 已刪除舊備份: instance\backups\c2_20250216_201708.db
+2025-02-28 20:16:36,526 - INFO - 命令執行成功: flask db current
+2025-02-28 20:16:36,526 - INFO - 創建遷移腳本
+2025-02-28 20:16:37,432 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-28 20:16:37,432 - INFO - 應用遷移
+2025-02-28 20:16:38,275 - INFO - 命令執行成功: flask db upgrade
+2025-02-28 20:16:38,275 - INFO - 數據庫遷移完成
+2025-02-28 20:16:38,275 - INFO - 數據庫更新成功完成
+2025-02-28 20:21:44,539 - INFO - 開始數據庫遷移流程
+2025-02-28 20:21:44,539 - INFO - 數據庫連接測試成功
+2025-02-28 20:21:44,539 - INFO - 數據庫已備份到: instance\backups\c2_20250228_202144.db
+2025-02-28 20:21:44,543 - INFO - 已刪除舊備份: instance\backups\c2_20250227_232937.db
+2025-02-28 20:21:45,433 - INFO - 命令執行成功: flask db current
+2025-02-28 20:21:45,434 - INFO - 創建遷移腳本
+2025-02-28 20:21:46,372 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-28 20:21:46,372 - INFO - 應用遷移
+2025-02-28 20:21:47,280 - INFO - 命令執行成功: flask db upgrade
+2025-02-28 20:21:47,280 - INFO - 數據庫遷移完成
+2025-02-28 20:21:47,280 - INFO - 數據庫更新成功完成
+2025-02-28 20:22:41,338 - INFO - 開始數據庫遷移流程
+2025-02-28 20:22:41,338 - INFO - 數據庫連接測試成功
+2025-02-28 20:22:41,338 - INFO - 數據庫已備份到: instance\backups\c2_20250228_202241.db
+2025-02-28 20:22:41,338 - INFO - 已刪除舊備份: instance\backups\c2_20250227_233020.db
+2025-02-28 20:22:42,264 - INFO - 命令執行成功: flask db current
+2025-02-28 20:22:42,264 - WARNING - 數據庫版本不是最新的，執行強制更新
+2025-02-28 20:22:43,107 - INFO - 命令執行成功: flask db stamp head
+2025-02-28 20:22:43,940 - WARNING - 命令執行失敗 (嘗試 1/3)
+2025-02-28 20:22:43,940 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 14, in <module>
+    from routes.reconnaissance_route.flaresolverr_route import flaresolverr_route
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\flaresolverr_route.py", line 7, in <module>
+    from reconnaissance.scanner_flaresolverr.run_cloudflare_pass import CloudflareHarvester
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\reconnaissance\scanner_flaresolverr\run_cloudflare_pass.py", line 6, in <module>
+    from instance.models import db,ParamSpiderResult
+ImportError: cannot import name 'ParamSpiderResult' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py). Did you mean: 'paramspider_results'?
+
+2025-02-28 20:22:45,787 - WARNING - 命令執行失敗 (嘗試 2/3)
+2025-02-28 20:22:45,787 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 14, in <module>
+    from routes.reconnaissance_route.flaresolverr_route import flaresolverr_route
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\flaresolverr_route.py", line 7, in <module>
+    from reconnaissance.scanner_flaresolverr.run_cloudflare_pass import CloudflareHarvester
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\reconnaissance\scanner_flaresolverr\run_cloudflare_pass.py", line 6, in <module>
+    from instance.models import db,ParamSpiderResult
+ImportError: cannot import name 'ParamSpiderResult' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py). Did you mean: 'paramspider_results'?
+
+2025-02-28 20:23:33,793 - INFO - 開始數據庫遷移流程
+2025-02-28 20:23:33,793 - INFO - 數據庫連接測試成功
+2025-02-28 20:23:33,793 - INFO - 數據庫已備份到: instance\backups\c2_20250228_202333.db
+2025-02-28 20:23:33,793 - INFO - 已刪除舊備份: instance\backups\c2_20250227_233117.db
+2025-02-28 20:23:34,658 - INFO - 命令執行成功: flask db current
+2025-02-28 20:23:34,658 - WARNING - 數據庫版本不是最新的，執行強制更新
+2025-02-28 20:23:35,502 - INFO - 命令執行成功: flask db stamp head
+2025-02-28 20:23:36,361 - WARNING - 命令執行失敗 (嘗試 1/3)
+2025-02-28 20:23:36,361 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 15, in <module>
+    from routes.reconnaissance_route.paramspider_route import paramspider_blueprint
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\paramspider_route.py", line 10, in <module>
+    from instance.models import db, Target, db_lock, ParamSpiderResult
+ImportError: cannot import name 'ParamSpiderResult' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py). Did you mean: 'paramspider_results'?
+
+2025-02-28 20:23:38,230 - WARNING - 命令執行失敗 (嘗試 2/3)
+2025-02-28 20:23:38,230 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 15, in <module>
+    from routes.reconnaissance_route.paramspider_route import paramspider_blueprint
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\paramspider_route.py", line 10, in <module>
+    from instance.models import db, Target, db_lock, ParamSpiderResult
+ImportError: cannot import name 'ParamSpiderResult' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py). Did you mean: 'paramspider_results'?
+
+2025-02-28 20:23:41,130 - WARNING - 命令執行失敗 (嘗試 3/3)
+2025-02-28 20:23:41,130 - WARNING - 錯誤信息: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Scripts\flask.exe\__main__.py", line 7, in <module>
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 1107, in main
+    cli.main()
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1682, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\click\core.py", line 1729, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 613, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 341, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 264, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 72, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\__init__.py", line 10, in create_app
+    from .app import create_app as _create_app
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\app.py", line 13, in <module>
+    from app.blueprint_set import register_blueprints
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\app\blueprint_set.py", line 15, in <module>
+    from routes.reconnaissance_route.paramspider_route import paramspider_blueprint
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\paramspider_route.py", line 10, in <module>
+    from instance.models import db, Target, db_lock, ParamSpiderResult
+ImportError: cannot import name 'ParamSpiderResult' from 'instance.models' (C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\instance\models.py). Did you mean: 'paramspider_results'?
+
+2025-02-28 20:23:41,130 - ERROR - 遷移過程出錯: 重新初始化遷移失敗
+2025-02-28 20:23:41,130 - INFO - 嘗試恢復最新備份
+2025-02-28 20:23:41,132 - INFO - 已恢復最新備份: instance\backups\c2_20250228_202333.db
+2025-02-28 20:23:41,133 - INFO - 成功恢復到最新備份
+2025-02-28 20:23:41,133 - ERROR - 數據庫更新失敗
+2025-02-28 20:24:17,150 - INFO - 開始數據庫遷移流程
+2025-02-28 20:24:17,152 - INFO - 數據庫連接測試成功
+2025-02-28 20:24:17,152 - INFO - 數據庫已備份到: instance\backups\c2_20250228_202417.db
+2025-02-28 20:24:17,152 - INFO - 已刪除舊備份: instance\backups\c2_20250227_233131.db
+2025-02-28 20:24:18,038 - INFO - 命令執行成功: flask db current
+2025-02-28 20:24:18,038 - INFO - 創建遷移腳本
+2025-02-28 20:24:18,952 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-28 20:24:18,952 - INFO - 應用遷移
+2025-02-28 20:24:19,895 - INFO - 命令執行成功: flask db upgrade
+2025-02-28 20:24:19,895 - INFO - 數據庫遷移完成
+2025-02-28 20:24:19,895 - INFO - 數據庫更新成功完成
+2025-02-28 20:24:56,338 - INFO - 開始數據庫遷移流程
+2025-02-28 20:24:56,338 - INFO - 數據庫連接測試成功
+2025-02-28 20:24:56,338 - INFO - 數據庫已備份到: instance\backups\c2_20250228_202456.db
+2025-02-28 20:24:56,338 - INFO - 已刪除舊備份: instance\backups\c2_20250227_234513.db
+2025-02-28 20:24:57,259 - INFO - 命令執行成功: flask db current
+2025-02-28 20:24:57,259 - INFO - 創建遷移腳本
+2025-02-28 20:24:58,234 - INFO - 命令執行成功: flask db migrate -m "Auto migration"
+2025-02-28 20:24:58,234 - INFO - 應用遷移
+2025-02-28 20:24:59,207 - INFO - 命令執行成功: flask db upgrade
+2025-02-28 20:24:59,207 - INFO - 數據庫遷移完成
+2025-02-28 20:24:59,207 - INFO - 數據庫更新成功完成

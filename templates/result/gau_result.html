@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Gau扫描结果{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reconnaissance.css') }}">
+<style>
+  .url-list {
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .url-item {
+    margin-bottom: 5px;
+    word-break: break-all;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .page-button {
+    margin: 0 10px;
+  }
+  
+  .page-info {
+    font-size: 14px;
+  }
+  
+  .result-actions {
+    margin-bottom: 20px;
+  }
+  
+  .result-actions button {
+    margin-right: 10px;
+  }
+  
+  .result-summary {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .scanning-indicator {
+    display: flex;
+    align-items: center;
+    background-color: #e8f4ff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .scanning-indicator p {
+    margin-left: 10px;
+    margin-bottom: 0;
+  }
+  
+  .error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    padding: 10px;
+    border-radius: 5px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('user.dashboard', user_id=current_user.id) }}">仪表板</a></li>
+          <li class="breadcrumb-item"><a href="{{ url_for('attack.attack', user_id=current_user.id, target_id=target_id) }}">扫描工具</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Gau扫描结果</li>
+        </ol>
+      </nav>
+      
+      <div class="card">
+        <div class="card-header">
+          <h3>Gau扫描结果 - {{ target.target_ip }}</h3>
+        </div>
+        <div class="card-body">
+          <div id="gau-result-root"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 初始化数据
+  window.INITIAL_DATA = {
+    userId: "{{ current_user.id }}",
+    targetId: "{{ target_id }}",
+    target: {
+      target_ip: "{{ target.target_ip }}",
+      target_ip_no_https: "{{ target.target_ip_no_https }}"
+    }
+  };
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dist/result.js') }}"></script>
+{% endblock %} 

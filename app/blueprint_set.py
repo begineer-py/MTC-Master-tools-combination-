@@ -12,7 +12,8 @@ from routes.reconnaissance_route.nmap_route import nmap_route
 from routes.reconnaissance_route.crtsh_route import crtsh_route
 from routes.reconnaissance_route.webtech_route import webtech_route
 from routes.reconnaissance_route.flaresolverr_route import flaresolverr_route
-from routes.reconnaissance_route.harvester_route import harvester_route
+from routes.reconnaissance_route.Gau_route import gau_blueprint
+from routes.reconnaissance_route.linksfinder_route import linksfinder_blueprint
 
 def register_blueprints(app):
     """註冊所有藍圖"""
@@ -30,7 +31,8 @@ def register_blueprints(app):
         (crtsh_route, '/api/crtsh'),
         (webtech_route, '/api/webtech'),
         (flaresolverr_route, '/api/flaresolverr'),
-        (harvester_route, '/api/harvester')
+        (gau_blueprint, '/api/gau'),
+        (linksfinder_blueprint, '/api/linksfinder'),  
     ]
     
     # 註冊藍圖

@@ -2,7 +2,7 @@ import subprocess
 import time
 import json
 import requests
-
+from config.config import DockerConfig
 def run_command(command):
     """執行命令並返回結果"""
     try:
@@ -21,7 +21,7 @@ def run_command(command):
 
 def check_docker_installed():
     """檢查是否安裝了 Docker"""
-    success, _ = run_command("docker --version")
+    success, _ = run_command(DockerConfig.docker_path + " --version")
     return success
 
 def start_docker_service():
@@ -29,7 +29,7 @@ def start_docker_service():
     print("正在啟動 Docker 服務...")
     # 使用 runas 以管理員權限執行命令
     commands = [
-        'powershell -Command "Start-Process -FilePath \'C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\' -Verb RunAs"'
+        DockerConfig.docker_path + " start"
         ]
     
     for cmd in commands:
@@ -48,7 +48,7 @@ def check_docker_running():
     
     print("正在檢查 Docker 引擎狀態...")
     for i in range(max_retries):
-        success, output = run_command("docker info")
+        success, output = run_command(DockerConfig.docker_path + " info")
         if success:
             print("Docker 引擎運行正常")
             return True

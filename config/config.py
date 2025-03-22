@@ -1,4 +1,5 @@
 import os
+import logging
 
 class Config:
     """基本配置類"""
@@ -37,5 +38,46 @@ class TheHarvesterConfig:
     THEHARVESTER_PATH = os.path.join(os.path.dirname(__file__), '..', 'tools', 'theHarvester', 'theHarvester.py')
     THEHARVESTER_TIMEOUT = int(os.environ.get('THEHARVESTER_TIMEOUT', 60000))  # 毫秒
     THEHARVESTER_START_TIMEOUT = int(os.environ.get('THEHARVESTER_START_TIMEOUT', 20))  # 秒
+class LogConfig:
+    """日誌配置類"""
+    LOG_LEVEL = os.environ.get('LOG_LEVEL', 'DEBUG')
+    LOG_FORMAT = '%(asctime)s - %(levelname)s - %(message)s'
+    LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
     
+    # 配置并初始化日志记录器
+    logger = logging.getLogger('C2_application')
+    logger.setLevel(logging.getLevelName(LOG_LEVEL))
+    
+    # 如果没有处理器，添加一个控制台处理器
+    if not logger.handlers:
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.getLevelName(LOG_LEVEL))
+        
+        # 设置格式
+        formatter = logging.Formatter(LOG_FORMAT, LOG_DATE_FORMAT)
+        console_handler.setFormatter(formatter)
+        
+        # 添加处理器
+        logger.addHandler(console_handler)
+        
+        # 设置文件日志（如果需要）
+        log_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'logs')
+        os.makedirs(log_dir, exist_ok=True)
+        
+        file_handler = logging.FileHandler(os.path.join(log_dir, 'c2_app.log'), encoding='utf-8')
+        file_handler.setLevel(logging.getLevelName(LOG_LEVEL))
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+class ㄎDockerConfig:
+    """Docker 配置類"""
+    docker_path = os.environ.get('DOCKER_PATH', 'docker')
+    docker_compose_path = os.environ.get('DOCKER_COMPOSE_PATH', 'docker-compose')
+    docker_start_timeout = int(os.environ.get('DOCKER_START_TIMEOUT', 30))  # 秒
+    docker_stop_timeout = int(os.environ.get('DOCKER_STOP_TIMEOUT', 10))  # 秒
+    docker_check_interval = int(os.environ.get('DOCKER_CHECK_INTERVAL', 2))  # 秒
+    docker_auto_start = os.environ.get('DOCKER_AUTO_START', 'True').lower() == 'true'
+    docker_auto_restart = os.environ.get('DOCKER_AUTO_RESTART', 'True').lower() == 'true'
+
+
+
 

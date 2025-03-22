@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, render_template
+from flask import Blueprint, jsonify, render_template, request
 from instance.models import (
     Target, 
     crawler_each_url, 
@@ -6,7 +6,8 @@ from instance.models import (
     crawler_each_html, 
     crawler_each_js, 
     crawler_each_image,
-    crawler_each_security
+    crawler_each_security,
+    gau_results
 )
 from utils.permission import check_user_permission
 from flask_login import login_required, current_user
@@ -207,5 +208,36 @@ def get_crawler_security(user_id, target_id):
         return jsonify({
             'status': 'error',
             'message': f'獲取安全信息時出錯：{str(e)}'
+        }), 500
+
+@result_bp.route('/<int:user_id>/<int:target_id>')
+@login_required
+def get_result(user_id, target_id):
+    """获取扫描结果页面"""
+    try:
+        # 检查权限
+        permission_result = check_user_permission(user_id, target_id)
+        if not isinstance(permission_result, Target):
+            return permission_result
+            
+        # 获取结果类型
+        result_type = request.args.get('type', 'crawler')
+        
+        # 根据类型返回不同的结果页面
+        if result_type == 'gau':
+            return render_template('result/gau_result.html', 
+                                  user_id=user_id, 
+                                  target_id=target_id,
+                                  target=permission_result)
+        else:
+            # 默认返回爬虫结果页面
+            return render_template('result/crawler_result.html', 
+                                  user_id=user_id, 
+                                  target_id=target_id,
+                                  target=permission_result)
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': f'获取结果页面时出错：{str(e)}'
         }), 500
 

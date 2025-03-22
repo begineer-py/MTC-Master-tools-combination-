@@ -7,7 +7,7 @@ const WebtechScan = ({ userId, targetId }) => {
   const [hasResult, setHasResult] = useState(false);
   const scanEndpoint = useCallback((userId, targetId) => `/api/webtech/scan/${userId}/${targetId}`, []);
   const resultEndpoint = useCallback((userId, targetId) => `/api/webtech/result/${userId}/${targetId}`, []);
-  
+  const fileEndpoint = useCallback((userId, targetId) => `/api/webtech/file/${userId}/${targetId}`, []);
   const {
     isScanning,
     status,
@@ -64,7 +64,7 @@ const WebtechScan = ({ userId, targetId }) => {
 
   const handleDownload = useCallback(async (format) => {
     try {
-      window.location.href = `/api/webtech/download/${userId}/${targetId}?format=${format}`;
+      window.location.href = fileEndpoint(userId, targetId);
     } catch (error) {
       console.error('下載錯誤:', error);
     }

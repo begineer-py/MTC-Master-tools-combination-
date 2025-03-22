@@ -134,8 +134,8 @@ class Target(db.Model):
     """目標模型"""
     __tablename__ = 'target'
     id = db.Column(db.Integer, primary_key=True)
-    target_ip = db.Column(db.String(255), nullable=False)
-    target_ip_no_https = db.Column(db.String(255), nullable=False)
+    target_ip = db.Column(db.String(255), nullable=False,unique=True)
+    target_ip_no_https = db.Column(db.String(255), nullable=False,unique=True)
     target_port = db.Column(db.Integer, nullable=False)
     target_username = db.Column(db.String(255), nullable=False)
     target_password = db.Column(db.String(255), nullable=False)
@@ -148,7 +148,7 @@ class Target(db.Model):
     crtsh_results = db.relationship('crtsh_Result', backref='target', lazy='dynamic')
     webtech_results = db.relationship('webtech_Result', backref='target', lazy='dynamic')
     crawler_each_urls = db.relationship('crawler_each_url', backref=db.backref('target', lazy='joined'), lazy='dynamic')
-    harvester_results = db.relationship('HarvesterResult', backref='target', lazy='dynamic')
+    gau_results = db.relationship('gau_results', backref='target', lazy='dynamic')
 
 class nmap_Result(db.Model):
     """掃描結果模型"""
@@ -322,83 +322,6 @@ class if_sql_injection(db.Model):
     # 關聯定義
     url = db.relationship('crawler_each_url', backref=db.backref('sql_injections', lazy='dynamic'))
 
-class HarvesterResult(db.Model):
-    """theHarvester 扫描结果模型"""
-    __tablename__ = 'harvester_results'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    target_id = db.Column(db.Integer, db.ForeignKey('target.id'), nullable=False)
-    
-    # 基本信息
-    scan_time = db.Column(db.DateTime, default=datetime.now)
-    status = db.Column(db.String(50), default='pending')  # pending, running, completed, error
-    error = db.Column(db.Text)
-    
-    # IP 相关信息
-    direct_ips = db.Column(db.JSON)  # 直接关联的 IP 地址
-    ip_ranges = db.Column(db.JSON)   # IP 地址段
-    cdn_ips = db.Column(db.JSON)     # CDN IP 地址
-    
-    # DNS 信息
-    dns_records = db.Column(db.JSON)  # DNS 记录
-    reverse_dns = db.Column(db.JSON)  # 反向 DNS 记录
-    asn_info = db.Column(db.JSON)     # ASN 信息
-    
-    # 域名信息
-    subdomains = db.Column(db.JSON)   # 子域名列表
-    hosts = db.Column(db.JSON)        # 主机信息
-    
-    # 其他发现
-    urls = db.Column(db.JSON)         # 发现的 URL
-    emails = db.Column(db.JSON)       # 电子邮件地址
-    social_media = db.Column(db.JSON) # 社交媒体信息
-    
-    # 扫描配置
-    scan_sources = db.Column(db.String(255))  # 使用的数据源
-    limit = db.Column(db.Integer)             # 结果限制数
-    
-    def to_dict(self):
-        """转换为字典格式"""
-        return {
-            'id': self.id,
-            'target_id': self.target_id,
-            'scan_time': self.scan_time.isoformat() if self.scan_time else None,
-            'status': self.status,
-            'error': self.error,
-            
-            # IP 相关信息
-            'ip_data': {
-                'direct_ips': self.direct_ips or [],
-                'ip_ranges': self.ip_ranges or [],
-                'cdn_ips': self.cdn_ips or []
-            },
-            
-            # DNS 信息
-            'dns_data': {
-                'dns_records': self.dns_records or [],
-                'reverse_dns': self.reverse_dns or [],
-                'asn_info': self.asn_info or []
-            },
-            
-            # 域名信息
-            'domain_data': {
-                'subdomains': self.subdomains or [],
-                'hosts': self.hosts or []
-            },
-            
-            # 其他发现
-            'discovery_data': {
-                'urls': self.urls or [],
-                'emails': self.emails or [],
-                'social_media': self.social_media or []
-            },
-            
-            # 扫描配置
-            'scan_config': {
-                'sources': self.scan_sources,
-                'limit': self.limit
-            }
-        }
 class vulnerability_scanning_result(db.Model):
     """漏洞掃描結果模型"""
     id = db.Column(db.Integer, primary_key=True)
@@ -432,4 +355,42 @@ class xss_result(db.Model):
             'id': self.id,
             'xss_result': self.xss_result
         }
+
+class gau_results(db.Model):
+    """Gau扫描结果模型"""
+    __tablename__ = 'gau_results'
     
+    id = db.Column(db.Integer, primary_key=True)
+    target_id = db.Column(db.Integer, db.ForeignKey('target.id'), nullable=False, unique=True)
+    domain = db.Column(db.String(255), nullable=False)
+    urls = db.Column(db.JSON, nullable=True)  # 存储URL列表
+    total_urls = db.Column(db.Integer, default=0)  # URL总数
+    status = db.Column(db.String(20), nullable=False, default='pending')  # 扫描状态：pending, scanning, completed, failed
+    error_message = db.Column(db.Text, nullable=True)  # 错误信息
+    scan_time = db.Column(db.DateTime, nullable=False, default=datetime.now)  # 扫描时间
+    
+    __table_args__ = (
+        db.UniqueConstraint('target_id', name='uq_gau_results_target_id'),
+    )
+    
+    def __init__(self, target_id, domain, urls=None, total_urls=0, status='pending', error_message=None):
+        self.target_id = target_id
+        self.domain = domain
+        self.urls = urls or []
+        self.total_urls = total_urls
+        self.status = status
+        self.error_message = error_message
+        self.scan_time = datetime.now()
+    
+    def to_dict(self):
+        """转换为字典格式"""
+        return {
+            'id': self.id,
+            'target_id': self.target_id,
+            'domain': self.domain,
+            'urls': self.urls,
+            'total_urls': self.total_urls,
+            'status': self.status,
+            'error_message': self.error_message,
+            'scan_time': self.scan_time.strftime('%Y-%m-%d %H:%M:%S') if self.scan_time else None
+        }

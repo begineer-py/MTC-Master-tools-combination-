@@ -15,29 +15,7 @@ from flask_cors import CORS
 import requests
 from requests.exceptions import RequestException
 
-def check_harvester_environment():
-    """檢查 theHarvester 環境"""
-    harvester_path = os.path.join(os.getcwd(), 'tools', 'theHarvester')
-    
-    # 檢查 theHarvester 目錄是否存在
-    if not os.path.exists(harvester_path):
-        try:
-            # 如果不存在，克隆倉庫
-            import subprocess
-            clone_cmd = f"git clone https://github.com/laramies/theHarvester.git {harvester_path}"
-            subprocess.run(clone_cmd, shell=True, check=True)
-            
-            # 安裝依賴
-            install_cmd = f"pip install -r {os.path.join(harvester_path, 'requirements.txt')}"
-            subprocess.run(install_cmd, shell=True, check=True)
-            
-            return True
-        except subprocess.CalledProcessError as e:
-            raise RuntimeError(f"安裝 theHarvester 失敗: {str(e)}")
-        except Exception as e:
-            raise RuntimeError(f"設置 theHarvester 環境時出錯: {str(e)}")
-    
-    return True
+
 
 def check_flaresolverr():
     """檢查 FlareSolverr 服務是否正在運行"""
@@ -53,8 +31,6 @@ def check_flaresolverr():
 
 def create_app():
     try:
-        # 檢查 theHarvester 環境
-        check_harvester_environment()
         
         # 檢查並啟動 FlareSolverr
         if not check_flaresolverr():

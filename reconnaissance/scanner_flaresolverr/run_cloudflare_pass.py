@@ -3,7 +3,7 @@ import subprocess
 from datetime import datetime
 from contextlib import contextmanager
 from flask import current_app
-from instance.models import db, HarvesterResult
+from instance.models import db, gau_results
 import os
 
 def setup_logging():
@@ -136,7 +136,7 @@ class CloudflareHarvester:
             
             with session_scope() as session:
                 # 檢查現有結果
-                existing_result = session.query(HarvesterResult).filter_by(
+                existing_result = session.query(gau_results).filter_by(
                     target_id=target_id
                 ).first()
                 
@@ -147,7 +147,7 @@ class CloudflareHarvester:
                     
                 # 更新或創建新的掃描結果
                 if not existing_result:
-                    existing_result = HarvesterResult(target_id=target_id)
+                    existing_result = gau_results(target_id=target_id)
                     session.add(existing_result)
                 
                 existing_result.status = 'running'
