@@ -1,126 +1,85 @@
-from flask import Blueprint, request, jsonify, redirect, url_for, current_app
-from flask_login import login_required, current_user
-from instance.models import Target
-from utils.permission import check_user_permission
-from reconnaissance.threads.thread_nmap import nmap_ScanThread
-import queue
-from instance.models import nmap_Result
-import requests
+from flask import Blueprint, request, jsonify, current_app
+from instance.models import Target, nmap_Result, db
+from reconnaissance.threads.thread_nmap import start_nmap_scan
 import json
+import os
+from datetime import datetime
+import tempfile
 
+# 创建蓝图
 nmap_route = Blueprint('nmap', __name__)
 
-@nmap_route.route('/scan/<int:user_id>/<int:target_id>', methods=['POST'])
-@login_required
-def nmap_scan(user_id, target_id):
-    # 檢查用戶權限
-    target = Target.query.filter_by(id=target_id).first()
-    if not target:
-        return jsonify({
-            'status': 'error',
-            'message': '找不到指定的目標'
-        }), 404
-    
-    client_ip = request.remote_addr
-    current_app.logger.debug(f"用戶 {current_user.id} 正在訪問 nmap 路由，目標 ID: {target_id} {client_ip}")
-    
+@nmap_route.route('/scan/<int:target_id>', methods=['POST'])
+def nmap_scan(target_id):
+    """启动NMAP扫描"""
     try:
-        # 獲取掃描類型
-        data = request.get_json()
-        scan_type = data.get('scan_type', 'common') if data else 'common'
+        client_ip = request.remote_addr
+        current_app.logger.debug(f"正在访问 nmap 路由，目标 ID: {target_id} {client_ip}")
         
-        # 創建並啟動掃描線程
-        scan_thread = nmap_ScanThread(
-            target_ip=target.target_ip_no_https,
-            user_id=current_user.id,
-            target_id=target_id,
-            app=current_app,
-            scan_type=scan_type
-        )
-        scan_thread.start()
-        current_app.logger.debug(f"掃描線程已啟動，類型: {scan_type}")
+        # 获取目标信息
+        target = Target.query.get_or_404(target_id)
         
-        # 等待結果（最多等待6000秒）
-        try:
-            scan_result, success, code = scan_thread.get_result(timeout=6000)
-            if not success:
-                raise Exception(scan_result if isinstance(scan_result, str) else "掃描失敗")
-            
-            if not scan_result or not isinstance(scan_result, dict):
-                raise Exception("無效的掃描結果")
-            
-            current_app.logger.debug(f"掃描已完成")
-            return jsonify({
-                'status': 'success',
-                'message': '掃描完成',
-                'result': scan_result,
-                'code': code
-            }), 200
-            
-        except queue.Empty:
-            current_app.logger.error("掃描超時")
-            return jsonify({
-                'status': 'error',
-                'message': '掃描超時，請稍後重試',
-                'code': 408
-            }), 408
+        # 获取扫描类型
+        data = request.get_json() or {}
+        scan_type = data.get('scan_type', 'common')  # 默认为common扫描
+        
+        # 获取目标信息
+        target_data = {
+            'id': target.id,
+            'target_ip': target.domain,  # 使用domain字段
+            'target_port': target.target_port,
+            'scan_type': scan_type
+        }
+        
+        # 启动扫描
+        scan_id = start_nmap_scan(target_id, target_data, current_app._get_current_object())
+        
+        return jsonify({
+            'success': True,
+            'message': '扫描已启动',
+            'scan_id': scan_id
+        })
         
     except Exception as e:
-        error_msg = str(e)
-        current_app.logger.error(f"Nmap scan error: {error_msg}")
+        current_app.logger.error(f"启动NMAP扫描时出错: {str(e)}")
         return jsonify({
-            'status': 'error',
-            'message': f'掃描過程中發生錯誤: {error_msg}',
-            'code': 500
+            'success': False,
+            'message': f'启动扫描失败: {str(e)}'
         }), 500
 
-@nmap_route.route('/result/<int:user_id>/<int:target_id>', methods=['GET', 'POST'])
-@login_required
-def nmap_get_result(user_id, target_id):
+@nmap_route.route('/result/<int:target_id>', methods=['GET'])
+def get_nmap_result(target_id):
+    """获取NMAP扫描结果"""
     try:
-        # 檢查用戶權限
-        target = Target.query.filter_by(id=target_id).first()
-        if not target:
-            return jsonify({
-                'status': 'error',
-                'message': '找不到指定的目標'
-            }), 404
+        # 获取目标信息
+        target = Target.query.get_or_404(target_id)
         
-        # 檢查是否已存在掃描結果
-        existing_result = nmap_Result.query.filter_by(
+        # 获取扫描类型（默认为common）
+        scan_type = request.args.get('scan_type', 'common')
+        
+        # 查询扫描结果
+        nmap_result = nmap_Result.query.filter_by(
             target_id=target_id,
-        ).order_by(
-            nmap_Result.scan_time.desc()
+            scan_type=scan_type
         ).first()
         
-        if existing_result:
+        if not nmap_result:
             return jsonify({
-                'status': 'success',
-                'data': existing_result.to_dict()
-            })
+                'success': False,
+                'message': '未找到扫描结果'
+            }), 404
         
-        # 如果沒有結果，自動開始新的掃描
-        response = requests.post(
-            url_for('nmap.nmap_scan', user_id=user_id, target_id=target_id, _external=True),
-            json={'scan_type': 'common'}
-        )
-        
-        if response.status_code == 200:
-            return jsonify({
-                'status': 'success',
-                'message': '掃描完成'
-            }), 200
-        else:
-            return jsonify({
-                'status': 'error',
-                'message': '未找到掃描結果,自動掃描中'
-            }), 302
+        # 返回结果
+        return jsonify({
+            'success': True,
+            'result': nmap_result.to_dict()
+        })
         
     except Exception as e:
-        current_app.logger.error(f"Error getting Nmap result: {str(e)}")
+        current_app.logger.error(f"获取NMAP扫描结果时出错: {str(e)}")
         return jsonify({
-            'status': 'error',
-            'message': f'獲取掃描結果時發生錯誤: {str(e)}'
+            'success': False,
+            'message': f'获取扫描结果失败: {str(e)}'
         }), 500
     
 

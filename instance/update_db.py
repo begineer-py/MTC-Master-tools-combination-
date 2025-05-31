@@ -244,32 +244,66 @@ def migrate_database():
         return False
 
 def update_database():
-    """更新数据库结构"""
+    """简单迁移：将target_ip_no_https换成domain"""
     try:
-        app = Flask(__name__)
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        # 连接数据库
+        conn = sqlite3.connect('instance/c2.db')
+        cursor = conn.cursor()
         
-        db.init_app(app)
+        # 备份当前数据库
+        backup_time = datetime.now().strftime('%Y%m%d_%H%M%S')
+        backup_path = f'instance/backups/c2_{backup_time}.db'
+        os.makedirs('instance/backups', exist_ok=True)
+        shutil.copy2('instance/c2.db', backup_path)
+        print(f"数据库已备份到: {backup_path}")
+            
+        print("开始将target_ip_no_https换成domain的迁移...")
         
-        with app.app_context():
-            # 删除旧的 harvester_results 表
-            db.engine.execute('DROP TABLE IF EXISTS harvester_results')
-            
-            # 创建新的表结构
-            db.create_all()
-            
-            print("数据库更新成功！")
-            
+        # 1. 检查target表是否已经有domain列
+        cursor.execute("PRAGMA table_info(target)")
+        columns = cursor.fetchall()
+        column_names = [col[1] for col in columns]
+        
+        # 如果已经有domain列，则跳过创建
+        if 'domain' not in column_names:
+            # 2. 添加domain列
+            print("添加domain列...")
+            cursor.execute("ALTER TABLE target ADD COLUMN domain VARCHAR(255)")
+        else:
+            print("domain列已存在，跳过创建")
+        
+        # 3. 将target_ip_no_https的数据复制到domain
+        if 'target_ip_no_https' in column_names:
+            print("将target_ip_no_https数据复制到domain...")
+            cursor.execute("UPDATE target SET domain = target_ip_no_https WHERE domain IS NULL OR domain = ''")
+        
+        # 4. 更新引用target_ip_no_https的相关表（这里以gau_results为例）
+        # 检查gau_results表中是否有需要更新的字段
+        try:
+            cursor.execute("SELECT * FROM gau_results LIMIT 1")
+            # 如果表存在，检查数据
+            cursor.execute("UPDATE gau_results SET domain = (SELECT target_ip_no_https FROM target WHERE target.id = gau_results.target_id) WHERE domain IS NULL OR domain = ''")
+            print("更新gau_results表中的domain引用...")
+        except sqlite3.OperationalError:
+            print("gau_results表不存在或无需更新")
+        
+        # 5. 提交更改
+        conn.commit()
+        print("数据库迁移成功完成！")
+        
+        # 6. 关闭连接
+        cursor.close()
+        conn.close()
+        
+        return True
+        
     except Exception as e:
         print(f"数据库更新失败: {str(e)}")
-        logging.error(f"数据库更新错误: {str(e)}")
+        # 尝试回滚
+        if 'conn' in locals() and conn:
+            conn.rollback()
+            conn.close()
+        return False
 
 if __name__ == "__main__":
-    try:
-        if migrate_database():
-            logger.info("數據庫更新成功完成")
-        else:
-            logger.error("數據庫更新失敗")
-    except Exception as e:
-        logger.error(f"程序執行出錯: {str(e)}")
+    update_database()

@@ -1,12 +1,65 @@
+# 數據庫文件
 *.db
 *.db-wal
 *.db-shm
+instance/backups/
+
+# Node.js 依賴
+frontend/node_modules/
 node_modules/
+
+# 構建輸出
 static/js/dist/
+build/
+frontend/build/
+
+# 日誌文件
 *.log
+logs/
+*.txt
+
+# 系統文件
 .DS_Store
+Thumbs.db
+
+# 環境變量
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Python 相關
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.venv/
+
+# 測試和緩存
+*/test
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 輸出和臨時文件
+output/
+temp/
+flask_session/
+
+# IDE 和編輯器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 特定配置文件
+\tools\AI_hacking_tool\hacker_ai\configs\token_set.py
+
+# 敏感信息
+config/secrets.py
+instance/config.py

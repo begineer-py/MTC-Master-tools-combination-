@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}添加扫描目标{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-plus-circle"></i> 添加新目标</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="mb-4">
+                            <label for="domain" class="form-label fw-bold">域名</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                                <input type="text" class="form-control" id="domain" name="domain" 
+                                       placeholder="例如: example.com">
+                            </div>
+                            <div class="form-text text-muted">请输入要扫描的域名（不需要添加http/https）</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="target_ip" class="form-label fw-bold">目标URL</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-link"></i></span>
+                                <input type="text" class="form-control" id="target_ip" name="target_ip" required
+                                       placeholder="例如: https://example.com">
+                            </div>
+                            <div class="form-text text-muted">请输入完整URL，需要添加http/https前缀</div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-plus"></i> 添加目标
+                            </button>
+                            <a href="{{ url_for('index.index') }}" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-arrow-left"></i> 返回
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

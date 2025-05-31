@@ -86,3 +86,7 @@ class WebTechScanThread(threading.Thread):
             if self.is_alive():
                 return {"error": "扫描超时"}, False, 408
         return self.result, self.success, self.code 
+    def start_webtech_scan(target_id, target_data):
+        webtech_thread = WebTechScanThread(current_app, target_data['target_ip'], target_id)
+        webtech_thread.start()
+        return target_id

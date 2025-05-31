@@ -14,31 +14,34 @@ from urllib.parse import urlparse
 class GauScanThread(threading.Thread):
     """Gau扫描线程类"""
     
-    def __init__(self, target_id, user_id, domain, options=None, app=None):
+    def __init__(self, target_id, domain, options=None, app=None):
         """
         初始化Gau扫描线程
         
         参数:
             target_id: 目标ID
-            user_id: 用户ID
             domain: 要扫描的域名
-            options: 扫描选项字典
+            options: 扫描配置选项
             app: Flask应用实例
         """
-        threading.Thread.__init__(self)
+        super().__init__()
         self.target_id = target_id
-        self.user_id = user_id
         self.domain = domain
         self.options = options or {}
         self.app = app
+        self.daemon = True  # 设置为守护线程
+        
+        # 保存到活动扫描字典，用于跟踪
+        active_scans[f"{target_id}"] = self
+        
         self.result = Queue()
-        self.daemon = True  # 设置为守护线程，主线程结束时自动结束
-        self.batch_size = 1000  # 每批处理的URL数量，从500增加到1000
-        self.update_interval = 30  # 更新数据库的间隔（秒），从10增加到30
-        self.log_interval = 10000  # 日志记录间隔，每处理10000个URL记录一次
+        self.batch_size = 10000  # 每批处理的URL数量，从1000增加到10000
+        self.update_interval = 60  # 更新数据库的间隔（秒），从30增加到60
+        self.log_interval = 50000  # 日志记录间隔，从10000增加到50000
         self.last_update_time = 0  # 上次更新时间
         self.url_set = set()  # 使用集合存储URL，自动去重
         self.last_log_count = 0  # 上次记录日志时的URL数量
+        self.memory_mode = True  # 使用内存模式加快处理速度
     
     def run(self):
         """线程执行函数"""
@@ -155,13 +158,13 @@ class GauScanThread(threading.Thread):
             scan_result.urls = current_urls
             scan_result.total_urls = len(current_urls)
             
-            # 如果是最终更新或URL数量增加了一定比例，才提交更改
-            if final_update or (len(current_urls) - current_count) > 5000 or processed_count % 50000 == 0:
+            # 如果是最终更新或URL数量增加了一定比例，或处理了大量URL，才提交更改
+            if final_update or (len(current_urls) - current_count) > 10000 or processed_count % 100000 == 0:
                 # 提交更改
                 db.session.commit()
                 
                 # 只在最终更新或处理了一定数量的URL时记录日志
-                if final_update or processed_count % 10000 == 0:
+                if final_update or processed_count % 50000 == 0:
                     current_app.logger.info(f"已更新Gau扫描结果，目标ID: {self.target_id}，当前URL总数: {scan_result.total_urls}")
         
         except Exception as e:
@@ -213,6 +216,9 @@ class GauScanThread(threading.Thread):
             # 添加线程参数
             if self.options.get('threads'):
                 cmd.extend(['--threads', str(self.options.get('threads'))])
+            else:
+                # 默认使用50个线程加速扫描
+                cmd.extend(['--threads', '50'])
             
             if self.options.get('providers'):
                 cmd.extend(['--providers', self.options.get('providers')])
@@ -263,38 +269,82 @@ class GauScanThread(threading.Thread):
             # 从文件中读取URL并处理
             current_app.logger.info(f"Gau扫描完成，正在处理结果...")
             
-            # 分批读取文件并处理
-            with open(output_file, 'r', encoding='utf-8', errors='replace') as f:
-                url_buffer = []
-                buffer_size = 10000  # 更大的缓冲区
-                
-                for line in f:
-                    url = self._clean_url(line.strip())
-                    if url and url not in self.url_set:
-                        self.url_set.add(url)
-                        url_buffer.append(url)
+            # 使用内存模式时，一次性读取整个文件内容到内存中处理
+            if self.memory_mode and os.path.getsize(output_file) < 100 * 1024 * 1024:  # 小于100MB的文件
+                try:
+                    with open(output_file, 'r', encoding='utf-8', errors='replace') as f:
+                        content = f.read()
                     
-                    processed_count += 1
+                    # 按行分割并处理
+                    lines = content.splitlines()
+                    url_buffer = []
                     
-                    # 每处理一定数量的URL，更新一次数据库
-                    if len(url_buffer) >= buffer_size:
-                        self._update_scan_result(scan_result, url_buffer, processed_count)
-                        url_buffer = []
+                    for line in lines:
+                        url = self._clean_url(line.strip())
+                        if url and url not in self.url_set:
+                            self.url_set.add(url)
+                            url_buffer.append(url)
                         
-                        # 每处理100,000个URL记录一次日志
-                        if processed_count % 100000 == 0:
-                            current_app.logger.info(f"已处理 {processed_count} 个URL，当前去重后URL数量：{len(self.url_set)}")
+                        processed_count += 1
+                        
+                        # 每处理一定数量的URL，更新一次扫描结果
+                        if len(url_buffer) >= self.batch_size:
+                            self._update_scan_result(scan_result, url_buffer, processed_count)
+                            url_buffer = []
+                            
+                            # 每处理一定数量的URL记录一次日志
+                            if processed_count % 100000 == 0:
+                                current_app.logger.info(f"已处理 {processed_count} 个URL，当前去重后URL数量：{len(self.url_set)}")
+                    
+                    # 处理剩余的URL
+                    if url_buffer:
+                        self._update_scan_result(scan_result, url_buffer, processed_count)
+                    
+                    # 更新最终结果
+                    scan_result.status = 'completed'
+                    scan_result.total_urls = len(self.url_set)
+                    db.session.commit()
+                    
+                    current_app.logger.info(f"Gau扫描处理完成，目标ID: {self.target_id}，总URL数: {scan_result.total_urls}")
+                    
+                except Exception as e:
+                    current_app.logger.error(f"内存模式处理文件失败: {str(e)}，切换到流式处理模式")
+                    self.memory_mode = False
             
-            # 处理剩余的URL
-            if url_buffer:
-                self._update_scan_result(scan_result, url_buffer, processed_count)
-            
-            # 更新最终结果
-            scan_result.status = 'completed'
-            scan_result.total_urls = len(self.url_set)
-            db.session.commit()
-            
-            current_app.logger.info(f"Gau扫描完成，目标ID: {self.target_id}，总URL数: {scan_result.total_urls}")
+            # 如果不使用内存模式或内存模式处理失败，使用流式处理
+            if not self.memory_mode:
+                # 分批读取文件并处理
+                with open(output_file, 'r', encoding='utf-8', errors='replace') as f:
+                    url_buffer = []
+                    buffer_size = 20000  # 更大的缓冲区
+                    
+                    for line in f:
+                        url = self._clean_url(line.strip())
+                        if url and url not in self.url_set:
+                            self.url_set.add(url)
+                            url_buffer.append(url)
+                        
+                        processed_count += 1
+                        
+                        # 每处理一定数量的URL，更新一次数据库
+                        if len(url_buffer) >= buffer_size:
+                            self._update_scan_result(scan_result, url_buffer, processed_count)
+                            url_buffer = []
+                            
+                            # 每处理100,000个URL记录一次日志
+                            if processed_count % 100000 == 0:
+                                current_app.logger.info(f"已处理 {processed_count} 个URL，当前去重后URL数量：{len(self.url_set)}")
+                
+                # 处理剩余的URL
+                if url_buffer:
+                    self._update_scan_result(scan_result, url_buffer, processed_count)
+                
+                # 更新最终结果
+                scan_result.status = 'completed'
+                scan_result.total_urls = len(self.url_set)
+                db.session.commit()
+                
+                current_app.logger.info(f"Gau扫描完成，目标ID: {self.target_id}，总URL数: {scan_result.total_urls}")
             
             # 尝试删除临时文件以节省空间
             try:
@@ -380,27 +430,30 @@ class GauScanThread(threading.Thread):
 # 全局线程字典，用于跟踪正在运行的扫描
 active_scans = {}
 
-def start_gau_scan(target_id, user_id, domain, options=None):
+def start_gau_scan(target_id, domain, options=None):
     """
     启动Gau扫描
     
     参数:
         target_id: 目标ID
-        user_id: 用户ID
-        domain: 要扫描的域名
-        options: 扫描选项字典
+        domain: 域名
+        options: 扫描选项
     
     返回:
         target_id: 目标ID
     """
+    # 初始化选项
+    if options is None:
+        options = {}
+    
     # 检查是否已有该目标的扫描正在进行
-    scan_key = f"{user_id}_{target_id}"
+    scan_key = f"{target_id}"
     if scan_key in active_scans and active_scans[scan_key].is_alive():
         current_app.logger.info(f"已有Gau扫描正在进行，目标ID: {target_id}")
         return target_id
     
     # 创建并启动新的扫描线程
-    scan_thread = GauScanThread(target_id, user_id, domain, options, current_app._get_current_object())
+    scan_thread = GauScanThread(target_id, domain, options, current_app._get_current_object())
     scan_thread.start()
     
     # 记录活动扫描

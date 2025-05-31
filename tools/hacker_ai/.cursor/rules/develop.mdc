@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+使用class做為需要大量定義參數的python檔案的方法 例如
+class trainer(self):
+    self. ........
+
+    

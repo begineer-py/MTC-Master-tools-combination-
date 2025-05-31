@@ -1,10 +1,8 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, UTC, timedelta
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
 from threading import Lock
-from flask_login import UserMixin
 import json
 import secrets
 
@@ -17,132 +15,16 @@ class payload(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     payload = db.Column(db.String(255), nullable=False)
 
-class User(db.Model, UserMixin):
-    """用戶模型"""
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
-    registered_on = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
-    client_ip = db.Column(db.String(39))
-    is_admin = db.Column(db.Boolean, default=False)
-    
-    # API Key 相關字段
-    api_key = db.Column(db.String(64), unique=True, nullable=True)
-    api_key_created_at = db.Column(db.DateTime, nullable=True)
-    api_key_expires_at = db.Column(db.DateTime, nullable=True)
-    is_api_authenticated = db.Column(db.Boolean, default=False)
-    
-    # 關聯定義
-    commands = db.relationship('Command_User', backref='user', lazy='dynamic')
-    targets = db.relationship('Target', backref='user', lazy='dynamic')
-
-    def set_password(self, password):
-        """設置密碼"""
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        """檢查密碼"""
-        return check_password_hash(self.password_hash, password)
-        
-    def generate_api_key(self, expires_in=30):
-        """生成新的 API Key
-        
-        Args:
-            expires_in: API Key 的有效期（天數）
-            
-        Returns:
-            str: 生成的 API Key
-        """
-        self.api_key = secrets.token_hex(32)
-        self.api_key_created_at = datetime.now(UTC)
-        self.api_key_expires_at = self.api_key_created_at + timedelta(days=expires_in)
-        return self.api_key
-        
-    def revoke_api_key(self):
-        """撤銷當前的 API Key"""
-        self.api_key = None
-        self.api_key_created_at = None
-        self.api_key_expires_at = None
-        self.is_api_authenticated = False
-        
-    def check_api_key(self, api_key):
-        """檢查 API Key 是否有效
-        
-        Args:
-            api_key: 要檢查的 API Key
-            
-        Returns:
-            bool: API Key 是否有效
-        """
-        if not self.api_key or not api_key:
-            return False
-            
-        if self.api_key != api_key:
-            return False
-            
-        if not self.api_key_expires_at:
-            return False
-            
-        if datetime.now(UTC) > self.api_key_expires_at:
-            return False
-            
-        return True
-
-    def set_api_auth(self, api_key):
-        """設置 API 認證狀態"""
-        self.is_api_authenticated = self.check_api_key(api_key)
-        return self.is_api_authenticated
-
-    @property
-    def is_active(self):
-        """用戶是否活躍"""
-        return True
-
-    @property
-    def is_authenticated(self):
-        """用戶是否已認證"""
-        return True if self.is_api_authenticated else super().is_authenticated
-
-class ZOMBIE(db.Model):
-    """肉雞模型"""
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
-    session_id = db.Column(db.String(32))
-    ip_address = db.Column(db.String(39))
-    last_seen = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
-    commands = db.relationship('Command_ZOMBIE', backref='zombie', lazy='dynamic')
-
-class Command_ZOMBIE(db.Model):
-    """肉雞命令模型"""
-    id = db.Column(db.Integer, primary_key=True)
-    command = db.Column(db.String(255), nullable=False)
-    timestamp = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
-    user_id = db.Column(db.Integer, db.ForeignKey('zombie.id'), nullable=True)
-    is_run = db.Column(db.Boolean, default=False)
-    result = db.Column(db.Text, nullable=True)
-
-class Command_User(db.Model):
-    """用戶命令模型"""
-    id = db.Column(db.Integer, primary_key=True)
-    command = db.Column(db.String(255), nullable=False)
-    timestamp = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    is_run = db.Column(db.Boolean, default=False)
-    result = db.Column(db.Text, nullable=True)
-
 class Target(db.Model):
     """目標模型"""
     __tablename__ = 'target'
     id = db.Column(db.Integer, primary_key=True)
-    target_ip = db.Column(db.String(255), nullable=False,unique=True)
-    target_ip_no_https = db.Column(db.String(255), nullable=False,unique=True)
+    target_ip = db.Column(db.String(255), nullable=False, unique=True)
+    domain = db.Column(db.String(255), nullable=True)  # 替代target_ip_no_https，存储不带协议的域名
     target_port = db.Column(db.Integer, nullable=False)
-    target_username = db.Column(db.String(255), nullable=False)
-    target_password = db.Column(db.String(255), nullable=False)
     target_status = db.Column(db.String(50), default='pending')
     deep_scan = db.Column(db.Boolean, default=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    
+
     # 關聯定義
     nmap_results = db.relationship('nmap_Result', backref='target', lazy='dynamic')
     crtsh_results = db.relationship('crtsh_Result', backref='target', lazy='dynamic')
@@ -167,13 +49,52 @@ class nmap_Result(db.Model):
         
     def to_dict(self):
         """將結果轉換為字典格式"""
-        return {
-            'id': self.id,
-            'target_id': self.target_id,
-            'scan_result': json.loads(self.scan_result) if self.scan_result else None,
-            'scan_time': self.scan_time.strftime('%Y-%m-%d %H:%M:%S') if self.scan_time else None,
-            'scan_type': self.scan_type
-        }
+        try:
+            scan_data = json.loads(self.scan_result) if self.scan_result else {}
+            
+            # 提取主機狀態
+            host_status = 'unknown'
+            if scan_data.get('state'):
+                host_status = scan_data['state']
+            
+            # 提取端口信息
+            ports = []
+            if scan_data.get('ports'):
+                for port_number, port_info in scan_data['ports'].items():
+                    ports.append({
+                        'port': port_number,
+                        'state': port_info.get('state', 'unknown'),
+                        'service': port_info.get('name', 'unknown'),
+                        'version': port_info.get('product', '') + ' ' + port_info.get('version', ''),
+                        'protocol': 'tcp'  # 默認為 TCP
+                    })
+            
+            # 提取操作系統信息
+            os_info = None
+            if scan_data.get('os'):
+                os_info = {
+                    'name': scan_data['os'].get('name', 'unknown'),
+                    'accuracy': scan_data['os'].get('accuracy', 0),
+                    'details': scan_data['os'].get('details', {})
+                }
+            
+            return {
+                'scan_type': self.scan_type,
+                'host_status': host_status,
+                'ports': ports,
+                'os_info': os_info,
+                'error': scan_data.get('error'),
+                'scan_time': self.scan_time.strftime('%Y-%m-%d %H:%M:%S') if self.scan_time else None
+            }
+        except Exception as e:
+            return {
+                'scan_type': self.scan_type,
+                'host_status': 'error',
+                'ports': [],
+                'os_info': None,
+                'error': str(e),
+                'scan_time': self.scan_time.strftime('%Y-%m-%d %H:%M:%S') if self.scan_time else None
+            }
 
 class crtsh_Result(db.Model):
     """crtsh掃描結果模型"""
@@ -362,7 +283,7 @@ class gau_results(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     target_id = db.Column(db.Integer, db.ForeignKey('target.id'), nullable=False, unique=True)
-    domain = db.Column(db.String(255), nullable=False)
+    domain = db.Column(db.String(255), nullable=False)  # 保留这个字段，但在初始化时使用target_ip_no_https
     urls = db.Column(db.JSON, nullable=True)  # 存储URL列表
     total_urls = db.Column(db.Integer, default=0)  # URL总数
     status = db.Column(db.String(20), nullable=False, default='pending')  # 扫描状态：pending, scanning, completed, failed
@@ -373,9 +294,20 @@ class gau_results(db.Model):
         db.UniqueConstraint('target_id', name='uq_gau_results_target_id'),
     )
     
-    def __init__(self, target_id, domain, urls=None, total_urls=0, status='pending', error_message=None):
+    def __init__(self, target_id, domain=None, urls=None, total_urls=0, status='pending', error_message=None):
+        from sqlalchemy.orm import Session
+        
         self.target_id = target_id
-        self.domain = domain
+        
+        # 如果没有提供domain，尝试获取目标的domain
+        if domain is None:
+            session = Session.object_session(self) or db.session
+            if session:
+                target = session.query(Target).filter_by(id=target_id).first()
+                if target:
+                    domain = target.domain
+        
+        self.domain = domain or ''
         self.urls = urls or []
         self.total_urls = total_urls
         self.status = status

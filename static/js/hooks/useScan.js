@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-const useScan = () => {
+const useScan = (endpointFn) => {
   const [isScanning, setIsScanning] = useState(false);
   const [status, setStatus] = useState('');
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
-  const startScan = async (endpoint, options = {}) => {
+  const startScan = async (targetId, options = {}) => {
     if (isScanning) {
       throw new Error('掃描已在進行中');
     }
@@ -16,8 +16,8 @@ const useScan = () => {
       setStatus('掃描中，預計需要3-5分鐘...');
       setError(null);
 
-      // endpoint 现在是字符串，直接使用
-      const url = endpoint;
+      // 使用endpointFn生成URL
+      const url = endpointFn(targetId);
       console.log('請求 URL:', url);
       console.log('請求選項:', options);
 
@@ -45,18 +45,6 @@ const useScan = () => {
         'statusText': response.statusText
       });
 
-      // 檢查響應類型
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        const text = await response.text();
-        console.error('收到非 JSON 響應:', {
-          status: response.status,
-          contentType: contentType,
-          responseText: text
-        });
-        throw new Error(`服務器返回了非 JSON 響應 (${response.status}): ${text.substring(0, 100)}...`);
-      }
-
       const data = await response.json();
       console.log('響應數據:', data);
 
@@ -64,23 +52,22 @@ const useScan = () => {
         throw new Error(data.message || `掃描失敗 (${response.status})`);
       }
 
-      if (!data.result) {
-        console.warn('響應中缺少 result 字段:', data);
+      if (data.success) {
+        setStatus('掃描已啟動');
+        return data;
+      } else {
+        throw new Error(data.message || '掃描失敗');
       }
 
-      setStatus('掃描完成');
-      setResult(data.result || data);
-      
-      return data;
-    } catch (error) {
+    } catch (err) {
       console.error('掃描錯誤:', {
-        message: error.message,
-        stack: error.stack,
-        type: error.name
+        message: err.message,
+        stack: err.stack,
+        type: err.constructor.name
       });
-      setError(error.message);
+      setError(err.message);
       setStatus('掃描失敗');
-      throw error;
+      throw err;
     } finally {
       setIsScanning(false);
     }
@@ -94,8 +81,7 @@ const useScan = () => {
     startScan,
     setResult,
     setStatus,
-    setError,
-    setIsScanning
+    setError
   };
 };
 

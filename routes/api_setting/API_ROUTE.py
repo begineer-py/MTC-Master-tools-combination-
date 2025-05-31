@@ -1,11 +1,15 @@
 from flask import Blueprint, request, jsonify
-from flask_login import login_required, current_user
-from instance.models import db, User
+from utils.decorators import json_login_required
+from instance.models import db
 from functools import wraps
 from datetime import datetime, UTC
+import os
 
 # 創建藍圖
 api_route = Blueprint('api', __name__)
+
+# 固定的API密钥 - 可以从环境变量获取或使用固定值
+API_KEY = os.environ.get('API_KEY', 'default_api_key_for_development')
 
 def api_auth_required(f):
     @wraps(f)
@@ -18,25 +22,13 @@ def api_auth_required(f):
                 'message': '缺少 API Key'
             }), 401
             
-        # 查找具有此 API Key 的用戶
-        user = User.query.filter_by(api_key=api_key).first()
-        if not user or not user.check_api_key(api_key):
+        # 检查API密钥是否匹配固定值
+        if api_key != API_KEY:
             return jsonify({
                 'success': False,
                 'message': '無效的 API Key'
             }), 401
             
-        return f(*args, **kwargs)
-    return decorated_function
-
-def json_login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if not current_user.is_authenticated:
-            return jsonify({
-                'success': False,
-                'message': '請先登錄'
-            }), 401
         return f(*args, **kwargs)
     return decorated_function
 
@@ -48,10 +40,9 @@ def test_auth():
         return jsonify({
             'success': True,
             'message': 'API 認證成功',
-            'user': {
-                'id': current_user.id,
-                'username': current_user.username,
-                'api_key_expires_at': current_user.api_key_expires_at.isoformat() if current_user.api_key_expires_at else None
+            'system': {
+                'version': '2.0',
+                'api_enabled': True
             }
         })
     except Exception as e:
@@ -60,75 +51,18 @@ def test_auth():
             'message': f'API 認證失敗: {str(e)}'
         }), 500
 
-@api_route.route('/key/generate', methods=['POST'])
-@json_login_required
-def generate_api_key():
-    """生成新的 API Key"""
-    try:
-        # 獲取過期時間（天數）
-        data = request.get_json() or {}
-        expires_in = data.get('expires_in', 30)
-        
-        # 生成新的 API Key
-        api_key = current_user.generate_api_key(expires_in)
-        
-        # 保存到數據庫
-        db.session.commit()
-        
-        return jsonify({
-            'success': True,
-            'message': 'API Key 生成成功',
-            'data': {
-                'api_key': api_key,
-                'expires_at': current_user.api_key_expires_at.isoformat()
-            }
-        })
-        
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({
-            'success': False,
-            'message': f'生成 API Key 失敗: {str(e)}'
-        }), 500
-
-@api_route.route('/key/revoke', methods=['POST'])
-@json_login_required
-def revoke_api_key():
-    """撤銷 API Key"""
-    try:
-        current_user.revoke_api_key()
-        db.session.commit()
-        
-        return jsonify({
-            'success': True,
-            'message': 'API Key 已撤銷'
-        })
-        
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({
-            'success': False,
-            'message': f'撤銷 API Key 失敗: {str(e)}'
-        }), 500
-
 @api_route.route('/key/info', methods=['GET'])
 @json_login_required
 def get_api_key_info():
     """獲取 API Key 信息"""
     try:
-        if not current_user.api_key:
-            return jsonify({
-                'success': False,
-                'message': '尚未生成 API Key'
-            }), 404
-            
         return jsonify({
             'success': True,
             'data': {
-                'api_key': current_user.api_key,
-                'created_at': current_user.api_key_created_at.isoformat() if current_user.api_key_created_at else None,
-                'expires_at': current_user.api_key_expires_at.isoformat() if current_user.api_key_expires_at else None,
-                'is_expired': datetime.now(UTC) > current_user.api_key_expires_at if current_user.api_key_expires_at else True
+                'api_key': API_KEY,
+                'created_at': datetime.now(UTC).isoformat(),
+                'expires_at': None,  # 永不过期
+                'is_expired': False
             }
         })
         
@@ -137,3 +71,26 @@ def get_api_key_info():
             'success': False,
             'message': f'獲取 API Key 信息失敗: {str(e)}'
         }), 500
+
+# 以下路由已被移除，返回简化的响应
+@api_route.route('/key/generate', methods=['POST'])
+@json_login_required
+def generate_api_key():
+    """生成新的 API Key - 已简化，使用固定API密钥"""
+    return jsonify({
+        'success': True,
+        'message': '系统现在使用固定API密钥，无需生成',
+        'data': {
+            'api_key': API_KEY,
+            'expires_at': None  # 永不过期
+        }
+    })
+
+@api_route.route('/key/revoke', methods=['POST'])
+@json_login_required
+def revoke_api_key():
+    """撤銷 API Key - 已简化，使用固定API密钥"""
+    return jsonify({
+        'success': True,
+        'message': '系统现在使用固定API密钥，无法撤销'
+    })

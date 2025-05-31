@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Loading from '../common/Loading';
 
-const CrtshResult = ({ userId, targetId }) => {
+const CrtshResult = ({ targetId }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [result, setResult] = useState(null);
@@ -12,7 +12,7 @@ const CrtshResult = ({ userId, targetId }) => {
             setLoading(true);
             setError(null);
             
-            const response = await fetch(`/api/crtsh/result/${userId}/${targetId}`, {
+            const response = await fetch(`/api/crtsh/result/${targetId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const CrtshResult = ({ userId, targetId }) => {
 
     useEffect(() => {
         fetchResults();
-    }, [userId, targetId]);
+    }, [targetId]);
 
     const renderResult = () => {
         if (!result) return null;
@@ -106,7 +106,7 @@ const CrtshResult = ({ userId, targetId }) => {
                         刷新結果
                     </button>
                     <button 
-                        onClick={() => window.location.href = `/api/crtsh/download/${userId}/${targetId}`}
+                        onClick={() => window.location.href = `/api/crtsh/download/${targetId}`}
                         className="download-button"
                     >
                         下載結果

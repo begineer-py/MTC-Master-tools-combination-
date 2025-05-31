@@ -1,132 +1,306 @@
 import React, { useState, useEffect } from 'react';
-import Loading from '../common/Loading';
-import { formatNmapResults } from '../../utils/formatResults';
 
-const NmapResult = ({ userId, targetId }) => {
+const NmapResult = ({ targetId }) => {
+    const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [result, setResult] = useState(null);
 
     const fetchResults = async () => {
         try {
-            setLoading(true);
-            setError(null);
+            const response = await fetch(`/api/nmap/result/${targetId}`);
+            console.log('Nmap結果響應狀態:', response.status);
             
-            const response = await fetch(`/api/nmap/result/${userId}/${targetId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                credentials: 'same-origin'
-            });
+            if (!response.ok) {
+                if (response.status === 404) {
+                    console.log('掃描結果尚未就緒');
+                    return null;
+                }
+                throw new Error(`獲取結果失敗 (${response.status})`);
+            }
 
             const data = await response.json();
+            console.log('Nmap原始結果數據:', data);
 
-            if (!response.ok) {
-                throw new Error(data.message || '獲取掃描結果失敗');
+            if (!data.success) {
+                throw new Error(data.message || '獲取結果失敗');
             }
 
-            if (data.status === 'success') {
-                setResult(formatNmapResults(data.data));
-            } else if (response.status === 302) {
-                // 如果正在掃描中，設置定時器重新獲取結果
-                setTimeout(fetchResults, 5000);
-            }
+            // 处理和转换数据格式
+            const processedResult = {
+                scan_type: data.result.scan_type || 'common',
+                host_status: data.result.host_status || 'unknown',
+                ports: Array.isArray(data.result.ports) ? data.result.ports : [],
+                os_info: data.result.os_info || null,
+                error: data.result.error || null
+            };
+
+            console.log('處理後的結果數據:', processedResult);
+            return processedResult;
         } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
+            console.error('獲取Nmap結果錯誤:', err);
+            throw err;
         }
     };
 
     useEffect(() => {
-        fetchResults();
-    }, [userId, targetId]);
+        let intervalId;
+        let attempts = 0;
+        const maxAttempts = 60; // 最多輪詢5分鐘 (5秒間隔)
 
-    const renderPortDetails = (ports) => (
-        <div className="port-details">
-            <h4>端口詳情</h4>
-            <table className="tech-table">
-                <thead>
-                    <tr>
-                        <th>端口</th>
-                        <th>狀態</th>
-                        <th>服務</th>
-                        <th>產品</th>
-                        <th>版本</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Object.entries(ports).map(([port, info]) => (
-                        <tr key={port} className={info.state}>
-                            <td>{port}</td>
-                            <td>{info.state}</td>
-                            <td>{info.name || '未知'}</td>
-                            <td>{info.product || '未知'}</td>
-                            <td>{info.version || '未知'}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
+        const pollResults = async () => {
+            if (attempts >= maxAttempts) {
+                setError('掃描超時，請稍後重試');
+                setLoading(false);
+                clearInterval(intervalId);
+                return;
+            }
 
-    const renderResult = () => {
-        if (!result) return null;
+            try {
+                const data = await fetchResults();
+                attempts++;
+
+                if (data) {
+                    console.log('獲取到結果:', data);
+                    setResult(data);
+                    setLoading(false);
+                    clearInterval(intervalId);
+                } else {
+                    console.log(`等待結果中... (嘗試 ${attempts}/${maxAttempts})`);
+                }
+            } catch (err) {
+                console.error('輪詢錯誤:', err);
+                setError(err.message);
+                setLoading(false);
+                clearInterval(intervalId);
+            }
+        };
+
+        // 立即執行一次
+        pollResults();
+        // 每5秒輪詢一次
+        intervalId = setInterval(pollResults, 5000);
+
+        return () => {
+            console.log('清理輪詢定時器');
+            clearInterval(intervalId);
+        };
+    }, [targetId]);
+
+    if (loading) {
+        return (
+            <div className="alert alert-info">
+                <div className="spinner-border spinner-border-sm me-2" role="status">
+                    <span className="visually-hidden">加載中...</span>
+                </div>
+                正在獲取掃描結果...
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="alert alert-danger">
+                <i className="fas fa-exclamation-circle me-2"></i>
+                {error}
+            </div>
+        );
+    }
+
+    if (!result) {
+        return null;
+    }
+
+    // 格式化端口信息
+    const formatPorts = (ports) => {
+        if (!Array.isArray(ports) || ports.length === 0) {
+            return (
+                <div className="alert alert-warning">
+                    <i className="fas fa-info-circle me-2"></i>
+                    未發現開放端口
+                </div>
+            );
+        }
+
+        // 按端口号排序
+        const sortedPorts = [...ports].sort((a, b) => parseInt(a.port) - parseInt(b.port));
 
         return (
-            <div className="nmap-results">
-                <div className="result-header">
-                    <h3>Nmap 掃描結果</h3>
-                    <div className="result-info">
-                        <p><strong>目標主機:</strong> {result.host}</p>
-                        <p><strong>主機名:</strong> {result.hostname}</p>
-                        <p><strong>狀態:</strong> {result.state}</p>
-                        <p><strong>掃描時間:</strong> {result.scan_time}</p>
+            <div className="table-responsive">
+                <table className="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>端口</th>
+                            <th>狀態</th>
+                            <th>服務</th>
+                            <th>版本</th>
+                            <th>協議</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {sortedPorts.map((port, index) => (
+                            <tr key={index} className={port.state === 'open' ? 'table-success' : ''}>
+                                <td>
+                                    <span className="badge bg-primary">
+                                        {port.port}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span className={`badge ${port.state === 'open' ? 'bg-success' : 'bg-danger'}`}>
+                                        {port.state === 'open' ? '開放' : '關閉'}
+                                    </span>
+                                </td>
+                                <td>{port.service || '未知'}</td>
+                                <td>
+                                    {port.version ? (
+                                        <span className="badge bg-info">
+                                            {port.version}
+                                        </span>
+                                    ) : '未知'}
+                                </td>
+                                <td>
+                                    <span className="badge bg-secondary">
+                                        {port.protocol || 'tcp'}
+                                    </span>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+    };
+
+    // 格式化操作系统信息
+    const formatOsInfo = (osInfo) => {
+        if (!osInfo) return null;
+
+        return (
+            <div className="os-info mb-3">
+                <h6 className="mb-2">
+                    <i className="fas fa-desktop me-2"></i>
+                    操作系統信息
+                </h6>
+                <div className="card bg-light">
+                    <div className="card-body">
+                        <div className="row">
+                            <div className="col-md-6">
+                                <strong>名稱：</strong> {osInfo.name || '未知'}
+                            </div>
+                            {osInfo.accuracy && (
+                                <div className="col-md-6">
+                                    <strong>準確度：</strong>
+                                    <div className="progress" style={{ height: '20px' }}>
+                                        <div
+                                            className="progress-bar bg-success"
+                                            role="progressbar"
+                                            style={{ width: `${osInfo.accuracy}%` }}
+                                            aria-valuenow={osInfo.accuracy}
+                                            aria-valuemin="0"
+                                            aria-valuemax="100"
+                                        >
+                                            {osInfo.accuracy}%
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        {osInfo.details && (
+                            <div className="mt-3">
+                                <strong>詳細信息：</strong>
+                                <ul className="list-group mt-2">
+                                    {Object.entries(osInfo.details).map(([key, value]) => (
+                                        <li key={key} className="list-group-item d-flex justify-content-between align-items-center">
+                                            {key}
+                                            <span className="badge bg-primary rounded-pill">{value}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
                     </div>
-                </div>
-
-                <div className="port-statistics">
-                    <h4>端口統計</h4>
-                    <ul>
-                        <li>開放端口: {result.portStats.open}</li>
-                        <li>過濾端口: {result.portStats.filtered}</li>
-                        <li>關閉端口: {result.portStats.closed}</li>
-                    </ul>
-                </div>
-
-                {renderPortDetails(result.ports)}
-
-                <div className="result-actions">
-                    <button 
-                        onClick={fetchResults}
-                        className="refresh-button"
-                    >
-                        刷新結果
-                    </button>
                 </div>
             </div>
         );
     };
 
-    if (loading) {
-        return <Loading text="加載掃描結果中..." />;
-    }
+    return (
+        <div className="nmap-result mt-3">
+            <div className="card">
+                <div className="card-header bg-primary text-white">
+                    <h5 className="card-title mb-0">
+                        <i className="fas fa-network-wired me-2"></i>
+                        Nmap 掃描結果
+                    </h5>
+                </div>
+                <div className="card-body">
+                    {result.error ? (
+                        <div className="alert alert-danger">
+                            <i className="fas fa-exclamation-circle me-2"></i>
+                            {result.error}
+                        </div>
+                    ) : (
+                        <>
+                            <div className="row mb-3">
+                                <div className="col-md-6">
+                                    <div className="mb-3">
+                                        <strong>
+                                            <i className="fas fa-search me-2"></i>
+                                            掃描類型：
+                                        </strong>
+                                        <span className="badge bg-secondary ms-2">
+                                            {result.scan_type === 'full' ? '完整掃描' : '常用端口掃描'}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="mb-3">
+                                        <strong>
+                                            <i className="fas fa-signal me-2"></i>
+                                            主機狀態：
+                                        </strong>
+                                        <span className={`badge ms-2 ${result.host_status === 'up' ? 'bg-success' : 'bg-danger'}`}>
+                                            {result.host_status === 'up' ? '在線' : '離線'}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
 
-    if (error) {
-        return (
-            <div className="error-message">
-                <h4>錯誤</h4>
-                <p>{error}</p>
-                <button onClick={fetchResults} className="retry-button">
-                    重試
-                </button>
+                            <div className="mb-3">
+                                <h6 className="mb-2">
+                                    <i className="fas fa-plug me-2"></i>
+                                    端口掃描結果
+                                </h6>
+                                {formatPorts(result.ports)}
+                            </div>
+
+                            {result.os_info && formatOsInfo(result.os_info)}
+
+                            <div className="mt-3">
+                                <a
+                                    href={`/api/nmap/file/${targetId}?format=txt`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn btn-sm btn-outline-primary me-2"
+                                >
+                                    <i className="fas fa-download me-1"></i>
+                                    下載 TXT
+                                </a>
+                                <a
+                                    href={`/api/nmap/file/${targetId}?format=xml`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn btn-sm btn-outline-primary me-2"
+                                >
+                                    <i className="fas fa-file-code me-1"></i>
+                                    下載 XML
+                                </a>
+                            </div>
+                        </>
+                    )}
+                </div>
             </div>
-        );
-    }
-
-    return renderResult();
+        </div>
+    );
 };
 
 export default NmapResult; 

@@ -7341,3 +7341,193 @@ WHERE nmap_result.target_id = ?
 2025-03-15 00:03:00,374 - ERROR - 获取 Gau 扫描结果时出错: '1_1_True_1_100_all_'
 2025-03-15 00:05:00,380 - ERROR - 获取 Gau 扫描结果时出错: '1_1_True_1_100_all_'
 2025-03-15 00:07:00,358 - ERROR - 获取 Gau 扫描结果时出错: '1_1_True_1_100_all_'
+2025-03-22 20:18:39,322 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 2
+2025-03-22 20:20:43,603 - INFO - 已启动Gau扫描，目标ID: 2
+2025-03-22 20:20:43,611 - INFO - 创建新的Gau扫描结果，目标ID: 2
+2025-03-22 20:20:43,613 - ERROR - 执行Gau扫描时出错: 'OUTPUT_FOLDER'
+2025-03-22 20:25:35,872 - ERROR - 获取 Gau 扫描结果时出错: '1_2_True_1_100_all_'
+2025-03-22 20:25:46,607 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 2
+2025-03-22 20:25:47,519 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-03-22 20:25:48,464 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-03-22 20:25:48,813 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-03-22 20:25:49,233 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-03-22 20:25:49,558 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-03-22 20:25:50,735 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-03-22 20:26:52,539 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-03-22 20:26:54,351 - INFO - 已有进行中的 Gau 扫描，目标 ID: 1
+2025-03-22 20:27:26,857 - ERROR - 获取 Gau 扫描结果时出错: '1_1_True_1_100_all_'
+2025-03-22 20:28:29,002 - ERROR - 获取 Gau 扫描结果时出错: '1_1_True_1_100_all_'
+2025-03-22 20:29:26,851 - ERROR - 获取 Gau 扫描结果时出错: '1_1_True_1_100_all_'
+2025-03-22 20:30:35,847 - ERROR - 获取 Gau 扫描结果时出错: '1_1_True_1_100_all_'
+2025-03-22 20:32:35,852 - ERROR - 获取 Gau 扫描结果时出错: '1_1_True_1_100_all_'
+2025-03-22 20:34:24,542 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-03-22 20:34:35,848 - ERROR - 获取 Gau 扫描结果时出错: '1_1_True_1_100_all_'
+2025-03-22 20:36:35,853 - ERROR - 获取 Gau 扫描结果时出错: '1_1_True_1_100_all_'
+2025-03-22 20:38:35,869 - ERROR - 获取 Gau 扫描结果时出错: '1_1_True_1_100_all_'
+2025-03-22 20:50:47 - INFO - 用戶 1 正在訪問攻擊頁面，目標 ID: 1
+2025-03-22 20:55:13 - WARNING - 生成缓存键时出错: '1_1_metadata_only_1_100_all_'
+2025-03-22 20:56:35 - WARNING - 生成缓存键时出错: '1_1_metadata_only_1_100_all_'
+2025-03-23 16:50:04 - INFO - 访问攻击页面，目标 ID: 1
+2025-04-03 21:59:12 - INFO - 加载扫描界面，目标ID: 2
+2025-04-03 21:59:12 - INFO - 加载扫描界面，目标ID: 2
+2025-04-03 22:42:48 - INFO - 加载扫描界面，目标ID: 1
+2025-04-03 22:44:27 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 15:40:14 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 15:47:20 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 15:47:21 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 15:47:21 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 15:47:21 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 15:52:41 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 15:57:48 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 15:58:08 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 15:58:38 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 15:58:41 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 15:58:48 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 15:59:27 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 15:59:27 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:00:18 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:00:18 - DEBUG - 用戶正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-04-04 16:00:18 - ERROR - 執行 crt.sh 掃描時發生錯誤: 'Target' object has no attribute 'target_ip_no_https'
+Traceback (most recent call last):
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\crtsh_route.py", line 40, in crtsh_scan
+    domains, success, message = crtsh_scan_target(target.target_ip_no_https, target_id)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Target' object has no attribute 'target_ip_no_https'
+2025-04-04 16:00:18 - DEBUG - 用戶正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-04-04 16:00:18 - ERROR - 執行 crt.sh 掃描時發生錯誤: 'Target' object has no attribute 'target_ip_no_https'
+Traceback (most recent call last):
+  File "C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2\routes\reconnaissance_route\crtsh_route.py", line 40, in crtsh_scan
+    domains, success, message = crtsh_scan_target(target.target_ip_no_https, target_id)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Target' object has no attribute 'target_ip_no_https'
+2025-04-04 16:06:10 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:06:10 - DEBUG - 用戶正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-04-04 16:06:10 - DEBUG - 開始 crtsh 掃描: www.kucoin.com
+2025-04-04 16:06:10 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.www.kucoin.com&output=json
+2025-04-04 16:06:12 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.www.kucoin.com&output=json
+2025-04-04 16:06:12 - INFO - 找到 1 個域名
+2025-04-04 16:06:12 - DEBUG - 域名列表: ['www.kucoin.com']
+2025-04-04 16:06:12 - INFO - 掃描完成，找到 1 個域名
+2025-04-04 16:06:12 - INFO - 成功保存掃描結果到數據庫，包含 1 個域名
+2025-04-04 16:06:12 - DEBUG - 用戶正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-04-04 16:06:12 - INFO - 已刪除舊的掃描結果: target_id=1
+2025-04-04 16:06:12 - DEBUG - 開始 crtsh 掃描: www.kucoin.com
+2025-04-04 16:06:12 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.www.kucoin.com&output=json
+2025-04-04 16:06:13 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.www.kucoin.com&output=json
+2025-04-04 16:06:13 - INFO - 找到 1 個域名
+2025-04-04 16:06:13 - DEBUG - 域名列表: ['www.kucoin.com']
+2025-04-04 16:06:13 - INFO - 掃描完成，找到 1 個域名
+2025-04-04 16:06:13 - INFO - 成功保存掃描結果到數據庫，包含 1 個域名
+2025-04-04 16:07:29 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:10:10 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:10:26 - DEBUG - 用戶正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-04-04 16:10:26 - INFO - 已刪除舊的掃描結果: target_id=1
+2025-04-04 16:10:26 - DEBUG - 開始 crtsh 掃描: www.kucoin.com
+2025-04-04 16:10:26 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.www.kucoin.com&output=json
+2025-04-04 16:10:27 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.www.kucoin.com&output=json
+2025-04-04 16:10:27 - INFO - 找到 1 個域名
+2025-04-04 16:10:27 - DEBUG - 域名列表: ['www.kucoin.com']
+2025-04-04 16:10:27 - INFO - 掃描完成，找到 1 個域名
+2025-04-04 16:10:27 - INFO - 成功保存掃描結果到數據庫，包含 1 個域名
+2025-04-04 16:10:34 - DEBUG - 正在访问 nmap 路由，目标 ID: 1 127.0.0.1
+2025-04-04 16:10:34 - ERROR - 启动NMAP扫描时出错: 'Flask' object has no attribute '_get_current_object'
+2025-04-04 16:10:40 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:10:41 - DEBUG - 正在访问 nmap 路由，目标 ID: 1 127.0.0.1
+2025-04-04 16:10:41 - ERROR - 启动NMAP扫描时出错: 'Flask' object has no attribute '_get_current_object'
+2025-04-04 16:14:29 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:14:34 - DEBUG - 正在访问 nmap 路由，目标 ID: 1 127.0.0.1
+2025-04-04 16:14:34 - DEBUG - Processing target IP: www.kucoin.com, Scan Type: common
+2025-04-04 16:14:34 - INFO - 已启动NMAP扫描，目标ID: 1，扫描类型: common
+2025-04-04 16:14:34 - INFO - 執行常見端口掃描
+2025-04-04 16:14:41 - DEBUG - 正在访问 nmap 路由，目标 ID: 1 127.0.0.1
+2025-04-04 16:14:41 - INFO - 已有NMAP扫描正在进行，目标ID: 1，扫描类型: common
+2025-04-04 16:14:44 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:14:45 - DEBUG - 正在访问 nmap 路由，目标 ID: 1 127.0.0.1
+2025-04-04 16:14:45 - INFO - 已有NMAP扫描正在进行，目标ID: 1，扫描类型: common
+2025-04-04 16:17:58 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:18:01 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:18:02 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:18:03 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:22:13 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:22:17 - DEBUG - 正在访问 nmap 路由，目标 ID: 1 127.0.0.1
+2025-04-04 16:22:17 - DEBUG - Processing target IP: www.kucoin.com, Scan Type: common
+2025-04-04 16:22:17 - INFO - 已启动NMAP扫描，目标ID: 1，扫描类型: common
+2025-04-04 16:22:17 - INFO - 執行常見端口掃描
+2025-04-04 16:31:40 - DEBUG - Formatted scan result: {"host": "104.18.33.108", "hostname": "www.kucoin.com", "state": "up", "ports": {"21": {"state": "open", "name": "ftp", "product": "", "version": ""}, "22": {"state": "filtered", "name": "ssh", "product": "", "version": ""}, "23": {"state": "filtered", "name": "telnet", "product": "", "version": ""}, "25": {"state": "filtered", "name": "smtp", "product": "", "version": ""}, "53": {"state": "filtered", "name": "domain", "product": "", "version": ""}, "80": {"state": "open", "name": "http", "product": "Cloudflare http proxy", "version": ""}, "110": {"state": "filtered", "name": "pop3", "product": "", "version": ""}, "135": {"state": "filtered", "name": "msrpc", "product": "", "version": ""}, "139": {"state": "filtered", "name": "netbios-ssn", "product": "", "version": ""}, "143": {"state": "filtered", "name": "imap", "product": "", "version": ""}, "443": {"state": "open", "name": "http", "product": "Cloudflare http proxy", "version": ""}, "445": {"state": "filtered", "name": "microsoft-ds", "product": "", "version": ""}, "993": {"state": "filtered", "name": "imaps", "product": "", "version": ""}, "995": {"state": "filtered", "name": "pop3s", "product": "", "version": ""}, "1723": {"state": "filtered", "name": "pptp", "product": "", "version": ""}, "3306": {"state": "filtered", "name": "mysql", "product": "", "version": ""}, "3389": {"state": "filtered", "name": "ms-wbt-server", "product": "", "version": ""}, "5900": {"state": "filtered", "name": "vnc", "product": "", "version": ""}, "8080": {"state": "open", "name": "http", "product": "Cloudflare http proxy", "version": ""}}, "scan_time": "2025-04-04 16:31:40"}
+2025-04-04 16:32:01 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:32:02 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 16:32:13 - DEBUG - 正在访问 nmap 路由，目标 ID: 1 127.0.0.1
+2025-04-04 16:32:13 - DEBUG - Processing target IP: www.kucoin.com, Scan Type: common
+2025-04-04 16:32:13 - INFO - 已启动NMAP扫描，目标ID: 1，扫描类型: common
+2025-04-04 16:32:13 - INFO - 執行常見端口掃描
+2025-04-04 16:41:38 - DEBUG - Formatted scan result: {"host": "104.18.33.108", "hostname": "www.kucoin.com", "state": "up", "ports": {"21": {"state": "open", "name": "ftp", "product": "", "version": ""}, "22": {"state": "filtered", "name": "ssh", "product": "", "version": ""}, "23": {"state": "filtered", "name": "telnet", "product": "", "version": ""}, "25": {"state": "filtered", "name": "smtp", "product": "", "version": ""}, "53": {"state": "filtered", "name": "domain", "product": "", "version": ""}, "80": {"state": "open", "name": "http", "product": "Cloudflare http proxy", "version": ""}, "110": {"state": "filtered", "name": "pop3", "product": "", "version": ""}, "135": {"state": "filtered", "name": "msrpc", "product": "", "version": ""}, "139": {"state": "filtered", "name": "netbios-ssn", "product": "", "version": ""}, "143": {"state": "filtered", "name": "imap", "product": "", "version": ""}, "443": {"state": "open", "name": "http", "product": "Cloudflare http proxy", "version": ""}, "445": {"state": "filtered", "name": "microsoft-ds", "product": "", "version": ""}, "993": {"state": "filtered", "name": "imaps", "product": "", "version": ""}, "995": {"state": "filtered", "name": "pop3s", "product": "", "version": ""}, "1723": {"state": "filtered", "name": "pptp", "product": "", "version": ""}, "3306": {"state": "filtered", "name": "mysql", "product": "", "version": ""}, "3389": {"state": "filtered", "name": "ms-wbt-server", "product": "", "version": ""}, "5900": {"state": "filtered", "name": "vnc", "product": "", "version": ""}, "8080": {"state": "open", "name": "http", "product": "Cloudflare http proxy", "version": ""}}, "scan_time": "2025-04-04 16:41:38"}
+2025-04-04 19:41:03 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 19:59:46 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 19:59:51 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 19:59:51 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 19:59:51 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:30:29 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:32:19 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:32:27 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:32:27 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:32:27 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:32:28 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:32:28 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:32:28 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:32:28 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:40:56 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:46:32 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:46:33 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:46:33 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:46:33 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:48:21 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:42 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:46 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:46 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:47 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:47 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:47 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:47 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:48 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:48 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:49 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:49 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:49 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:49 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:50 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:50 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:51 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:51 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:51 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:51 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:52 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:52 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:52 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:53 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:53 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:50:53 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:51:01 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:51:04 - DEBUG - 用戶正在訪問 crtsh 路由，目標 ID: 1 127.0.0.1
+2025-04-04 20:51:04 - INFO - 已刪除舊的掃描結果: target_id=1
+2025-04-04 20:51:04 - DEBUG - 開始 crtsh 掃描: www.kucoin.com
+2025-04-04 20:51:04 - DEBUG - 嘗試請求 URL: https://crt.sh/?q=%.www.kucoin.com&output=json
+2025-04-04 20:51:06 - INFO - 成功獲取響應，URL: https://crt.sh/?q=%.www.kucoin.com&output=json
+2025-04-04 20:51:06 - INFO - 找到 1 個域名
+2025-04-04 20:51:06 - DEBUG - 域名列表: ['www.kucoin.com']
+2025-04-04 20:51:06 - INFO - 掃描完成，找到 1 個域名
+2025-04-04 20:51:06 - INFO - 成功保存掃描結果到數據庫，包含 1 個域名
+2025-04-04 20:51:11 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:51:12 - DEBUG - 正在访问 nmap 路由，目标 ID: 1 127.0.0.1
+2025-04-04 20:51:12 - DEBUG - Processing target IP: www.kucoin.com, Scan Type: common
+2025-04-04 20:51:12 - INFO - 已启动NMAP扫描，目标ID: 1，扫描类型: common
+2025-04-04 20:51:12 - INFO - 執行常見端口掃描
+2025-04-04 20:51:13 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:52:57 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 20:56:54 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 21:00:13 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 21:00:16 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 21:00:35 - DEBUG - Formatted scan result: {"host": "104.18.33.108", "hostname": "www.kucoin.com", "state": "up", "ports": {"21": {"state": "open", "name": "ftp", "product": "", "version": ""}, "22": {"state": "filtered", "name": "ssh", "product": "", "version": ""}, "23": {"state": "filtered", "name": "telnet", "product": "", "version": ""}, "25": {"state": "filtered", "name": "smtp", "product": "", "version": ""}, "53": {"state": "filtered", "name": "domain", "product": "", "version": ""}, "80": {"state": "open", "name": "http", "product": "Cloudflare http proxy", "version": ""}, "110": {"state": "filtered", "name": "pop3", "product": "", "version": ""}, "135": {"state": "filtered", "name": "msrpc", "product": "", "version": ""}, "139": {"state": "filtered", "name": "netbios-ssn", "product": "", "version": ""}, "143": {"state": "filtered", "name": "imap", "product": "", "version": ""}, "443": {"state": "open", "name": "http", "product": "Cloudflare http proxy", "version": ""}, "445": {"state": "filtered", "name": "microsoft-ds", "product": "", "version": ""}, "993": {"state": "filtered", "name": "imaps", "product": "", "version": ""}, "995": {"state": "filtered", "name": "pop3s", "product": "", "version": ""}, "1723": {"state": "filtered", "name": "pptp", "product": "", "version": ""}, "3306": {"state": "filtered", "name": "mysql", "product": "", "version": ""}, "3389": {"state": "filtered", "name": "ms-wbt-server", "product": "", "version": ""}, "5900": {"state": "filtered", "name": "vnc", "product": "", "version": ""}, "8080": {"state": "open", "name": "http", "product": "Cloudflare http proxy", "version": ""}}, "scan_time": "2025-04-04 21:00:35"}
+2025-04-04 21:02:28 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 21:04:10 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 21:04:15 - INFO - 加载扫描界面，目标ID: 1
+2025-04-04 21:05:51 - INFO - 加载扫描界面，目标ID: 1

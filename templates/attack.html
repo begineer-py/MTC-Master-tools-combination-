@@ -1,31 +1,29 @@
-{%extends "base.html"%}
+{% extends "base.html" %}
 
-{% block title %}掃描頁面{% endblock %}
+{% block title %}扫描目标{% endblock %}
 
 {% block css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/attack.css') }}">
 {% endblock %}
 
 {% block content %}
-<div id="attack-root"></div>
+    {# 1. 先定義數據 #}
+    <script>
+      window.INITIAL_DATA = {
+        targetId: "{{ target_id }}",
+        target: {
+          target_ip: "{{ target.target_ip }}",
+          domain: "{{ target.domain }}",
+          target_port: "{{ target.target_port }}"
+        }
+      };
+    </script>
 
-<script>
-  // 初始化數據
-  window.INITIAL_DATA = {
-    targetId: "{{ target_id }}",
-    target: {
-      target_ip: "{{ target.target_ip }}",
-      target_port: "{{ target.target_port }}",
-      target_username: "{{ target.target_username }}",
-      target_password: "{{ target.target_password }}"
-    },
-    currentUser: {
-      id: "{{ current_user.id }}"
-    }
-  };
-</script>
+    {# 2. 然後創建掛載點 #}
+    <div id="attack-root"></div>
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/dist/bundle.js') }}"></script>
+    {# 3. 最後加載 React 應用 #}
+    <script src="{{ url_for('static', filename='js/dist/bundle.js') }}"></script>
 {% endblock %}

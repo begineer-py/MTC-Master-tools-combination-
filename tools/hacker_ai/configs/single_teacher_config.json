@@ -1,0 +1,35 @@
+{
+    "model_settings": {
+        "teacher_model_id": "deepseek-ai/deepseek-coder-33b-instruct",
+        "default_student_model_path": "./deepseek-coder-1.3b"
+    },
+    "distillation_settings": {
+        "num_samples": 100,
+        "temperature": 0.7,
+        "max_length": 512
+    },
+    "training_settings": {
+        "use_4bit": false,
+        "num_train_epochs": 3,
+        "learning_rate": 2e-4,
+        "per_device_train_batch_size": 4,
+        "use_lora": true,
+        "lora_rank": 8,
+        "lora_alpha": 16,
+        "seed": 42,
+        "save_steps": 100,
+        "save_total_limit": 2,
+        "logging_steps": 10,
+        "gradient_accumulation_steps": 4,
+        "fp16": true,
+        "optim": "adamw_torch",
+        "lr_scheduler_type": "cosine",
+        "warmup_ratio": 0.05,
+        "weight_decay": 0.01
+    },
+    "domain_settings": {
+        "default_domain": "security",
+        "available_domains": ["security", "coding", "general", "combined"],
+        "questions_dir": "./scripts/questions"
+    }
+} 

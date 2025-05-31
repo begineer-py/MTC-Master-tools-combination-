@@ -1,0 +1,51 @@
+{
+    "model_settings": {
+        "default_student_model_path": "./deepseek-coder-1.3b",
+        "default_teacher_models": [
+            "openchat/openchat-3.5-0106",
+            "THUDM/chatglm3-6b",
+            "Qwen/Qwen-7B-Chat",
+            "01-ai/Yi-6B-Chat",
+            "mistralai/Mistral-7B-Instruct-v0.2",
+            "meta-llama/Llama-2-7b-chat-hf",
+            "google/gemma-7b-it"
+        ]
+    },
+    "distillation_settings": {
+        "samples_per_model": 20,
+        "temperature": 0.7,
+        "max_length": 1024,
+        "use_cached": false,
+        "retry_count": 3,
+        "timeout": 30
+    },
+    "training_settings": {
+        "use_4bit": false,
+        "num_train_epochs": 3,
+        "learning_rate": 2e-4,
+        "per_device_train_batch_size": 4,
+        "use_lora": true,
+        "lora_rank": 8,
+        "lora_alpha": 16,
+        "seed": 42,
+        "save_steps": 50,
+        "save_total_limit": 3,
+        "logging_steps": 10,
+        "gradient_accumulation_steps": 4,
+        "fp16": true,
+        "optim": "adamw_torch",
+        "lr_scheduler_type": "cosine",
+        "warmup_ratio": 0.05,
+        "weight_decay": 0.01
+    },
+    "domain_settings": {
+        "default_domain": "security",
+        "available_domains": ["security", "coding", "general", "combined"],
+        "questions_dir": "./scripts/questions"
+    },
+    "expert_models": {
+        "security_expert": "mistralai/Mistral-7B-Instruct-v0.2",
+        "coding_expert": "Qwen/Qwen-7B-Chat",
+        "general_expert": "meta-llama/Llama-2-7b-chat-hf"
+    }
+} 

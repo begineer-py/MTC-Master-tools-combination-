@@ -6,70 +6,121 @@ import FlareSolverr from './scanners/FlareSolverr';
 import LinksFinderScan from './scanners/LinksFinderScan';
 import GauScan from './scanners/GauScan';
 
-const Attack = ({ targetId, target = {}, currentUser = {} }) => {
-  // 添加数据验证
-  if (!targetId || !currentUser.id) {
+const Attack = ({ targetId, target = {} }) => {
+  // 在檢查前立即記錄 props 的狀態
+  console.log('Attack Component Render - Props Check:', {
+      targetIdValue: targetId,
+      targetValue: target,
+      targetIdIsTruthy: !!targetId, // 檢查 targetId 是否為真值
+      targetIsTruthy: !!target    // 檢查 target 是否為真值
+  });
+
+  // 验证必要的数据
+  if (!targetId || !target) {
+    // 如果條件判斷失敗 (即進入此 if 塊)，再次記錄狀態
+    console.error('Condition Failed! Logging values inside if block:', {
+        targetIdValue: targetId,
+        targetValue: target,
+        targetIdIsTruthy: !!targetId,
+        targetIsTruthy: !!target
+    });
+    console.error('缺少必要的初始數據:', { targetId, target }); // 保留原始錯誤日誌
     return (
-      <div className="error-message">
-        <h4>加载错误</h4>
-        <p>无法加载扫描页面：缺少必要的目标或用户信息</p>
-        <p>请确保您已正确登录并选择了扫描目标</p>
+      <div className="alert alert-danger">
+        <h4>加載錯誤</h4>
+        <p>無法加載掃描頁面：缺少目標信息</p>
+        <p>請確保已選擇了掃描目標</p>
+      </div>
+    );
+  }
+
+  // 验证目标数据的完整性 (如果第一個 if 通過，會執行到這裡)
+  if (!target.domain || !target.target_ip || !target.target_port) {
+    console.error('目標數據不完整:', target);
+    return (
+      <div className="alert alert-danger">
+        <h4>目標數據不完整</h4>
+        <p>請確保目標包含以下信息：</p>
+        <ul>
+          <li>域名 (domain)</li>
+          <li>目標URL (target_ip)</li>
+          <li>端口 (target_port)</li>
+        </ul>
       </div>
     );
   }
 
   return (
     <div className="container">
-      <h2>扫描页面</h2>
+      <h2>掃描頁面</h2>
       
-      <div className="scan-navigation">
-        <a href={`/attack/vulnerability/${currentUser.id}/${targetId}`} 
-           className="vulnerability-button">
-          进入漏洞扫描页面
+      <div className="scan-navigation mb-4">
+        <a href={`/attack/vulnerability/${targetId}`} 
+           className="btn btn-warning">
+          <i className="fas fa-bug me-2"></i>
+          進入漏洞掃描頁面
         </a>
       </div>
 
-      <div className="target-info">
-        <h3>目标信息</h3>
-        <p>目标 ID: {targetId}</p>
-        <p>目标 IP: {target.target_ip || '未设置'}</p>
-        <p>目标端口: {target.target_port || '未设置'}</p>
-        <p>目标用户名: {target.target_username || '未设置'}</p>
-        <p>目标密码: {target.target_password || '未设置'}</p>
+      <div className="target-info card mb-4">
+        <div className="card-header bg-info text-white">
+          <h3 className="card-title mb-0">
+            <i className="fas fa-info-circle me-2"></i>
+            目標信息
+          </h3>
+        </div>
+        <div className="card-body">
+          <div className="row">
+            <div className="col-md-3">
+              <strong>目標 ID:</strong> {targetId}
+            </div>
+            <div className="col-md-3">
+              <strong>目標 URL:</strong> 
+              <a href={target.target_ip} target="_blank" rel="noopener noreferrer">
+                {target.target_ip}
+              </a>
+            </div>
+            <div className="col-md-3">
+              <strong>目標域名:</strong> {target.domain}
+            </div>
+            <div className="col-md-3">
+              <strong>目標端口:</strong> {target.target_port}
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="scan-controls">
-        <h3>基础扫描</h3>
+        <h3 className="mb-4">
+          <i className="fas fa-search me-2"></i>
+          基礎掃描
+        </h3>
         
-        <NmapScan 
-          userId={currentUser.id}
-          targetId={targetId}
-        />
-
-        <CrtshScan 
-          userId={currentUser.id}
-          targetId={targetId}
-        />
-
-        <WebtechScan 
-          userId={currentUser.id}
-          targetId={targetId}
-        />
-
-        <FlareSolverr 
-          userId={currentUser.id}
-          targetId={targetId}
-        />
-
-        <GauScan 
-          userId={currentUser.id}
-          targetId={targetId}
-        />
-
-        <LinksFinderScan 
-          userId={currentUser.id}
-          targetId={targetId}
-        />
+        <div className="row">
+          <div className="col-12 mb-4">
+            <NmapScan targetId={targetId} />
+          </div>
+          
+          <div className="col-12 mb-4">
+            <CrtshScan targetId={targetId} />
+          </div>
+          
+          <div className="col-12 mb-4">
+            <WebtechScan targetId={targetId} />
+          </div>
+          
+          <div className="col-12 mb-4">
+            <FlareSolverr targetId={targetId} />
+          </div>
+          
+          <div className="col-12 mb-4">
+            <GauScan targetId={targetId} />
+          </div>
+          
+          <div className="col-12 mb-4">
+            <LinksFinderScan targetId={targetId} />
+          </div>
+        </div>
       </div>
     </div>
   );

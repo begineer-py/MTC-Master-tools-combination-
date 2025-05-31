@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, current_app, send_file
-from flask_login import login_required, current_user
+from utils.decorators import login_required
 from utils.permission import check_user_permission
 from instance.models import db, Target, gau_results
 from reconnaissance.threads.thread_gau import start_gau_scan
@@ -23,8 +23,8 @@ def _clean_expired_cache():
     now = time.time()
     expired_keys = []
     for key, timestamp in _cache_timestamp.items():
-        # 缓存超过30秒过期
-        if now - timestamp > 30:
+        # 缓存超过60秒过期 (从30秒增加到60秒)
+        if now - timestamp > 60:
             expired_keys.append(key)
     
     for key in expired_keys:
@@ -33,22 +33,21 @@ def _clean_expired_cache():
         if key in _cache_timestamp:
             del _cache_timestamp[key]
 
-@gau_blueprint.route('/scan/<int:user_id>/<int:target_id>', methods=['POST'])
-@login_required
-def gau_scan(user_id, target_id):
+@gau_blueprint.route('/scan/<int:target_id>', methods=['POST'])
+def gau_scan(target_id):
     """
     启动 Gau 扫描
     
     请求体参数:
     {
-        "threads": number,        // 可选，默认 10，线程数量
+        "threads": number,        // 可选，默认 50，线程数量
         "verbose": boolean,       // 可选，默认 false，是否显示详细信息
         "providers": string,      // 可选，默认 "wayback,commoncrawl,otx,urlscan"，数据提供者
         "blacklist": string       // 可选，默认 "ttf,woff,svg,png,jpg,gif,jpeg,ico"，排除的文件类型
     }
     """
     # 使用权限检查函数
-    result = check_user_permission(user_id, target_id)
+    result = check_user_permission(target_id=target_id)
     if not isinstance(result, Target):
         return result  # 返回错误响应
     
@@ -75,13 +74,13 @@ def gau_scan(user_id, target_id):
                 'result': existing_scan.to_dict()
             })
         
-        # 启动新扫描
-        target_id = start_gau_scan(target_id, user_id, domain, options)
+        # 启动新扫描，直接使用target_id
+        scan_target_id = start_gau_scan(target_id, domain, options)
         
         return jsonify({
             'success': True,
             'message': '扫描已启动',
-            'target_id': target_id
+            'target_id': scan_target_id
         })
     except Exception as e:
         current_app.logger.error(f"启动 Gau 扫描时出错: {str(e)}")
@@ -90,12 +89,19 @@ def gau_scan(user_id, target_id):
             'message': f'启动扫描失败: {str(e)}'
         }), 500
 
-@gau_blueprint.route('/result/<int:user_id>/<int:target_id>', methods=['GET'])
-@login_required
-def gau_get_result(user_id, target_id):
+# 使用LRU缓存加速常用查询
+@lru_cache(maxsize=32)
+def _get_scan_result_cached(target_id):
+    """获取缓存的扫描结果"""
+    return gau_results.query.filter_by(
+        target_id=target_id
+    ).order_by(gau_results.scan_time.desc()).first()
+
+@gau_blueprint.route('/result/<int:target_id>', methods=['GET'])
+def gau_get_result(target_id):
     """获取 Gau 扫描结果"""
     # 使用权限检查函数
-    result = check_user_permission(user_id, target_id)
+    result = check_user_permission(target_id=target_id)
     if not isinstance(result, Target):
         return result  # 返回错误响应
     
@@ -113,19 +119,8 @@ def gau_get_result(user_id, target_id):
         if per_page > 1000:
             per_page = 1000
         
-        # 生成缓存键
-        cache_key = f"{user_id}_{target_id}_{metadata_only}_{page}_{per_page}_{category}_{search}"
-        
-        # 检查缓存是否有效
-        if not _cache_lock and cache_key in _result_cache:
-            # 清理过期缓存
-            _clean_expired_cache()
-            return _result_cache[cache_key]
-        
-        # 查询最新的扫描结果
-        scan_result = gau_results.query.filter_by(
-            target_id=target_id
-        ).order_by(gau_results.scan_time.desc()).first()
+        # 查询最新的扫描结果 (使用缓存)
+        scan_result = _get_scan_result_cached(target_id)
         
         if not scan_result:
             response = jsonify({
@@ -134,6 +129,22 @@ def gau_get_result(user_id, target_id):
                 'result': None
             })
             return response
+        
+        # 安全生成缓存键，确保类型正确
+        try:
+            # 避免使用布尔值作为字符串的一部分
+            metadata_str = "metadata_only" if metadata_only else "full_data"
+            cache_key = f"{target_id}_{metadata_str}_{page}_{per_page}_{category}_{search}"
+            
+            # 检查缓存是否有效
+            if not _cache_lock and cache_key in _result_cache:
+                # 清理过期缓存
+                _clean_expired_cache()
+                return _result_cache[cache_key]
+        except Exception as e:
+            current_app.logger.warning(f"生成缓存键时出错: {str(e)}")
+            # 出错时不使用缓存
+            cache_key = None
         
         # 如果只需要元数据，则不返回URL列表
         if metadata_only:
@@ -153,18 +164,19 @@ def gau_get_result(user_id, target_id):
                 'result': result_dict
             })
             
-            # 缓存结果
-            _result_cache[cache_key] = response
-            _cache_timestamp[cache_key] = time.time()
+            # 缓存结果 (如果缓存键有效)
+            if cache_key:
+                _result_cache[cache_key] = response
+                _cache_timestamp[cache_key] = time.time()
             
             return response
         
         # 获取完整结果
         urls = scan_result.urls or []
         
-        # 对URL进行分类
+        # 对URL进行分类 - 优化为单次遍历
         categories = {
-            'all': len(urls),
+            'all': 0,
             'js': 0,
             'api': 0,
             'image': 0,
@@ -176,33 +188,33 @@ def gau_get_result(user_id, target_id):
         # 过滤URL
         filtered_urls = []
         
-        # 根据类别和搜索词过滤URL
+        # 单次遍历优化：根据类别和搜索词过滤URL
         for url in urls:
-            # 分类URL
+            # 确保URL是字符串
+            if not isinstance(url, str):
+                continue
+                
+            # 分类URL并同时过滤
+            url_category = 'other'  # 默认分类
+            
             if '.js' in url or '/js/' in url:
-                categories['js'] += 1
-                if category != 'all' and category != 'js':
-                    continue
+                url_category = 'js'
             elif '/api/' in url or '/rest/' in url or '/v1/' in url or '/v2/' in url:
-                categories['api'] += 1
-                if category != 'all' and category != 'api':
-                    continue
+                url_category = 'api'
             elif any(ext in url for ext in ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.ico']):
-                categories['image'] += 1
-                if category != 'all' and category != 'image':
-                    continue
+                url_category = 'image'
             elif any(ext in url for ext in ['.css', '.scss', '.less']):
-                categories['css'] += 1
-                if category != 'all' and category != 'css':
-                    continue
+                url_category = 'css'
             elif any(ext in url for ext in ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.txt']):
-                categories['doc'] += 1
-                if category != 'all' and category != 'doc':
-                    continue
-            else:
-                categories['other'] += 1
-                if category != 'all' and category != 'other':
-                    continue
+                url_category = 'doc'
+            
+            # 更新分类计数
+            categories[url_category] += 1
+            categories['all'] += 1
+            
+            # 检查是否满足当前选择的类别
+            if category != 'all' and category != url_category:
+                continue
             
             # 搜索过滤
             if search and search.lower() not in url.lower():
@@ -250,9 +262,10 @@ def gau_get_result(user_id, target_id):
             'result': result_dict
         })
         
-        # 缓存结果
-        _result_cache[cache_key] = response
-        _cache_timestamp[cache_key] = time.time()
+        # 缓存结果 (如果缓存键有效)
+        if cache_key:
+            _result_cache[cache_key] = response
+            _cache_timestamp[cache_key] = time.time()
         
         return response
     except Exception as e:
@@ -262,13 +275,13 @@ def gau_get_result(user_id, target_id):
             'message': f'获取扫描结果失败: {str(e)}'
         }), 500
 
-@gau_blueprint.route('/file/<user_id>/<target_id>', methods=['GET'])
-@login_required
-def get_gau_file(user_id, target_id):
+@gau_blueprint.route('/file/<int:target_id>', methods=['GET'])
+def get_gau_file(target_id):
     """获取Gau扫描结果文件"""
     try:
-        # 检查用户权限
-        if not current_user.is_admin and str(current_user.id) != str(user_id):
+        # 检查权限
+        permission_result = check_user_permission(target_id=target_id)
+        if not isinstance(permission_result, Target):
             return jsonify({'success': False, 'message': '无权访问此资源'}), 403
         
         # 查询扫描结果
@@ -285,19 +298,32 @@ def get_gau_file(user_id, target_id):
         if not result.urls or len(result.urls) == 0:
             return jsonify({'success': False, 'message': '扫描结果中没有URL'}), 404
         
+        # 检查是否存在缓存文件
+        cache_file_path = os.path.join(current_app.config['TEMP_FOLDER'], f"gau_results_{target.domain}_{target_id}.txt")
+        if os.path.exists(cache_file_path) and os.path.getmtime(cache_file_path) > (time.time() - 3600):  # 缓存1小时
+            # 返回缓存文件
+            return send_file(
+                cache_file_path,
+                as_attachment=True,
+                download_name=f"gau_results_{target.domain}_{target_id}.txt",
+                mimetype='text/plain'
+            )
+        
+        # 确保临时目录存在
+        os.makedirs(os.path.dirname(os.path.join(current_app.config['TEMP_FOLDER'], f"temp.txt")), exist_ok=True)
+        
         # 创建临时文件
         temp_file_path = os.path.join(current_app.config['TEMP_FOLDER'], f"gau_results_{target.domain}_{target_id}.txt")
-        os.makedirs(os.path.dirname(temp_file_path), exist_ok=True)
         
-        # 将URL写入文件，按类别分组
-        with open(temp_file_path, 'w', encoding='utf-8', errors='replace') as f:
+        # 使用更高效的方式写入文件
+        with open(temp_file_path, 'w', encoding='utf-8', errors='replace', buffering=1024*1024) as f:  # 1MB缓冲区
             # 写入文件头部信息
             f.write(f"# Gau扫描结果 - {target.domain}\n")
             f.write(f"# 扫描时间: {result.scan_time}\n")
             f.write(f"# 总URL数: {len(result.urls)}\n")
             f.write("#" + "-" * 50 + "\n\n")
             
-            # 对URL进行分类
+            # 使用单次遍历分类URL
             js_urls = []
             api_urls = []
             image_urls = []
@@ -305,11 +331,45 @@ def get_gau_file(user_id, target_id):
             doc_urls = []
             other_urls = []
             
-            for url in result.urls:
+            # 预分配内存
+            urls = result.urls
+            url_count = len(urls)
+            
+            # 计算大概的内存分配
+            estimated_js = int(url_count * 0.15)  # 假设15%是JS
+            estimated_api = int(url_count * 0.10)  # 假设10%是API
+            estimated_other = int(url_count * 0.50)  # 假设50%是其他
+            
+            # 预分配
+            js_urls = [None] * estimated_js
+            api_urls = [None] * estimated_api
+            other_urls = [None] * estimated_other
+            image_urls = []
+            css_urls = []
+            doc_urls = []
+            
+            # 实际填充的计数
+            js_count = 0
+            api_count = 0
+            other_count = 0
+            
+            for url in urls:
+                # 确保URL是字符串
+                if not isinstance(url, str):
+                    continue
+                    
                 if '.js' in url or '/js/' in url:
-                    js_urls.append(url)
+                    if js_count < estimated_js:
+                        js_urls[js_count] = url
+                        js_count += 1
+                    else:
+                        js_urls.append(url)
                 elif '/api/' in url or '/rest/' in url or '/v1/' in url or '/v2/' in url:
-                    api_urls.append(url)
+                    if api_count < estimated_api:
+                        api_urls[api_count] = url
+                        api_count += 1
+                    else:
+                        api_urls.append(url)
                 elif any(ext in url.lower() for ext in ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.ico']):
                     image_urls.append(url)
                 elif any(ext in url.lower() for ext in ['.css', '.scss', '.less']):
@@ -317,48 +377,51 @@ def get_gau_file(user_id, target_id):
                 elif any(ext in url.lower() for ext in ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.txt']):
                     doc_urls.append(url)
                 else:
-                    other_urls.append(url)
+                    if other_count < estimated_other:
+                        other_urls[other_count] = url
+                        other_count += 1
+                    else:
+                        other_urls.append(url)
+            
+            # 裁剪预分配数组
+            js_urls = js_urls[:js_count]
+            api_urls = api_urls[:api_count]
+            other_urls = other_urls[:other_count]
             
             # 写入JavaScript文件
             if js_urls:
                 f.write("## JavaScript文件\n")
-                for url in js_urls:
-                    f.write(f"{url}\n")
-                f.write("\n")
+                f.write("\n".join(js_urls))
+                f.write("\n\n")
             
             # 写入API端点
             if api_urls:
                 f.write("## API端点\n")
-                for url in api_urls:
-                    f.write(f"{url}\n")
-                f.write("\n")
+                f.write("\n".join(api_urls))
+                f.write("\n\n")
             
             # 写入其他URL
             if other_urls:
                 f.write("## 其他URL\n")
-                for url in other_urls:
-                    f.write(f"{url}\n")
-                f.write("\n")
+                f.write("\n".join(other_urls))
+                f.write("\n\n")
             
             # 写入文档文件
             if doc_urls:
                 f.write("## 文档文件\n")
-                for url in doc_urls:
-                    f.write(f"{url}\n")
-                f.write("\n")
+                f.write("\n".join(doc_urls))
+                f.write("\n\n")
             
             # 写入CSS文件
             if css_urls:
                 f.write("## CSS文件\n")
-                for url in css_urls:
-                    f.write(f"{url}\n")
-                f.write("\n")
+                f.write("\n".join(css_urls))
+                f.write("\n\n")
             
             # 写入图片文件
             if image_urls:
                 f.write("## 图片文件\n")
-                for url in image_urls:
-                    f.write(f"{url}\n")
+                f.write("\n".join(image_urls))
         
         # 返回文件
         return send_file(

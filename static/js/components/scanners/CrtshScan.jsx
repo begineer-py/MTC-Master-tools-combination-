@@ -3,8 +3,8 @@ import ScanComponent from '../common/ScanComponent';
 import CrtshResult from './CrtshResult';
 import useScan from '../../hooks/useScan';
 
-const CrtshScan = ({ userId, targetId }) => {
-  const scanEndpoint = (userId, targetId) => `/api/crtsh/scan/${userId}/${targetId}`;
+const CrtshScan = ({ targetId }) => {
+  const scanEndpoint = (targetId) => `/api/crtsh/scan/${targetId}`;
   
   const {
     isScanning,
@@ -15,7 +15,7 @@ const CrtshScan = ({ userId, targetId }) => {
 
   const handleScanClick = async () => {
     try {
-      await startScan(userId, targetId);
+      await startScan(targetId);
     } catch (error) {
       console.error('CRT.sh 掃描錯誤:', error);
     }
@@ -32,7 +32,7 @@ const CrtshScan = ({ userId, targetId }) => {
         renderResult={null}
       />
 
-      <CrtshResult userId={userId} targetId={targetId} />
+      <CrtshResult targetId={targetId} />
     </div>
   );
 };

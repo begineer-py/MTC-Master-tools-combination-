@@ -1,0 +1,55 @@
+<!-- HTML5 文件聲明 -->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <!-- 設定文件編碼為 UTF-8 -->
+    <meta charset="UTF-8">
+    <!-- 設定響應式視窗 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 網站標題區塊，可被子模板覆蓋 -->
+    <title>{% block title %}網站標題{% endblock %}</title>
+    <!-- 引入 CSS 樣式表 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Flash 消息顯示區域 -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class="messages">
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+    <!-- 頁面標頭區域 -->
+    <header class="header">
+        <!-- 標頭內容區塊，可被子模板覆蓋 -->
+        {% block header %}
+        <h1>網站標題</h1>
+        <!-- 如果用戶已登入則顯示登出連結 -->
+        {% if user_id %}
+            <a href="{{ url_for('index.logout') }}">登出</a>
+        {% endif %}
+        {% endblock %}
+    </header>
+
+    <!-- 主要內容容器 -->
+    <div class="container">
+        <!-- 內容區塊，可被子模板覆蓋 -->
+        {% block content %}
+        <!-- 內容將在這裡插入 -->
+        {% endblock %}
+    </div>
+
+    <!-- 頁面頁尾 -->
+    <footer class="footer">
+        <!-- 版權信息 -->
+        <p>版權所有 &copy; {{ current_year }}</p>
+    </footer>
+
+    <!-- JavaScript 腳本區塊，可被子模板覆蓋 -->
+    {% block scripts %}{% endblock %}
+</body>
+</html> 

@@ -1,5 +1,4 @@
 from flask import Blueprint, request, jsonify, redirect, url_for, current_app, make_response
-from flask_login import login_required
 from instance.models import Target, db, crtsh_Result
 from utils.permission import check_user_permission
 from reconnaissance.threads.thread_crtsh import crtsh_scan_target
@@ -10,21 +9,15 @@ import time
 crtsh_route = Blueprint('crtsh', __name__)
 logger = logging.getLogger(__name__)
 
-@crtsh_route.route('/scan/<int:user_id>/<int:target_id>', methods=['POST','GET'])
-@login_required
-def crtsh_scan(user_id, target_id):
+@crtsh_route.route('/scan/<int:target_id>', methods=['POST','GET'])
+def crtsh_scan(target_id):
     client_ip = request.remote_addr
-    current_app.logger.debug(f"用戶 {user_id} 正在訪問 crtsh 路由，目標 ID: {target_id} {client_ip}")
-    
-    # 檢查用戶權限
-    permission_result = check_user_permission(user_id, target_id)
-    if not isinstance(permission_result, Target):
-        return permission_result
-    if not isinstance(permission_result, Target):
-        return redirect(url_for('index.login'))
-    target = permission_result
+    current_app.logger.debug(f"用戶正在訪問 crtsh 路由，目標 ID: {target_id} {client_ip}")
     
     try:
+        # 获取目标信息
+        target = Target.query.get_or_404(target_id)
+        
         # 檢查是否已存在掃描結果
         existing_result = crtsh_Result.query.filter_by(
             target_id=target_id,
@@ -41,7 +34,7 @@ def crtsh_scan(user_id, target_id):
                 current_app.logger.error(f"刪除舊結果時發生錯誤: {str(e)}")
                 
         # 執行掃描
-        domains, success, message = crtsh_scan_target(target.target_ip_no_https, target_id)
+        domains, success, message = crtsh_scan_target(target.domain, target_id)
         
         # 記錄域名數量
         current_app.logger.info(f"掃描完成，找到 {len(domains)} 個域名")
@@ -98,99 +91,96 @@ def crtsh_scan(user_id, target_id):
                 'domains': domains,
                 'total': len(domains),
                 'scan_time': scan_time.timestamp(),
-                'error_message': message if not success else None
+                'error_message': None if success else message
             },
-            'code': 200 if success else 400
+            'code': 200 if success else 500
         }
         
-        return jsonify(response_data), 200 if success else 400
-        
+        return jsonify(response_data), 200 if success else 500
+    
     except Exception as e:
-        current_app.logger.error(f"crtsh 掃描過程中發生錯誤: {str(e)}")
+        # 記錄異常
+        current_app.logger.exception(f"執行 crt.sh 掃描時發生錯誤: {str(e)}")
+        
+        # 返回錯誤響應
         return jsonify({
             'status': 'error',
-            'message': f'掃描過程中發生錯誤: {str(e)}',
-            'code': 500
-        }), 500 
-@crtsh_route.route('/result/<int:user_id>/<int:target_id>', methods=['GET'])
-@login_required
-def get_latest_crtsh_result(user_id, target_id):
-    """獲取最新的 crtsh 掃描結果"""
-    try:
-        result = crtsh_Result.query.filter_by(
-            target_id=target_id,
-        ).order_by(
-            crtsh_Result.scan_time.desc()
-        ).first()
-
-        if result:
-            return jsonify({
-                'status': 'success',
-                'message': '掃描結果獲取成功',
-                'result': result.to_dict()
-            }), 200
-        else:
-            # 如果沒有掃描結果，返回302重定向到掃描頁面
-            return redirect(url_for('crtsh.crtsh_scan', user_id=user_id, target_id=target_id))
-        
-    except Exception as e:
-        current_app.logger.error(f"獲取 crtsh 掃描結果時發生錯誤: {str(e)}")
-        return jsonify({
-            'status': 'error',
-            'message': f'獲取掃描結果時發生錯誤: {str(e)}',
+            'message': f'執行掃描時發生錯誤: {str(e)}',
+            'result': {
+                'domains': [],
+                'total': 0,
+                'scan_time': None,
+                'error_message': str(e)
+            },
             'code': 500
         }), 500
-@crtsh_route.route('/download/<int:user_id>/<int:target_id>', methods=['GET'])
-@login_required
-def download_crtsh_result(user_id, target_id):
-    """下載 crtsh 掃描結果"""
+
+@crtsh_route.route('/result/<int:target_id>', methods=['GET'])
+def get_latest_crtsh_result(target_id):
+    """獲取最新的 crt.sh 掃描結果"""
     try:
-        # 檢查用戶權限
-        permission_result = check_user_permission(user_id, target_id)
-        if not isinstance(permission_result, Target):
-            return permission_result
-        if not isinstance(permission_result, Target):
-            return redirect(url_for('index.login'))
-        target = permission_result
+        # 获取目标信息
+        target = Target.query.get_or_404(target_id)
         
-        # 從資料庫中獲取最新的掃描結果
-        result = crtsh_Result.query.filter_by(
-            target_id=target_id,
-        ).order_by(
-            crtsh_Result.scan_time.desc()
-        ).first()
+        # 查詢數據庫獲取最新結果
+        result = crtsh_Result.query.filter_by(target_id=target_id).order_by(crtsh_Result.scan_time.desc()).first()
         
         if not result:
-            return jsonify({
-                'status': 'error',
-                'message': '找不到掃描結果',
-                'code': 404
-            }), 404
-            
-        # 檢查域名列表是否存在
-        if not result.domains:
-            return jsonify({
-                'status': 'error',
-                'message': '掃描結果為空',
-                'code': 404
-            }), 404
-            
-        # 將域名列表轉換為文本格式
-        domains_text = '\n'.join(result.domains)
+            # 如果沒有結果，重定向到掃描頁面
+            return redirect(url_for('crtsh.crtsh_scan', target_id=target_id))
         
-        # 創建響應
-        filename = f'crtsh_result_{target_id}.txt'
-        response = make_response(domains_text)
-        response.headers['Content-Type'] = 'text/plain'
-        response.headers['Content-Disposition'] = f'attachment; filename={filename}'
-        
-        return response
-        
+        # 返回結果
+        return jsonify({
+            'status': 'success',
+            'message': '獲取結果成功',
+            'result': result.to_dict(),
+            'code': 200
+        })
     except Exception as e:
-        current_app.logger.error(f"下載 crtsh 掃描結果時發生錯誤: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': f'下載失敗: {str(e)}',
+            'message': str(e),
+            'code': 500
+        }), 500
+
+@crtsh_route.route('/download/<int:target_id>', methods=['GET'])
+def download_crtsh_result(target_id):
+    """下載 crt.sh 掃描結果為文本文件"""
+    try:
+        # 獲取目標信息
+        target = Target.query.get_or_404(target_id)
+        
+        # 查詢數據庫獲取最新結果
+        result = crtsh_Result.query.filter_by(target_id=target_id).order_by(crtsh_Result.scan_time.desc()).first()
+        
+        if not result or not result.domains:
+            return jsonify({
+                'status': 'error',
+                'message': '沒有可用的掃描結果',
+                'code': 404
+            }), 404
+        
+        # 生成文本內容
+        domains = result.domains
+        content = f"# crt.sh 子域名掃描結果\n"
+        content += f"# 目標: {target.domain}\n"
+        content += f"# 掃描時間: {result.scan_time}\n"
+        content += f"# 總域名數: {len(domains)}\n\n"
+        
+        # 添加每個域名
+        for i, domain in enumerate(domains, 1):
+            content += f"{i}. {domain}\n"
+        
+        # 創建響應對象
+        response = make_response(content)
+        response.headers["Content-Disposition"] = f"attachment; filename=crtsh_results_{target.domain}_{int(time.time())}.txt"
+        response.headers["Content-Type"] = "text/plain"
+        
+        return response
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e),
             'code': 500
         }), 500
         

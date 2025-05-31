@@ -26,8 +26,8 @@ def main():
         return
     
     # 設置倉庫路徑
-    repo_path = Path(r"C:\Users\User.DESKTOP-AQD9BKJ\Desktop\C2")
-    
+    repo_path = Path(os.getcwd())
+
     # 檢查倉庫目錄是否存在
     if not repo_path.exists():
         print(f"\033[91m錯誤: 倉庫目錄 {repo_path} 不存在！\033[0m")
@@ -49,7 +49,7 @@ def main():
         return
     
     print("\033[92m正在推送更改...\033[0m")
-    if not run_command("git push origin main", "git push 失敗，請檢查遠程倉庫配置或網絡連接"):
+    if not run_command("git push origin main --force", "git push 失敗，請檢查遠程倉庫配置或網絡連接"):
         return
     
     print("\033[92m正在檢查 Git 狀態...\033[0m")

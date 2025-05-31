@@ -1,0 +1,61 @@
+{
+  "teacher_models": [
+    {
+      "id": "openchat/openchat-3.5-0106",
+      "description": "开源聊天模型",
+      "domain": "general",
+      "template": "Human: {prompt}\n\nAssistant:"
+    },
+    {
+      "id": "THUDM/chatglm3-6b",
+      "description": "中文能力强",
+      "domain": "general",
+      "template": "[Round 1]\n\n问：{prompt}\n\n答："
+    },
+    {
+      "id": "Qwen/Qwen-7B-Chat",
+      "description": "通用中文模型",
+      "domain": "general",
+      "template": "<|im_start|>user\n{prompt}<|im_end|>\n<|im_start|>assistant\n"
+    },
+    {
+      "id": "01-ai/Yi-6B-Chat",
+      "description": "中英双语",
+      "domain": "general",
+      "template": "<human>: {prompt}\n<assistant>:"
+    },
+    {
+      "id": "mistralai/Mistral-7B-Instruct-v0.2",
+      "description": "强大的开源指令模型",
+      "domain": "security",
+      "template": "<s>[INST] {prompt} [/INST]"
+    },
+    {
+      "id": "meta-llama/Llama-2-7b-chat-hf",
+      "description": "Meta开源聊天模型",
+      "domain": "coding",
+      "template": "<s>[INST] {prompt} [/INST]"
+    },
+    {
+      "id": "google/gemma-7b-it",
+      "description": "Google开源指令模型",
+      "domain": "general",
+      "template": "<start_of_turn>user\n{prompt}<end_of_turn>\n<start_of_turn>model\n"
+    }
+  ],
+  
+  "student_models": [
+    {
+      "id": "deepseek-coder-1.3b",
+      "description": "小型编程模型",
+      "path": "./models/student/deepseek-coder-1.3b",
+      "lora_target_modules": ["query_key_value", "dense", "dense_h_to_4h", "dense_4h_to_h"]
+    }
+  ],
+  
+  "default_experts": {
+    "security": "mistralai/Mistral-7B-Instruct-v0.2",
+    "coding": "meta-llama/Llama-2-7b-chat-hf",
+    "general": "openchat/openchat-3.5-0106"
+  }
+} 

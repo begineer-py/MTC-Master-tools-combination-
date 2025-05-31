@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import LoadingSpinner from '../common/LoadingSpinner';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,6 +17,18 @@ const GauResult = ({ userId, targetId }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [pageLoading, setPageLoading] = useState(false);
+  const [resultCache, setResultCache] = useState({});
+
+  // 使用防抖处理搜索
+  const debounce = (func, delay) => {
+    let debounceTimer;
+    return function() {
+      const context = this;
+      const args = arguments;
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => func.apply(context, args), delay);
+    };
+  };
 
   // 获取扫描结果
   const fetchResults = async () => {
@@ -47,15 +59,38 @@ const GauResult = ({ userId, targetId }) => {
             ...(searchTerm && { search: searchTerm })
           }).toString();
           
-          const fullResponse = await fetch(`/api/gau/result/${userId}/${targetId}?${queryParams}`);
-          const fullData = await fullResponse.json();
-          
-          if (fullData.success && fullData.result) {
-            setResult(fullData.result);
+          // 检查缓存
+          const cacheKey = `${currentPage}_${activeCategory}_${searchTerm}`;
+          if (resultCache[cacheKey] && !pageLoading) {
+            setResult(prevResult => ({
+              ...prevResult,
+              ...resultData,
+              urls: resultCache[cacheKey].urls,
+              pagination: resultCache[cacheKey].pagination,
+              categories: resultCache[cacheKey].categories
+            }));
+          } else {
+            // 如果缓存未命中，请求完整数据
+            const fullResponse = await fetch(`/api/gau/result/${userId}/${targetId}?${queryParams}`);
+            const fullData = await fullResponse.json();
             
-            // 如果有分类数据，更新分类
-            if (fullData.result.categories) {
-              setUrlCategories(fullData.result.categories);
+            if (fullData.success && fullData.result) {
+              setResult(fullData.result);
+              
+              // 如果有分类数据，更新分类
+              if (fullData.result.categories) {
+                setUrlCategories(fullData.result.categories);
+              }
+              
+              // 缓存结果
+              setResultCache(prev => ({
+                ...prev,
+                [cacheKey]: {
+                  urls: fullData.result.urls,
+                  pagination: fullData.result.pagination,
+                  categories: fullData.result.categories
+                }
+              }));
             }
           }
         } else {
@@ -78,8 +113,8 @@ const GauResult = ({ userId, targetId }) => {
     }
   };
 
-  // 加载特定页面的数据
-  const loadPage = async (page) => {
+  // 使用useCallback包装加载页面函数以提高性能
+  const loadPage = useCallback(async (page) => {
     if (!result) return;
     
     try {
@@ -92,6 +127,19 @@ const GauResult = ({ userId, targetId }) => {
         category: activeCategory,
         ...(searchTerm && { search: searchTerm })
       }).toString();
+      
+      // 检查缓存
+      const cacheKey = `${page}_${activeCategory}_${searchTerm}`;
+      if (resultCache[cacheKey]) {
+        setResult(prevResult => ({
+          ...prevResult,
+          urls: resultCache[cacheKey].urls,
+          pagination: resultCache[cacheKey].pagination
+        }));
+        setCurrentPage(page);
+        setPageLoading(false);
+        return;
+      }
       
       const response = await fetch(`/api/gau/result/${userId}/${targetId}?${queryParams}`);
       const data = await response.json();
@@ -108,6 +156,15 @@ const GauResult = ({ userId, targetId }) => {
           pagination: data.result.pagination
         }));
         
+        // 缓存结果
+        setResultCache(prev => ({
+          ...prev,
+          [cacheKey]: {
+            urls: data.result.urls,
+            pagination: data.result.pagination
+          }
+        }));
+        
         setCurrentPage(page);
       }
     } catch (err) {
@@ -115,10 +172,10 @@ const GauResult = ({ userId, targetId }) => {
     } finally {
       setPageLoading(false);
     }
-  };
+  }, [activeCategory, itemsPerPage, result, resultCache, searchTerm, targetId, userId]);
 
   // 切换分类
-  const changeCategory = async (category) => {
+  const changeCategory = useCallback(async (category) => {
     setActiveCategory(category);
     setCurrentPage(1);
     
@@ -132,6 +189,18 @@ const GauResult = ({ userId, targetId }) => {
         category: category,
         ...(searchTerm && { search: searchTerm })
       }).toString();
+      
+      // 检查缓存
+      const cacheKey = `1_${category}_${searchTerm}`;
+      if (resultCache[cacheKey]) {
+        setResult(prevResult => ({
+          ...prevResult,
+          urls: resultCache[cacheKey].urls,
+          pagination: resultCache[cacheKey].pagination
+        }));
+        setPageLoading(false);
+        return;
+      }
       
       const response = await fetch(`/api/gau/result/${userId}/${targetId}?${queryParams}`);
       const data = await response.json();
@@ -147,16 +216,25 @@ const GauResult = ({ userId, targetId }) => {
           urls: data.result.urls,
           pagination: data.result.pagination
         }));
+        
+        // 缓存结果
+        setResultCache(prev => ({
+          ...prev,
+          [cacheKey]: {
+            urls: data.result.urls,
+            pagination: data.result.pagination
+          }
+        }));
       }
     } catch (err) {
       toast.error(`切换分类失败: ${err.message}`);
     } finally {
       setPageLoading(false);
     }
-  };
+  }, [itemsPerPage, resultCache, searchTerm, targetId, userId]);
 
-  // 搜索URL
-  const handleSearch = async () => {
+  // 使用防抖搜索
+  const handleSearch = useCallback(debounce(async () => {
     try {
       setPageLoading(true);
       
@@ -167,6 +245,19 @@ const GauResult = ({ userId, targetId }) => {
         category: activeCategory,
         ...(searchTerm && { search: searchTerm })
       }).toString();
+      
+      // 检查缓存
+      const cacheKey = `1_${activeCategory}_${searchTerm}`;
+      if (resultCache[cacheKey]) {
+        setResult(prevResult => ({
+          ...prevResult,
+          urls: resultCache[cacheKey].urls,
+          pagination: resultCache[cacheKey].pagination
+        }));
+        setCurrentPage(1);
+        setPageLoading(false);
+        return;
+      }
       
       const response = await fetch(`/api/gau/result/${userId}/${targetId}?${queryParams}`);
       const data = await response.json();
@@ -183,6 +274,15 @@ const GauResult = ({ userId, targetId }) => {
           pagination: data.result.pagination
         }));
         
+        // 缓存结果
+        setResultCache(prev => ({
+          ...prev,
+          [cacheKey]: {
+            urls: data.result.urls,
+            pagination: data.result.pagination
+          }
+        }));
+        
         setCurrentPage(1);
       }
     } catch (err) {
@@ -190,7 +290,7 @@ const GauResult = ({ userId, targetId }) => {
     } finally {
       setPageLoading(false);
     }
-  };
+  }, 800), [activeCategory, itemsPerPage, resultCache, searchTerm, targetId, userId]);
 
   // 分页
   const paginate = (pageNumber) => {
@@ -206,7 +306,7 @@ const GauResult = ({ userId, targetId }) => {
     if (autoRefresh && (scanStatus === 'scanning' || scanStatus === 'pending')) {
       intervalId = setInterval(() => {
         fetchResults();
-      }, 10000); // 增加刷新间隔到10秒
+      }, 15000); // 增加刷新间隔到15秒
     }
     
     return () => {
@@ -216,14 +316,10 @@ const GauResult = ({ userId, targetId }) => {
 
   // 监听搜索词变化
   useEffect(() => {
-    const delaySearch = setTimeout(() => {
-      if (searchTerm !== '') {
-        handleSearch();
-      }
-    }, 800); // 增加延迟到800毫秒
-    
-    return () => clearTimeout(delaySearch);
-  }, [searchTerm]);
+    if (searchTerm !== '') {
+      handleSearch();
+    }
+  }, [searchTerm, handleSearch]);
 
   // 获取当前页的URL
   const getCurrentUrls = () => {
@@ -436,7 +532,7 @@ const GauResult = ({ userId, targetId }) => {
             <button 
               className="btn btn-sm btn-outline-primary me-2" 
               onClick={refreshResults}
-              disabled={loading}
+              disabled={loading || pageLoading}
             >
               <i className="fas fa-sync-alt me-1"></i> 刷新
             </button>
@@ -494,29 +590,43 @@ const GauResult = ({ userId, targetId }) => {
                   <div className="card">
                     <div className="card-body">
                       <h5 className="card-title">操作</h5>
-                      <button 
-                        className="btn btn-primary me-2" 
-                        onClick={downloadResults}
-                        disabled={downloadingFile || !result.urls || result.urls.length === 0}
-                      >
-                        {downloadingFile ? (
-                          <>
-                            <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                            下载中...
-                          </>
-                        ) : (
-                          <>
-                            <i className="fas fa-download me-1"></i> 下载结果
-                          </>
-                        )}
-                      </button>
+                      <div className="d-flex flex-wrap">
+                        <button 
+                          className="btn btn-primary me-2 mb-2" 
+                          onClick={downloadResults}
+                          disabled={downloadingFile || !result.urls || result.urls.length === 0 || result.status !== 'completed'}
+                        >
+                          {downloadingFile ? (
+                            <>
+                              <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                              下载中...
+                            </>
+                          ) : (
+                            <>
+                              <i className="fas fa-download me-1"></i> 下载结果
+                            </>
+                          )}
+                        </button>
+                        
+                        <a 
+                          href={`/user/${userId}/attack/${targetId}`} 
+                          className="btn btn-outline-secondary mb-2"
+                        >
+                          <i className="fas fa-arrow-left me-1"></i> 返回扫描页面
+                        </a>
+                      </div>
                       
-                      <a 
-                        href={`/user/${userId}/attack/${targetId}`} 
-                        className="btn btn-outline-secondary"
-                      >
-                        <i className="fas fa-arrow-left me-1"></i> 返回扫描页面
-                      </a>
+                      {result.status === 'scanning' && (
+                        <div className="progress mt-2">
+                          <div 
+                            className="progress-bar progress-bar-striped progress-bar-animated" 
+                            role="progressbar" 
+                            style={{ width: '100%' }}
+                          >
+                            扫描进行中...
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -533,7 +643,7 @@ const GauResult = ({ userId, targetId }) => {
                         value={searchTerm}
                         onChange={(e) => {
                           setSearchTerm(e.target.value);
-                          setCurrentPage(1);
+                          // 不需要再设置当前页码，会在handleSearch中处理
                         }}
                       />
                       {searchTerm && (
@@ -542,7 +652,6 @@ const GauResult = ({ userId, targetId }) => {
                           type="button"
                           onClick={() => {
                             setSearchTerm('');
-                            setCurrentPage(1);
                           }}
                         >
                           <i className="fas fa-times"></i>
@@ -554,7 +663,11 @@ const GauResult = ({ userId, targetId }) => {
                   {renderCategories()}
                   
                   <div className="url-list">
-                    {getCurrentUrls().length > 0 ? (
+                    {pageLoading ? (
+                      <div className="text-center p-4">
+                        <LoadingSpinner size="small" message="正在加载数据..." />
+                      </div>
+                    ) : getCurrentUrls().length > 0 ? (
                       <div className="list-group">
                         {getCurrentUrls().map((url, index) => (
                           <div key={index} className="list-group-item url-item">
@@ -574,7 +687,7 @@ const GauResult = ({ userId, targetId }) => {
                   {renderPagination()}
                   
                   <div className="mt-3 text-muted text-center">
-                    显示 {urlCategories[activeCategory]?.length || 0} 个URL中的 
+                    显示 {result.pagination?.total_items || 0} 个URL中的 
                     {getCurrentUrls().length} 个
                     {searchTerm && ` (搜索: "${searchTerm}")`}
                   </div>
@@ -584,7 +697,8 @@ const GauResult = ({ userId, targetId }) => {
                   {result.status === 'scanning' || result.status === 'pending' ? (
                     <>
                       <LoadingSpinner size="small" />
-                      <span>扫描正在进行中，请稍候...</span>
+                      <span className="ms-2">扫描正在进行中，请稍候...</span>
+                      <p className="mt-2 mb-0 text-muted">当前扫描可能需要一些时间，我们正在收集和处理URL。扫描完成后将自动显示结果。</p>
                     </>
                   ) : (
                     '没有找到URL'

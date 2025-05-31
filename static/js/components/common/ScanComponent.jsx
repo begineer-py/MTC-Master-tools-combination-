@@ -7,36 +7,29 @@ const ScanComponent = ({
   isScanning,
   status,
   error,
-  result,
   onScanClick,
-  renderResult,
-  buttonText
+  buttonText,
+  scanInitiated
 }) => {
   return (
     <div className="scan-section">
       <button 
         onClick={onScanClick}
-        disabled={isScanning}
-        className="scan-button"
+        disabled={isScanning || scanInitiated}
+        className="scan-button btn btn-primary mb-2"
       >
+        {isScanning 
+          ? <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span> 
+          : <i className="fas fa-play me-1"></i>
+        }
         {buttonText || `開始${title}掃描`}
       </button>
       
-      <div className={`scan-status ${error ? 'error' : ''}`}>
-        {status}
+      <div className={`scan-status ${error ? 'text-danger' : (status === 'completed' ? 'text-success' : 'text-info')} mb-2`}>
+        {isScanning ? '掃描中...' : 
+         scanInitiated ? '等待結果...' : 
+         status ? status : '準備就緒'}
       </div>
-      
-      {isScanning && <Loading text={`${title}掃描中...`} />}
-      
-      {error && (
-        <div className="error-message">
-          <h4>掃描失敗</h4>
-          <p>{error}</p>
-          <p>如果問題持續存在，請稍後重試或聯繫管理員</p>
-        </div>
-      )}
-      
-      {result && renderResult(result)}
       
       {error && (
         <Notification
