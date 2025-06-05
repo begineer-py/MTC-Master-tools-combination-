@@ -1,0 +1,197 @@
+{
+    "title": "Gau URL 掃描器 API",
+    "description": "使用 Gau 工具從多個來源（Wayback Machine、Common Crawl、OTX、URLScan）獲取目標的 URL 列表",
+    "version": "1.0.0",
+    "endpoints": [
+        {
+            "method": "POST",
+            "path": "/api/gau/scan/<target_id>",
+            "description": "啟動 Gau 掃描",
+            "parameters": {
+                "target_id": "目標 ID（路徑參數）",
+                "threads": "線程數量（可選，默認 3）",
+                "verbose": "詳細輸出（可選，默認 false）",
+                "providers": "數據提供者（可選，默認 ['wayback', 'commoncrawl', 'otx']）",
+                "blacklist": "排除的文件類型（可選，默認 'ttf,woff,svg,png,jpg,gif,jpeg,ico'）",
+                "exclude_extensions": "排除的文件擴展名列表（可選，會轉換為 blacklist）"
+            },
+            "request_example": {
+                "threads": 10,
+                "blacklist": "png,jpg,gif,css,js,ico,svg,woff,ttf",
+                "verbose": true,
+                "providers": ["wayback", "commoncrawl"]
+            },
+            "response": {
+                "success": "是否成功",
+                "message": "響應消息",
+                "scan_id": "掃描 ID",
+                "target_id": "目標 ID",
+                "domain": "掃描域名",
+                "estimated_time": "預估完成時間"
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/api/gau/result/<target_id>",
+            "description": "獲取掃描結果",
+            "parameters": {
+                "target_id": "目標 ID（路徑參數）",
+                "page": "頁碼（可選，默認 1）",
+                "per_page": "每頁數量（可選，默認 50）",
+                "category": "URL 分類（可選，all/js/api/image/css/doc/other）",
+                "search": "搜索關鍵詞（可選）",
+                "metadata": "僅獲取元數據（可選，值為 'only'）"
+            },
+            "response": {
+                "success": "是否成功",
+                "result": {
+                    "status": "掃描狀態",
+                    "total_urls": "總 URL 數量",
+                    "domain": "掃描域名",
+                    "scan_time": "掃描時間",
+                    "urls": "URL 列表（分頁）",
+                    "categories": "URL 分類統計",
+                    "pagination": "分頁信息"
+                }
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/api/gau/status/<target_id>",
+            "description": "獲取掃描狀態",
+            "parameters": {
+                "target_id": "目標 ID（路徑參數）"
+            },
+            "response": {
+                "success": "是否成功",
+                "status": "掃描狀態（not_started/scanning/completed/error）",
+                "message": "狀態描述"
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/api/gau/history/<target_id>",
+            "description": "獲取掃描歷史",
+            "parameters": {
+                "target_id": "目標 ID（路徑參數）"
+            },
+            "response": {
+                "success": "是否成功",
+                "history": "歷史記錄列表"
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/api/gau/dashboard",
+            "description": "訪問 Gau 掃描器界面",
+            "parameters": {
+                "target_id": "目標 ID（可選查詢參數）"
+            },
+            "response": "HTML 頁面"
+        },
+        {
+            "method": "GET",
+            "path": "/api/gau/file/<target_id>",
+            "description": "下載掃描結果文件",
+            "parameters": {
+                "target_id": "目標 ID（路徑參數）"
+            },
+            "response": "文本文件下載（按分類整理）"
+        },
+        {
+            "method": "GET",
+            "path": "/api/gau/help",
+            "description": "獲取 API 使用說明",
+            "response": "本 JSON 文檔"
+        }
+    ],
+    "usage_examples": {
+        "start_scan": {
+            "description": "啟動掃描",
+            "method": "POST",
+            "url": "/api/gau/scan/1",
+            "body": {
+                "threads": 10,
+                "blacklist": "png,jpg,gif,css,js",
+                "verbose": true
+            }
+        },
+        "get_results": {
+            "description": "獲取 JavaScript 文件結果",
+            "method": "GET",
+            "url": "/api/gau/result/1?page=1&category=js&per_page=20"
+        },
+        "check_status": {
+            "description": "檢查掃描狀態",
+            "method": "GET",
+            "url": "/api/gau/status/1"
+        },
+        "download_file": {
+            "description": "下載完整結果文件",
+            "method": "GET",
+            "url": "/api/gau/file/1"
+        },
+        "view_dashboard": {
+            "description": "訪問 Web 界面",
+            "method": "GET",
+            "url": "/api/gau/dashboard?target_id=1"
+        }
+    },
+    "features": [
+        "多數據源 URL 收集（Wayback Machine、Common Crawl、OTX、URLScan）",
+        "URL 自動分類（JavaScript、API、圖片、CSS、文檔等）",
+        "實時掃描狀態更新",
+        "分頁和搜索功能",
+        "歷史記錄管理",
+        "結果導出功能",
+        "現代化 Web 界面",
+        "自定義排除文件類型",
+        "多線程並發掃描"
+    ],
+    "url_categories": {
+        "js": {
+            "name": "JavaScript 文件",
+            "patterns": [".js", "javascript"],
+            "description": "JavaScript 腳本文件"
+        },
+        "api": {
+            "name": "API 端點",
+            "patterns": ["/api/", "/v1/", "/v2/", ".json", ".xml"],
+            "description": "API 接口和數據端點"
+        },
+        "image": {
+            "name": "圖片文件",
+            "patterns": [".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp"],
+            "description": "圖片和圖標文件"
+        },
+        "css": {
+            "name": "CSS 文件",
+            "patterns": [".css", ".scss", ".sass"],
+            "description": "樣式表文件"
+        },
+        "doc": {
+            "name": "文檔文件",
+            "patterns": [".pdf", ".doc", ".docx", ".txt", ".zip", ".rar"],
+            "description": "文檔和壓縮文件"
+        },
+        "other": {
+            "name": "其他 URL",
+            "patterns": [],
+            "description": "不屬於上述分類的其他 URL"
+        }
+    },
+    "scan_status": {
+        "not_started": "尚未開始掃描",
+        "scanning": "掃描正在進行中",
+        "completed": "掃描已完成",
+        "failed": "掃描失敗",
+        "error": "掃描出錯"
+    },
+    "tips": [
+        "使用較小的線程數（3-10）以避免被目標網站限制",
+        "合理設置 blacklist 可以過濾不需要的文件類型",
+        "大型網站的掃描可能需要較長時間，請耐心等待",
+        "可以通過 category 參數過濾特定類型的 URL",
+        "使用 search 參數可以在結果中搜索特定關鍵詞"
+    ]
+}

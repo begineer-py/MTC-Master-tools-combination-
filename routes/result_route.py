@@ -15,7 +15,6 @@ from instance.models import (
     xss_result,
     vulnerability_scanning_result
 )
-from utils.permission import check_user_permission
 from flask import current_app
 import json
 import logging

@@ -8,39 +8,47 @@ import sys
 import os
 import shutil
 from sqlalchemy.exc import OperationalError
-# 修復導入路徑 - 註釋掉有問題的導入
-# from requirements.reconnaissance.scanner_flaresolverr.start_flaresolverr import start_flaresolverr
 from app.blueprint_set import register_blueprints
 from flask_cors import CORS
 import requests
 from requests.exceptions import RequestException
-from config.config import Config, LogConfig, FlaresolverrConfig
+from config.config import Config_dict as ConfigDict, LogConfig
 import importlib.util
 
+# 導入 FlareSolverr 管理器
+try:
+    from app.flaresolverr_set.start_flaresolverr import flaresolverr_manager, auto_start_flaresolverr
+    FLARESOLVERR_AVAILABLE = True
+except ImportError as e:
+    print(f"警告：無法導入 FlareSolverr 管理器: {e}")
+    FLARESOLVERR_AVAILABLE = False
 def check_flaresolverr():
     """檢查 FlareSolverr 服務是否正在運行"""
-    try:
-        response = requests.post('http://localhost:8191/v1', 
-                               json={
-                                   "cmd": "sessions.list"
-                               },
-                               timeout=5)
-        return response.status_code == 200
-    except RequestException:
-        return False
+    if FLARESOLVERR_AVAILABLE:
+        return flaresolverr_manager.is_flaresolverr_running()
+    else:
+        # 備用檢查方法
+        try:
+            response = requests.post('http://localhost:8191/v1', 
+                                   json={
+                                       "cmd": "sessions.list"
+                                   },
+                                   timeout=5)
+            return response.status_code == 200
+        except RequestException:
+            return False
 
 def start_flaresolverr():
-    """啟動 FlareSolverr 服務的替代實現"""
-    try:
-        # 檢查是否已經運行
-        if check_flaresolverr():
-            return True
-        
-        # 嘗試啟動 FlareSolverr（如果安裝了的話）
-        # 這裡可以添加啟動邏輯，暫時返回 False
-        return False
-    except Exception as e:
-        print(f"啟動 FlareSolverr 時出錯: {e}")
+    """啟動 FlareSolverr 服務"""
+    if FLARESOLVERR_AVAILABLE:
+        try:
+            result = auto_start_flaresolverr()
+            return result.get('success', False)
+        except Exception as e:
+            print(f"啟動 FlareSolverr 時出錯: {e}")
+            return False
+    else:
+        print("FlareSolverr 管理器不可用，跳過自動啟動")
         return False
 
 def ensure_directories_exist():
@@ -66,6 +74,9 @@ def load_db_manager():
         
     # 動態加載模塊
     spec = importlib.util.spec_from_file_location("db_manager", db_manager_path)
+    if spec is None or spec.loader is None:
+        return None
+        
     db_manager = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(db_manager)
     
@@ -139,25 +150,8 @@ def unlock_database(app):
     return True
 
 def setup_logging(app):
-    """配置应用日志"""
-    # 设置日志配置
-    formatter = logging.Formatter(LogConfig.LOG_FORMAT, LogConfig.LOG_DATE_FORMAT)
-    
-    # 添加文件日志处理器
-    if os.path.exists('logs'):
-        file_handler = logging.FileHandler('logs/app.txt', encoding='utf-8')
-        file_handler.setLevel(logging.getLevelName(LogConfig.LOG_LEVEL))
-        file_handler.setFormatter(formatter)
-        app.logger.addHandler(file_handler)
-    
-    # 添加控制台日志处理器
-    stream_handler = logging.StreamHandler(sys.stdout)
-    stream_handler.setLevel(logging.getLevelName(LogConfig.LOG_LEVEL))
-    stream_handler.setFormatter(formatter)
-    app.logger.addHandler(stream_handler)
-    
-    # 设置应用日志级别
-    app.logger.setLevel(logging.getLevelName(LogConfig.LOG_LEVEL))
+    """配置应用日志 - 使用增強版本"""
+    return LogConfig.setup_enhanced_logging(app)
 
 def create_app(config_name="default"):
     """創建 Flask 應用程序實例"""
@@ -168,7 +162,7 @@ def create_app(config_name="default"):
     app = Flask(__name__, template_folder='../templates', static_folder='../static')
     
     # 配置應用
-    app.config.from_object(Config[config_name])
+    app.config.from_object(ConfigDict[config_name])  # type: ignore
     app.permanent_session_lifetime = timedelta(minutes=30)
     
     # 配置静态文件
@@ -186,16 +180,31 @@ def create_app(config_name="default"):
     # 配置日誌
     setup_logging(app)
     
-    try:
-        # 嘗試啟動 FlareSolverr 服務
-        print("正在啟動 FlareSolverr 服務...")
-        flaresolverr_success = start_flaresolverr()
-        if flaresolverr_success:
-            print("FlareSolverr 服務已啟動")
-        else:
-            print("FlareSolverr 服務啟動失敗，但應用將繼續運行")
-    except Exception as e:
-        print(f"FlareSolverr 服務啟動時發生錯誤：{str(e)}，但應用將繼續運行")
+    # 根據配置決定是否自動啟動 FlareSolverr
+    if app.config.get('FLARESOLVERR_AUTO_START', True):
+        try:
+            app.logger.info("正在檢查 FlareSolverr 服務...")
+            
+            if FLARESOLVERR_AVAILABLE:
+                # 配置 FlareSolverr 管理器
+                flaresolverr_manager.flaresolverr_host = app.config.get('FLARESOLVERR_HOST', 'localhost')
+                flaresolverr_manager.flaresolverr_port = app.config.get('FLARESOLVERR_PORT', 8191)
+                flaresolverr_manager.flaresolverr_url = f"http://{flaresolverr_manager.flaresolverr_host}:{flaresolverr_manager.flaresolverr_port}"
+                flaresolverr_manager.auto_restart = app.config.get('FLARESOLVERR_AUTO_RESTART', True)
+                flaresolverr_manager.max_restart_attempts = app.config.get('FLARESOLVERR_MAX_RESTART_ATTEMPTS', 5)
+                
+                app.logger.info("正在啟動 FlareSolverr 服務...")
+                flaresolverr_success = start_flaresolverr()
+                if flaresolverr_success:
+                    app.logger.info("✅ FlareSolverr 服務已啟動")
+                else:
+                    app.logger.warning("⚠️ FlareSolverr 服務啟動失敗，但應用將繼續運行")
+            else:
+                app.logger.warning("⚠️ FlareSolverr 管理器不可用，跳過自動啟動")
+        except Exception as e:
+            app.logger.error(f"❌ FlareSolverr 服務啟動時發生錯誤：{str(e)}，但應用將繼續運行")
+    else:
+        app.logger.info("🔧 FlareSolverr 自動啟動已禁用")
     
     # 註冊藍圖
     register_blueprints(app)
@@ -211,4 +220,5 @@ if __name__ == '__main__':
     app = create_app()
     with app.app_context():
         db.create_all()
-    app.run(port=5000, debug=Config.DEBUG, use_reloader=False)  # 禁用重載器
+    app.run(port=8964, debug=ConfigDict.DEBUG, use_reloader=False)  # 禁用重載器
+    

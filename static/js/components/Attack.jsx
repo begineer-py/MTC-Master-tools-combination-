@@ -55,11 +55,43 @@ const Attack = ({ targetId, target = {} }) => {
       <h2>掃描頁面</h2>
       
       <div className="scan-navigation mb-4">
+        <div className="row">
+          <div className="col-md-3 mb-2">
         <a href={`/attack/vulnerability/${targetId}`} 
-           className="btn btn-warning">
+               className="btn btn-warning w-100">
           <i className="fas fa-bug me-2"></i>
           進入漏洞掃描頁面
         </a>
+          </div>
+          <div className="col-md-3 mb-2">
+            <a href={`/api/nmap/dashboard?target_id=${targetId}`} 
+               className="btn btn-primary w-100"
+               target="_blank"
+               rel="noopener noreferrer">
+              <i className="fas fa-network-wired me-2"></i>
+              進入 Nmap 掃描器界面
+            </a>
+          </div>
+          <div className="col-md-3 mb-2">
+            <a href={`/api/crtsh/dashboard?target_id=${targetId}`} 
+               className="btn btn-success w-100"
+               target="_blank"
+               rel="noopener noreferrer">
+              <i className="fas fa-search me-2"></i>
+              進入 crt.sh 掃描器界面
+            </a>
+          </div>
+          <div className="col-md-3 mb-2">
+            <a href={`/api/gau/dashboard?target_id=${targetId}`} 
+               className="btn btn-info w-100"
+               target="_blank"
+               rel="noopener noreferrer"
+               style={{backgroundColor: '#FF9800', borderColor: '#FF9800'}}>
+              <i className="fas fa-link me-2"></i>
+              進入 Gau URL 掃描器界面
+            </a>
+          </div>
+        </div>
       </div>
 
       <div className="target-info card mb-4">
@@ -90,37 +122,22 @@ const Attack = ({ targetId, target = {} }) => {
         </div>
       </div>
 
-      <div className="scan-controls">
-        <h3 className="mb-4">
-          <i className="fas fa-search me-2"></i>
-          基礎掃描
-        </h3>
-        
-        <div className="row">
-          <div className="col-12 mb-4">
-            <NmapScan targetId={targetId} />
-          </div>
-          
-          <div className="col-12 mb-4">
-            <CrtshScan targetId={targetId} />
-          </div>
-          
-          <div className="col-12 mb-4">
-            <WebtechScan targetId={targetId} />
-          </div>
-          
-          <div className="col-12 mb-4">
-            <FlareSolverr targetId={targetId} />
-          </div>
-          
-          <div className="col-12 mb-4">
-            <GauScan targetId={targetId} />
-          </div>
-          
-          <div className="col-12 mb-4">
-            <LinksFinderScan targetId={targetId} />
-          </div>
-        </div>
+      <div className="alert alert-info">
+        <h4>
+          <i className="fas fa-info-circle me-2"></i>
+          掃描工具說明
+        </h4>
+        <p>請使用上方的導航按鈕進入相應的掃描界面：</p>
+        <ul>
+          <li><strong>漏洞掃描頁面</strong>：進行目標的漏洞檢測和安全評估</li>
+          <li><strong>Nmap 掃描器界面</strong>：進行網絡掃描、端口檢測和服務識別</li>
+          <li><strong>crt.sh 掃描器界面</strong>：進行子域名發現和證書透明度日誌查詢</li>
+          <li><strong>Gau URL 掃描器界面</strong>：從多個來源收集目標的 URL 列表（Wayback Machine、Common Crawl 等）</li>
+        </ul>
+        <p className="mb-0">
+          <i className="fas fa-lightbulb me-1"></i>
+          <small>目標 ID ({targetId}) 將自動傳遞到掃描器界面</small>
+        </p>
       </div>
     </div>
   );

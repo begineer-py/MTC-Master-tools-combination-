@@ -1,6 +1,5 @@
-from flask import Blueprint, request, jsonify, redirect, url_for, current_app, make_response
+from flask import Blueprint, request, jsonify, redirect, url_for, current_app, make_response, render_template
 from instance.models import Target, db, crtsh_Result
-from utils.permission import check_user_permission
 from reconnaissance.threads.thread_crtsh import crtsh_scan_target
 from datetime import datetime
 import logging
@@ -85,7 +84,7 @@ def crtsh_scan(target_id):
         
         # 返回響應
         response_data = {
-            'status': 'success' if success else 'error',
+            'success': True if success else False,
             'message': '掃描完成' if success else message,
             'result': {
                 'domains': domains,
@@ -104,7 +103,7 @@ def crtsh_scan(target_id):
         
         # 返回錯誤響應
         return jsonify({
-            'status': 'error',
+            'success': False,
             'message': f'執行掃描時發生錯誤: {str(e)}',
             'result': {
                 'domains': [],
@@ -126,22 +125,211 @@ def get_latest_crtsh_result(target_id):
         result = crtsh_Result.query.filter_by(target_id=target_id).order_by(crtsh_Result.scan_time.desc()).first()
         
         if not result:
-            # 如果沒有結果，重定向到掃描頁面
-            return redirect(url_for('crtsh.crtsh_scan', target_id=target_id))
+            return jsonify({
+                'success': False,
+                'message': '未找到掃描結果',
+                'status': 'not_found'
+            }), 404
         
         # 返回結果
+        result_dict = result.to_dict()
+        
+        # 添加額外的統計信息
+        if result_dict.get('domains'):
+            domain_stats = {
+                'total': len(result_dict['domains']),
+                'unique_subdomains': len(set(result_dict['domains'])),
+                'wildcard_domains': len([d for d in result_dict['domains'] if d.startswith('*.')]),
+                'main_domain_count': len([d for d in result_dict['domains'] if not d.startswith('*.')])
+            }
+            result_dict['domain_statistics'] = domain_stats
+        
         return jsonify({
-            'status': 'success',
-            'message': '獲取結果成功',
-            'result': result.to_dict(),
-            'code': 200
+            'success': True,
+            'result': result_dict,
+            'target_info': {
+                'id': target.id,
+                'domain': target.domain,
+                'target_port': target.target_port
+            }
         })
+        
     except Exception as e:
+        current_app.logger.error(f"获取 crt.sh 掃描結果時出錯: {str(e)}")
         return jsonify({
-            'status': 'error',
-            'message': str(e),
-            'code': 500
+            'success': False,
+            'message': f'获取掃描結果失败: {str(e)}'
         }), 500
+
+@crtsh_route.route('/status/<int:target_id>', methods=['GET'])
+def get_scan_status(target_id):
+    """获取掃描状态"""
+    try:
+        # 檢查是否有結果
+        crtsh_result = crtsh_Result.query.filter_by(target_id=target_id).order_by(crtsh_Result.scan_time.desc()).first()
+        
+        if crtsh_result:
+            if crtsh_result.status == 'success':
+                return jsonify({
+                    'success': True,
+                    'status': 'completed',
+                    'message': '掃描已完成，結果可用'
+                })
+            elif crtsh_result.status == 'failed':
+                return jsonify({
+                    'success': True,
+                    'status': 'error',
+                    'message': f'掃描失敗: {crtsh_result.error_message}'
+                })
+            else:
+                return jsonify({
+                    'success': True,
+                    'status': 'scanning',
+                    'message': '掃描正在進行中...'
+                })
+        else:
+            return jsonify({
+                'success': True,
+                'status': 'not_started',
+                'message': '尚未開始掃描'
+            })
+            
+    except Exception as e:
+        current_app.logger.error(f"获取掃描状态時出錯: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': f'获取状态失败: {str(e)}'
+        }), 500
+
+@crtsh_route.route('/history/<int:target_id>', methods=['GET'])
+def get_scan_history(target_id):
+    """获取掃描历史"""
+    try:
+        # 获取所有掃描结果
+        results = crtsh_Result.query.filter_by(target_id=target_id).order_by(crtsh_Result.scan_time.desc()).all()
+        
+        history = []
+        for result in results:
+            result_dict = result.to_dict()
+            history.append({
+                'scan_time': result_dict['scan_time'],
+                'status': result.status,
+                'domain_count': len(result_dict.get('domains', [])),
+                'total_domains': result.total_domains,
+                'error_message': result.error_message
+            })
+        
+        return jsonify({
+            'success': True,
+            'history': history
+        })
+        
+    except Exception as e:
+        current_app.logger.error(f"获取掃描历史時出錯: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': f'获取历史失败: {str(e)}'
+        }), 500
+
+@crtsh_route.route('/dashboard', methods=['GET'])
+def crtsh_dashboard():
+    """crt.sh 掃描器現代化界面"""
+    try:
+        current_app.logger.info("正在載入 crt.sh 掃描器界面")
+        
+        # 獲取 URL 參數
+        target_id = request.args.get('target_id', '')
+        
+        # 使用分離的模板文件
+        return render_template('crtsh_htmls/dashboard.html', target_id=target_id)
+        
+    except Exception as e:
+        current_app.logger.error(f"載入 crt.sh 掃描器界面時出錯: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': f'載入界面失敗: {str(e)}'
+        }), 500
+
+@crtsh_route.route('/help', methods=['GET'])
+def crtsh_help():
+    """crt.sh API 使用說明"""
+    help_info = {
+        'title': 'crt.sh 子域名掃描器 API',
+        'description': '使用 crt.sh 服務進行子域名發現和證書透明度日誌查詢',
+        'endpoints': [
+            {
+                'method': 'POST',
+                'path': '/api/crtsh/scan/<target_id>',
+                'description': '啟動 crt.sh 掃描',
+                'parameters': {
+                    'target_id': '目標 ID（路徑參數）'
+                },
+                'response': {
+                    'success': '是否成功',
+                    'message': '響應消息',
+                    'result': {
+                        'domains': '發現的域名列表',
+                        'total': '域名總數',
+                        'scan_time': '掃描時間戳',
+                        'error_message': '錯誤信息（如有）'
+                    }
+                }
+            },
+            {
+                'method': 'GET',
+                'path': '/api/crtsh/result/<target_id>',
+                'description': '獲取掃描結果',
+                'response': {
+                    'success': '是否成功',
+                    'result': '掃描結果詳情',
+                    'target_info': '目標信息'
+                }
+            },
+            {
+                'method': 'GET',
+                'path': '/api/crtsh/status/<target_id>',
+                'description': '獲取掃描狀態',
+                'response': {
+                    'success': '是否成功',
+                    'status': '掃描狀態（not_started/scanning/completed/error）',
+                    'message': '狀態描述'
+                }
+            },
+            {
+                'method': 'GET',
+                'path': '/api/crtsh/history/<target_id>',
+                'description': '獲取掃描歷史',
+                'response': {
+                    'success': '是否成功',
+                    'history': '歷史記錄列表'
+                }
+            },
+            {
+                'method': 'GET',
+                'path': '/api/crtsh/dashboard',
+                'description': '訪問 crt.sh 掃描器界面',
+                'parameters': {
+                    'target_id': '目標 ID（可選查詢參數）'
+                }
+            }
+        ],
+        'usage_example': {
+            'scan': 'POST /api/crtsh/scan/1',
+            'get_result': 'GET /api/crtsh/result/1',
+            'check_status': 'GET /api/crtsh/status/1',
+            'view_dashboard': 'GET /api/crtsh/dashboard?target_id=1'
+        },
+        'features': [
+            '證書透明度日誌查詢',
+            '子域名自動發現',
+            '實時掃描狀態更新',
+            '歷史記錄管理',
+            '結果導出功能',
+            '現代化 Web 界面'
+        ]
+    }
+    
+    return jsonify(help_info)
 
 @crtsh_route.route('/download/<int:target_id>', methods=['GET'])
 def download_crtsh_result(target_id):

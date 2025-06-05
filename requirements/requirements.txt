@@ -13,6 +13,8 @@ SQLAlchemy>=2.0.0
 alembic>=1.12.0
 psycopg2-binary>=2.9.7  # PostgreSQL支持
 pymysql>=1.1.0  # MySQL支持
+cachelib>=0.1.0
+sqlparse>=0.4.4  # SQL解析
 
 # 異步和網絡
 aiohttp>=3.11.0
@@ -25,6 +27,7 @@ websocket-client>=1.7.0
 urllib3>=2.2.0
 httpx>=0.27.0
 yarl>=1.17.0  # 修復與aiohttp的兼容性
+websockets==11.0.3
 
 # 數據處理和解析
 beautifulsoup4>=4.12.0
@@ -49,9 +52,10 @@ scapy>=2.5.0  # 網絡包處理
 # Web服務和性能
 fastapi>=0.115.0
 uvicorn>=0.34.0
-uvloop>=0.21.0; platform_system != "Windows"
-winloop>=0.1.8; platform_system == "Windows"
+uvloop>=0.21.0  # Linux 事件循環加速
 slowapi>=0.1.9
+bottle==0.12.25
+waitress==3.0.1
 
 # 開發和測試工具
 pytest>=8.3.0
@@ -61,6 +65,7 @@ black>=24.2.0
 flake8>=7.0.0
 ruff>=0.9.0
 playwright>=1.40.0
+selenium==4.15.2
 
 # 工具和實用程序
 colorama>=0.4.6
@@ -70,9 +75,11 @@ loguru>=0.7.2
 certifi>=2024.12.0
 func-timeout>=4.3.5
 rich>=13.7.0
+click>=8.1.0
 
 # 系統監控和性能
 psutil>=5.9.0  # 系統和進程監控
+prometheus-client==0.17.1
 
 # JSON和數據序列化
 jsonlines>=3.1.0
@@ -106,9 +113,6 @@ tiktoken>=0.4.0
 # 圖像處理
 Pillow>=10.0.0
 
-# 命令行工具
-click>=8.1.0
-
 # 多進程和並發
 multiprocessing-logging>=0.3.4
 
@@ -118,27 +122,24 @@ pytz>=2023.3
 # 加密和哈希
 bcrypt>=4.0.0
 
-# WSL和平台特定依賴
-python-certifi-win32>=1.6.1; platform_system == "Windows"
-
 # 打包工具
 pyinstaller>=6.2.0
 
-# Linux特定依賴
-python-magic>=0.4.27  # 文件類型檢測
-python-magic-bin>=0.4.14; platform_system == "Windows"  # Windows版本
+# Linux 文件類型檢測
+python-magic>=0.4.27
 
 # 額外的安全工具
 paramiko>=3.3.0  # SSH客戶端
 pycryptodome>=3.19.0  # 加密庫
 
-# 數據庫工具
-sqlparse>=0.4.4  # SQL解析
-
 # 網絡協議支持
 impacket>=0.11.0  # 網絡協議實現
+
+# only required for linux and macos
+xvfbwrapper==0.2.9; platform_system != "Windows"
 
 # 可選依賴 (大型模型訓練加速，需要CUDA支持)
 # deepspeed>=0.9.0
 
 # 注意：Python內建模塊（如os, sys, json等）不需要通過pip安裝
+

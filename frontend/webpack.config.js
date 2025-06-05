@@ -2,11 +2,11 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    bundle: './static/js/attack.js',
-    result: './static/js/result.js'
+    bundle: '../static/js/attack.js',
+    result: '../static/js/result.js'
   },
   output: {
-    path: path.resolve(__dirname, 'static/js/dist'),
+    path: path.resolve(__dirname, '../static/js/dist'),
     filename: '[name].js',
   },
   module: {
@@ -30,7 +30,11 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    modules: [
+      path.resolve(__dirname, 'node_modules'),
+      'node_modules'
+    ]
   },
   devtool: 'source-map'
 }; 

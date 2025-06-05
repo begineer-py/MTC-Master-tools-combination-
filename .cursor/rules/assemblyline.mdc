@@ -1,5 +1,73 @@
 ---
 description: assembly line
 globs: 
+alwaysApply: false
 ---
-我的每個工具有個流程 1前端路由使用node.js(位置/)  html 2 路由中如果是掃描路由 有檔案發送功能 掃描功能 直接json回傳功能(放在/routes/) 3 後端使用多線程掃描(位置reconnaissance\threads) 資料庫使用sqlite3(資料表位置/instance/models) 4 多線程-掃描機制-存入sqlite3邏輯 5 資料掃瞄之後存入sqlite3 
+# C2 安全測試平台 - 組裝線檔案組織規則
+
+## 核心流程架構
+基於組裝線模式的安全測試平台，每個組件都有明確的職責和位置。
+
+## 檔案組織規則
+
+### 1. 前端路由層 (/)
+- **run.py** - 應用程式主入口點，負責啟動Flask服務器和權限管理
+- **templates/** - HTML模板檔案，提供用戶界面展示
+- **static/** - 靜態資源檔案，包含CSS、JS、圖片等前端資源
+- **frontend/** - Node.js前端構建配置，處理前端資源打包和編譯
+
+### 2. 路由控制層 (/routes/)
+- **index_routes.py** - 主頁面路由，處理基本頁面導航
+- **result_route.py** - 結果展示路由，負責掃描結果的查詢和展示
+- **zombie_routes.py** - 殭屍網路控制路由，處理C2控制功能
+- **reconnaissance_route/** - 偵察掃描路由目錄，包含各種掃描功能的API端點
+- **attack_vulnerability_route/** - 攻擊漏洞路由目錄，處理漏洞利用相關功能
+
+### 3. 多線程掃描層 (reconnaissance/threads/)
+- **thread_nmap.py** - Nmap端口掃描線程，執行網絡端口探測
+- **thread_gau.py** - GAU URL收集線程，收集目標網站的所有URL
+- **thread_crtsh.py** - Certificate Transparency日誌掃描線程，查找SSL證書信息
+- **thread_webtech.py** - Web技術識別線程，識別目標網站使用的技術棧
+- **thread_flaresolverr.py** - FlareSolverr反爬蟲線程，繞過Cloudflare保護
+- **thread_crawler.py** - 網頁爬蟲線程，深度爬取網站內容
+- **thread_linksfinder.py** - 鏈接發現線程，從網頁中提取所有鏈接
+
+### 4. 資料庫層 (instance/)
+- **models.py** - SQLite3資料表定義，定義所有數據模型和表結構
+- **c2.db** - SQLite3資料庫檔案，存儲所有掃描結果和配置數據
+- **db_tools.py** - 資料庫工具函數，提供數據庫操作的輔助功能
+- **update_db.py** - 資料庫更新腳本，處理數據庫結構升級和數據遷移
+- **backups/** - 資料庫備份目錄，存放資料庫的備份檔案
+
+### 5. 工具和配置層
+- **tools/** - 外部工具集成，包含各種安全測試工具的封裝
+- **config/** - 配置檔案目錄，存放應用程式的各種配置文件
+- **utils/** - 通用工具函數，提供跨模組使用的輔助功能
+- **logs/** - 日誌檔案目錄，記錄應用程式運行日誌和錯誤信息
+- **scripts/** - 自動化腳本目錄，包含部署和維護腳本
+
+### 6. 輸出和臨時檔案層
+- **output/** - 掃描結果輸出目錄，存放生成的報告和結果檔案
+- **temp/** - 臨時檔案目錄，存放處理過程中的臨時數據
+- **test/** - 測試檔案目錄，包含單元測試和集成測試
+
+### 7. 特殊功能模組
+- **vulnerability_scanning/** - 漏洞掃描模組，專門處理漏洞檢測功能
+- **back_door/** - 後門功能模組，實現持久化訪問功能
+- **DDOS_DAY/** - DDoS攻擊模組，提供分散式拒絕服務攻擊功能
+
+## 數據流向
+1. **前端請求** → routes/ → 路由處理
+2. **掃描任務** → reconnaissance/threads/ → 多線程執行
+3. **掃描結果** → instance/models.py → SQLite3存儲
+4. **結果查詢** → instance/db_tools.py → 數據檢索
+5. **結果展示** → templates/ → 前端顯示
+
+## 檔案命名規範
+- 路由檔案：`*_routes.py` 或 `*_route.py`
+- 線程檔案：`thread_*.py`
+- 模型檔案：`models.py`
+- 工具檔案：`*_tools.py`
+- 配置檔案：`config.py` 或 `*.conf`
+- HTML模板：`*.html`
+- 靜態資源：按類型分類到css/、js/、images/等子目錄

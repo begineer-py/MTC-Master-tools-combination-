@@ -4,12 +4,13 @@ import json
 import subprocess
 import time
 import io
-from datetime import datetime
+from datetime import datetime, timedelta
 from queue import Queue, Empty
 from instance.models import db, gau_results, Target
 from flask import current_app
 from sqlalchemy import exc
 from urllib.parse import urlparse
+import platform
 
 class GauScanThread(threading.Thread):
     """Gau扫描线程类"""
@@ -149,23 +150,20 @@ class GauScanThread(threading.Thread):
         try:
             # 获取当前URL列表
             current_urls = scan_result.urls or []
-            current_count = len(current_urls)
             
-            # 添加新URL
-            current_urls.extend(new_urls)
+            # 添加新URL（避免重复）
+            for url in new_urls:
+                if url not in current_urls:
+                    current_urls.append(url)
             
             # 更新扫描结果
             scan_result.urls = current_urls
             scan_result.total_urls = len(current_urls)
             
-            # 如果是最终更新或URL数量增加了一定比例，或处理了大量URL，才提交更改
-            if final_update or (len(current_urls) - current_count) > 10000 or processed_count % 100000 == 0:
-                # 提交更改
+            # 提交更改
+            if final_update:
                 db.session.commit()
-                
-                # 只在最终更新或处理了一定数量的URL时记录日志
-                if final_update or processed_count % 50000 == 0:
-                    current_app.logger.info(f"已更新Gau扫描结果，目标ID: {self.target_id}，当前URL总数: {scan_result.total_urls}")
+                current_app.logger.info(f"已更新Gau扫描结果，目标ID: {self.target_id}，当前URL总数: {scan_result.total_urls}")
         
         except Exception as e:
             db.session.rollback()
@@ -199,29 +197,69 @@ class GauScanThread(threading.Thread):
     def _execute_gau_scan(self, scan_result):
         """执行Gau扫描"""
         try:
-            # 创建输出目录
-            output_dir = os.path.join(current_app.config['OUTPUT_FOLDER'], 'gau')
+            # 确保输出目录存在
+            output_folder = getattr(current_app.config, 'OUTPUT_FOLDER', None)
+            if not output_folder:
+                # 如果配置中没有 OUTPUT_FOLDER，使用默认路径
+                base_dir = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+                output_folder = os.path.join(base_dir, 'output')
+            
+            output_dir = os.path.join(output_folder, 'gau')
             os.makedirs(output_dir, exist_ok=True)
             
             # 设置输出文件路径
             output_file = os.path.join(output_dir, f"gau_{self.target_id}_{int(time.time())}.txt")
             
+            # 获取正确的 gau 执行文件路径
+            tools_folder = getattr(current_app.config, 'TOOLS_FOLDER', None)
+            if not tools_folder:
+                # 如果配置中没有 TOOLS_FOLDER，使用默认路径
+                base_dir = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+                tools_folder = os.path.join(base_dir, 'tools')
+                gau_path = os.path.join(tools_folder, 'gau_linux', 'gau')
+            
+            # 检查 gau 执行文件是否存在
+            if not os.path.exists(gau_path):
+                error_msg = f"Gau 执行文件不存在: {gau_path}"
+                current_app.logger.error(error_msg)
+                scan_result.status = 'failed'
+                scan_result.error_message = error_msg
+                db.session.commit()
+                return False
+            
             # 构建命令
             cmd = [
-                os.path.join(current_app.config['TOOLS_FOLDER'], 'gau_2.2.3_windows_amd64', 'gau.exe'),
+                gau_path,
                 self.domain,
-                '--o', output_file  # 直接输出到文件
+                '--o', output_file  # 直接輸出到文件
             ]
             
-            # 添加线程参数
+            # 添加線程參數 - 使用更保守的設置
             if self.options.get('threads'):
                 cmd.extend(['--threads', str(self.options.get('threads'))])
             else:
-                # 默认使用50个线程加速扫描
-                cmd.extend(['--threads', '50'])
+                # 默認使用5個線程，進一步降低並發
+                cmd.extend(['--threads', '5'])
             
+            # 添加超時設置
+            cmd.extend(['--timeout', '20'])  # 20秒超時
+            
+            # 添加重試次數限制
+            cmd.extend(['--retries', '2'])  # 最多重試2次
+            
+            # 限制日期範圍，只獲取最近2年的數據
+            current_date = datetime.now()
+            two_years_ago = current_date - timedelta(days=730)
+            cmd.extend(['--from', two_years_ago.strftime('%Y%m')])
+            
+            # 默認只使用 wayback provider，更穩定
             if self.options.get('providers'):
                 cmd.extend(['--providers', self.options.get('providers')])
+            else:
+                cmd.extend(['--providers', 'wayback'])
+            
+            # 添加去重參數，減少重複URL
+            cmd.append('--fp')  # 移除相同端點的不同參數
             
             if self.options.get('blacklist'):
                 cmd.extend(['--blacklist', self.options.get('blacklist')])
@@ -269,16 +307,25 @@ class GauScanThread(threading.Thread):
             # 从文件中读取URL并处理
             current_app.logger.info(f"Gau扫描完成，正在处理结果...")
             
-            # 使用内存模式时，一次性读取整个文件内容到内存中处理
-            if self.memory_mode and os.path.getsize(output_file) < 100 * 1024 * 1024:  # 小于100MB的文件
+            # 检查输出文件是否存在
+            if not os.path.exists(output_file):
+                current_app.logger.warning(f"输出文件不存在: {output_file}")
+                scan_result.status = 'completed'
+                scan_result.total_urls = 0
+                db.session.commit()
+                return True
+            
+            # 获取文件大小以决定处理方式
+            file_size = os.path.getsize(output_file)
+            current_app.logger.info(f"输出文件大小: {file_size} 字节")
+            
+            # 如果文件较小（小于100MB），使用内存模式处理
+            if file_size < 100 * 1024 * 1024 and self.memory_mode:
                 try:
                     with open(output_file, 'r', encoding='utf-8', errors='replace') as f:
-                        content = f.read()
+                        lines = f.readlines()
                     
-                    # 按行分割并处理
-                    lines = content.splitlines()
                     url_buffer = []
-                    
                     for line in lines:
                         url = self._clean_url(line.strip())
                         if url and url not in self.url_set:
@@ -286,19 +333,9 @@ class GauScanThread(threading.Thread):
                             url_buffer.append(url)
                         
                         processed_count += 1
-                        
-                        # 每处理一定数量的URL，更新一次扫描结果
-                        if len(url_buffer) >= self.batch_size:
-                            self._update_scan_result(scan_result, url_buffer, processed_count)
-                            url_buffer = []
-                            
-                            # 每处理一定数量的URL记录一次日志
-                            if processed_count % 100000 == 0:
-                                current_app.logger.info(f"已处理 {processed_count} 个URL，当前去重后URL数量：{len(self.url_set)}")
                     
-                    # 处理剩余的URL
-                    if url_buffer:
-                        self._update_scan_result(scan_result, url_buffer, processed_count)
+                    # 一次性更新所有URL
+                    self._update_scan_result(scan_result, url_buffer, processed_count, final_update=True)
                     
                     # 更新最终结果
                     scan_result.status = 'completed'

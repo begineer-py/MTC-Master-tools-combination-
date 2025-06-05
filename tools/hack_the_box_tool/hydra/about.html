@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>GRAPH ASM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/bootstrap.min.css">
+  <script src="jquery-3.6.1.min.js"></script>
+  <script src="bootstrap.bundle.min.js"></script>
+  <script src="vivagraph.min.js"></script>
+  <script src="bootstrap-notify.min.js"></script>
+  <script src="utils.js"></script>
+
+  <!-- "what is the acceptable amount of suffering, is the question." -TheFunky1 -->
+
+  <style>
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      background-color: #000;
+      font-family: 'Courier New', monospace;
+      overflow: auto; /* Changed from hidden to auto */
+    }
+
+    #dramatic-text-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 35px;
+      text-align: center;
+      white-space: nowrap;
+      z-index: 999;
+    }
+
+    #cursor {
+      display: inline-block;
+      width: 20px;
+      height: 28px;
+      background-color: white;
+      animation: blink 0.7s infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+  </style>
+
+  <style>
+    .orange-button {
+      background-color: #ff6800;
+      color: black;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 20px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+    .orange-button:hover {
+      background-color: white;
+      color: black;
+    }
+  </style>
+
+  <style>
+    .main-content {
+      font-size: 1.5em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      max-width: 50vw;
+      margin: 0 auto;
+      text-align: justify;
+    }
+
+    nav {
+      z-index: 999
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black with 50% opacity */
+      z-index: 555;
+      /* Ensure it's on top of other elements */
+      backdrop-filter: blur(1px);
+      -webkit-backdrop-filter: blur(1px);
+      /* For Safari support */
+    }
+
+    #graphVisualization {
+      width: 100vw;
+      height: calc(100vh - 5em);
+    }
+
+    div.alert {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 50, 50);
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+      <img src="logo.png" class="mx-3" style="width: 30px" />
+      <a class="navbar-brand" href="#">GRAPH ASM</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <p>
+    <h2>About Us</h2>
+    </p>
+
+    <p class="m-5">
+      Discover <span style="font-weight: bold; color: white">GRAPH ASM</span>, the revolutionary Attack Surface Management solution that harnesses the power of proprietary
+      graph technology to map your organization's digital landscape. Unlike solutions built on open-source components,
+      GRAPH ASM's fully proprietary, in-house developed engine provides unparalleled visibility into your network's
+      complex relationships and hidden vulnerabilities. Our cutting-edge, custom-built algorithms traverse your IT
+      infrastructure with a level of sophistication that's simply unattainable with conventional tools.
+    </p>
+
+    <p>
+      <img src="us.png" style="width: 100%" />
+    </p>
+
+    <p class="m-5">
+      Powered by our exclusive artificial intelligence, GRAPH ASM doesn't just collect data – it transforms it into
+      actionable insights. Our proprietary AI engine, designed specifically for attack surface management, analyzes the
+      intricate web of your digital ecosystem to prioritize risks and strengthen your security posture. With GRAPH ASM,
+      you're not just getting a tool; you're gaining access to the most advanced, non-open-source Attack Surface
+      Management technology on the market. Choose GRAPH ASM for uncompromising security and innovation that's truly
+      one-of-a-kind.
+    </p>
+
+  </div>
+
+</body>
+
+</html>

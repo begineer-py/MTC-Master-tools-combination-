@@ -4,8 +4,7 @@ from routes.zombie_routes import zombie_bp
 from routes.index_routes import index_bp
 from routes.reconnaissance_route.attack_route import attack_bp
 from routes.result_route import result_bp
-from routes.attack_vulnerability_route import attack_vulnerability_route
-from routes.api_setting.api_set import api_route
+from routes.attack_vulnerability_route.attack_vulnerability_route import attack_vulnerability_route
 from routes.reconnaissance_route.nmap_route import nmap_route
 from routes.reconnaissance_route.crtsh_route import crtsh_route
 from routes.reconnaissance_route.webtech_route import webtech_route
@@ -22,7 +21,6 @@ def register_blueprints(app):
         (attack_bp, None),  # None 表示沒有前綴
         (result_bp, '/result'),
         (attack_vulnerability_route, '/attack/vulnerability'),
-        (api_route, '/api'),
         (nmap_route, '/api/nmap'),
         (crtsh_route, '/api/crtsh'),
         (webtech_route, '/api/webtech'),

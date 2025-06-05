@@ -1,0 +1,40 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "python.pythonPath": "./venv/bin/python3",
+        "python.defaultInterpreterPath": "./venv/bin/python3",
+        "python.terminal.activateEnvironment": true,
+        "python.terminal.activateEnvInCurrentTerminal": true,
+        "python.venvPath": "./venv",
+        "terminal.integrated.env.linux": {
+            "PYTHONPATH": "${workspaceFolder}/venv/lib/python3.12/site-packages",
+            "VIRTUAL_ENV": "${workspaceFolder}/venv",
+            "PATH": "${workspaceFolder}/venv/bin:${env:PATH}"
+        },
+        "python.analysis.extraPaths": [
+            "./venv/lib/python3.12/site-packages"
+        ],
+        "python.analysis.autoImportCompletions": true,
+        "python.analysis.typeCheckingMode": "basic",
+        "files.associations": {
+            "*.py": "python"
+        },
+        "editor.formatOnSave": true,
+        "python.formatting.provider": "black",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": false,
+        "python.linting.flake8Enabled": true
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-python.python",
+            "ms-python.debugpy",
+            "ms-python.flake8",
+            "ms-python.black-formatter"
+        ]
+    }
+} 

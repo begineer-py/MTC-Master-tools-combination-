@@ -1,0 +1,52 @@
+{
+    "title": "Nmap 掃描器使用說明",
+    "version": "2.0.0",
+    "access_url": "/api/nmap/dashboard",
+    "sections": [
+        {
+            "title": "快速開始",
+            "content": [
+                "1. 訪問 /api/nmap/dashboard 進入掃描界面",
+                "2. 輸入目標 ID 並點擊「設置目標」",
+                "3. 選擇掃描類型（常用端口或完整掃描）",
+                "4. 點擊「開始掃描」並等待結果"
+            ]
+        },
+        {
+            "title": "掃描類型",
+            "content": [
+                "常用端口掃描: 掃描 19 個最常見的端口，速度快（30-120秒）",
+                "完整掃描: 掃描 114 個擴展端口，更全面但耗時較長（2-8分鐘）"
+            ]
+        },
+        {
+            "title": "API 端點",
+            "content": [
+                "POST /api/nmap/scan/<target_id> - 啟動掃描",
+                "GET /api/nmap/status/<target_id> - 獲取掃描狀態",
+                "GET /api/nmap/result/<target_id> - 獲取掃描結果",
+                "GET /api/nmap/history/<target_id> - 獲取掃描歷史",
+                "GET /api/nmap/dashboard - 掃描器界面",
+                "GET /api/nmap/help - 幫助信息"
+            ]
+        },
+        {
+            "title": "功能特色",
+            "content": [
+                "實時狀態更新: 自動顯示掃描進度和結果",
+                "歷史記錄: 查看之前的掃描結果",
+                "智能權限檢測: 根據運行權限自動選擇最佳掃描方式",
+                "現代化界面: 響應式設計，支持各種設備"
+            ]
+        },
+        {
+            "title": "注意事項",
+            "content": [
+                "掃描時間取決於目標響應速度和網絡狀況",
+                "建議先使用常用端口掃描進行快速檢測",
+                "掃描過程中請勿關閉瀏覽器",
+                "僅用於授權的安全測試，請遵守相關法律法規"
+            ]
+        }
+    ]
+}

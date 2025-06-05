@@ -1,8 +1,13 @@
-from flask import Blueprint, request, jsonify, current_app
-from utils.permission import check_user_permission
+from flask import Blueprint, request, jsonify, current_app, render_template
 from instance.models import Target
 import requests
 import json
+import sys
+import os
+
+# 添加項目根目錄到 Python 路徑
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+from app.flaresolverr_set.start_flaresolverr import flaresolverr_manager
 
 # 创建蓝图
 flaresolverr_bp = Blueprint('flaresolverr', __name__)
@@ -22,12 +27,6 @@ def flaresolverr_solve():
                 'message': '缺少URL参数'
             }), 400
             
-        # 检查权限（如果提供了target_id）
-        if target_id:
-            permission_result = check_user_permission(target_id=target_id)
-            if not isinstance(permission_result, Target):
-                return permission_result
-        
         # 调用FlareSolverr
         flaresolverr_url = 'http://localhost:8191/v1'
         
@@ -79,4 +78,152 @@ def flaresolverr_solve():
         return jsonify({
             'success': False,
             'message': f'处理请求时出错: {str(e)}'
-        }), 500 
+        }), 500
+
+@flaresolverr_bp.route('/start', methods=['POST'])
+def start_flaresolverr():
+    """啟動 FlareSolverr 服務"""
+    try:
+        result = flaresolverr_manager.start_flaresolverr()
+        status_code = 200 if result['success'] else 500
+        return jsonify(result), status_code
+    except Exception as e:
+        current_app.logger.error(f"啟動 FlareSolverr 錯誤: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': f'啟動服務時出錯: {str(e)}'
+        }), 500
+
+@flaresolverr_bp.route('/stop', methods=['POST'])
+def stop_flaresolverr():
+    """停止 FlareSolverr 服務"""
+    try:
+        result = flaresolverr_manager.stop_flaresolverr()
+        status_code = 200 if result['success'] else 500
+        return jsonify(result), status_code
+    except Exception as e:
+        current_app.logger.error(f"停止 FlareSolverr 錯誤: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': f'停止服務時出錯: {str(e)}'
+        }), 500
+
+@flaresolverr_bp.route('/restart', methods=['POST'])
+def restart_flaresolverr():
+    """重啟 FlareSolverr 服務"""
+    try:
+        result = flaresolverr_manager.restart_flaresolverr()
+        status_code = 200 if result['success'] else 500
+        return jsonify(result), status_code
+    except Exception as e:
+        current_app.logger.error(f"重啟 FlareSolverr 錯誤: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': f'重啟服務時出錯: {str(e)}'
+        }), 500
+
+@flaresolverr_bp.route('/status', methods=['GET'])
+def get_flaresolverr_status():
+    """獲取 FlareSolverr 狀態"""
+    try:
+        result = flaresolverr_manager.get_status()
+        status_code = 200 if result['success'] else 500
+        return jsonify(result), status_code
+    except Exception as e:
+        current_app.logger.error(f"獲取 FlareSolverr 狀態錯誤: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': f'獲取狀態時出錯: {str(e)}'
+        }), 500
+
+@flaresolverr_bp.route('/auto-start', methods=['POST'])
+def auto_start_flaresolverr():
+    """自動啟動 FlareSolverr（如果未運行）"""
+    try:
+        # 檢查是否已經運行
+        status_result = flaresolverr_manager.get_status()
+        if status_result['success'] and status_result['status']['running']:
+            return jsonify({
+                'success': True,
+                'message': 'FlareSolverr 已經在運行',
+                'status': 'already_running'
+            })
+        
+        # 啟動服務
+        result = flaresolverr_manager.start_flaresolverr()
+        status_code = 200 if result['success'] else 500
+        return jsonify(result), status_code
+    except Exception as e:
+        current_app.logger.error(f"自動啟動 FlareSolverr 錯誤: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': f'自動啟動服務時出錯: {str(e)}'
+        }), 500
+
+@flaresolverr_bp.route('/dashboard', methods=['GET'])
+def flaresolverr_dashboard():
+    """FlareSolverr 管理界面"""
+    return render_template("flaresolverr_htmls/flaresolverr.html")
+
+@flaresolverr_bp.route('/help', methods=['GET'])
+def flaresolverr_help():
+    """FlareSolverr 使用說明"""
+    help_info = {
+        'success': True,
+        'service_info': {
+            'name': 'FlareSolverr',
+            'description': 'Cloudflare 驗證碼解決方案',
+            'version': '3.3.21',
+            'default_port': 8191
+        },
+        'api_endpoints': {
+            '/api/flaresolverr/start': {
+                'method': 'POST',
+                'description': '啟動 FlareSolverr 服務'
+            },
+            '/api/flaresolverr/stop': {
+                'method': 'POST', 
+                'description': '停止 FlareSolverr 服務'
+            },
+            '/api/flaresolverr/restart': {
+                'method': 'POST',
+                'description': '重啟 FlareSolverr 服務'
+            },
+            '/api/flaresolverr/status': {
+                'method': 'GET',
+                'description': '獲取服務狀態'
+            },
+            '/api/flaresolverr/solve': {
+                'method': 'POST',
+                'description': '解決 Cloudflare 驗證碼',
+                'parameters': {
+                    'url': '要解析的 URL',
+                    'target_id': '目標 ID（可選）'
+                }
+            },
+            '/api/flaresolverr/dashboard': {
+                'method': 'GET',
+                'description': '管理界面'
+            }
+        },
+        'usage_examples': {
+            'solve_request': {
+                'url': '/api/flaresolverr/solve',
+                'method': 'POST',
+                'body': {
+                    'url': 'https://example.com',
+                    'target_id': 1
+                }
+            }
+        },
+        'features': [
+            '自動啟動和停止服務',
+            '實時狀態監控',
+            '自動重啟機制',
+            '進程資源監控',
+            'Web 管理界面',
+            'Cloudflare 驗證碼解決'
+        ]
+    }
+    
+    return jsonify(help_info) 

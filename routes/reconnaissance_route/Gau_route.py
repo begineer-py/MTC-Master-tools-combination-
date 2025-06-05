@@ -1,6 +1,4 @@
-from flask import Blueprint, jsonify, request, current_app, send_file
-from utils.decorators import login_required
-from utils.permission import check_user_permission
+from flask import Blueprint, jsonify, request, current_app, send_file, render_template
 from instance.models import db, Target, gau_results
 from reconnaissance.threads.thread_gau import start_gau_scan
 import os
@@ -8,6 +6,7 @@ import json
 from datetime import datetime
 import time
 from functools import lru_cache
+from sqlalchemy import text
 
 # 创建蓝图
 gau_blueprint = Blueprint('gau', __name__, url_prefix='')
@@ -33,55 +32,138 @@ def _clean_expired_cache():
         if key in _cache_timestamp:
             del _cache_timestamp[key]
 
-@gau_blueprint.route('/scan/<int:target_id>', methods=['POST'])
-def gau_scan(target_id):
-    """
-    启动 Gau 扫描
-    
-    请求体参数:
-    {
-        "threads": number,        // 可选，默认 50，线程数量
-        "verbose": boolean,       // 可选，默认 false，是否显示详细信息
-        "providers": string,      // 可选，默认 "wayback,commoncrawl,otx,urlscan"，数据提供者
-        "blacklist": string       // 可选，默认 "ttf,woff,svg,png,jpg,gif,jpeg,ico"，排除的文件类型
-    }
-    """
-    # 使用权限检查函数
-    result = check_user_permission(target_id=target_id)
-    if not isinstance(result, Target):
-        return result  # 返回错误响应
-    
-    target = result  # 获取目标对象
-    data = request.get_json() or {}
-    options = data
-    
-    # 自动从目标获取域名
-    domain = target.target_ip_no_https
-    
-    # 启动扫描
+def _check_database_health():
+    """檢查數據庫健康狀態並嘗試修復"""
     try:
-        # 检查是否已有进行中的扫描
-        existing_scan = gau_results.query.filter_by(
-            target_id=target_id,
-            status='scanning'
-        ).first()
+        # 簡單的數據庫連接測試
+        db.session.execute(text('SELECT 1'))
+        db.session.commit()
+        return True
+    except Exception as e:
+        current_app.logger.warning(f"數據庫健康檢查失敗: {str(e)}")
+        try:
+            # 嘗試回滾並重新連接
+            db.session.rollback()
+            db.session.close()
+            # 重新測試
+            db.session.execute(text('SELECT 1'))
+            db.session.commit()
+            current_app.logger.info("數據庫連接已修復")
+            return True
+        except Exception as e2:
+            current_app.logger.error(f"數據庫修復失敗: {str(e2)}")
+            return False
+
+@gau_blueprint.route('/scan/<int:target_id>', methods=['POST', 'GET'])
+def gau_scan(target_id):
+    """启动 Gau 扫描"""
+
+    target = Target.query.get_or_404(target_id)
+    
+    try:
+        # 获取扫描参数
+        data = request.get_json() or {}
+        threads = data.get('threads', 3)
+        providers = data.get('providers', ['wayback', 'commoncrawl', 'otx'])
+        exclude_extensions = data.get('exclude_extensions', [])
+        blacklist = data.get('blacklist', '')  # 新增：直接接收 blacklist 參數
         
-        if existing_scan:
-            current_app.logger.info(f"已有进行中的 Gau 扫描，目标 ID: {target_id}")
+        verbose = data.get('verbose', False)
+        
+        current_app.logger.info(f"Scan parameters: threads={threads}, providers={providers}, exclude_extensions={exclude_extensions}, blacklist={blacklist}")
+        
+        # 使用 domain 字段而不是 target_ip_no_https
+        domain = target.domain
+        if not domain:
+            # 如果 domain 为空，尝试从 target_ip 中提取
+            domain = target.target_ip.replace('https://', '').replace('http://', '').split('/')[0]
+        
+        # 檢查數據庫健康狀態
+        if not _check_database_health():
             return jsonify({
-                'success': True,
-                'message': '已有进行中的扫描',
-                'result': existing_scan.to_dict()
-            })
+                'success': False,
+                'message': '數據庫連接異常，請稍後重試'
+            }), 503
         
-        # 启动新扫描，直接使用target_id
-        scan_target_id = start_gau_scan(target_id, domain, options)
+        # 使用重試機制處理數據庫操作
+        max_retries = 3
+        retry_delay = 0.5  # 500ms
+        
+        for attempt in range(max_retries):
+            try:
+                # 检查是否已存在扫描结果
+                existing_result = gau_results.query.filter_by(target_id=target_id).first()
+                
+                if existing_result:
+                    # 删除旧结果
+                    db.session.delete(existing_result)
+                    current_app.logger.info(f"已删除旧的扫描结果: target_id={target_id}")
+                
+                # 创建新的扫描记录
+                new_result = gau_results(
+                    target_id=target_id,
+                    domain=domain,
+                    status='scanning'
+                )
+                
+                db.session.add(new_result)
+                db.session.commit()
+                current_app.logger.info(f"创建新的扫描记录: target_id={target_id}, domain={domain}")
+                break  # 成功則跳出重試循環
+                
+            except Exception as e:
+                db.session.rollback()
+                current_app.logger.warning(f"數據庫操作失敗 (嘗試 {attempt + 1}/{max_retries}): {str(e)}")
+                
+                if attempt == max_retries - 1:
+                    # 最後一次嘗試失敗
+                    current_app.logger.error(f"创建扫描记录失败，已重試 {max_retries} 次: {str(e)}")
+                    return jsonify({
+                        'success': False,
+                        'message': f'数据库繁忙，请稍后重试: {str(e)}'
+                    }), 503  # Service Unavailable
+                else:
+                    # 等待後重試
+                    import time
+                    time.sleep(retry_delay)
+                    retry_delay *= 2  # 指數退避
+        
+        # 启动后台扫描任务
+        # 處理排除文件類型
+        final_blacklist = ''
+        if blacklist:
+            # 如果直接提供了 blacklist 字符串，使用它
+            final_blacklist = blacklist
+        elif exclude_extensions:
+            # 如果提供了 exclude_extensions 列表，轉換為字符串
+            if isinstance(exclude_extensions, list):
+                final_blacklist = ','.join(exclude_extensions)
+            else:
+                final_blacklist = str(exclude_extensions)
+        else:
+            # 默認排除的文件類型
+            final_blacklist = 'ttf,woff,svg,png,jpg,gif,jpeg,ico'
+        
+        options = {
+            'threads': threads,
+            'providers': ','.join(providers) if isinstance(providers, list) else str(providers),
+            'blacklist': final_blacklist,
+            'verbose': verbose
+        }
+        
+        current_app.logger.info(f"Final scan options: {options}")
+        
+        scan_id = start_gau_scan(target_id, domain, options)
         
         return jsonify({
             'success': True,
-            'message': '扫描已启动',
-            'target_id': scan_target_id
+            'message': 'Gau 扫描已启动',
+            'scan_id': scan_id,
+            'target_id': target_id,
+            'domain': domain,
+            'estimated_time': '1-3分钟'
         })
+        
     except Exception as e:
         current_app.logger.error(f"启动 Gau 扫描时出错: {str(e)}")
         return jsonify({
@@ -89,21 +171,23 @@ def gau_scan(target_id):
             'message': f'启动扫描失败: {str(e)}'
         }), 500
 
-# 使用LRU缓存加速常用查询
-@lru_cache(maxsize=32)
+# 移除 LRU 緩存，改用簡單查詢
 def _get_scan_result_cached(target_id):
-    """获取缓存的扫描结果"""
-    return gau_results.query.filter_by(
-        target_id=target_id
-    ).order_by(gau_results.scan_time.desc()).first()
+    """获取扫描结果"""
+    try:
+        return gau_results.query.filter_by(
+            target_id=target_id
+        ).order_by(gau_results.scan_time.desc()).first()
+    except Exception as e:
+        current_app.logger.error(f"查询扫描结果时出错: {str(e)}")
+        return None
 
 @gau_blueprint.route('/result/<int:target_id>', methods=['GET'])
 def gau_get_result(target_id):
     """获取 Gau 扫描结果"""
-    # 使用权限检查函数
-    result = check_user_permission(target_id=target_id)
-    if not isinstance(result, Target):
-        return result  # 返回错误响应
+    current_app.logger.info(f"DEBUG: gau_get_result called with target_id={target_id}")
+    
+    target = Target.query.get_or_404(target_id)
     
     try:
         # 检查是否只需要元数据
@@ -111,179 +195,237 @@ def gau_get_result(target_id):
         
         # 获取分页参数
         page = request.args.get('page', 1, type=int)
-        per_page = request.args.get('per_page', 100, type=int)
-        category = request.args.get('category', 'all')
+        per_page = request.args.get('per_page', 50, type=int)
+        category = request.args.get('category', '')
         search = request.args.get('search', '')
         
-        # 限制每页最大数量
-        if per_page > 1000:
-            per_page = 1000
+        current_app.logger.info(f"DEBUG: Query parameters - page={page}, per_page={per_page}, category={category}")
         
-        # 查询最新的扫描结果 (使用缓存)
-        scan_result = _get_scan_result_cached(target_id)
+        # 获取扫描结果
+        scan_result = gau_results.query.filter_by(target_id=target_id).first()
+        
+        current_app.logger.info(f"DEBUG: scan_result found: {scan_result is not None}")
         
         if not scan_result:
-            response = jsonify({
-                'success': True,
+            response_data = {
+                'success': True,  # 改為 True，因為查詢成功，只是沒有結果
                 'message': '未找到扫描结果',
-                'result': None
-            })
-            return response
-        
-        # 安全生成缓存键，确保类型正确
-        try:
-            # 避免使用布尔值作为字符串的一部分
-            metadata_str = "metadata_only" if metadata_only else "full_data"
-            cache_key = f"{target_id}_{metadata_str}_{page}_{per_page}_{category}_{search}"
-            
-            # 检查缓存是否有效
-            if not _cache_lock and cache_key in _result_cache:
-                # 清理过期缓存
-                _clean_expired_cache()
-                return _result_cache[cache_key]
-        except Exception as e:
-            current_app.logger.warning(f"生成缓存键时出错: {str(e)}")
-            # 出错时不使用缓存
-            cache_key = None
-        
-        # 如果只需要元数据，则不返回URL列表
-        if metadata_only:
-            result_dict = {
-                'id': scan_result.id,
-                'target_id': scan_result.target_id,
-                'domain': scan_result.domain,
-                'total_urls': scan_result.total_urls,
-                'status': scan_result.status,
-                'error_message': scan_result.error_message,
-                'scan_time': scan_result.scan_time.strftime('%Y-%m-%d %H:%M:%S') if scan_result.scan_time else None
+                'result': {
+                    'status': 'not_started',
+                    'total_urls': 0,
+                    'urls': [],
+                    'categories': {
+                        'all': 0,
+                        'js': 0,
+                        'api': 0,
+                        'image': 0,
+                        'css': 0,
+                        'doc': 0,
+                        'other': 0
+                    },
+                    'pagination': {
+                        'page': page,
+                        'per_page': per_page,
+                        'total': 0,
+                        'pages': 0,
+                        'total_pages': 0
+                    }
+                }
             }
-            
-            response = jsonify({
-                'success': True,
-                'message': '获取扫描结果成功',
-                'result': result_dict
-            })
-            
-            # 缓存结果 (如果缓存键有效)
-            if cache_key:
-                _result_cache[cache_key] = response
-                _cache_timestamp[cache_key] = time.time()
-            
-            return response
+            current_app.logger.info(f"DEBUG: Returning no result response: {response_data}")
+            return jsonify(response_data)
         
-        # 获取完整结果
+        # 如果只需要元数据
+        if metadata_only:
+            return jsonify({
+                'success': True,
+                'result': {
+                    'status': scan_result.status,
+                    'total_urls': scan_result.total_urls,
+                    'domain': scan_result.domain,
+                    'scan_time': scan_result.scan_time.strftime('%Y-%m-%d %H:%M:%S') if scan_result.scan_time else None,
+                    'error_message': scan_result.error_message
+                }
+            })
+        
+        # 获取 URL 列表
         urls = scan_result.urls or []
         
-        # 对URL进行分类 - 优化为单次遍历
-        categories = {
-            'all': 0,
-            'js': 0,
-            'api': 0,
-            'image': 0,
-            'css': 0,
-            'doc': 0,
-            'other': 0
-        }
+        # 分类统计
+        categories = _categorize_urls(urls)
         
-        # 过滤URL
-        filtered_urls = []
+        # 过滤 URL
+        filtered_urls = urls
+        if category and category != 'all' and category in categories:
+            filtered_urls = [url for url in urls if _get_url_category(url) == category]
         
-        # 单次遍历优化：根据类别和搜索词过滤URL
-        for url in urls:
-            # 确保URL是字符串
-            if not isinstance(url, str):
-                continue
-                
-            # 分类URL并同时过滤
-            url_category = 'other'  # 默认分类
-            
-            if '.js' in url or '/js/' in url:
-                url_category = 'js'
-            elif '/api/' in url or '/rest/' in url or '/v1/' in url or '/v2/' in url:
-                url_category = 'api'
-            elif any(ext in url for ext in ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.ico']):
-                url_category = 'image'
-            elif any(ext in url for ext in ['.css', '.scss', '.less']):
-                url_category = 'css'
-            elif any(ext in url for ext in ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.txt']):
-                url_category = 'doc'
-            
-            # 更新分类计数
-            categories[url_category] += 1
-            categories['all'] += 1
-            
-            # 检查是否满足当前选择的类别
-            if category != 'all' and category != url_category:
-                continue
-            
-            # 搜索过滤
-            if search and search.lower() not in url.lower():
-                continue
-            
-            filtered_urls.append(url)
+        if search:
+            filtered_urls = [url for url in filtered_urls if search.lower() in url.lower()]
         
-        # 计算分页
-        total_items = len(filtered_urls)
-        total_pages = (total_items + per_page - 1) // per_page if total_items > 0 else 1
+        # 分页处理
+        total = len(filtered_urls)
+        start = (page - 1) * per_page
+        end = start + per_page
+        paginated_urls = filtered_urls[start:end]
         
-        # 确保页码有效
-        if page < 1:
-            page = 1
-        elif page > total_pages:
-            page = total_pages
-        
-        # 获取当前页的URL
-        start_idx = (page - 1) * per_page
-        end_idx = min(start_idx + per_page, total_items)
-        current_page_urls = filtered_urls[start_idx:end_idx]
-        
-        # 构建结果
-        result_dict = {
-            'id': scan_result.id,
-            'target_id': scan_result.target_id,
-            'domain': scan_result.domain,
-            'urls': current_page_urls,
-            'total_urls': scan_result.total_urls,
-            'status': scan_result.status,
-            'error_message': scan_result.error_message,
-            'scan_time': scan_result.scan_time.strftime('%Y-%m-%d %H:%M:%S') if scan_result.scan_time else None,
-            'categories': categories,
-            'pagination': {
-                'page': page,
-                'per_page': per_page,
-                'total_items': total_items,
-                'total_pages': total_pages
-            }
-        }
-        
-        response = jsonify({
+        return jsonify({
             'success': True,
-            'message': '获取扫描结果成功',
-            'result': result_dict
+            'result': {
+                'status': scan_result.status,
+                'total_urls': scan_result.total_urls,
+                'domain': scan_result.domain,
+                'scan_time': scan_result.scan_time.strftime('%Y-%m-%d %H:%M:%S') if scan_result.scan_time else None,
+                'error_message': scan_result.error_message,
+                'urls': paginated_urls,
+                'categories': categories,
+                'pagination': {
+                    'page': page,
+                    'per_page': per_page,
+                    'total': total,
+                    'pages': (total + per_page - 1) // per_page,
+                    'total_pages': (total + per_page - 1) // per_page  # 添加 total_pages 以保持兼容性
+                }
+            }
         })
         
-        # 缓存结果 (如果缓存键有效)
-        if cache_key:
-            _result_cache[cache_key] = response
-            _cache_timestamp[cache_key] = time.time()
-        
-        return response
     except Exception as e:
         current_app.logger.error(f"获取 Gau 扫描结果时出错: {str(e)}")
         return jsonify({
             'success': False,
-            'message': f'获取扫描结果失败: {str(e)}'
+            'message': f'获取结果失败: {str(e)}'
+        }), 500
+
+@gau_blueprint.route('/status/<int:target_id>', methods=['GET'])
+def get_scan_status(target_id):
+    """获取掃描状态"""
+    try:
+        # 檢查是否有結果
+        gau_result = gau_results.query.filter_by(target_id=target_id).order_by(gau_results.scan_time.desc()).first()
+        
+        if gau_result:
+            if gau_result.status == 'completed':
+                return jsonify({
+                    'success': True,
+                    'status': 'completed',
+                    'message': '掃描已完成，結果可用'
+                })
+            elif gau_result.status == 'failed':
+                return jsonify({
+                    'success': True,
+                    'status': 'error',
+                    'message': f'掃描失敗: {gau_result.error_message}'
+                })
+            elif gau_result.status == 'scanning':
+                return jsonify({
+                    'success': True,
+                    'status': 'scanning',
+                    'message': '掃描正在進行中...'
+                })
+            else:
+                return jsonify({
+                    'success': True,
+                    'status': 'scanning',
+                    'message': '掃描正在進行中...'
+                })
+        else:
+            return jsonify({
+                'success': True,
+                'status': 'not_started',
+                'message': '尚未開始掃描'
+            })
+            
+    except Exception as e:
+        current_app.logger.error(f"获取掃描状态時出錯: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': f'获取状态失败: {str(e)}'
+        }), 500
+
+@gau_blueprint.route('/history/<int:target_id>', methods=['GET'])
+def get_scan_history(target_id):
+    """获取掃描历史"""
+    try:
+        # 获取所有掃描结果
+        results = gau_results.query.filter_by(target_id=target_id).order_by(gau_results.scan_time.desc()).all()
+        
+        history = []
+        for result in results:
+            history.append({
+                'scan_time': result.scan_time.timestamp() if result.scan_time else None,
+                'status': result.status,
+                'url_count': result.total_urls or 0,
+                'total_urls': result.total_urls or 0,
+                'error_message': result.error_message
+            })
+        
+        return jsonify({
+            'success': True,
+            'history': history
+        })
+        
+    except Exception as e:
+        current_app.logger.error(f"获取掃描历史時出錯: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': f'获取历史失败: {str(e)}'
+        }), 500
+
+@gau_blueprint.route('/dashboard', methods=['GET'])
+def gau_dashboard():
+    """Gau URL 掃描器現代化界面"""
+    try:
+        current_app.logger.info("正在載入 Gau 掃描器界面")
+        
+        # 獲取 URL 參數
+        target_id = request.args.get('target_id', '')
+        
+        # 使用分離的模板文件
+        return render_template('gau_htmls/dashboard.html', target_id=target_id)
+        
+    except Exception as e:
+        current_app.logger.error(f"載入 Gau 掃描器界面時出錯: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': f'載入界面失敗: {str(e)}'
+        }), 500
+
+@gau_blueprint.route('/help', methods=['GET'])
+def gau_help():
+    """Gau API 使用說明"""
+    try:
+        # 獲取當前文件的目錄
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        help_file_path = os.path.join(current_dir, 'Gau_help.json')
+        
+        # 讀取 JSON 文件
+        with open(help_file_path, 'r', encoding='utf-8') as f:
+            help_info = json.load(f)
+        
+        return jsonify(help_info)
+        
+    except FileNotFoundError:
+        current_app.logger.error(f"幫助文件未找到: {help_file_path}")
+        return jsonify({
+            'error': '幫助文檔未找到',
+            'message': 'Gau 幫助文件遺失'
+        }), 404
+    except json.JSONDecodeError as e:
+        current_app.logger.error(f"幫助文件中的 JSON 格式無效: {str(e)}")
+        return jsonify({
+            'error': '幫助文檔格式無效',
+            'message': '幫助文件包含無效的 JSON 格式'
+        }), 500
+    except Exception as e:
+        current_app.logger.error(f"載入幫助文檔時出錯: {str(e)}")
+        return jsonify({
+            'error': '載入幫助文檔失敗',
+            'message': str(e)
         }), 500
 
 @gau_blueprint.route('/file/<int:target_id>', methods=['GET'])
 def get_gau_file(target_id):
     """获取Gau扫描结果文件"""
     try:
-        # 检查权限
-        permission_result = check_user_permission(target_id=target_id)
-        if not isinstance(permission_result, Target):
-            return jsonify({'success': False, 'message': '无权访问此资源'}), 403
-        
         # 查询扫描结果
         result = gau_results.query.filter_by(target_id=target_id).first()
         if not result:
@@ -315,113 +457,67 @@ def get_gau_file(target_id):
         # 创建临时文件
         temp_file_path = os.path.join(current_app.config['TEMP_FOLDER'], f"gau_results_{target.domain}_{target_id}.txt")
         
-        # 使用更高效的方式写入文件
-        with open(temp_file_path, 'w', encoding='utf-8', errors='replace', buffering=1024*1024) as f:  # 1MB缓冲区
-            # 写入文件头部信息
-            f.write(f"# Gau扫描结果 - {target.domain}\n")
-            f.write(f"# 扫描时间: {result.scan_time}\n")
-            f.write(f"# 总URL数: {len(result.urls)}\n")
-            f.write("#" + "-" * 50 + "\n\n")
-            
-            # 使用单次遍历分类URL
-            js_urls = []
-            api_urls = []
-            image_urls = []
-            css_urls = []
-            doc_urls = []
-            other_urls = []
-            
-            # 预分配内存
-            urls = result.urls
-            url_count = len(urls)
-            
-            # 计算大概的内存分配
-            estimated_js = int(url_count * 0.15)  # 假设15%是JS
-            estimated_api = int(url_count * 0.10)  # 假设10%是API
-            estimated_other = int(url_count * 0.50)  # 假设50%是其他
-            
-            # 预分配
-            js_urls = [None] * estimated_js
-            api_urls = [None] * estimated_api
-            other_urls = [None] * estimated_other
-            image_urls = []
-            css_urls = []
-            doc_urls = []
-            
-            # 实际填充的计数
-            js_count = 0
-            api_count = 0
-            other_count = 0
-            
-            for url in urls:
-                # 确保URL是字符串
-                if not isinstance(url, str):
-                    continue
-                    
-                if '.js' in url or '/js/' in url:
-                    if js_count < estimated_js:
-                        js_urls[js_count] = url
-                        js_count += 1
-                    else:
+        current_app.logger.info(f"開始生成文件，URL 總數: {len(result.urls)}")
+        
+        try:
+            # 使用簡單高效的方式寫入文件
+            with open(temp_file_path, 'w', encoding='utf-8', errors='replace') as f:
+                # 写入文件头部信息
+                f.write(f"# Gau扫描结果 - {target.domain}\n")
+                f.write(f"# 扫描时间: {result.scan_time}\n")
+                f.write(f"# 总URL数: {len(result.urls)}\n")
+                f.write("#" + "-" * 50 + "\n\n")
+                
+                # 分類 URL
+                js_urls = []
+                api_urls = []
+                image_urls = []
+                css_urls = []
+                doc_urls = []
+                other_urls = []
+                
+                # 一次性分類所有 URL
+                for url in result.urls:
+                    url_lower = url.lower()
+                    if any(ext in url_lower for ext in ['.js', 'javascript']):
                         js_urls.append(url)
-                elif '/api/' in url or '/rest/' in url or '/v1/' in url or '/v2/' in url:
-                    if api_count < estimated_api:
-                        api_urls[api_count] = url
-                        api_count += 1
-                    else:
+                    elif any(ext in url_lower for ext in ['/api/', '/v1/', '/v2/', '.json', '.xml']):
                         api_urls.append(url)
-                elif any(ext in url.lower() for ext in ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.ico']):
-                    image_urls.append(url)
-                elif any(ext in url.lower() for ext in ['.css', '.scss', '.less']):
-                    css_urls.append(url)
-                elif any(ext in url.lower() for ext in ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.txt']):
-                    doc_urls.append(url)
-                else:
-                    if other_count < estimated_other:
-                        other_urls[other_count] = url
-                        other_count += 1
+                    elif any(ext in url_lower for ext in ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.webp']):
+                        image_urls.append(url)
+                    elif any(ext in url_lower for ext in ['.css', '.scss', '.sass']):
+                        css_urls.append(url)
+                    elif any(ext in url_lower for ext in ['.pdf', '.doc', '.docx', '.txt', '.zip', '.rar']):
+                        doc_urls.append(url)
                     else:
                         other_urls.append(url)
-            
-            # 裁剪预分配数组
-            js_urls = js_urls[:js_count]
-            api_urls = api_urls[:api_count]
-            other_urls = other_urls[:other_count]
-            
-            # 写入JavaScript文件
-            if js_urls:
-                f.write("## JavaScript文件\n")
-                f.write("\n".join(js_urls))
-                f.write("\n\n")
-            
-            # 写入API端点
-            if api_urls:
-                f.write("## API端点\n")
-                f.write("\n".join(api_urls))
-                f.write("\n\n")
-            
-            # 写入其他URL
-            if other_urls:
-                f.write("## 其他URL\n")
-                f.write("\n".join(other_urls))
-                f.write("\n\n")
-            
-            # 写入文档文件
-            if doc_urls:
-                f.write("## 文档文件\n")
-                f.write("\n".join(doc_urls))
-                f.write("\n\n")
-            
-            # 写入CSS文件
-            if css_urls:
-                f.write("## CSS文件\n")
-                f.write("\n".join(css_urls))
-                f.write("\n\n")
-            
-            # 写入图片文件
-            if image_urls:
-                f.write("## 图片文件\n")
-                f.write("\n".join(image_urls))
+                
+                # 寫入分類的 URL
+                categories = [
+                    ("JavaScript 文件", js_urls),
+                    ("API 端點", api_urls),
+                    ("圖片文件", image_urls),
+                    ("CSS 文件", css_urls),
+                    ("文檔文件", doc_urls),
+                    ("其他 URL", other_urls)
+                ]
+                
+                for category_name, category_urls in categories:
+                    if category_urls:
+                        f.write(f"\n# {category_name} ({len(category_urls)} 个)\n")
+                        f.write("#" + "-" * 30 + "\n")
+                        for url in category_urls:
+                            f.write(f"{url}\n")
+                
+                current_app.logger.info(f"文件生成完成: {temp_file_path}")
+                
+        except Exception as e:
+            current_app.logger.error(f"文件生成錯誤: {str(e)}")
+            return jsonify({
+                'status': 'error',
+                'message': f'文件生成失敗: {str(e)}',
+                'code': 500
+            }), 500
         
         # 返回文件
         return send_file(
@@ -430,10 +526,49 @@ def get_gau_file(target_id):
             download_name=f"gau_results_{target.domain}_{target_id}.txt",
             mimetype='text/plain'
         )
-    
     except Exception as e:
-        current_app.logger.error(f"获取Gau扫描结果文件时出错: {str(e)}")
-        return jsonify({'success': False, 'message': f'获取文件时出错: {str(e)}'}), 500
+        return jsonify({
+            'status': 'error',
+            'message': str(e),
+            'code': 500
+        }), 500
+
+# 輔助函數
+def _categorize_urls(urls):
+    """對 URL 進行分類統計"""
+    categories = {
+        'all': len(urls),
+        'js': 0,
+        'api': 0,
+        'image': 0,
+        'css': 0,
+        'doc': 0,
+        'other': 0
+    }
+    
+    for url in urls:
+        category = _get_url_category(url)
+        if category in categories:
+            categories[category] += 1
+    
+    return categories
+
+def _get_url_category(url):
+    """獲取 URL 的分類"""
+    url_lower = url.lower()
+    
+    if any(ext in url_lower for ext in ['.js', 'javascript']):
+        return 'js'
+    elif any(ext in url_lower for ext in ['/api/', '/v1/', '/v2/', '.json', '.xml']):
+        return 'api'
+    elif any(ext in url_lower for ext in ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.webp']):
+        return 'image'
+    elif any(ext in url_lower for ext in ['.css', '.scss', '.sass']):
+        return 'css'
+    elif any(ext in url_lower for ext in ['.pdf', '.doc', '.docx', '.txt', '.zip', '.rar']):
+        return 'doc'
+    else:
+        return 'other'
 
 
 

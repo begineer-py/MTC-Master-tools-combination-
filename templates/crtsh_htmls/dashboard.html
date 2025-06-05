@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C2 安全測試平台 - crt.sh 子域名掃描器</title>
+    
+    <!-- Material-UI 和 React -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background: linear-gradient(135deg, #9C27B0 0%, #673AB7 100%);
+            color: white;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background-color: #f5f5f5;
+            color: #d32f2f;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .error-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .error-title {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .error-message {
+            font-size: 16px;
+            color: #666;
+            max-width: 500px;
+        }
+        
+        .retry-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #9C27B0;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .retry-button:hover {
+            background-color: #7B1FA2;
+        }
+        
+        #crtsh-app {
+            display: none;
+        }
+        
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: #9C27B0;
+            color: white;
+            padding: 16px 20px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #9C27B0;
+            box-shadow: 0 0 0 2px rgba(156, 39, 176, 0.2);
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: #9C27B0;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #7B1FA2;
+        }
+        
+        .btn-secondary {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .status-chip {
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .status-chip.status-scanning {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .status-chip.status-completed {
+            background-color: #e8f5e8;
+            color: #2e7d32;
+        }
+        
+        .status-chip.status-error {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: #e0e0e0;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #9C27B0, #673AB7);
+            animation: progress 2s ease-in-out infinite;
+        }
+        
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #9C27B0;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .domain-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .domain-table th {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .domain-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .domain-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .domain-table tr:hover {
+            background-color: rgba(156, 39, 176, 0.05);
+        }
+        
+        .domain-cell {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        .copy-button {
+            padding: 4px 8px;
+            background-color: #9C27B0;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .copy-button:hover {
+            background-color: #7B1FA2;
+        }
+        
+        .copy-button.copied {
+            background-color: #4caf50;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #9C27B0;
+            box-shadow: 0 0 0 2px rgba(156, 39, 176, 0.2);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 16px;
+            max-width: 400px;
+            z-index: 1000;
+            border-left: 4px solid #9C27B0;
+        }
+        
+        .notification.success {
+            border-left-color: #4caf50;
+        }
+        
+        .notification.error {
+            border-left-color: #f44336;
+        }
+        
+        .notification.warning {
+            border-left-color: #ff9800;
+        }
+        
+        .notification-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .notification-message {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .export-buttons {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-export {
+            padding: 8px 16px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn-export:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <!-- 載入畫面 -->
+    <div id="loading" class="loading-container">
+        <div class="loading-spinner"></div>
+        <h2>正在載入 crt.sh 掃描器...</h2>
+        <p>請稍候，正在初始化應用程式</p>
+    </div>
+    
+    <!-- 錯誤畫面 -->
+    <div id="error" class="error-container">
+        <div class="error-icon">⚠️</div>
+        <div class="error-title">載入失敗</div>
+        <div class="error-message">
+            無法載入 crt.sh 掃描器。請檢查您的網絡連接或聯繫系統管理員。
+        </div>
+        <button class="retry-button" onclick="location.reload()">重新載入</button>
+    </div>
+    
+    <!-- 主應用程式 -->
+    <div id="crtsh-app">
+        <div class="dashboard-container">
+            <!-- 標題 -->
+            <div class="card">
+                <div class="card-header">
+                    🔍 C2 安全測試平台 - crt.sh 子域名掃描器
+                </div>
+            </div>
+            
+            <!-- 目標選擇 -->
+            <div class="card" id="target-selection">
+                <div class="card-header">🎯 目標選擇</div>
+                <div class="card-content">
+                    <div class="form-group">
+                        <label class="form-label">目標 ID</label>
+                        <input type="number" id="target-id" class="form-input" placeholder="請輸入目標 ID (例如: 1)" value="{{ target_id }}">
+                    </div>
+                    <button class="btn btn-primary" onclick="setTarget()">設置目標</button>
+                </div>
+            </div>
+            
+            <!-- 掃描控制 -->
+            <div class="card hidden" id="scan-control">
+                <div class="card-header">🔍 掃描控制</div>
+                <div class="card-content">
+                    <div class="form-group">
+                        <label class="form-label">掃描狀態</label>
+                        <div>
+                            <span id="scan-status" class="status-chip">未開始</span>
+                            <span id="scan-message" style="margin-left: 10px; color: #666;"></span>
+                        </div>
+                        <div id="scan-progress" class="hidden">
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill"></div>
+                            </div>
+                            <div style="font-size: 14px; color: #666; margin-top: 5px;">
+                                正在查詢證書透明度日誌...
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="start-scan-btn" onclick="startScan()">開始掃描</button>
+                    <button class="btn btn-secondary" onclick="refreshStatus()" style="margin-left: 10px;">刷新狀態</button>
+                </div>
+            </div>
+            
+            <!-- 掃描結果 -->
+            <div class="card hidden" id="scan-results">
+                <div class="card-header">📊 掃描結果</div>
+                <div class="card-content">
+                    <!-- 統計信息 -->
+                    <div class="result-grid" id="domain-statistics">
+                        <!-- 統計卡片將在這裡動態生成 -->
+                    </div>
+                    
+                    <!-- 域名搜索 -->
+                    <div class="form-group">
+                        <input type="text" id="domain-search" class="search-input" placeholder="搜索域名..." onkeyup="filterDomains()">
+                    </div>
+                    
+                    <!-- 域名詳情 -->
+                    <div id="domain-details">
+                        <h3 style="margin: 20px 0 10px 0;">域名詳情</h3>
+                        <table class="domain-table" id="domain-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>域名</th>
+                                    <th>類型</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="domain-table-body">
+                                <!-- 域名數據將在這裡動態生成 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- 導出按鈕 -->
+                    <div class="export-buttons">
+                        <button class="btn-export" onclick="exportDomains('txt')">導出為 TXT</button>
+                        <button class="btn-export" onclick="exportDomains('csv')">導出為 CSV</button>
+                        <button class="btn-export" onclick="copyAllDomains()">複製所有域名</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 歷史記錄 -->
+            <div class="card hidden" id="scan-history">
+                <div class="card-header">📚 掃描歷史</div>
+                <div class="card-content">
+                    <table class="domain-table" id="history-table">
+                        <thead>
+                            <tr>
+                                <th>掃描時間</th>
+                                <th>狀態</th>
+                                <th>域名數量</th>
+                                <th>錯誤信息</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body">
+                            <!-- 歷史數據將在這裡動態生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 通知容器 -->
+    <div id="notification-container"></div>
+    
+    <script src="{{ url_for('static', filename='js/crtsh_dashboard.js') }}"></script>
+</body>
+</html> 

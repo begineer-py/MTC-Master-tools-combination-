@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block title %}FlareSolverr 管理面板{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/vulnerability/vulnerability.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="flaresolverr-container">
+    <div class="container">
+        <div class="flaresolverr-main">
+            <!-- 頭部 -->
+            <div class="flaresolverr-header">
+                <h1>🔥 FlareSolverr 管理面板</h1>
+                <p>Cloudflare 驗證碼解決方案管理工具</p>
+            </div>
+            
+            <!-- 內容區域 -->
+            <div class="flaresolverr-content">
+                <!-- 狀態卡片 -->
+                <div class="status-card">
+                    <h2>
+                        <i class="fas fa-server me-2"></i>服務狀態
+                        <div class="form-check form-switch float-end">
+                            <input class="form-check-input" type="checkbox" id="auto-refresh-toggle" checked>
+                            <label class="form-check-label" for="auto-refresh-toggle">
+                                自動刷新
+                            </label>
+                        </div>
+                    </h2>
+                    <div id="status-info">
+                        <div class="loading loading-dark"></div> 正在載入狀態...
+                    </div>
+                </div>
+                
+                <!-- 控制按鈕 -->
+                <div class="controls">
+                    <!-- 測試按鈕 -->
+                    <button class="flaresolverr-btn btn-refresh" onclick="alert('測試按鈕工作正常！'); console.log('內聯測試按鈕被點擊');">
+                        <i class="fas fa-bug me-2"></i>
+                        <span>測試按鈕</span>
+                    </button>
+                    
+                    <button class="flaresolverr-btn btn-start" id="start-service-btn">
+                        <i class="fas fa-play me-2"></i>
+                        <span>啟動服務</span>
+                    </button>
+                    <button class="flaresolverr-btn btn-stop" id="stop-service-btn">
+                        <i class="fas fa-stop me-2"></i>
+                        <span>停止服務</span>
+                    </button>
+                    <button class="flaresolverr-btn btn-restart" id="restart-service-btn">
+                        <i class="fas fa-redo me-2"></i>
+                        <span>重啟服務</span>
+                    </button>
+                    <button class="flaresolverr-btn btn-refresh" id="refresh-status-btn">
+                        <i class="fas fa-sync me-2"></i>
+                        <span>刷新狀態</span>
+                    </button>
+                </div>
+                
+                <!-- 信息網格 -->
+                <div class="info-grid" id="info-grid">
+                    <!-- 動態載入服務信息 -->
+                </div>
+                
+                <!-- 測試區域 -->
+                <div class="test-section">
+                    <h2>
+                        <i class="fas fa-flask me-2"></i>測試 FlareSolverr
+                    </h2>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input 
+                                type="url" 
+                                class="test-input" 
+                                id="test-url" 
+                                placeholder="輸入要測試的 URL (例: https://example.com)"
+                                value="https://httpbin.org/get"
+                            >
+                        </div>
+                        <div class="col-md-4">
+                            <button class="flaresolverr-btn btn-start w-100" id="test-solve-btn">
+                                <i class="fas fa-vial me-2"></i>
+                                <span>測試解析</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="test-result" class="test-result" style="display: none;"></div>
+                </div>
+                
+                <!-- 使用說明 -->
+                <div class="test-section mt-4">
+                    <h2>
+                        <i class="fas fa-info-circle me-2"></i>使用說明
+                    </h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-cogs me-2"></i>功能特色</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>自動啟動和停止服務</li>
+                                <li><i class="fas fa-check text-success me-2"></i>實時狀態監控</li>
+                                <li><i class="fas fa-check text-success me-2"></i>自動重啟機制</li>
+                                <li><i class="fas fa-check text-success me-2"></i>進程資源監控</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Web 管理界面</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Cloudflare 驗證碼解決</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-link me-2"></i>API 端點</h5>
+                            <ul class="list-unstyled">
+                                <li><code>POST /api/flaresolverr/start</code> - 啟動服務</li>
+                                <li><code>POST /api/flaresolverr/stop</code> - 停止服務</li>
+                                <li><code>POST /api/flaresolverr/restart</code> - 重啟服務</li>
+                                <li><code>GET /api/flaresolverr/status</code> - 獲取狀態</li>
+                                <li><code>POST /api/flaresolverr/solve</code> - 解決驗證碼</li>
+                                <li><code>GET /api/flaresolverr/help</code> - 獲取幫助</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mt-3">
+                        <h6><i class="fas fa-lightbulb me-2"></i>提示</h6>
+                        <p class="mb-0">
+                            FlareSolverr 是一個代理服務器，用於繞過 Cloudflare 和 DDoS-GUARD 保護。
+                            它啟動一個代理服務器，並使用無頭 Chrome 瀏覽器和 undetected-chromedriver 來解決挑戰。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 通知容器 -->
+<div id="notification" class="notification"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/vulnerability.js') }}"></script>
+<script>
+// 調試腳本 - 檢查 JavaScript 是否正確載入
+console.log('調試: HTML 模板腳本已載入');
+
+// 檢查 DOM 是否已準備好
+if (document.readyState === 'loading') {
+    console.log('調試: DOM 仍在載入中');
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('調試: DOM 載入完成事件觸發');
+        setTimeout(checkElements, 1000); // 延遲檢查元素
+    });
+} else {
+    console.log('調試: DOM 已載入完成');
+    setTimeout(checkElements, 1000); // 延遲檢查元素
+}
+
+function checkElements() {
+    console.log('調試: 檢查頁面元素...');
+    
+    const elements = {
+        'start-service-btn': document.getElementById('start-service-btn'),
+        'stop-service-btn': document.getElementById('stop-service-btn'),
+        'restart-service-btn': document.getElementById('restart-service-btn'),
+        'refresh-status-btn': document.getElementById('refresh-status-btn'),
+        'test-solve-btn': document.getElementById('test-solve-btn'),
+        'test-url': document.getElementById('test-url'),
+        'auto-refresh-toggle': document.getElementById('auto-refresh-toggle')
+    };
+    
+    console.log('調試: 找到的元素:', elements);
+    
+    // 檢查全局變量
+    console.log('調試: 全局變量檢查:', {
+        FlareSolverrManager: typeof window.FlareSolverrManager,
+        flaresolverrManager: typeof window.flaresolverrManager
+    });
+    
+    // 手動測試按鈕點擊
+    const testBtn = document.getElementById('refresh-status-btn');
+    if (testBtn) {
+        console.log('調試: 為刷新按鈕添加測試事件監聽器');
+        testBtn.addEventListener('click', function(e) {
+            console.log('調試: 刷新按鈕點擊事件觸發!');
+            e.preventDefault();
+            alert('刷新按鈕被點擊了！');
+        });
+    }
+}
+</script>
+{% endblock %}
