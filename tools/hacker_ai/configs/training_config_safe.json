@@ -1,0 +1,25 @@
+{
+  "model": {
+    "base_model": "gpt2",
+    "vocab_size": 50257,
+    "max_length": 512
+  },
+  "data": {
+    "path": "./datasets/hacker_data.txt"
+  },
+  "training": {
+    "output_dir": "./models/hacker_ai_safe_trained",
+    "batch_size": 2,
+    "epochs": 2,
+    "learning_rate": 1e-5,
+    "warmup_steps": 50,
+    "save_steps": 100,
+    "auto_cleanup_checkpoints": true,
+    "keep_best_checkpoint": false,
+    "cleanup_unnecessary_files": true,
+    "gradient_accumulation_steps": 2,
+    "max_grad_norm": 1.0,
+    "fp16": false,
+    "seed": 42
+  }
+} 

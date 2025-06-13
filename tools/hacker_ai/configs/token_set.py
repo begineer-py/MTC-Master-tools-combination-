@@ -18,6 +18,7 @@ def get_token():
     # 如果沒有環境變量，返回 None 並提示用戶設置
     print("警告: 未找到 HF_API_TOKEN 環境變量")
     print("請設置環境變量: export HF_API_TOKEN=your_token_here")
+    print("然後重新啟動終端或執行: source ~/.bashrc")
     return None
 
 def set_token_from_file(token_file_path):
