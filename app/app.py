@@ -220,5 +220,5 @@ if __name__ == '__main__':
     app = create_app()
     with app.app_context():
         db.create_all()
-    app.run(port=8964, debug=ConfigDict.DEBUG, use_reloader=False)  # 禁用重載器
+    app.run(port=8964, debug=ConfigDict['default'].DEBUG, use_reloader=False)  # 禁用重載器
     

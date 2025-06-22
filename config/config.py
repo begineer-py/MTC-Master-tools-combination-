@@ -181,8 +181,12 @@ class LogConfig: # 定義增強的日誌配置類
         if name is None: # 如果沒有提供日誌器名稱
             # 自動獲取調用者信息作為日誌器名稱
             import inspect # 導入 inspect 模塊，用於獲取運行時信息
-            frame = inspect.currentframe().f_back # 獲取調用 get_context_logger 的上一級棧幀
-            name = f"{os.path.basename(frame.f_code.co_filename)}:{frame.f_lineno}" # 將調用者的文件名和行號作為日誌器名稱
+            current_frame = inspect.currentframe() # 獲取當前棧幀
+            if current_frame is not None and current_frame.f_back is not None: # 檢查棧幀是否存在
+                frame = current_frame.f_back # 獲取調用 get_context_logger 的上一級棧幀
+                name = f"{os.path.basename(frame.f_code.co_filename)}:{frame.f_lineno}" # 將調用者的文件名和行號作為日誌器名稱
+            else: # 如果無法獲取棧幀信息
+                name = 'C2_application_context' # 使用默認名稱
         
         return logging.getLogger(name) # 獲取或創建具有該上下文名稱的日誌器
 

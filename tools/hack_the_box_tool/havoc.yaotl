@@ -1,0 +1,46 @@
+Teamserver {
+    Host = "127.0.0.1"
+    Port = 40056
+
+    Build {
+        Compiler64 = "data/x86_64-w64-mingw32-cross/bin/x86_64-w64-mingw32-gcc"
+        Compiler86 = "data/i686-w64-mingw32-cross/bin/i686-w64-mingw32-gcc"
+        Nasm = "/usr/bin/nasm"
+    }
+}
+
+Operators {
+    user "ilya" {
+        Password = "CobaltStr1keSuckz!"
+    }
+
+    user "sergej" {
+        Password = "1w4nt2sw1tch2h4rdh4tc2"
+    }
+}
+
+Demon {
+    Sleep = 2
+    Jitter = 15
+
+    TrustXForwardedFor = false
+
+    Injection {
+        Spawn64 = "C:\\Windows\\System32\\notepad.exe"
+        Spawn32 = "C:\\Windows\\SysWOW64\\notepad.exe"
+    }
+}
+
+Listeners {
+    Http {
+        Name = "Demon Listener"
+        Hosts = [
+            "backfire.htb"
+        ]
+        HostBind = "127.0.0.1" 
+        PortBind = 8443
+        PortConn = 8443
+        HostRotation = "round-robin"
+        Secure = true
+    }
+}

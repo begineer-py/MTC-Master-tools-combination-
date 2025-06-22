@@ -246,7 +246,9 @@ chmod 755 logs
 chmod 755 flask_session
 chmod 755 output
 chmod 755 temp
-
+cd requirements
+python3 create_venv.py
+cd ..
 # 檢查安裝結果
 echo "檢查關鍵依賴安裝狀態..."
 $PYTHON_CMD -c "

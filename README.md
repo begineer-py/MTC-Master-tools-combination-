@@ -1,3 +1,4 @@
+
 # C2 網絡安全測試平台
 
 ## 項目簡介
@@ -42,8 +43,8 @@ chmod +x requirements/install_dependencies.sh
 ./requirements/install_dependencies.sh
 
 # 激活虛擬環境（如果創建了的話）
-直接使用vscode or cursor
-
+cd requiremnts 
+python  create_venv.py
 # 啟動應用
 python run.py
 ```

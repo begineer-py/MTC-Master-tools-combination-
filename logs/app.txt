@@ -1435,3 +1435,19 @@ locked
 2025-06-05 23:52:20 | INFO     | Gau_route.py:207 | gau_get_result() | DEBUG: scan_result found: True
 2025-06-05 23:52:20 | INFO     | Gau_route.py:207 | gau_get_result() | DEBUG: scan_result found: True
 2025-06-05 23:52:20 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [05/Jun/2025 23:52:20] "GET /api/gau/result/1?page=1&per_page=50&category=all&search= HTTP/1.1" 200 -
+2025-06-22 16:58:21 | INFO     | config.py:168 | setup_enhanced_logging() | 🚀 增強日誌系統已啟動
+2025-06-22 16:58:21 | INFO     | config.py:168 | setup_enhanced_logging() | 🚀 增強日誌系統已啟動
+2025-06-22 16:58:21 | DEBUG    | config.py:169 | setup_enhanced_logging() | 調試級別日誌已啟用
+2025-06-22 16:58:21 | DEBUG    | config.py:169 | setup_enhanced_logging() | 調試級別日誌已啟用
+2025-06-22 16:58:21 | INFO     | app.py:186 | create_app() | 正在檢查 FlareSolverr 服務...
+2025-06-22 16:58:21 | INFO     | app.py:186 | create_app() | 正在檢查 FlareSolverr 服務...
+2025-06-22 16:58:21 | INFO     | app.py:196 | create_app() | 正在啟動 FlareSolverr 服務...
+2025-06-22 16:58:21 | INFO     | app.py:196 | create_app() | 正在啟動 FlareSolverr 服務...
+2025-06-22 16:58:21 | INFO     | start_flaresolverr.py:77 | start_flaresolverr() | 正在啟動 FlareSolverr: /home/hacker/Desktop/C2/tools/FlareSolverr/src/flaresolverr.py
+2025-06-22 16:58:25 | INFO     | start_flaresolverr.py:104 | start_flaresolverr() | FlareSolverr 啟動成功，運行在 http://localhost:8191
+2025-06-22 16:58:25 | INFO     | start_flaresolverr.py:242 | start_monitoring() | FlareSolverr 監控已啟動
+2025-06-22 16:58:25 | INFO     | app.py:199 | create_app() | ✅ FlareSolverr 服務已啟動
+2025-06-22 16:58:25 | INFO     | app.py:199 | create_app() | ✅ FlareSolverr 服務已啟動
+2025-06-22 16:58:25 | INFO     | _internal.py:97 | _log() | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8964
+2025-06-22 16:58:25 | INFO     | _internal.py:97 | _log() | [33mPress CTRL+C to quit[0m

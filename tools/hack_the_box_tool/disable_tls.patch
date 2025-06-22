@@ -1,0 +1,36 @@
+Disable TLS for Websocket management port 40056, so I can prove that
+sergej is not doing any work
+Management port only allows local connections (we use ssh forwarding) so 
+this will not compromize our teamserver
+
+diff --git a/client/src/Havoc/Connector.cc b/client/src/Havoc/Connector.cc
+index abdf1b5..6be76fb 100644
+--- a/client/src/Havoc/Connector.cc
++++ b/client/src/Havoc/Connector.cc
+@@ -8,12 +8,11 @@ Connector::Connector( Util::ConnectionInfo* ConnectionInfo )
+ {
+     Teamserver   = ConnectionInfo;
+     Socket       = new QWebSocket();
+-    auto Server  = "wss://" + Teamserver->Host + ":" + this->Teamserver->Port + "/havoc/";
++    auto Server  = "ws://" + Teamserver->Host + ":" + this->Teamserver->Port + "/havoc/";
+     auto SslConf = Socket->sslConfiguration();
+ 
+     /* ignore annoying SSL errors */
+     SslConf.setPeerVerifyMode( QSslSocket::VerifyNone );
+-    Socket->setSslConfiguration( SslConf );
+     Socket->ignoreSslErrors();
+ 
+     QObject::connect( Socket, &QWebSocket::binaryMessageReceived, this, [&]( const QByteArray& Message )
+diff --git a/teamserver/cmd/server/teamserver.go b/teamserver/cmd/server/teamserver.go
+index 9d1c21f..59d350d 100644
+--- a/teamserver/cmd/server/teamserver.go
++++ b/teamserver/cmd/server/teamserver.go
+@@ -151,7 +151,7 @@ func (t *Teamserver) Start() {
+ 		}
+ 
+ 		// start the teamserver
+-		if err = t.Server.Engine.RunTLS(Host+":"+Port, certPath, keyPath); err != nil {
++		if err = t.Server.Engine.Run(Host+":"+Port); err != nil {
+ 			logger.Error("Failed to start websocket: " + err.Error())
+ 		}
+ 

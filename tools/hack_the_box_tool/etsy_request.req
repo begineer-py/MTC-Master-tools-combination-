@@ -1,0 +1,33 @@
+PUT /api/v3/ajax/bespoke/shop/60258308/onboarding/preferences HTTP/2
+Host: www.etsy.com
+Cookie: uaid=VUudhUHvgd_XW9qGDV7TRvI-FcljZACCDB_H1TC6Wqk0MTNFyUopPjHNNdAvrLA0sKLUPym3sDDQyNWg2CvEPT3DUqmWAQA.; user_prefs=1PskVgakrgK2uh6xV6AuE7WSYndjZACCDB_H1TA6Wikk3EVJJ680J0dHKTVPNzRYSQcoBBUxglC4iFgGAA..; fve=1749828011.0; exp_ebid=m=c8x4uF1v7SbtMMT18DOOq5Y%2FBTW5JX40VV0ums5JmV0%3D,v=uj24Mszn-PPz1GYu8NtrLlvpLQeb2NNL; _fbp=fb.1.1749828015990.6567792664097912; ua=531227642bc86f3b5fd7103a0c0b4fd6; _gcl_au=1.1.1139366786.1749828017; _ga=GA1.1.1400917634.1749828017; lantern=d03c8639-afd5-4b1b-b777-81dcd442d494; session-key-www=1100298062-1386333409753-610ef54c524a32637c0eb29f069b278ab7663e379e512971da537458|1757604262; session-key-apex=1100298062-1386333409753-4485ac62b8d1857d7a24e1d90fbf2557d5d4135147a670ee4ed7987c|1757604262; LD=1; et-v1-1-1-_etsy_com=2%3A5d3854dd6dc76693239ca98bec7b6cdffd9333b9%3A1749828261%3A1749828261%3A__athena_compat-1100298062-1386333409753-e022879b35696f8f7dd471f5f821716cd94fca8a41d989cf012ab15e96be22470d3e80cf789eb3b2; _pin_unauth=dWlkPVltVTFNMlExWW1NdE1HVmtNeTAwWldNeUxUbGtZbVl0TVdJNU0yTXpPRGcyWlRneQ; _ga_KR3J610VYM=GS2.1.s1749867132$o3$g1$t1749867797$j46$l0$h0; _uetsid=e9551440486911f0825dc59ac4002dbc; _uetvid=e954f710486911f0a59a9394bac689b8; datadome=qUwi380D0vvM~nYqaEWUr98TxH69QEHPZupyWUwd~wJWmT6ToMxOU0GiXmdwXu6twUgz~ptIcFm_2_xFWHPzPIf5eMAXF_Z~OAq_hTEjisD6Uw78XXGC7z5xGQ6Ndv80
+Content-Length: 85
+X-Detected-Locale: TWD|en-US|TW
+Sec-Ch-Ua-Platform: "Linux"
+Sec-Ch-Ua-Full-Version-List: "Chromium";v="137.0.7151.103", "Not/A)Brand";v="24.0.0.0"
+Sec-Ch-Ua: "Chromium";v="137", "Not/A)Brand";v="24"
+Sec-Ch-Ua-Bitness: "64"
+Sec-Ch-Dpr: 1
+Sec-Ch-Ua-Mobile: ?0
+X-Page-Guid: fea3a7be9c9.410062028c5f7b826a19.00
+Sec-Ch-Ua-Arch: "x86"
+X-Requested-With: XMLHttpRequest
+Accept: */*
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Downlink: 2.35
+X-Csrf-Token: 3:1749867796:iv6TVmRJY5Dgoy9MNfMSWWj7Mub-:8dea5394d50cf77bf60f679c1b5da500d988eedb3e6f8496d851d6c2de3a7727
+Ect: 4g
+Dpr: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36
+Rtt: 100
+Sec-Ch-Ua-Platform-Version: "6.11.0"
+Origin: https://www.etsy.com
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://www.etsy.com/your/shops/me/onboarding/name
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7
+Priority: u=1, i
+
+country_id=209&currency_code=USD&name=initial_seller_type&value=0&language_code=en-US

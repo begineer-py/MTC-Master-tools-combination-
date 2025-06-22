@@ -1,0 +1,4 @@
+# Nmap 7.94SVN scan initiated Wed Jun 18 13:58:36 2025 as: nmap -T4 -sC -sV -p- -oA backfire_recon 10.10.11.49
+Host: 10.10.11.49 ()	Status: Up
+Host: 10.10.11.49 ()	Ports: 22/open/tcp//ssh//OpenSSH 9.2p1 Debian 2+deb12u4 (protocol 2.0)/, 443/open/tcp//ssl|http//nginx 1.22.1/, 8000/open/tcp//http//nginx 1.22.1/
+# Nmap done at Wed Jun 18 14:35:58 2025 -- 1 IP address (1 host up) scanned in 2241.88 seconds
