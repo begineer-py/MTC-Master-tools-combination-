@@ -18,11 +18,10 @@ frontend/build/
 logs/
 *.txt
 */venv/
-
 # 系統文件
 .DS_Store
 Thumbs.db
-
+*/hacker_ai
 # 環境變量
 .env
 .env.local
@@ -64,3 +63,43 @@ flask_session/
 # 敏感信息
 config/secrets.py
 instance/config.py
+
+# 大檔案 (>50MB) - 2025年1月28日新增
+# AI 模型檔案
+tools/hacker_ai/models/*/model.safetensors
+tools/hacker_ai/models/Qwen1.5-1.8B-Chat/
+tools/hacker_ai/datasets/sql_injection_prompts.csv
+
+# PyTorch 和 CUDA 庫檔案
+**/torch/lib/libtorch_cuda.so
+**/torch/lib/libtorch_cpu.so
+**/torch/lib/libtorch_cuda_linalg.so
+**/nvidia/cublas/lib/libcublasLt.so.*
+**/nvidia/cudnn/lib/libcudnn_engines_precompiled.so.*
+**/nvidia/cudnn/lib/libcudnn_adv.so.*
+**/nvidia/cudnn/lib/libcudnn_ops.so.*
+**/nvidia/cusparse/lib/libcusparse.so.*
+**/nvidia/cufft/lib/libcufft.so.*
+**/nvidia/nccl/lib/libnccl.so.*
+**/nvidia/cusolver/lib/libcusolver.so.*
+**/nvidia/cusolver/lib/libcusolverMg.so.*
+**/nvidia/cublas/lib/libcublas.so.*
+**/nvidia/curand/lib/libcurand.so.*
+**/nvidia/cuda_nvrtc/lib/libnvrtc.so.*
+**/triton/_C/libtriton.so
+**/cusparselt/lib/libcusparseLt.so.*
+**/pyarrow/libarrow.so.*
+**/playwright/driver/node
+
+# BurpSuite 安裝檔
+tools/hack_the_box_tool/burpsuite_community_linux_v2025_5_3.sh
+
+# 字典檔案
+tools/hack_the_box_tool/hydra/rockyou.txt
+payloads/Passwords/Common-Credentials/Pwdb_top-10000000.txt
+payloads/Usernames/xato-net-10-million-usernames.txt
+payloads/Discovery/DNS/FUZZSUBS_CYFARE_*.txt
+payloads/Fuzzing/User-Agents/software-type-specific/web-browser.txt
+
+# Nuclei 二進制檔案
+tools/nuclei/nuclei
