@@ -85,45 +85,55 @@ def gau_scan(target_id):
                 'message': '數據庫連接異常，請稍後重試'
             }), 503
         
-        # 使用重試機制處理數據庫操作
-        max_retries = 3
-        retry_delay = 0.5  # 500ms
+        # 使用改進的重試機制處理數據庫操作，解決競爭條件問題
+        max_retries = 5  # 增加重試次數
+        retry_delay = 0.1  # 減少初始延遲
         
         for attempt in range(max_retries):
             try:
-                # 检查是否已存在扫描结果
-                existing_result = gau_results.query.filter_by(target_id=target_id).first()
+                # 開始新的事務，確保原子性操作
+                with db.session.begin():
+                    # 使用 SELECT FOR UPDATE 防止競爭條件
+                    existing_result = gau_results.query.filter_by(target_id=target_id).with_for_update().first()
+                    
+                    if existing_result:
+                        # 更新現有記錄而不是刪除重建
+                        existing_result.domain = domain
+                        existing_result.status = 'scanning'
+                        existing_result.urls = []
+                        existing_result.total_urls = 0
+                        existing_result.error_message = None
+                        existing_result.scan_time = datetime.now()
+                        current_app.logger.info(f"已更新現有掃描結果: target_id={target_id}")
+                    else:
+                        # 創建新的掃描記錄
+                        new_result = gau_results(
+                            target_id=target_id,
+                            domain=domain,
+                            status='scanning'
+                        )
+                        db.session.add(new_result)
+                        current_app.logger.info(f"創建新的掃描記錄: target_id={target_id}, domain={domain}")
                 
-                if existing_result:
-                    # 删除旧结果
-                    db.session.delete(existing_result)
-                    current_app.logger.info(f"已删除旧的扫描结果: target_id={target_id}")
-                
-                # 创建新的扫描记录
-                new_result = gau_results(
-                    target_id=target_id,
-                    domain=domain,
-                    status='scanning'
-                )
-                
-                db.session.add(new_result)
-                db.session.commit()
-                current_app.logger.info(f"创建新的扫描记录: target_id={target_id}, domain={domain}")
+                # 如果到這裡，表示事務成功提交
+                current_app.logger.info(f"數據庫操作成功完成: target_id={target_id}")
                 break  # 成功則跳出重試循環
                 
             except Exception as e:
-                db.session.rollback()
-                current_app.logger.warning(f"數據庫操作失敗 (嘗試 {attempt + 1}/{max_retries}): {str(e)}")
+                # 事務會自動回滾
+                error_msg = str(e)
+                current_app.logger.warning(f"數據庫操作失敗 (嘗試 {attempt + 1}/{max_retries}): {error_msg}")
                 
                 if attempt == max_retries - 1:
                     # 最後一次嘗試失敗
-                    current_app.logger.error(f"创建扫描记录失败，已重試 {max_retries} 次: {str(e)}")
+                    current_app.logger.error(f"創建掃描記錄失敗，已重試 {max_retries} 次: {error_msg}")
                     return jsonify({
                         'success': False,
-                        'message': f'数据库繁忙，请稍后重试: {str(e)}'
+                        'message': f'數據庫操作失敗，請稍後重試: {error_msg}',
+                        'error_type': 'database_error'
                     }), 503  # Service Unavailable
                 else:
-                    # 等待後重試
+                    # 等待後重試，使用指數退避策略
                     import time
                     time.sleep(retry_delay)
                     retry_delay *= 2  # 指數退避
@@ -177,7 +187,7 @@ def _get_scan_result_cached(target_id):
     try:
         return gau_results.query.filter_by(
             target_id=target_id
-        ).order_by(gau_results.scan_time.desc()).first()
+        ).order_by(gau_results.scan_time.desc()).first()# type: ignore
     except Exception as e:
         current_app.logger.error(f"查询扫描结果时出错: {str(e)}")
         return None
@@ -300,7 +310,7 @@ def get_scan_status(target_id):
     """获取掃描状态"""
     try:
         # 檢查是否有結果
-        gau_result = gau_results.query.filter_by(target_id=target_id).order_by(gau_results.scan_time.desc()).first()
+        gau_result = gau_results.query.filter_by(target_id=target_id).order_by(gau_results.scan_time.desc()).first()# type: ignore
         
         if gau_result:
             if gau_result.status == 'completed':
@@ -346,7 +356,7 @@ def get_scan_history(target_id):
     """获取掃描历史"""
     try:
         # 获取所有掃描结果
-        results = gau_results.query.filter_by(target_id=target_id).order_by(gau_results.scan_time.desc()).all()
+        results = gau_results.query.filter_by(target_id=target_id).order_by(gau_results.scan_time.desc()).all()# type: ignore
         
         history = []
         for result in results:

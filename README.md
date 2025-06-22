@@ -1,4 +1,3 @@
-
 # C2 網絡安全測試平台
 
 ## 項目簡介
@@ -25,14 +24,18 @@
 - 無需用戶認證，直接訪問
 - 掃描結果統一管理
 
+## 系統要求
+
+- **操作系統**: Ubuntu/Debian Linux (18.04+)
+- **Python版本**: Python 3.8 或更高版本
+- **內存**: 建議 8GB 以上 (機器學習功能需要更多內存)
+- **存儲空間**: 至少 10GB 可用空間
+- **網絡**: 需要互聯網連接以下載依賴
+
 ## 快速開始
 
-### 系統要求
-- Python 3.8+
-- Linux/
-### 安裝步驟
+### 方法一：使用自動安裝腳本（推薦）
 
-#### Linux 系統
 ```bash
 # 克隆項目
 git clone https://github.com/begineer-py/MTC-Master-tools-combination-
@@ -42,23 +45,125 @@ cd C2
 chmod +x requirements/install_dependencies.sh
 ./requirements/install_dependencies.sh
 
-# 激活虛擬環境（如果創建了的話）
-cd requiremnts 
-python  create_venv.py
 # 啟動應用
 python run.py
 ```
 
-#### Windows 系統
+### 方法二：手動安裝
+
+#### 1. 安裝系統依賴
+
+**Ubuntu/Debian:**
 ```bash
-# 啟動應用
+sudo apt-get update
+sudo apt-get install -y python3-dev python3-pip python3-venv python3-full \
+    build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev \
+    zlib1g-dev libjpeg-dev libpng-dev libmagic1 libmagic-dev \
+    nmap masscan git curl wget postgresql-client mysql-client \
+    sqlite3 libpq-dev libmysqlclient-dev libsqlite3-dev
+```
+
+#### 2. 創建虛擬環境並安裝Python依賴
+
+```bash
+# 創建虛擬環境
+python3 -m venv venv
+source venv/bin/activate
+
+# 升級pip
+python -m pip install --upgrade pip setuptools wheel
+
+# 安裝Python依賴
+pip install -r requirements/requirements.txt
+
+# 安裝playwright瀏覽器
+python -m playwright install
+```
+
+#### 3. 創建必要目錄
+
+```bash
+mkdir -p instance/backups instance/tools logs flask_session output temp
+chmod 755 instance logs flask_session output temp
+```
+
+## 驗證安裝
+
+運行以下命令檢查關鍵依賴是否正確安裝：
+
+```bash
+python -c "
+import flask, sqlalchemy, requests, beautifulsoup4, nmap, scapy
+import torch, transformers, numpy, pandas, matplotlib, aiohttp, playwright
+print('所有關鍵依賴安裝成功！')
+"
+```
+
+## 運行項目
+
+```bash
+# 基本運行
 python run.py
+
+# 重置數據庫後運行
+python run.py --reset-db
+
+# 僅重置數據庫
+python run.py --reset-db --reset-only
+
+# 數據庫遷移
+python run.py --migrate
 ```
 
 ### 訪問應用
-啟動後訪問：http://127.0.0.1:8964(紀念肉餅學生
-)
--)
+啟動後訪問：http://127.0.0.1:8964 (紀念肉餅學生)
+
+## 常見問題解決
+
+### 1. 權限問題
+
+如果遇到權限錯誤：
+```bash
+# 確保目錄權限正確
+sudo chown -R $USER:$USER /path/to/C2
+chmod -R 755 /path/to/C2
+```
+
+### 2. Python包安裝失敗
+
+如果某些包安裝失敗，嘗試：
+```bash
+# 使用虛擬環境（推薦）
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements/requirements.txt
+
+# 或者使用用戶安裝模式
+python3 -m pip install --user -r requirements/requirements.txt
+```
+
+### 3. 機器學習依賴問題
+
+對於PyTorch等大型包：
+```bash
+# 如果沒有CUDA，安裝CPU版本
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+
+# 如果有CUDA，安裝GPU版本
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+```
+
+### 4. 數據庫鎖定問題
+
+如果遇到數據庫鎖定：
+```bash
+# 解鎖數據庫
+./scripts/database/db_unlock.sh
+
+# 或者重置數據庫
+python run.py --reset-db
+```
+
 ## 項目結構
 
 ```
@@ -70,6 +175,9 @@ C2/
 ├── config/                 # 配置文件
 ├── instance/               # 數據庫和模型
 ├── requirements/           # 依賴管理和安裝文件
+│   ├── install_dependencies.sh # 自動安裝腳本
+│   ├── apt_install.txt     # Ubuntu/Debian包列表
+│   └── requirements.txt    # Python依賴
 ├── scripts/                # 工具腳本
 │   └── database/          # 數據庫管理腳本
 ├── test/                   # 測試文件
@@ -84,6 +192,32 @@ C2/
 
 詳細結構說明請參考：[docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)
 
+## 支持的功能
+
+安裝完成後，您將可以使用以下功能：
+
+- ✅ Web應用框架 (Flask)
+- ✅ 數據庫操作 (SQLAlchemy)
+- ✅ 網絡掃描 (nmap, masscan)
+- ✅ 漏洞掃描 (SQL注入, XSS等)
+- ✅ 網絡包分析 (scapy)
+- ✅ 機器學習 (PyTorch, Transformers)
+- ✅ 異步處理 (aiohttp)
+- ✅ 瀏覽器自動化 (Playwright)
+
+## 性能優化建議
+
+1. **內存優化**: 如果內存不足，可以在配置中禁用某些機器學習功能
+2. **存儲優化**: 定期清理logs和temp目錄
+3. **網絡優化**: 配置代理以加速包下載
+
+## 安全注意事項
+
+1. 確保防火牆配置正確
+2. 定期更新依賴包
+3. 不要在生產環境中使用DEBUG模式
+4. 定期備份數據庫
+
 ## 系統更新記錄
 
 ### 用戶模型移除
@@ -95,27 +229,22 @@ C2/
    - 刪除了`Command_User`模型
    - 修改了`Target`模型，移除了對`User`的引用
 
-
-3. **權限檢查**：
+2. **權限檢查**：
    - 簡化了權限系統，只檢查目標是否存在，不再驗證用戶權限
+
+### 系統簡化 (最新)
+為了提高穩定性和維護性：
+
+1. **移除多發行版支持**: 專注於Ubuntu/Debian系統
+2. **移除Docker依賴**: 簡化安裝流程
+3. **強制虛擬環境**: 確保環境隔離和穩定性
+4. **模組化包管理**: 使用獨立的apt_install.txt管理系統依賴
 
 ## 使用指南
 
 1. **添加目標**: 通過首頁的"添加目標"按鈕添加新的掃描目標
 2. **執行掃描**: 選擇目標後，可以執行各種掃描和測試
 3. **管理數據**: 使用`scripts/database/`中的工具管理數據庫
-
-## 重置數據庫
-
-如果需要重置數據庫：
-
-```bash
-# 重置數據庫並啟動應用
-python run.py --reset-db
-
-# 只重置數據庫，不啟動應用
-python run.py --reset-db --reset-only
-```
 
 ## 開發者信息
 
@@ -131,6 +260,7 @@ python run.py --reset-db --reset-only
 我真的不希望這個承載著我的夢想與記憶的專案，就這樣在我一個15歲孩子孤軍奮戰的電腦上，突然折戟沉沙，或者因為我的力竭而被迫「退出開發」。
 求求你們，幫幫我，幫幫這個還想繼續走下去的MTC。
 一個快要被bug淹沒的15歲開發者，在此叩謝
+
 ### 貢獻指南
 - 查看 `test/` 目錄了解如何運行測試
 - 閱讀 `docs/` 目錄中的文檔

@@ -1451,3 +1451,406 @@ locked
 2025-06-22 16:58:25 | INFO     | _internal.py:97 | _log() | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:8964
 2025-06-22 16:58:25 | INFO     | _internal.py:97 | _log() | [33mPress CTRL+C to quit[0m
+2025-06-22 21:05:21 | INFO     | config.py:168 | setup_enhanced_logging() | 🚀 增強日誌系統已啟動
+2025-06-22 21:05:21 | INFO     | config.py:168 | setup_enhanced_logging() | 🚀 增強日誌系統已啟動
+2025-06-22 21:05:21 | DEBUG    | config.py:169 | setup_enhanced_logging() | 調試級別日誌已啟用
+2025-06-22 21:05:21 | DEBUG    | config.py:169 | setup_enhanced_logging() | 調試級別日誌已啟用
+2025-06-22 21:05:21 | INFO     | app.py:186 | create_app() | 正在檢查 FlareSolverr 服務...
+2025-06-22 21:05:21 | INFO     | app.py:186 | create_app() | 正在檢查 FlareSolverr 服務...
+2025-06-22 21:05:21 | INFO     | app.py:196 | create_app() | 正在啟動 FlareSolverr 服務...
+2025-06-22 21:05:21 | INFO     | app.py:196 | create_app() | 正在啟動 FlareSolverr 服務...
+2025-06-22 21:05:21 | INFO     | start_flaresolverr.py:77 | start_flaresolverr() | 正在啟動 FlareSolverr: /home/hacker/Desktop/C2/tools/FlareSolverr/src/flaresolverr.py
+2025-06-22 21:05:25 | INFO     | start_flaresolverr.py:104 | start_flaresolverr() | FlareSolverr 啟動成功，運行在 http://localhost:8191
+2025-06-22 21:05:25 | INFO     | start_flaresolverr.py:242 | start_monitoring() | FlareSolverr 監控已啟動
+2025-06-22 21:05:25 | INFO     | app.py:199 | create_app() | ✅ FlareSolverr 服務已啟動
+2025-06-22 21:05:25 | INFO     | app.py:199 | create_app() | ✅ FlareSolverr 服務已啟動
+2025-06-22 21:05:25 | INFO     | _internal.py:97 | _log() | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8964
+2025-06-22 21:05:25 | INFO     | _internal.py:97 | _log() | [33mPress CTRL+C to quit[0m
+2025-06-22 21:05:31 | INFO     | config.py:209 | wrapper() | 📞 調用函數 index (位置參數個數: 0, 關鍵字參數: [])
+2025-06-22 21:05:31 | INFO     | index_routes.py:14 | index() | 用戶訪問首頁
+2025-06-22 21:05:31 | INFO     | index_routes.py:17 | index() | 查詢到 1 個目標
+2025-06-22 21:05:32 | INFO     | config.py:214 | wrapper() | ✅ 函數 index 執行成功 (耗時: 0.029s)
+2025-06-22 21:05:32 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:32] "GET / HTTP/1.1" 200 -
+2025-06-22 21:05:33 | INFO     | attack_route.py:16 | attack() | 加载扫描界面，目标ID: 1
+2025-06-22 21:05:33 | INFO     | attack_route.py:16 | attack() | 加载扫描界面，目标ID: 1
+2025-06-22 21:05:33 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:33] "GET /attack/1 HTTP/1.1" 200 -
+2025-06-22 21:05:33 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:33] "[36mGET /static/css/attack.css HTTP/1.1[0m" 304 -
+2025-06-22 21:05:33 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:33] "GET /static/js/dist/bundle.js HTTP/1.1" 200 -
+2025-06-22 21:05:33 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:33] "GET /favicon.ico HTTP/1.1" 200 -
+2025-06-22 21:05:36 | INFO     | Gau_route.py:377 | gau_dashboard() | 正在載入 Gau 掃描器界面
+2025-06-22 21:05:36 | INFO     | Gau_route.py:377 | gau_dashboard() | 正在載入 Gau 掃描器界面
+2025-06-22 21:05:36 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:36] "GET /api/gau/dashboard?target_id=1 HTTP/1.1" 200 -
+2025-06-22 21:05:36 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:36] "[36mGET /static/js/gau_dashboard.js HTTP/1.1[0m" 304 -
+2025-06-22 21:05:37 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:37] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:05:37 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:37] "GET /api/gau/history/1 HTTP/1.1" 200 -
+2025-06-22 21:05:37 | INFO     | Gau_route.py:188 | gau_get_result() | DEBUG: gau_get_result called with target_id=1
+2025-06-22 21:05:37 | INFO     | Gau_route.py:188 | gau_get_result() | DEBUG: gau_get_result called with target_id=1
+2025-06-22 21:05:37 | INFO     | Gau_route.py:202 | gau_get_result() | DEBUG: Query parameters - page=1, per_page=50, category=all
+2025-06-22 21:05:37 | INFO     | Gau_route.py:202 | gau_get_result() | DEBUG: Query parameters - page=1, per_page=50, category=all
+2025-06-22 21:05:37 | INFO     | Gau_route.py:207 | gau_get_result() | DEBUG: scan_result found: True
+2025-06-22 21:05:37 | INFO     | Gau_route.py:207 | gau_get_result() | DEBUG: scan_result found: True
+2025-06-22 21:05:37 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:37] "GET /api/gau/result/1?page=1&per_page=50&category=all&search= HTTP/1.1" 200 -
+2025-06-22 21:05:38 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:38] "GET /favicon.ico HTTP/1.1" 200 -
+2025-06-22 21:05:42 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:42] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:05:42 | INFO     | Gau_route.py:188 | gau_get_result() | DEBUG: gau_get_result called with target_id=1
+2025-06-22 21:05:42 | INFO     | Gau_route.py:188 | gau_get_result() | DEBUG: gau_get_result called with target_id=1
+2025-06-22 21:05:42 | INFO     | Gau_route.py:202 | gau_get_result() | DEBUG: Query parameters - page=1, per_page=50, category=all
+2025-06-22 21:05:42 | INFO     | Gau_route.py:202 | gau_get_result() | DEBUG: Query parameters - page=1, per_page=50, category=all
+2025-06-22 21:05:42 | INFO     | Gau_route.py:207 | gau_get_result() | DEBUG: scan_result found: True
+2025-06-22 21:05:42 | INFO     | Gau_route.py:207 | gau_get_result() | DEBUG: scan_result found: True
+2025-06-22 21:05:42 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:42] "GET /api/gau/result/1?page=1&per_page=50&category=all&search= HTTP/1.1" 200 -
+2025-06-22 21:05:51 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:05:51] "[33mGET /api/gau/file/1 HTTP/1.1[0m" 404 -
+2025-06-22 21:06:08 | INFO     | attack_route.py:16 | attack() | 加载扫描界面，目标ID: 1
+2025-06-22 21:06:08 | INFO     | attack_route.py:16 | attack() | 加载扫描界面，目标ID: 1
+2025-06-22 21:06:08 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:06:08] "GET /attack/1 HTTP/1.1" 200 -
+2025-06-22 21:06:08 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:06:08] "[36mGET /static/js/dist/bundle.js HTTP/1.1[0m" 304 -
+2025-06-22 21:06:08 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:06:08] "[36mGET /static/css/attack.css HTTP/1.1[0m" 304 -
+2025-06-22 21:06:08 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:06:08] "GET /favicon.ico HTTP/1.1" 200 -
+2025-06-22 21:06:09 | INFO     | Gau_route.py:377 | gau_dashboard() | 正在載入 Gau 掃描器界面
+2025-06-22 21:06:09 | INFO     | Gau_route.py:377 | gau_dashboard() | 正在載入 Gau 掃描器界面
+2025-06-22 21:06:09 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:06:09] "GET /api/gau/dashboard?target_id=1 HTTP/1.1" 200 -
+2025-06-22 21:06:09 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:06:09] "[36mGET /static/js/gau_dashboard.js HTTP/1.1[0m" 304 -
+2025-06-22 21:06:09 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:06:09] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:06:09 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:06:09] "GET /api/gau/history/1 HTTP/1.1" 200 -
+2025-06-22 21:06:09 | INFO     | Gau_route.py:188 | gau_get_result() | DEBUG: gau_get_result called with target_id=1
+2025-06-22 21:06:09 | INFO     | Gau_route.py:188 | gau_get_result() | DEBUG: gau_get_result called with target_id=1
+2025-06-22 21:06:09 | INFO     | Gau_route.py:202 | gau_get_result() | DEBUG: Query parameters - page=1, per_page=50, category=all
+2025-06-22 21:06:09 | INFO     | Gau_route.py:202 | gau_get_result() | DEBUG: Query parameters - page=1, per_page=50, category=all
+2025-06-22 21:06:09 | INFO     | Gau_route.py:207 | gau_get_result() | DEBUG: scan_result found: True
+2025-06-22 21:06:09 | INFO     | Gau_route.py:207 | gau_get_result() | DEBUG: scan_result found: True
+2025-06-22 21:06:09 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:06:09] "GET /api/gau/result/1?page=1&per_page=50&category=all&search= HTTP/1.1" 200 -
+2025-06-22 21:06:09 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:06:09] "GET /favicon.ico HTTP/1.1" 200 -
+2025-06-22 21:06:09 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:06:09 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:06:09 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:06:09 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:06:09 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 1/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:06:09.913200')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:06:09 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 1/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:06:09.913200')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:06:10 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:06:10 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:06:10 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 2/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:06:10.416073')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:06:10 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 2/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:06:10.416073')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:06:11 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:06:11 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:06:11 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 3/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:06:11.418074')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:06:11 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 3/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:06:11.418074')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:06:11 | ERROR    | Gau_route.py:120 | gau_scan() | 创建扫描记录失败，已重試 3 次: (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:06:11.418074')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:06:11 | ERROR    | Gau_route.py:120 | gau_scan() | 创建扫描记录失败，已重試 3 次: (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:06:11.418074')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:06:11 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:06:11] "[35m[1mPOST /api/gau/scan/1 HTTP/1.1[0m" 503 -
+2025-06-22 21:07:13 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:07:13 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:07:13 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:07:13 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:07:13 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 1/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:13.449552')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:13 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 1/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:13.449552')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:13 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:07:13 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:07:13 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 2/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:13.950875')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:13 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 2/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:13.950875')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:14 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:07:14 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:07:14 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 3/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:14.952045')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:14 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 3/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:14.952045')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:14 | ERROR    | Gau_route.py:120 | gau_scan() | 创建扫描记录失败，已重試 3 次: (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:14.952045')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:14 | ERROR    | Gau_route.py:120 | gau_scan() | 创建扫描记录失败，已重試 3 次: (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:14.952045')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:14 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:07:14] "[35m[1mPOST /api/gau/scan/1 HTTP/1.1[0m" 503 -
+2025-06-22 21:07:23 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:07:23 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:07:23 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:07:23 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:07:23 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 1/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:23.511705')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:23 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 1/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:23.511705')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:24 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:07:24 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:07:24 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 2/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:24.014175')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:24 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 2/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:24.014175')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:25 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:07:25 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:07:25 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 3/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:25.016137')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:25 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 3/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:25.016137')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:25 | ERROR    | Gau_route.py:120 | gau_scan() | 创建扫描记录失败，已重試 3 次: (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:25.016137')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:25 | ERROR    | Gau_route.py:120 | gau_scan() | 创建扫描记录失败，已重試 3 次: (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:07:25.016137')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:07:25 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:07:25] "[35m[1mPOST /api/gau/scan/1 HTTP/1.1[0m" 503 -
+2025-06-22 21:11:13 | INFO     | config.py:168 | setup_enhanced_logging() | 🚀 增強日誌系統已啟動
+2025-06-22 21:11:13 | INFO     | config.py:168 | setup_enhanced_logging() | 🚀 增強日誌系統已啟動
+2025-06-22 21:11:13 | DEBUG    | config.py:169 | setup_enhanced_logging() | 調試級別日誌已啟用
+2025-06-22 21:11:13 | DEBUG    | config.py:169 | setup_enhanced_logging() | 調試級別日誌已啟用
+2025-06-22 21:11:13 | INFO     | app.py:186 | create_app() | 正在檢查 FlareSolverr 服務...
+2025-06-22 21:11:13 | INFO     | app.py:186 | create_app() | 正在檢查 FlareSolverr 服務...
+2025-06-22 21:11:13 | INFO     | app.py:196 | create_app() | 正在啟動 FlareSolverr 服務...
+2025-06-22 21:11:13 | INFO     | app.py:196 | create_app() | 正在啟動 FlareSolverr 服務...
+2025-06-22 21:11:13 | INFO     | start_flaresolverr.py:59 | start_flaresolverr() | FlareSolverr 已經在運行
+2025-06-22 21:11:13 | INFO     | app.py:199 | create_app() | ✅ FlareSolverr 服務已啟動
+2025-06-22 21:11:13 | INFO     | app.py:199 | create_app() | ✅ FlareSolverr 服務已啟動
+2025-06-22 21:13:26 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:13:26 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:13:26 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:13:26 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:13:26 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 1/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:13:26.940859')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:13:26 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 1/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:13:26.940859')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:13:27 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:13:27 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:13:27 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 2/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:13:27.443104')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:13:27 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 2/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:13:27.443104')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:13:28 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:13:28 | INFO     | Gau_route.py:100 | gau_scan() | 已删除旧的扫描结果: target_id=1
+2025-06-22 21:13:28 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 3/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:13:28.445367')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:13:28 | WARNING  | Gau_route.py:116 | gau_scan() | 數據庫操作失敗 (嘗試 3/3): (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:13:28.445367')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:13:28 | ERROR    | Gau_route.py:120 | gau_scan() | 创建扫描记录失败，已重試 3 次: (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:13:28.445367')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:13:28 | ERROR    | Gau_route.py:120 | gau_scan() | 创建扫描记录失败，已重試 3 次: (sqlite3.IntegrityError) UNIQUE constraint failed: gau_results.target_id
+[SQL: INSERT INTO gau_results (target_id, domain, urls, total_urls, status, error_message, scan_time) VALUES (?, ?, ?, ?, ?, ?, ?)]
+[parameters: (1, 'www.kucoin.com', '[]', 0, 'scanning', None, '2025-06-22 21:13:28.445367')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-06-22 21:13:28 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:13:28] "[35m[1mPOST /api/gau/scan/1 HTTP/1.1[0m" 503 -
+2025-06-22 21:13:36 | INFO     | config.py:168 | setup_enhanced_logging() | 🚀 增強日誌系統已啟動
+2025-06-22 21:13:36 | INFO     | config.py:168 | setup_enhanced_logging() | 🚀 增強日誌系統已啟動
+2025-06-22 21:13:36 | DEBUG    | config.py:169 | setup_enhanced_logging() | 調試級別日誌已啟用
+2025-06-22 21:13:36 | DEBUG    | config.py:169 | setup_enhanced_logging() | 調試級別日誌已啟用
+2025-06-22 21:13:36 | INFO     | app.py:186 | create_app() | 正在檢查 FlareSolverr 服務...
+2025-06-22 21:13:36 | INFO     | app.py:186 | create_app() | 正在檢查 FlareSolverr 服務...
+2025-06-22 21:13:36 | INFO     | app.py:196 | create_app() | 正在啟動 FlareSolverr 服務...
+2025-06-22 21:13:36 | INFO     | app.py:196 | create_app() | 正在啟動 FlareSolverr 服務...
+2025-06-22 21:13:36 | INFO     | start_flaresolverr.py:77 | start_flaresolverr() | 正在啟動 FlareSolverr: /home/hacker/Desktop/C2/tools/FlareSolverr/src/flaresolverr.py
+2025-06-22 21:13:40 | INFO     | start_flaresolverr.py:104 | start_flaresolverr() | FlareSolverr 啟動成功，運行在 http://localhost:8191
+2025-06-22 21:13:40 | INFO     | start_flaresolverr.py:242 | start_monitoring() | FlareSolverr 監控已啟動
+2025-06-22 21:13:40 | INFO     | app.py:199 | create_app() | ✅ FlareSolverr 服務已啟動
+2025-06-22 21:13:40 | INFO     | app.py:199 | create_app() | ✅ FlareSolverr 服務已啟動
+2025-06-22 21:13:40 | INFO     | _internal.py:97 | _log() | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8964
+2025-06-22 21:13:40 | INFO     | _internal.py:97 | _log() | [33mPress CTRL+C to quit[0m
+2025-06-22 21:13:44 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:13:44 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:13:44 | INFO     | Gau_route.py:107 | gau_scan() | 已更新現有掃描結果: target_id=1
+2025-06-22 21:13:44 | INFO     | Gau_route.py:107 | gau_scan() | 已更新現有掃描結果: target_id=1
+2025-06-22 21:13:44 | INFO     | Gau_route.py:119 | gau_scan() | 數據庫操作成功完成: target_id=1
+2025-06-22 21:13:44 | INFO     | Gau_route.py:119 | gau_scan() | 數據庫操作成功完成: target_id=1
+2025-06-22 21:13:44 | INFO     | Gau_route.py:164 | gau_scan() | Final scan options: {'threads': 50, 'providers': 'wayback,commoncrawl,otx,urlscan', 'blacklist': 'ttf,woff,svg,png,jpg,gif,jpeg,ico', 'verbose': False}
+2025-06-22 21:13:44 | INFO     | Gau_route.py:164 | gau_scan() | Final scan options: {'threads': 50, 'providers': 'wayback,commoncrawl,otx,urlscan', 'blacklist': 'ttf,woff,svg,png,jpg,gif,jpeg,ico', 'verbose': False}
+2025-06-22 21:13:44 | INFO     | thread_gau.py:482 | start_gau_scan() | 已启动Gau扫描，目标ID: 1
+2025-06-22 21:13:44 | INFO     | thread_gau.py:99 | _create_or_update_scan_result() | 更新現有Gau掃描結果，目標ID: 1
+2025-06-22 21:13:44 | INFO     | thread_gau.py:482 | start_gau_scan() | 已启动Gau扫描，目标ID: 1
+2025-06-22 21:13:44 | INFO     | thread_gau.py:99 | _create_or_update_scan_result() | 更新現有Gau掃描結果，目標ID: 1
+2025-06-22 21:13:44 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:13:44] "POST /api/gau/scan/1 HTTP/1.1" 200 -
+2025-06-22 21:13:44 | INFO     | thread_gau.py:255 | _execute_gau_scan() | 执行命令: /home/hacker/Desktop/C2/tools/gau_linux/gau www.kucoin.com --o /home/hacker/Desktop/C2/output/gau/gau_1_1750598024.txt --threads 50 --timeout 20 --retries 2 --from 202306 --providers wayback,commoncrawl,otx,urlscan --fp --blacklist ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:13:44 | INFO     | thread_gau.py:255 | _execute_gau_scan() | 执行命令: /home/hacker/Desktop/C2/tools/gau_linux/gau www.kucoin.com --o /home/hacker/Desktop/C2/output/gau/gau_1_1750598024.txt --threads 50 --timeout 20 --retries 2 --from 202306 --providers wayback,commoncrawl,otx,urlscan --fp --blacklist ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:13:47 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:13:47] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:13:50 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:13:50] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:13:53 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:13:53] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:13:56 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:13:56] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:13:59 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:13:59] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:02 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:02] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:05 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:05] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:08 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:08] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:11 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:11] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:14 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:14] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:17 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:17] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:20 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:20] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:23 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:23] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:26 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:26] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:29 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:29] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:32 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:32] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:35 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:35] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:38 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:38] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:41 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:41] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:44 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:44] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:45 | INFO     | thread_gau.py:291 | _execute_gau_scan() | Gau扫描完成，正在处理结果...
+2025-06-22 21:14:45 | INFO     | thread_gau.py:291 | _execute_gau_scan() | Gau扫描完成，正在处理结果...
+2025-06-22 21:14:45 | INFO     | thread_gau.py:303 | _execute_gau_scan() | 输出文件大小: 0 字节
+2025-06-22 21:14:45 | INFO     | thread_gau.py:303 | _execute_gau_scan() | 输出文件大小: 0 字节
+2025-06-22 21:14:45 | INFO     | thread_gau.py:149 | _update_scan_result() | 已更新Gau扫描结果，目标ID: 1，当前URL总数: 0
+2025-06-22 21:14:45 | INFO     | thread_gau.py:149 | _update_scan_result() | 已更新Gau扫描结果，目标ID: 1，当前URL总数: 0
+2025-06-22 21:14:45 | INFO     | thread_gau.py:328 | _execute_gau_scan() | Gau扫描处理完成，目标ID: 1，总URL数: 0
+2025-06-22 21:14:45 | INFO     | thread_gau.py:328 | _execute_gau_scan() | Gau扫描处理完成，目标ID: 1，总URL数: 0
+2025-06-22 21:14:45 | INFO     | thread_gau.py:372 | _execute_gau_scan() | 已删除临时文件: /home/hacker/Desktop/C2/output/gau/gau_1_1750598024.txt
+2025-06-22 21:14:45 | INFO     | thread_gau.py:372 | _execute_gau_scan() | 已删除临时文件: /home/hacker/Desktop/C2/output/gau/gau_1_1750598024.txt
+2025-06-22 21:14:47 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:47] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:14:47 | INFO     | Gau_route.py:198 | gau_get_result() | DEBUG: gau_get_result called with target_id=1
+2025-06-22 21:14:47 | INFO     | Gau_route.py:198 | gau_get_result() | DEBUG: gau_get_result called with target_id=1
+2025-06-22 21:14:47 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:47] "GET /api/gau/history/1 HTTP/1.1" 200 -
+2025-06-22 21:14:47 | INFO     | Gau_route.py:212 | gau_get_result() | DEBUG: Query parameters - page=1, per_page=50, category=all
+2025-06-22 21:14:47 | INFO     | Gau_route.py:212 | gau_get_result() | DEBUG: Query parameters - page=1, per_page=50, category=all
+2025-06-22 21:14:47 | INFO     | Gau_route.py:217 | gau_get_result() | DEBUG: scan_result found: True
+2025-06-22 21:14:47 | INFO     | Gau_route.py:217 | gau_get_result() | DEBUG: scan_result found: True
+2025-06-22 21:14:47 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:14:47] "GET /api/gau/result/1?page=1&per_page=50&category=all&search= HTTP/1.1" 200 -
+2025-06-22 21:23:46 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:23:46 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:23:46 | INFO     | Gau_route.py:107 | gau_scan() | 已更新現有掃描結果: target_id=1
+2025-06-22 21:23:46 | INFO     | Gau_route.py:107 | gau_scan() | 已更新現有掃描結果: target_id=1
+2025-06-22 21:23:46 | INFO     | Gau_route.py:119 | gau_scan() | 數據庫操作成功完成: target_id=1
+2025-06-22 21:23:46 | INFO     | Gau_route.py:119 | gau_scan() | 數據庫操作成功完成: target_id=1
+2025-06-22 21:23:46 | INFO     | Gau_route.py:164 | gau_scan() | Final scan options: {'threads': 50, 'providers': 'wayback,commoncrawl,otx,urlscan', 'blacklist': 'ttf,woff,svg,png,jpg,gif,jpeg,ico', 'verbose': False}
+2025-06-22 21:23:46 | INFO     | Gau_route.py:164 | gau_scan() | Final scan options: {'threads': 50, 'providers': 'wayback,commoncrawl,otx,urlscan', 'blacklist': 'ttf,woff,svg,png,jpg,gif,jpeg,ico', 'verbose': False}
+2025-06-22 21:23:46 | INFO     | thread_gau.py:482 | start_gau_scan() | 已启动Gau扫描，目标ID: 1
+2025-06-22 21:23:46 | INFO     | thread_gau.py:99 | _create_or_update_scan_result() | 更新現有Gau掃描結果，目標ID: 1
+2025-06-22 21:23:46 | INFO     | thread_gau.py:482 | start_gau_scan() | 已启动Gau扫描，目标ID: 1
+2025-06-22 21:23:46 | INFO     | thread_gau.py:99 | _create_or_update_scan_result() | 更新現有Gau掃描結果，目標ID: 1
+2025-06-22 21:23:46 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:23:46] "POST /api/gau/scan/1 HTTP/1.1" 200 -
+2025-06-22 21:23:46 | INFO     | thread_gau.py:255 | _execute_gau_scan() | 执行命令: /home/hacker/Desktop/C2/tools/gau_linux/gau www.kucoin.com --o /home/hacker/Desktop/C2/output/gau/gau_1_1750598626.txt --threads 50 --timeout 20 --retries 2 --from 202306 --providers wayback,commoncrawl,otx,urlscan --fp --blacklist ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:23:46 | INFO     | thread_gau.py:255 | _execute_gau_scan() | 执行命令: /home/hacker/Desktop/C2/tools/gau_linux/gau www.kucoin.com --o /home/hacker/Desktop/C2/output/gau/gau_1_1750598626.txt --threads 50 --timeout 20 --retries 2 --from 202306 --providers wayback,commoncrawl,otx,urlscan --fp --blacklist ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:23:49 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:23:49] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:23:55 | INFO     | config.py:168 | setup_enhanced_logging() | 🚀 增強日誌系統已啟動
+2025-06-22 21:23:55 | INFO     | config.py:168 | setup_enhanced_logging() | 🚀 增強日誌系統已啟動
+2025-06-22 21:23:55 | DEBUG    | config.py:169 | setup_enhanced_logging() | 調試級別日誌已啟用
+2025-06-22 21:23:55 | DEBUG    | config.py:169 | setup_enhanced_logging() | 調試級別日誌已啟用
+2025-06-22 21:23:55 | INFO     | app.py:186 | create_app() | 正在檢查 FlareSolverr 服務...
+2025-06-22 21:23:55 | INFO     | app.py:186 | create_app() | 正在檢查 FlareSolverr 服務...
+2025-06-22 21:23:55 | INFO     | app.py:196 | create_app() | 正在啟動 FlareSolverr 服務...
+2025-06-22 21:23:55 | INFO     | app.py:196 | create_app() | 正在啟動 FlareSolverr 服務...
+2025-06-22 21:23:55 | INFO     | start_flaresolverr.py:77 | start_flaresolverr() | 正在啟動 FlareSolverr: /home/hacker/Desktop/C2/tools/FlareSolverr/src/flaresolverr.py
+2025-06-22 21:23:59 | INFO     | start_flaresolverr.py:104 | start_flaresolverr() | FlareSolverr 啟動成功，運行在 http://localhost:8191
+2025-06-22 21:23:59 | INFO     | start_flaresolverr.py:242 | start_monitoring() | FlareSolverr 監控已啟動
+2025-06-22 21:23:59 | INFO     | app.py:199 | create_app() | ✅ FlareSolverr 服務已啟動
+2025-06-22 21:23:59 | INFO     | app.py:199 | create_app() | ✅ FlareSolverr 服務已啟動
+2025-06-22 21:23:59 | INFO     | _internal.py:97 | _log() | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8964
+2025-06-22 21:23:59 | INFO     | _internal.py:97 | _log() | [33mPress CTRL+C to quit[0m
+2025-06-22 21:24:01 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:01] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:02 | INFO     | Gau_route.py:387 | gau_dashboard() | 正在載入 Gau 掃描器界面
+2025-06-22 21:24:02 | INFO     | Gau_route.py:387 | gau_dashboard() | 正在載入 Gau 掃描器界面
+2025-06-22 21:24:02 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:02] "GET /api/gau/dashboard?target_id=1 HTTP/1.1" 200 -
+2025-06-22 21:24:02 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:02] "[36mGET /static/js/gau_dashboard.js HTTP/1.1[0m" 304 -
+2025-06-22 21:24:02 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:02] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:02 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:02] "GET /api/gau/history/1 HTTP/1.1" 200 -
+2025-06-22 21:24:02 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:02] "GET /favicon.ico HTTP/1.1" 200 -
+2025-06-22 21:24:04 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:24:04 | INFO     | Gau_route.py:73 | gau_scan() | Scan parameters: threads=50, providers=wayback,commoncrawl,otx,urlscan, exclude_extensions=[], blacklist=ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:24:04 | INFO     | Gau_route.py:107 | gau_scan() | 已更新現有掃描結果: target_id=1
+2025-06-22 21:24:04 | INFO     | Gau_route.py:107 | gau_scan() | 已更新現有掃描結果: target_id=1
+2025-06-22 21:24:04 | INFO     | Gau_route.py:119 | gau_scan() | 數據庫操作成功完成: target_id=1
+2025-06-22 21:24:04 | INFO     | Gau_route.py:119 | gau_scan() | 數據庫操作成功完成: target_id=1
+2025-06-22 21:24:04 | INFO     | Gau_route.py:164 | gau_scan() | Final scan options: {'threads': 50, 'providers': 'wayback,commoncrawl,otx,urlscan', 'blacklist': 'ttf,woff,svg,png,jpg,gif,jpeg,ico', 'verbose': False}
+2025-06-22 21:24:04 | INFO     | Gau_route.py:164 | gau_scan() | Final scan options: {'threads': 50, 'providers': 'wayback,commoncrawl,otx,urlscan', 'blacklist': 'ttf,woff,svg,png,jpg,gif,jpeg,ico', 'verbose': False}
+2025-06-22 21:24:04 | INFO     | thread_gau.py:494 | start_gau_scan() | 已启动Gau扫描，目标ID: 1
+2025-06-22 21:24:04 | INFO     | thread_gau.py:494 | start_gau_scan() | 已启动Gau扫描，目标ID: 1
+2025-06-22 21:24:04 | INFO     | thread_gau.py:111 | _create_or_update_scan_result() | 更新現有Gau掃描結果，目標ID: 1
+2025-06-22 21:24:04 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:04] "POST /api/gau/scan/1 HTTP/1.1" 200 -
+2025-06-22 21:24:04 | INFO     | thread_gau.py:111 | _create_or_update_scan_result() | 更新現有Gau掃描結果，目標ID: 1
+2025-06-22 21:24:04 | INFO     | thread_gau.py:267 | _execute_gau_scan() | 执行命令: /home/hacker/Desktop/C2/tools/gau_linux/gau www.kucoin.com --o /home/hacker/Desktop/C2/output/gau/gau_1_1750598644.txt --threads 50 --timeout 120 --retries 5 --from 202306 --providers wayback,commoncrawl,otx,urlscan --fp --blacklist ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:24:04 | INFO     | thread_gau.py:267 | _execute_gau_scan() | 执行命令: /home/hacker/Desktop/C2/tools/gau_linux/gau www.kucoin.com --o /home/hacker/Desktop/C2/output/gau/gau_1_1750598644.txt --threads 50 --timeout 120 --retries 5 --from 202306 --providers wayback,commoncrawl,otx,urlscan --fp --blacklist ttf,woff,svg,png,jpg,gif,jpeg,ico
+2025-06-22 21:24:07 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:07] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:10 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:10] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:13 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:13] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:16 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:16] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:19 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:19] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:22 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:22] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:25 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:25] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:28 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:28] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:31 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:31] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:34 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:34] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:37 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:37] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:40 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:40] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:43 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:43] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:46 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:46] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:48 | INFO     | thread_gau.py:303 | _execute_gau_scan() | Gau扫描完成，正在处理结果...
+2025-06-22 21:24:48 | INFO     | thread_gau.py:303 | _execute_gau_scan() | Gau扫描完成，正在处理结果...
+2025-06-22 21:24:48 | INFO     | thread_gau.py:315 | _execute_gau_scan() | 输出文件大小: 0 字节
+2025-06-22 21:24:48 | INFO     | thread_gau.py:315 | _execute_gau_scan() | 输出文件大小: 0 字节
+2025-06-22 21:24:48 | INFO     | thread_gau.py:161 | _update_scan_result() | 已更新Gau扫描结果，目标ID: 1，当前URL总数: 0
+2025-06-22 21:24:48 | INFO     | thread_gau.py:161 | _update_scan_result() | 已更新Gau扫描结果，目标ID: 1，当前URL总数: 0
+2025-06-22 21:24:48 | INFO     | thread_gau.py:340 | _execute_gau_scan() | Gau扫描处理完成，目标ID: 1，总URL数: 0
+2025-06-22 21:24:48 | INFO     | thread_gau.py:340 | _execute_gau_scan() | Gau扫描处理完成，目标ID: 1，总URL数: 0
+2025-06-22 21:24:48 | INFO     | thread_gau.py:384 | _execute_gau_scan() | 已删除临时文件: /home/hacker/Desktop/C2/output/gau/gau_1_1750598644.txt
+2025-06-22 21:24:48 | INFO     | thread_gau.py:384 | _execute_gau_scan() | 已删除临时文件: /home/hacker/Desktop/C2/output/gau/gau_1_1750598644.txt
+2025-06-22 21:24:49 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:49] "GET /api/gau/status/1 HTTP/1.1" 200 -
+2025-06-22 21:24:49 | INFO     | Gau_route.py:198 | gau_get_result() | DEBUG: gau_get_result called with target_id=1
+2025-06-22 21:24:49 | INFO     | Gau_route.py:198 | gau_get_result() | DEBUG: gau_get_result called with target_id=1
+2025-06-22 21:24:49 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:49] "GET /api/gau/history/1 HTTP/1.1" 200 -
+2025-06-22 21:24:49 | INFO     | Gau_route.py:212 | gau_get_result() | DEBUG: Query parameters - page=1, per_page=50, category=all
+2025-06-22 21:24:49 | INFO     | Gau_route.py:212 | gau_get_result() | DEBUG: Query parameters - page=1, per_page=50, category=all
+2025-06-22 21:24:49 | INFO     | Gau_route.py:217 | gau_get_result() | DEBUG: scan_result found: True
+2025-06-22 21:24:49 | INFO     | Gau_route.py:217 | gau_get_result() | DEBUG: scan_result found: True
+2025-06-22 21:24:49 | INFO     | _internal.py:97 | _log() | 127.0.0.1 - - [22/Jun/2025 21:24:49] "GET /api/gau/result/1?page=1&per_page=50&category=all&search= HTTP/1.1" 200 -

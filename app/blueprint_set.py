@@ -11,7 +11,7 @@ from routes.reconnaissance_route.webtech_route import webtech_route
 from routes.reconnaissance_route.flaresolverr_route import flaresolverr_bp
 from routes.reconnaissance_route.Gau_route import gau_blueprint
 from routes.reconnaissance_route.linksfinder_route import linksfinder_blueprint
-
+from routes.config_route.target_config_route import target_config_route
 def register_blueprints(app):
     """註冊所有藍圖"""
     # 定義藍圖和對應的 URL 前綴
@@ -27,6 +27,7 @@ def register_blueprints(app):
         (flaresolverr_bp, '/api/flaresolverr'),
         (gau_blueprint, '/api/gau'),
         (linksfinder_blueprint, '/api/linksfinder'),  
+        (target_config_route, '/api/target/config'),
     ]
     
     # 註冊藍圖

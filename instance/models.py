@@ -6,6 +6,8 @@ from threading import Lock
 import json
 import secrets
 
+from transformers.utils.hub import create_and_tag_model_card
+
 db = SQLAlchemy()
 migrate = Migrate()
 db_lock = Lock()
@@ -21,7 +23,6 @@ class Target(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     target_ip = db.Column(db.String(255), nullable=False, unique=True)
     domain = db.Column(db.String(255), nullable=True)  # 替代target_ip_no_https，存储不带协议的域名
-    target_port = db.Column(db.Integer, nullable=False)
     target_status = db.Column(db.String(50), default='pending')
     deep_scan = db.Column(db.Boolean, default=False)
 
@@ -31,7 +32,7 @@ class Target(db.Model):
     webtech_results = db.relationship('webtech_Result', backref='target', lazy='dynamic')
     crawler_each_urls = db.relationship('crawler_each_url', backref=db.backref('target', lazy='joined'), lazy='dynamic')
     gau_results = db.relationship('gau_results', backref='target', lazy='dynamic')
-
+    web_config = db.relationship('web_config', backref='target', lazy='dynamic')
 class nmap_Result(db.Model):
     """掃描結果模型"""
     __tablename__ = 'nmap_result'
@@ -325,4 +326,37 @@ class gau_results(db.Model):
             'status': self.status,
             'error_message': self.error_message,
             'scan_time': self.scan_time.strftime('%Y-%m-%d %H:%M:%S') if self.scan_time else None
+        }
+class web_config(db.Model):
+    """web配置模型"""
+    id = db.Column(db.Integer, primary_key=True)
+    target_id = db.Column(db.Integer, db.ForeignKey('target.id'), nullable=False)
+    database_tech = db.Column(db.JSON, nullable=True)
+    cookie_config = db.Column(db.Text, nullable=True)
+    fornt_tech = db.Column(db.JSON, nullable=True)
+    back_tech = db.Column(db.JSON,nullable=True)
+    WAF_tech = db.Column(db.JSON,nullable=True)
+    captcha_type = db.Column(db.Text,nullable=True)
+    login_url = db.Column(db.Text,nullable=True)
+    logout_url = db.Column(db.Text,nullable=True)
+    server_software = db.Column(db.Text,nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    def __init__(self, target_id, database_tech, cookie_config,fornt_tech,back_tech,WAF_tech,captcha_type,login_url,logout_url,server_software,created_at):
+        self.target_id = target_id
+        self.database_tech = database_tech
+        self.cookie_config = cookie_config
+        self.fornt_tech = fornt_tech
+        self.back_tech = back_tech
+        self.WAF_tech = WAF_tech
+        self.created_at = created_at
+    def to_dict(self):
+        """转换为字典格式"""
+        return {
+            'id': self.id,
+            'target_id': self.target_id,
+            'database_tech': self.database_tech,
+            'cookie_config': self.cookie_config,
+            'fornt_tech': self.fornt_tech,
+            'back_tech': self.back_tech,
+            'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S') if self.created_at else None
         }

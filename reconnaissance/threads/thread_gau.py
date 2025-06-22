@@ -46,10 +46,22 @@ class GauScanThread(threading.Thread):
     
     def run(self):
         """线程执行函数"""
+        # 提前檢查 app 是否為 None
+        if self.app is None:
+            error_msg = "Flask 應用實例為 None，無法執行掃描"
+            self.result.put(({'error': error_msg}, False, 500))
+            return
+        
         with self.app.app_context():
             try:
                 # 创建或更新扫描结果记录
                 scan_result = self._create_or_update_scan_result('scanning')
+                
+                # 提前檢查 scan_result 是否為 None
+                if scan_result is None:
+                    error_msg = "無法創建掃描結果記錄"
+                    self.result.put(({'error': error_msg}, False, 500))
+                    return
                 
                 # 执行Gau扫描
                 success = self._execute_gau_scan(scan_result)
@@ -72,78 +84,61 @@ class GauScanThread(threading.Thread):
                 self.result.put(({'error': error_msg}, False, 500))
     
     def _create_or_update_scan_result(self, status):
-        """创建或更新扫描结果记录"""
-        # 检查是否已存在扫描结果
-        scan_result = None
+        """创建或更新扫描结果记录 - 使用改進的事務處理避免競爭條件"""
+        max_retries = 3
+        retry_delay = 0.1
         
-        # 首先尝试查找正在扫描的结果
-        scan_result = gau_results.query.filter_by(
-            target_id=self.target_id,
-            status='scanning'
-        ).first()
-        
-        if not scan_result:
-            # 如果没有正在扫描的结果，查找是否有已完成的结果
-            scan_result = gau_results.query.filter_by(
-                target_id=self.target_id
-            ).first()
-            
-            if scan_result:
-                # 如果存在已完成的结果，重置它
-                scan_result.status = status
-                scan_result.urls = []
-                scan_result.total_urls = 0
-                scan_result.error_message = None
-                scan_result.scan_time = datetime.now()
-                
-                # 初始化URL集合
-                self.url_set = set()
-                
-                # 保存更改
-                try:
-                    db.session.commit()
-                    current_app.logger.info(f"重置现有Gau扫描结果，目标ID: {self.target_id}")
-                except Exception as e:
-                    db.session.rollback()
-                    current_app.logger.error(f"重置Gau扫描结果时出错: {str(e)}")
-                    # 创建新记录
-                    scan_result = None
-        
-        if not scan_result:
-            # 创建新的扫描结果记录
-            scan_result = gau_results(
-                target_id=self.target_id,
-                domain=self.domain,
-                status=status,
-                urls=[]  # 初始化为空列表
-            )
-            db.session.add(scan_result)
-            
+        for attempt in range(max_retries):
             try:
-                db.session.commit()
-                current_app.logger.info(f"创建新的Gau扫描结果，目标ID: {self.target_id}")
-            except exc.IntegrityError:
-                # 如果发生完整性错误（例如唯一约束冲突），回滚并重试
-                db.session.rollback()
-                current_app.logger.warning(f"创建Gau扫描结果时发生完整性错误，尝试重新查询")
+                # 使用事務和行鎖定避免競爭條件
+                with db.session.begin():
+                    # 查找現有結果並鎖定
+                    scan_result = gau_results.query.filter_by(
+                        target_id=self.target_id
+                    ).with_for_update().first()
+                    
+                    if scan_result:
+                        # 更新現有記錄
+                        scan_result.status = status
+                        scan_result.urls = []
+                        scan_result.total_urls = 0
+                        scan_result.error_message = None
+                        scan_result.scan_time = datetime.now()
+                        
+                        # 初始化URL集合
+                        self.url_set = set()
+                        
+                        current_app.logger.info(f"更新現有Gau掃描結果，目標ID: {self.target_id}")
+                    else:
+                        # 創建新記錄
+                        scan_result = gau_results(
+                            target_id=self.target_id,
+                            domain=self.domain,
+                            status=status,
+                            urls=[]
+                        )
+                        db.session.add(scan_result)
+                        
+                        # 初始化URL集合
+                        self.url_set = set()
+                        
+                        current_app.logger.info(f"創建新的Gau掃描結果，目標ID: {self.target_id}")
                 
-                # 再次尝试查找并更新
-                scan_result = gau_results.query.filter_by(target_id=self.target_id).first()
-                if scan_result:
-                    scan_result.status = status
-                    scan_result.urls = []
-                    scan_result.total_urls = 0
-                    scan_result.error_message = None
-                    scan_result.scan_time = datetime.now()
-                    db.session.commit()
-        
-        # 初始化URL集合
-        if scan_result.urls:
-            self.url_set = set(scan_result.urls)
-        else:
-            self.url_set = set()
-            
-        return scan_result
+                # 事務自動提交，返回結果
+                return scan_result
+                
+            except Exception as e:
+                # 事務自動回滾
+                error_msg = str(e)
+                current_app.logger.warning(f"掃描結果處理失敗 (嘗試 {attempt + 1}/{max_retries}): {error_msg}")
+                
+                if attempt == max_retries - 1:
+                    current_app.logger.error(f"創建/更新掃描結果失敗，已重試 {max_retries} 次: {error_msg}")
+                    raise Exception(f"數據庫操作失敗: {error_msg}")
+                else:
+                    # 等待後重試
+                    time.sleep(retry_delay)
+                    retry_delay *= 2
     
     def _update_scan_result(self, scan_result, new_urls, processed_count, final_update=False):
         """更新扫描结果"""
@@ -239,24 +234,24 @@ class GauScanThread(threading.Thread):
                 cmd.extend(['--threads', str(self.options.get('threads'))])
             else:
                 # 默認使用5個線程，進一步降低並發
-                cmd.extend(['--threads', '5'])
+                cmd.extend(['--threads', '10'])
             
-            # 添加超時設置
-            cmd.extend(['--timeout', '20'])  # 20秒超時
+            # 添加超時設置 - 增加到120秒
+            cmd.extend(['--timeout', '120'])  # 120秒超時
             
             # 添加重試次數限制
-            cmd.extend(['--retries', '2'])  # 最多重試2次
+            cmd.extend(['--retries', '5'])  # 最多重試5次
             
             # 限制日期範圍，只獲取最近2年的數據
             current_date = datetime.now()
             two_years_ago = current_date - timedelta(days=730)
             cmd.extend(['--from', two_years_ago.strftime('%Y%m')])
             
-            # 默認只使用 wayback provider，更穩定
+            # 使用多個 provider 增加找到結果的機會
             if self.options.get('providers'):
                 cmd.extend(['--providers', self.options.get('providers')])
             else:
-                cmd.extend(['--providers', 'wayback'])
+                cmd.extend(['--providers', 'wayback,commoncrawl'])
             
             # 添加去重參數，減少重複URL
             cmd.append('--fp')  # 移除相同端點的不同參數
@@ -490,7 +485,7 @@ def start_gau_scan(target_id, domain, options=None):
         return target_id
     
     # 创建并启动新的扫描线程
-    scan_thread = GauScanThread(target_id, domain, options, current_app._get_current_object())
+    scan_thread = GauScanThread(target_id, domain, options, current_app._get_current_object())# type: ignore
     scan_thread.start()
     
     # 记录活动扫描
