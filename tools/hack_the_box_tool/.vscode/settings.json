@@ -1,0 +1,41 @@
+{
+    "python.pythonPath": "./venv/bin/python3",
+    "python.defaultInterpreterPath": "./venv/bin/python3",
+    "python.terminal.activateEnvironment": true,
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "python.venvPath": "./venv",
+    "python.envFile": "${workspaceFolder}/.env",
+    "terminal.integrated.env.linux": {
+        "PYTHONPATH": "${workspaceFolder}/venv/lib/python3.12/site-packages",
+        "VIRTUAL_ENV": "${workspaceFolder}/venv",
+        "PATH": "${workspaceFolder}/venv/bin:${env:PATH}"
+    },
+
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        ".pytest_cache": true,
+        "*.egg-info": true
+    },
+    "terminal.integrated.profiles.linux": {
+        "C2-venv": {
+            "path": "bash",
+            "args": ["--rcfile", "${workspaceFolder}/.vscode/activate_c2_venv.sh"],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/venv/lib/python3.12/site-packages",
+                "VIRTUAL_ENV": "${workspaceFolder}/venv"
+            }
+        },
+        "Zsh": {
+            "path": "/usr/bin/zsh",
+            "args": ["-c", "source ${workspaceFolder}/.vscode/activate_c2_venv.sh && exec zsh"],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/venv/lib/python3.12/site-packages",
+                "VIRTUAL_ENV": "${workspaceFolder}/venv"
+            }
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "Zsh"
+} 

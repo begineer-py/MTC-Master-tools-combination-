@@ -1,0 +1,176 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Activate Virtual Environment",
+            "type": "shell",
+            "command": "source",
+            "args": [
+                "${workspaceFolder}/.vscode/activate_c2_venv.sh"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "shell": {
+                    "executable": "/usr/bin/zsh",
+                    "args": [
+                        "-c"
+                    ]
+                }
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Flask App",
+            "type": "shell",
+            "command": "${workspaceFolder}/venv/bin/python3",
+            "args": [
+                "run.py",
+                "--no-sudo"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "PYTHONPATH": "${workspaceFolder}/venv/lib/python3.12/site-packages",
+                    "VIRTUAL_ENV": "${workspaceFolder}/venv",
+                    "FLASK_APP": "run.py",
+                    "FLASK_ENV": "development"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Flask App (with sudo)",
+            "type": "shell",
+            "command": "${workspaceFolder}/venv/bin/python3",
+            "args": [
+                "run.py",
+                "--force-sudo"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "PYTHONPATH": "${workspaceFolder}/venv/lib/python3.12/site-packages",
+                    "VIRTUAL_ENV": "${workspaceFolder}/venv",
+                    "FLASK_APP": "run.py",
+                    "FLASK_ENV": "development"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Install Package",
+            "type": "shell",
+            "command": "${workspaceFolder}/requirements/venv_manager.sh",
+            "args": [
+                "install",
+                "${input:packageName}"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "label": "Install Requirements",
+            "type": "shell",
+            "command": "${workspaceFolder}/requirements/venv_manager.sh",
+            "args": [
+                "install-req",
+                "requirements/requirements.txt"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "label": "List Packages",
+            "type": "shell",
+            "command": "${workspaceFolder}/requirements/venv_manager.sh",
+            "args": [
+                "list"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "label": "Test Virtual Environment",
+            "type": "shell",
+            "command": "${workspaceFolder}/requirements/venv_manager.sh",
+            "args": [
+                "test"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "packageName",
+            "description": "Package name to install",
+            "default": "",
+            "type": "promptString"
+        }
+    ]
+}

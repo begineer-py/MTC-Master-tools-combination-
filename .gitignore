@@ -51,7 +51,7 @@ temp/
 flask_session/
 
 # IDE 和編輯器
-.vscode/
+
 .idea/
 *.swp
 *.swo

@@ -15,8 +15,7 @@
 - **[SECURITY_DESIGN.md](SECURITY_DESIGN.md)** - 安全設計和考慮
 
 ### 開發記錄
-- **[開發日誌.txt](開發日誌.txt)** - 開發過程記錄
-- **[CHANGELOG.md](CHANGELOG.md)** - 版本更新記錄
+
 - **[TODO.md](TODO.md)** - 待辦事項和功能規劃
 
 ### 測試文檔

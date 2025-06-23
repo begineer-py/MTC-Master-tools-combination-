@@ -1,0 +1,56 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Flask App",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/run.py",
+            "python": "${workspaceFolder}/venv/bin/python3",
+            "env": {
+                "FLASK_APP": "run.py",
+                "FLASK_ENV": "development",
+                "FLASK_DEBUG": "1",
+                "PYTHONPATH": "${workspaceFolder}/venv/lib/python3.12/site-packages",
+                "VIRTUAL_ENV": "${workspaceFolder}/venv"
+            },
+            "args": ["--no-sudo"],
+            "jinja": true,
+            "justMyCode": true,
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Python: Flask App (with sudo)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/run.py",
+            "python": "${workspaceFolder}/venv/bin/python3",
+            "env": {
+                "FLASK_APP": "run.py",
+                "FLASK_ENV": "development",
+                "FLASK_DEBUG": "1",
+                "PYTHONPATH": "${workspaceFolder}/venv/lib/python3.12/site-packages",
+                "VIRTUAL_ENV": "${workspaceFolder}/venv"
+            },
+            "args": ["--force-sudo"],
+            "jinja": true,
+            "justMyCode": true,
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "python": "${workspaceFolder}/venv/bin/python3",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/venv/lib/python3.12/site-packages",
+                "VIRTUAL_ENV": "${workspaceFolder}/venv"
+            }
+        }
+    ]
+} 

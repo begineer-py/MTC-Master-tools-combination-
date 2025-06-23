@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.autopep8",
+        "ms-vscode.vscode-json",
+        "ms-toolsai.jupyter",
+        "ms-python.flake8"
+    ]
+}

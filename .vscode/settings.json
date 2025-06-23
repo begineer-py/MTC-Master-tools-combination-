@@ -1,0 +1,46 @@
+{
+    "python.pythonPath": "./venv/bin/python3",
+    "python.defaultInterpreterPath": "./venv/bin/python3",
+    "python.terminal.activateEnvironment": true,
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "python.venvPath": "./venv",
+    "python.envFile": "${workspaceFolder}/.env",
+    "terminal.integrated.env.linux": {
+        "PYTHONPATH": "${workspaceFolder}/venv/lib/python3.12/site-packages",
+        "VIRTUAL_ENV": "${workspaceFolder}/venv",
+        "PATH": "${workspaceFolder}/venv/bin:${env:PATH}"
+    },
+    "terminal.integrated.shellIntegration.enabled": true,
+    "terminal.integrated.profiles.linux": {
+        "C2-Auto": {
+            "path": "/usr/bin/zsh",
+            "args": [
+                "-c",
+                "cd ${workspaceFolder} && [ -f .vscode/activate_c2_venv.sh ] && source .vscode/activate_c2_venv.sh; exec zsh"
+            ],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/venv/lib/python3.12/site-packages",
+                "VIRTUAL_ENV": "${workspaceFolder}/venv",
+                "PATH": "${workspaceFolder}/venv/bin:${env:PATH}"
+            },
+            "icon": "terminal-python"
+        },
+        "C2-Manual": {
+            "path": "/usr/bin/zsh",
+            "icon": "terminal-bash"
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "C2-Auto",
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        ".pytest_cache": true,
+        "*.egg-info": true
+    },
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "editor.formatOnSave": true,
+    "python.formatting.autopep8Enabled": true
+}

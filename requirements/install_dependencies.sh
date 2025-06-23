@@ -6,6 +6,12 @@
 
 set -e  # 遇到錯誤時退出
 
+# 獲取腳本所在目錄，並切換到作為項目根目錄的上級目錄
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+PROJECT_ROOT=$(dirname "$SCRIPT_DIR")
+cd "$PROJECT_ROOT"
+echo "工作目錄已切換至項目根目錄：$PROJECT_ROOT"
+
 echo "=== C2項目依賴安裝腳本 ==="
 echo "正在為Linux系統安裝依賴..."
 
