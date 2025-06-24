@@ -6,6 +6,7 @@ from threading import Lock
 import json
 import secrets
 
+from torch import where
 from transformers.utils.hub import create_and_tag_model_card
 
 db = SQLAlchemy()
@@ -13,18 +14,14 @@ migrate = Migrate()
 db_lock = Lock()
 
 
-class payload(db.Model):
-    """負載模型"""
-    id = db.Column(db.Integer, primary_key=True)
-    payload = db.Column(db.String(255), nullable=False)
-
-
 class web_shell_back_point(db.Model):
     """收集的目標反向shell可回傳點 或是一些XSS的回傳點"""
     id = db.Column(db.Integer, primary_key=True)
     target_ip = db.Column(db.String(255), nullable=True, unique=True)
     target_config = db.Column(db.Text, nullable=True)
+    where = db.Column(db.String(255), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
+    to_do_command = db.Column(db.Text, nullable=True)
 
     def __init__(self, target_ip, target_config, created_at):
         self.target_ip = target_ip

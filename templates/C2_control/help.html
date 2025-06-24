@@ -405,7 +405,8 @@
             return;
         }
 
-        const url = `/add_message?message=${encodeURIComponent(message)}&target_ip=${encodeURIComponent(ip)}`;
+        // 使用相對路徑（因為在同一個域名下）
+        const url = `/api/control/add_message?message=${encodeURIComponent(message)}&target_ip=${encodeURIComponent(ip)}`;
 
         resultDiv.textContent = '發送中...';
         resultDiv.className = 'test-result';
@@ -419,7 +420,8 @@
                     <strong>✅ 測試成功!</strong><br>
                     消息: ${data.data.message}<br>
                     目標IP: ${data.data.target_ip || '未指定'}<br>
-                    時間: ${data.data.timestamp}
+                    時間: ${data.data.timestamp}<br>
+                    <small>完整URL: ${window.location.origin}${url}</small>
                 `;
                 } else {
                     resultDiv.className = 'test-result error';
