@@ -1,4 +1,4 @@
-import os 
+import os
 from flask import Blueprint
 from routes.zombie_routes import zombie_bp
 from routes.index_routes import index_bp
@@ -12,6 +12,9 @@ from routes.reconnaissance_route.flaresolverr_route import flaresolverr_bp
 from routes.reconnaissance_route.Gau_route import gau_blueprint
 from routes.reconnaissance_route.linksfinder_route import linksfinder_blueprint
 from routes.config_route.target_config_route import target_config_route
+from routes.C2_control.control_route import control_bp
+
+
 def register_blueprints(app):
     """註冊所有藍圖"""
     # 定義藍圖和對應的 URL 前綴
@@ -26,11 +29,11 @@ def register_blueprints(app):
         (webtech_route, '/api/webtech'),
         (flaresolverr_bp, '/api/flaresolverr'),
         (gau_blueprint, '/api/gau'),
-        (linksfinder_blueprint, '/api/linksfinder'),  
+        (linksfinder_blueprint, '/api/linksfinder'),
         (target_config_route, '/api/target/config'),
+        (control_bp, '/api/control'),
     ]
-    
+
     # 註冊藍圖
     for blueprint, url_prefix in blueprints:
         app.register_blueprint(blueprint, url_prefix=url_prefix)
-

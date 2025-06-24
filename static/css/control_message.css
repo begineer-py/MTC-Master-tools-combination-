@@ -1,0 +1,540 @@
+/* 控制消息面板樣式 */
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* Flash 消息樣式 */
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.flash-message {
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    animation: slideInDown 0.5s ease-out;
+}
+
+.flash-message.success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    box-shadow: 0 4px 15px rgba(21, 87, 36, 0.1);
+}
+
+.flash-message.error {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    box-shadow: 0 4px 15px rgba(114, 28, 36, 0.1);
+}
+
+.flash-message.warning {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    color: #856404;
+    border: 1px solid #ffeaa7;
+    box-shadow: 0 4px 15px rgba(133, 100, 4, 0.1);
+}
+
+.flash-message::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 4px;
+    background: currentColor;
+    opacity: 0.7;
+}
+
+.flash-message .close-btn {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: currentColor;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.flash-message .close-btn:hover {
+    opacity: 1;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    color: #2c3e50;
+    text-align: center;
+    font-size: 2.8em;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    border-radius: 2px;
+}
+
+h1 {
+    color: #34495e;
+    font-size: 1.8em;
+    margin: 40px 0 20px 0;
+    text-align: center;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+h1::before {
+    content: '📋';
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+/* 表單樣式 */
+form {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #495057;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 18px 24px;
+    margin: 0;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: white;
+    box-sizing: border-box;
+    position: relative;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+    transform: translateY(-3px);
+    background: #fafbfc;
+}
+
+input[type="text"]::placeholder {
+    color: #adb5bd;
+    font-style: italic;
+}
+
+button[type="submit"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 18px 50px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+button[type="submit"]::before {
+    content: '✉️';
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}
+
+button[type="submit"]:active {
+    transform: translateY(-2px);
+}
+
+/* 消息列表樣式 */
+#messageList {
+    display: grid;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.message {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-left: 6px solid #667eea;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.message::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.4;
+    }
+}
+
+.message:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border-left-color: #764ba2;
+}
+
+.message p {
+    margin: 15px 0;
+    padding: 12px 20px;
+    border-radius: 10px;
+    background: rgba(102, 126, 234, 0.05);
+    border: 1px solid rgba(102, 126, 234, 0.1);
+    color: #2c3e50;
+    font-size: 15px;
+    line-height: 1.6;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.message p:hover {
+    background: rgba(102, 126, 234, 0.08);
+    transform: translateX(5px);
+}
+
+.message p strong {
+    color: #495057;
+    font-weight: 700;
+}
+
+.message p:first-child {
+    background: rgba(52, 152, 219, 0.1);
+    border-color: rgba(52, 152, 219, 0.2);
+}
+
+.message p:first-child::before {
+    content: '🎯';
+    margin-right: 8px;
+}
+
+.message p:nth-child(2) {
+    background: rgba(155, 89, 182, 0.1);
+    border-color: rgba(155, 89, 182, 0.2);
+}
+
+.message p:nth-child(2)::before {
+    content: '⚙️';
+    margin-right: 8px;
+}
+
+.message p:last-child {
+    background: rgba(39, 174, 96, 0.1);
+    border-color: rgba(39, 174, 96, 0.2);
+    font-style: italic;
+}
+
+.message p:last-child::before {
+    content: '⏰';
+    margin-right: 8px;
+}
+
+/* 空狀態樣式 */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: #7f8c8d;
+    font-style: italic;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px dashed #dee2e6;
+}
+
+.empty-state::before {
+    content: "📭";
+    display: block;
+    font-size: 5em;
+    margin-bottom: 20px;
+    opacity: 0.6;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        margin: 0;
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    h2 {
+        font-size: 2.2em;
+    }
+
+    form {
+        padding: 25px;
+    }
+
+    input[type="text"] {
+        padding: 15px 20px;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 18px;
+    }
+
+    .message {
+        padding: 20px;
+    }
+
+    .message:hover {
+        transform: translateY(-5px) scale(1.01);
+    }
+}
+
+/* 動畫效果 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.message {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.message:nth-child(even) {
+    animation-delay: 0.1s;
+}
+
+.message:nth-child(odd) {
+    animation-delay: 0.2s;
+}
+
+/* 滾動條樣式 */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(241, 241, 241, 0.8);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #5a6fd8, #6a4190);
+    background-clip: content-box;
+}
+
+/* 加載動畫 */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* 工具提示樣式 */
+.tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 幫助按鈕樣式 */
+.help-btn {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #17a2b8, #138496);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
+    border: none;
+    cursor: pointer;
+}
+
+.help-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(23, 162, 184, 0.5);
+    text-decoration: none;
+    color: white;
+    background: linear-gradient(135deg, #138496, #117a8b);
+}
+
+.help-btn:active {
+    transform: translateY(0);
+}

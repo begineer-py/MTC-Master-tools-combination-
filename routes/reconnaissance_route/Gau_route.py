@@ -7,6 +7,7 @@ from datetime import datetime
 import time
 from functools import lru_cache
 from sqlalchemy import text
+from config.config import LogConfig
 
 # 创建蓝图
 gau_blueprint = Blueprint('gau', __name__, url_prefix='')
@@ -17,6 +18,8 @@ _cache_timestamp = {}
 _cache_lock = False
 
 # 缓存清理函数
+
+
 def _clean_expired_cache():
     """清理过期缓存"""
     now = time.time()
@@ -25,12 +28,13 @@ def _clean_expired_cache():
         # 缓存超过60秒过期 (从30秒增加到60秒)
         if now - timestamp > 60:
             expired_keys.append(key)
-    
+
     for key in expired_keys:
         if key in _result_cache:
             del _result_cache[key]
         if key in _cache_timestamp:
             del _cache_timestamp[key]
+
 
 def _check_database_health():
     """檢查數據庫健康狀態並嘗試修復"""
@@ -54,12 +58,15 @@ def _check_database_health():
             current_app.logger.error(f"數據庫修復失敗: {str(e2)}")
             return False
 
+
 @gau_blueprint.route('/scan/<int:target_id>', methods=['POST', 'GET'])
 def gau_scan(target_id):
     """启动 Gau 扫描"""
+    logger = LogConfig.get_context_logger()
 
     target = Target.query.get_or_404(target_id)
-    
+    logger.info(f"收到 Gau 掃描請求，目標ID: {target_id}, 域名: {target.domain}")
+
     try:
         # 获取扫描参数
         data = request.get_json() or {}
@@ -67,35 +74,38 @@ def gau_scan(target_id):
         providers = data.get('providers', ['wayback', 'commoncrawl', 'otx'])
         exclude_extensions = data.get('exclude_extensions', [])
         blacklist = data.get('blacklist', '')  # 新增：直接接收 blacklist 參數
-        
+
         verbose = data.get('verbose', False)
-        
-        current_app.logger.info(f"Scan parameters: threads={threads}, providers={providers}, exclude_extensions={exclude_extensions}, blacklist={blacklist}")
-        
+
+        current_app.logger.info(
+            f"Scan parameters: threads={threads}, providers={providers}, exclude_extensions={exclude_extensions}, blacklist={blacklist}")
+
         # 使用 domain 字段而不是 target_ip_no_https
         domain = target.domain
         if not domain:
             # 如果 domain 为空，尝试从 target_ip 中提取
-            domain = target.target_ip.replace('https://', '').replace('http://', '').split('/')[0]
-        
+            domain = target.target_ip.replace(
+                'https://', '').replace('http://', '').split('/')[0]
+
         # 檢查數據庫健康狀態
         if not _check_database_health():
             return jsonify({
                 'success': False,
                 'message': '數據庫連接異常，請稍後重試'
             }), 503
-        
+
         # 使用改進的重試機制處理數據庫操作，解決競爭條件問題
         max_retries = 5  # 增加重試次數
         retry_delay = 0.1  # 減少初始延遲
-        
+
         for attempt in range(max_retries):
             try:
                 # 開始新的事務，確保原子性操作
                 with db.session.begin():
                     # 使用 SELECT FOR UPDATE 防止競爭條件
-                    existing_result = gau_results.query.filter_by(target_id=target_id).with_for_update().first()
-                    
+                    existing_result = gau_results.query.filter_by(
+                        target_id=target_id).with_for_update().first()
+
                     if existing_result:
                         # 更新現有記錄而不是刪除重建
                         existing_result.domain = domain
@@ -104,7 +114,8 @@ def gau_scan(target_id):
                         existing_result.total_urls = 0
                         existing_result.error_message = None
                         existing_result.scan_time = datetime.now()
-                        current_app.logger.info(f"已更新現有掃描結果: target_id={target_id}")
+                        current_app.logger.info(
+                            f"已更新現有掃描結果: target_id={target_id}")
                     else:
                         # 創建新的掃描記錄
                         new_result = gau_results(
@@ -113,20 +124,23 @@ def gau_scan(target_id):
                             status='scanning'
                         )
                         db.session.add(new_result)
-                        current_app.logger.info(f"創建新的掃描記錄: target_id={target_id}, domain={domain}")
-                
+                        current_app.logger.info(
+                            f"創建新的掃描記錄: target_id={target_id}, domain={domain}")
+
                 # 如果到這裡，表示事務成功提交
                 current_app.logger.info(f"數據庫操作成功完成: target_id={target_id}")
                 break  # 成功則跳出重試循環
-                
+
             except Exception as e:
                 # 事務會自動回滾
                 error_msg = str(e)
-                current_app.logger.warning(f"數據庫操作失敗 (嘗試 {attempt + 1}/{max_retries}): {error_msg}")
-                
+                current_app.logger.warning(
+                    f"數據庫操作失敗 (嘗試 {attempt + 1}/{max_retries}): {error_msg}")
+
                 if attempt == max_retries - 1:
                     # 最後一次嘗試失敗
-                    current_app.logger.error(f"創建掃描記錄失敗，已重試 {max_retries} 次: {error_msg}")
+                    current_app.logger.error(
+                        f"創建掃描記錄失敗，已重試 {max_retries} 次: {error_msg}")
                     return jsonify({
                         'success': False,
                         'message': f'數據庫操作失敗，請稍後重試: {error_msg}',
@@ -137,7 +151,7 @@ def gau_scan(target_id):
                     import time
                     time.sleep(retry_delay)
                     retry_delay *= 2  # 指數退避
-        
+
         # 启动后台扫描任务
         # 處理排除文件類型
         final_blacklist = ''
@@ -153,18 +167,18 @@ def gau_scan(target_id):
         else:
             # 默認排除的文件類型
             final_blacklist = 'ttf,woff,svg,png,jpg,gif,jpeg,ico'
-        
+
         options = {
             'threads': threads,
             'providers': ','.join(providers) if isinstance(providers, list) else str(providers),
             'blacklist': final_blacklist,
             'verbose': verbose
         }
-        
+
         current_app.logger.info(f"Final scan options: {options}")
-        
+
         scan_id = start_gau_scan(target_id, domain, options)
-        
+
         return jsonify({
             'success': True,
             'message': 'Gau 扫描已启动',
@@ -173,7 +187,7 @@ def gau_scan(target_id):
             'domain': domain,
             'estimated_time': '1-3分钟'
         })
-        
+
     except Exception as e:
         current_app.logger.error(f"启动 Gau 扫描时出错: {str(e)}")
         return jsonify({
@@ -182,40 +196,48 @@ def gau_scan(target_id):
         }), 500
 
 # 移除 LRU 緩存，改用簡單查詢
+
+
 def _get_scan_result_cached(target_id):
     """获取扫描结果"""
     try:
         return gau_results.query.filter_by(
             target_id=target_id
-        ).order_by(gau_results.scan_time.desc()).first()# type: ignore
+        ).order_by(gau_results.scan_time.desc()).first()  # type: ignore
     except Exception as e:
         current_app.logger.error(f"查询扫描结果时出错: {str(e)}")
         return None
 
+
 @gau_blueprint.route('/result/<int:target_id>', methods=['GET'])
 def gau_get_result(target_id):
     """获取 Gau 扫描结果"""
-    current_app.logger.info(f"DEBUG: gau_get_result called with target_id={target_id}")
-    
+    logger = LogConfig.get_context_logger()
+    current_app.logger.info(
+        f"DEBUG: gau_get_result called with target_id={target_id}")
+    logger.info(f"獲取 Gau 掃描結果，目標ID: {target_id}")
+
     target = Target.query.get_or_404(target_id)
-    
+
     try:
         # 检查是否只需要元数据
         metadata_only = request.args.get('metadata', '') == 'only'
-        
+
         # 获取分页参数
         page = request.args.get('page', 1, type=int)
         per_page = request.args.get('per_page', 50, type=int)
         category = request.args.get('category', '')
         search = request.args.get('search', '')
-        
-        current_app.logger.info(f"DEBUG: Query parameters - page={page}, per_page={per_page}, category={category}")
-        
+
+        current_app.logger.info(
+            f"DEBUG: Query parameters - page={page}, per_page={per_page}, category={category}")
+
         # 获取扫描结果
         scan_result = gau_results.query.filter_by(target_id=target_id).first()
-        
-        current_app.logger.info(f"DEBUG: scan_result found: {scan_result is not None}")
-        
+
+        current_app.logger.info(
+            f"DEBUG: scan_result found: {scan_result is not None}")
+
         if not scan_result:
             response_data = {
                 'success': True,  # 改為 True，因為查詢成功，只是沒有結果
@@ -242,9 +264,10 @@ def gau_get_result(target_id):
                     }
                 }
             }
-            current_app.logger.info(f"DEBUG: Returning no result response: {response_data}")
+            current_app.logger.info(
+                f"DEBUG: Returning no result response: {response_data}")
             return jsonify(response_data)
-        
+
         # 如果只需要元数据
         if metadata_only:
             return jsonify({
@@ -257,27 +280,29 @@ def gau_get_result(target_id):
                     'error_message': scan_result.error_message
                 }
             })
-        
+
         # 获取 URL 列表
         urls = scan_result.urls or []
-        
+
         # 分类统计
         categories = _categorize_urls(urls)
-        
+
         # 过滤 URL
         filtered_urls = urls
         if category and category != 'all' and category in categories:
-            filtered_urls = [url for url in urls if _get_url_category(url) == category]
-        
+            filtered_urls = [
+                url for url in urls if _get_url_category(url) == category]
+
         if search:
-            filtered_urls = [url for url in filtered_urls if search.lower() in url.lower()]
-        
+            filtered_urls = [
+                url for url in filtered_urls if search.lower() in url.lower()]
+
         # 分页处理
         total = len(filtered_urls)
         start = (page - 1) * per_page
         end = start + per_page
         paginated_urls = filtered_urls[start:end]
-        
+
         return jsonify({
             'success': True,
             'result': {
@@ -293,11 +318,12 @@ def gau_get_result(target_id):
                     'per_page': per_page,
                     'total': total,
                     'pages': (total + per_page - 1) // per_page,
-                    'total_pages': (total + per_page - 1) // per_page  # 添加 total_pages 以保持兼容性
+                    # 添加 total_pages 以保持兼容性
+                    'total_pages': (total + per_page - 1) // per_page
                 }
             }
         })
-        
+
     except Exception as e:
         current_app.logger.error(f"获取 Gau 扫描结果时出错: {str(e)}")
         return jsonify({
@@ -305,13 +331,17 @@ def gau_get_result(target_id):
             'message': f'获取结果失败: {str(e)}'
         }), 500
 
+
 @gau_blueprint.route('/status/<int:target_id>', methods=['GET'])
 def get_scan_status(target_id):
     """获取掃描状态"""
+    logger = LogConfig.get_context_logger()
     try:
+        logger.info(f"獲取 Gau 掃描狀態，目標ID: {target_id}")
         # 檢查是否有結果
-        gau_result = gau_results.query.filter_by(target_id=target_id).order_by(gau_results.scan_time.desc()).first()# type: ignore
-        
+        gau_result = gau_results.query.filter_by(target_id=target_id).order_by(
+            gau_results.scan_time.desc()).first()  # type: ignore
+
         if gau_result:
             if gau_result.status == 'completed':
                 return jsonify({
@@ -343,7 +373,7 @@ def get_scan_status(target_id):
                 'status': 'not_started',
                 'message': '尚未開始掃描'
             })
-            
+
     except Exception as e:
         current_app.logger.error(f"获取掃描状态時出錯: {str(e)}")
         return jsonify({
@@ -351,13 +381,15 @@ def get_scan_status(target_id):
             'message': f'获取状态失败: {str(e)}'
         }), 500
 
+
 @gau_blueprint.route('/history/<int:target_id>', methods=['GET'])
 def get_scan_history(target_id):
     """获取掃描历史"""
     try:
         # 获取所有掃描结果
-        results = gau_results.query.filter_by(target_id=target_id).order_by(gau_results.scan_time.desc()).all()# type: ignore
-        
+        results = gau_results.query.filter_by(target_id=target_id).order_by(
+            gau_results.scan_time.desc()).all()  # type: ignore
+
         history = []
         for result in results:
             history.append({
@@ -367,12 +399,12 @@ def get_scan_history(target_id):
                 'total_urls': result.total_urls or 0,
                 'error_message': result.error_message
             })
-        
+
         return jsonify({
             'success': True,
             'history': history
         })
-        
+
     except Exception as e:
         current_app.logger.error(f"获取掃描历史時出錯: {str(e)}")
         return jsonify({
@@ -380,24 +412,26 @@ def get_scan_history(target_id):
             'message': f'获取历史失败: {str(e)}'
         }), 500
 
+
 @gau_blueprint.route('/dashboard', methods=['GET'])
 def gau_dashboard():
     """Gau URL 掃描器現代化界面"""
     try:
         current_app.logger.info("正在載入 Gau 掃描器界面")
-        
+
         # 獲取 URL 參數
         target_id = request.args.get('target_id', '')
-        
+
         # 使用分離的模板文件
         return render_template('gau_htmls/dashboard.html', target_id=target_id)
-        
+
     except Exception as e:
         current_app.logger.error(f"載入 Gau 掃描器界面時出錯: {str(e)}")
         return jsonify({
             'success': False,
             'message': f'載入界面失敗: {str(e)}'
         }), 500
+
 
 @gau_blueprint.route('/help', methods=['GET'])
 def gau_help():
@@ -406,13 +440,13 @@ def gau_help():
         # 獲取當前文件的目錄
         current_dir = os.path.dirname(os.path.abspath(__file__))
         help_file_path = os.path.join(current_dir, 'Gau_help.json')
-        
+
         # 讀取 JSON 文件
         with open(help_file_path, 'r', encoding='utf-8') as f:
             help_info = json.load(f)
-        
+
         return jsonify(help_info)
-        
+
     except FileNotFoundError:
         current_app.logger.error(f"幫助文件未找到: {help_file_path}")
         return jsonify({
@@ -432,6 +466,7 @@ def gau_help():
             'message': str(e)
         }), 500
 
+
 @gau_blueprint.route('/file/<int:target_id>', methods=['GET'])
 def get_gau_file(target_id):
     """获取Gau扫描结果文件"""
@@ -440,18 +475,19 @@ def get_gau_file(target_id):
         result = gau_results.query.filter_by(target_id=target_id).first()
         if not result:
             return jsonify({'success': False, 'message': '未找到扫描结果'}), 404
-        
+
         # 获取目标信息
         target = Target.query.get(target_id)
         if not target:
             return jsonify({'success': False, 'message': '未找到目标信息'}), 404
-        
+
         # 检查是否有URL结果
         if not result.urls or len(result.urls) == 0:
             return jsonify({'success': False, 'message': '扫描结果中没有URL'}), 404
-        
+
         # 检查是否存在缓存文件
-        cache_file_path = os.path.join(current_app.config['TEMP_FOLDER'], f"gau_results_{target.domain}_{target_id}.txt")
+        cache_file_path = os.path.join(
+            current_app.config['TEMP_FOLDER'], f"gau_results_{target.domain}_{target_id}.txt")
         if os.path.exists(cache_file_path) and os.path.getmtime(cache_file_path) > (time.time() - 3600):  # 缓存1小时
             # 返回缓存文件
             return send_file(
@@ -460,15 +496,17 @@ def get_gau_file(target_id):
                 download_name=f"gau_results_{target.domain}_{target_id}.txt",
                 mimetype='text/plain'
             )
-        
+
         # 确保临时目录存在
-        os.makedirs(os.path.dirname(os.path.join(current_app.config['TEMP_FOLDER'], f"temp.txt")), exist_ok=True)
-        
+        os.makedirs(os.path.dirname(os.path.join(
+            current_app.config['TEMP_FOLDER'], f"temp.txt")), exist_ok=True)
+
         # 创建临时文件
-        temp_file_path = os.path.join(current_app.config['TEMP_FOLDER'], f"gau_results_{target.domain}_{target_id}.txt")
-        
+        temp_file_path = os.path.join(
+            current_app.config['TEMP_FOLDER'], f"gau_results_{target.domain}_{target_id}.txt")
+
         current_app.logger.info(f"開始生成文件，URL 總數: {len(result.urls)}")
-        
+
         try:
             # 使用簡單高效的方式寫入文件
             with open(temp_file_path, 'w', encoding='utf-8', errors='replace') as f:
@@ -477,7 +515,7 @@ def get_gau_file(target_id):
                 f.write(f"# 扫描时间: {result.scan_time}\n")
                 f.write(f"# 总URL数: {len(result.urls)}\n")
                 f.write("#" + "-" * 50 + "\n\n")
-                
+
                 # 分類 URL
                 js_urls = []
                 api_urls = []
@@ -485,7 +523,7 @@ def get_gau_file(target_id):
                 css_urls = []
                 doc_urls = []
                 other_urls = []
-                
+
                 # 一次性分類所有 URL
                 for url in result.urls:
                     url_lower = url.lower()
@@ -501,7 +539,7 @@ def get_gau_file(target_id):
                         doc_urls.append(url)
                     else:
                         other_urls.append(url)
-                
+
                 # 寫入分類的 URL
                 categories = [
                     ("JavaScript 文件", js_urls),
@@ -511,16 +549,17 @@ def get_gau_file(target_id):
                     ("文檔文件", doc_urls),
                     ("其他 URL", other_urls)
                 ]
-                
+
                 for category_name, category_urls in categories:
                     if category_urls:
-                        f.write(f"\n# {category_name} ({len(category_urls)} 个)\n")
+                        f.write(
+                            f"\n# {category_name} ({len(category_urls)} 个)\n")
                         f.write("#" + "-" * 30 + "\n")
                         for url in category_urls:
                             f.write(f"{url}\n")
-                
+
                 current_app.logger.info(f"文件生成完成: {temp_file_path}")
-                
+
         except Exception as e:
             current_app.logger.error(f"文件生成錯誤: {str(e)}")
             return jsonify({
@@ -528,7 +567,7 @@ def get_gau_file(target_id):
                 'message': f'文件生成失敗: {str(e)}',
                 'code': 500
             }), 500
-        
+
         # 返回文件
         return send_file(
             temp_file_path,
@@ -544,6 +583,8 @@ def get_gau_file(target_id):
         }), 500
 
 # 輔助函數
+
+
 def _categorize_urls(urls):
     """對 URL 進行分類統計"""
     categories = {
@@ -555,18 +596,19 @@ def _categorize_urls(urls):
         'doc': 0,
         'other': 0
     }
-    
+
     for url in urls:
         category = _get_url_category(url)
         if category in categories:
             categories[category] += 1
-    
+
     return categories
+
 
 def _get_url_category(url):
     """獲取 URL 的分類"""
     url_lower = url.lower()
-    
+
     if any(ext in url_lower for ext in ['.js', 'javascript']):
         return 'js'
     elif any(ext in url_lower for ext in ['/api/', '/v1/', '/v2/', '.json', '.xml']):
@@ -579,6 +621,3 @@ def _get_url_category(url):
         return 'doc'
     else:
         return 'other'
-
-
-

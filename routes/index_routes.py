@@ -72,9 +72,8 @@ def add_target():
             new_target = Target(
                 target_ip=target_ip,
                 domain=domain,  # 使用domain字段
-                target_port=443 if 'https://' in target_ip else 80,
                 target_status='pending'
-            )
+            )#type: ignore
             
             # 保存到数据库
             db.session.add(new_target)

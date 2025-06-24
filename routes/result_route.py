@@ -1,10 +1,10 @@
 from flask import Blueprint, jsonify, render_template, request
 from instance.models import (
-    Target, 
-    crawler_each_url, 
-    crawler_each_form, 
-    crawler_each_html, 
-    crawler_each_js, 
+    Target,
+    crawler_each_url,
+    crawler_each_form,
+    crawler_each_html,
+    crawler_each_js,
     crawler_each_image,
     crawler_each_security,
     gau_results,
@@ -17,22 +17,19 @@ from instance.models import (
 )
 from flask import current_app
 import json
-import logging
+from config.config import LogConfig
 
 # 设置日志
-logger = logging.getLogger(__name__)
+logger = LogConfig.get_context_logger()
 
 result_bp = Blueprint('result', __name__)
+
 
 @result_bp.route('/form/<int:target_id>')
 def get_crawler_form(target_id):
     """获取表单数据"""
+    logger = LogConfig.get_context_logger()
     try:
-        # 检查权限
-        permission_result = check_user_permission(target_id=target_id)
-        if not isinstance(permission_result, Target):
-            return permission_result
-
         # 获取与目标相关的所有 URL 记录
         urls = crawler_each_url.query.filter_by(target_id=target_id).all()
         if not urls:
@@ -43,7 +40,8 @@ def get_crawler_form(target_id):
 
         forms_data = []
         for url in urls:
-            forms = crawler_each_form.query.filter_by(crawler_each_url_id=url.id).all()
+            forms = crawler_each_form.query.filter_by(
+                crawler_each_url_id=url.id).all()
             for form in forms:
                 forms_data.append({
                     'id': form.id,
@@ -55,22 +53,19 @@ def get_crawler_form(target_id):
             'status': 'success',
             'data': forms_data
         })
-        
+
     except Exception as e:
         return jsonify({
             'status': 'error',
             'message': f'獲取表單數據時出錯：{str(e)}'
         }), 500
 
+
 @result_bp.route('/html/<int:target_id>')
 def get_crawler_html(target_id):
     """获取HTML数据"""
+    logger = LogConfig.get_context_logger()
     try:
-        # 检查权限
-        permission_result = check_user_permission(target_id=target_id)
-        if not isinstance(permission_result, Target):
-            return permission_result
-
         # 获取与目标相关的所有 URL 记录
         urls = crawler_each_url.query.filter_by(target_id=target_id).all()
         if not urls:
@@ -81,7 +76,8 @@ def get_crawler_html(target_id):
 
         html_data = []
         for url in urls:
-            htmls = crawler_each_html.query.filter_by(crawler_each_url_id=url.id).all()
+            htmls = crawler_each_html.query.filter_by(
+                crawler_each_url_id=url.id).all()
             for html in htmls:
                 html_data.append({
                     'id': html.id,
@@ -101,15 +97,12 @@ def get_crawler_html(target_id):
             'message': f'获取数据失败: {str(e)}'
         }), 500
 
+
 @result_bp.route('/js/<int:target_id>')
 def get_crawler_js(target_id):
     """获取JavaScript数据"""
+    logger = LogConfig.get_context_logger()
     try:
-        # 检查权限
-        permission_result = check_user_permission(target_id=target_id)
-        if not isinstance(permission_result, Target):
-            return permission_result
-
         # 获取与目标相关的所有 URL 记录
         urls = crawler_each_url.query.filter_by(target_id=target_id).all()
         if not urls:
@@ -120,7 +113,8 @@ def get_crawler_js(target_id):
 
         js_data = []
         for url in urls:
-            scripts = crawler_each_js.query.filter_by(crawler_each_url_id=url.id).all()
+            scripts = crawler_each_js.query.filter_by(
+                crawler_each_url_id=url.id).all()
             for script in scripts:
                 js_data.append({
                     'id': script.id,
@@ -140,15 +134,12 @@ def get_crawler_js(target_id):
             'message': f'获取数据失败: {str(e)}'
         }), 500
 
+
 @result_bp.route('/image/<int:target_id>')
 def get_crawler_image(target_id):
     """获取图片数据"""
+    logger = LogConfig.get_context_logger()
     try:
-        # 检查权限
-        permission_result = check_user_permission(target_id=target_id)
-        if not isinstance(permission_result, Target):
-            return permission_result
-
         # 获取与目标相关的所有 URL 记录
         urls = crawler_each_url.query.filter_by(target_id=target_id).all()
         if not urls:
@@ -159,7 +150,8 @@ def get_crawler_image(target_id):
 
         image_data = []
         for url in urls:
-            images = crawler_each_image.query.filter_by(crawler_each_url_id=url.id).all()
+            images = crawler_each_image.query.filter_by(
+                crawler_each_url_id=url.id).all()
             for image in images:
                 image_data.append({
                     'id': image.id,
@@ -178,15 +170,12 @@ def get_crawler_image(target_id):
             'message': f'获取数据失败: {str(e)}'
         }), 500
 
+
 @result_bp.route('/security/<int:target_id>')
 def get_crawler_security(target_id):
     """获取安全相关数据"""
+    logger = LogConfig.get_context_logger()
     try:
-        # 检查权限
-        permission_result = check_user_permission(target_id=target_id)
-        if not isinstance(permission_result, Target):
-            return permission_result
-
         # 获取与目标相关的所有 URL 记录
         urls = crawler_each_url.query.filter_by(target_id=target_id).all()
         if not urls:
@@ -197,7 +186,8 @@ def get_crawler_security(target_id):
 
         security_data = []
         for url in urls:
-            securities = crawler_each_security.query.filter_by(crawler_each_url_id=url.id).all()
+            securities = crawler_each_security.query.filter_by(
+                crawler_each_url_id=url.id).all()
             for security in securities:
                 security_data.append({
                     'id': security.id,
@@ -217,20 +207,15 @@ def get_crawler_security(target_id):
             'message': f'获取数据失败: {str(e)}'
         }), 500
 
+
 @result_bp.route('/<int:target_id>')
 def get_result(target_id):
     """获取扫描结果页面"""
     try:
-        # 检查权限
-        permission_result = check_user_permission(target_id=target_id)
-        if not isinstance(permission_result, Target):
-            return permission_result
-            
-        target = permission_result
-        
+
         # 获取请求中的结果类型参数
         result_type = request.args.get('type', '')
-        
+
         if result_type == 'gau':
             # 加载gau结果页面
             return render_template(
@@ -243,7 +228,7 @@ def get_result(target_id):
                 'result/crawler_result.html',
                 target_id=target_id
             )
-            
+
     except Exception as e:
         current_app.logger.error(f"加载结果页面时发生错误: {str(e)}")
         return jsonify({
@@ -251,6 +236,3 @@ def get_result(target_id):
             'message': f'加载结果页面失败: {str(e)}',
             'code': 500
         }), 500
-
-
-

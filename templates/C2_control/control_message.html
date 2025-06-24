@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}控制消息{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Flash 消息區域 -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">
+            {{ message }}
+            <button class="close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <h2>控制消息</h2>
+    <p style="text-align: center; color: #6c757d; font-style: italic;">透過此面板管理和監控您的C2控制消息</p>
+    <form method="post" action="{{ url_for('control.add_message') }}">
+        <div class="form-group">
+            <label class="form-label" for="message">控制消息</label>
+            <input type="text" id="message" name="message" placeholder="輸入要發送的控制消息" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="target_ip">目標IP地址</label>
+            <input type="text" id="target_ip" name="target_ip" placeholder="輸入目標IP地址（可選）">
+        </div>
+        <button type="submit">發送消息</button>
+    </form>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 40px 0 20px 0;">
+        <h1 style="margin: 0;">已經知道的消息列表</h1>
+        <a href="{{ url_for('control.help_page') }}" class="help-btn">📚 查看使用說明</a>
+    </div>
+    <div id="messageList">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="message">
+            <p><strong>目標IP:</strong> {{ message.target_ip if message.target_ip else '未收集到' }}</p>
+            <p><strong>目標配置:</strong> {{ message.target_config if message.target_config else '未收集到' }}</p>
+            <p><strong>建立時間:</strong> {{ message.created_at if message.created_at else '未收集到' }}</p>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="empty-state">
+            目前沒有任何消息
+        </div>
+        {% endif %}
+    </div>
+</div>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/control_message.css') }}">
+{% endblock %}
