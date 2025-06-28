@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify, current_app, render_template
+
 from instance.models import Target, webtech_Result, db
 from reconnaissance.threads.thread_webtech import WebTechScanThread
 import os

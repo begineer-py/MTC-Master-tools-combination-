@@ -7,6 +7,10 @@ from datetime import datetime
 import tempfile
 from config.config import LogConfig
 
+
+# 设置日志
+logger = LogConfig.get_context_logger()
+
 # 创建蓝图
 nmap_route = Blueprint('nmap', __name__)
 

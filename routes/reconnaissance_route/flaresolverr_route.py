@@ -6,12 +6,15 @@ import json
 import sys
 import os
 from config.config import LogConfig
+from flask_cors import CORS
 
 # 添加項目根目錄到 Python 路徑
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 # 创建蓝图
 flaresolverr_bp = Blueprint('flaresolverr', __name__)
+CORS(flaresolverr_bp, origins="*", methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"],
+     allow_headers="*", supports_credentials=True, expose_headers="*")
 
 
 @flaresolverr_bp.route('/solve', methods=['POST'])

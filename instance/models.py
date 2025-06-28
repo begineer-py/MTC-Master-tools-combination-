@@ -22,6 +22,7 @@ class web_shell_back_point(db.Model):
     where = db.Column(db.String(255), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
     to_do_command = db.Column(db.Text, nullable=True)
+    target_report = db.Column(db.Text, nullable=True)
 
     def __init__(self, target_ip, target_config, created_at):
         self.target_ip = target_ip

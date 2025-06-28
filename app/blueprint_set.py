@@ -37,3 +37,9 @@ def register_blueprints(app):
     # 註冊藍圖
     for blueprint, url_prefix in blueprints:
         app.register_blueprint(blueprint, url_prefix=url_prefix)
+
+        blueprint_name = blueprint.name
+        prefix_info = f" with prefix '{url_prefix}'" if url_prefix else " without prefix"
+        print(f"📝 已註冊藍圖 '{blueprint_name}'{prefix_info}")
+
+    print(f"🎉 所有 {len(blueprints)} 個藍圖已成功註冊")

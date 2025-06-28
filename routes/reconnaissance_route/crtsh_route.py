@@ -5,6 +5,7 @@ from datetime import datetime
 from config.config import LogConfig
 import time
 
+
 crtsh_route = Blueprint('crtsh', __name__)
 logger = LogConfig.get_context_logger()
 
@@ -193,7 +194,8 @@ def get_scan_status(target_id):
         # 檢查是否有結果
         crtsh_result = crtsh_Result.query.filter_by(
             # type: ignore
-            target_id=target_id).order_by(crtsh_Result.scan_time.desc()).first()#type: ignore
+            # type: ignore
+            target_id=target_id).order_by(crtsh_Result.scan_time.desc()).first()
 
         if crtsh_result:
             if crtsh_result.status == 'success':

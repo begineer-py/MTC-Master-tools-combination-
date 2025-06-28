@@ -8,9 +8,12 @@ import time
 from functools import lru_cache
 from sqlalchemy import text
 from config.config import LogConfig
+from flask_cors import CORS
 
 # 创建蓝图
 gau_blueprint = Blueprint('gau', __name__, url_prefix='')
+CORS(gau_blueprint, origins="*", methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"],
+     allow_headers="*", supports_credentials=True, expose_headers="*")
 
 # 结果缓存
 _result_cache = {}
