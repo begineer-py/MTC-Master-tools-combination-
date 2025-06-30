@@ -46,7 +46,6 @@ class Target(db.Model):
     # 替代target_ip_no_https，存储不带协议的域名
     domain = db.Column(db.String(255), nullable=True)
     target_status = db.Column(db.String(50), default='pending')
-    deep_scan = db.Column(db.Boolean, default=False)
 
     def __init__(self, target_ip, domain, target_status, deep_scan):
         self.target_ip = target_ip

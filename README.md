@@ -101,9 +101,9 @@ source venv/bin/activate
 
 # 3. 安裝 Python 依賴
 pip install -r requirements/requirements.txt
-
 # 4. 啟動應用
 python3 run.py --no-sudo
+# apt 自己想辦法 如果你要手動安裝的話 
 ```
 
 ## 📦 虛擬環境管理
@@ -126,20 +126,8 @@ source .vscode/deactivate_c2_venv.sh
 
 ```bash
 # 使用虛擬環境管理器
-./requirements/venv_manager.sh init        # 初始化環境
-./requirements/venv_manager.sh install <package>  # 安裝包
-./requirements/venv_manager.sh list        # 列出已安裝包
-./requirements/venv_manager.sh test        # 測試環境
-./requirements/venv_manager.sh clean       # 清理重建
+./requirements/install_dependencies.sh
 ```
-
-### VSCode/Cursor 集成
-
-項目已配置好 VSCode/Cursor 開發環境：
-
-1. 打開 `C2.code-workspace` 文件
-2. 選擇 "Open Workspace"
-3. 虛擬環境將自動配置好
 
 ## 🔧 使用說明
 
@@ -161,9 +149,8 @@ python3 run.py --reset-db --reset-only
 
 ### 訪問應用
 
-- **主界面**: http://127.0.0.1:8964
-- **API 文檔**: http://127.0.0.1:8964/api/help
-- **掃描界面**: http://127.0.0.1:8964/attack/1
+- **主界面**: http://127.0.0.1:1337
+- **掃描界面**: http://127.0.0.1:1337/attack/1
 
 ### 核心工作流程
 
@@ -181,8 +168,6 @@ python3 run.py --reset-db --reset-only
 | **WebTech** | 技術識別 | ✅ 完成 | ✅ 專業界面 |
 | **Gau** | URL 收集 | ✅ 完成 | ✅ 專業界面 |
 | **CrtSH** | 子域名發現 | ✅ 完成 | ✅ 專業界面 |
-| **FlareSolverr** | CF 繞過 | ✅ 完成 | ✅ 專業界面 |
-| **XSS Scanner** | XSS 檢測 | ✅ 完成 | ✅ 專業界面 |
 | **SQLMap** | SQL 注入 | 🚧 開發中 | 🚧 開發中 |
 | **NoSQLMap** | NoSQL 注入 | 🚧 開發中 | 🚧 開發中 |
 | **Nuclei** | 漏洞掃描 | 📋 計劃中 | 📋 計劃中 |

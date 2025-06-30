@@ -308,72 +308,6 @@ def load_db_manager():
     return db_manager
 
 
-def unlock_database():
-    """解鎖數據庫"""
-    # 嘗試使用數據庫管理模塊
-    db_manager = load_db_manager()
-
-    if db_manager:
-        db_path = os.path.join(project_root, 'instance', 'c2.db')
-        print(f"使用數據庫管理模塊解鎖數據庫: {db_path}")
-
-        # 調用數據庫管理模塊的解鎖函數
-        db_manager.unlock_database(db_path)
-        return True
-
-    # 如果無法加載模塊，使用簡單的解鎖方法
-    try:
-        db_path = os.path.join(project_root, 'instance', 'c2.db')
-        db_shm_path = f"{db_path}-shm"
-        db_wal_path = f"{db_path}-wal"
-
-        # 檢查並刪除鎖文件
-        for lock_file in [db_shm_path, db_wal_path]:
-            if os.path.exists(lock_file):
-                os.remove(lock_file)
-                print(f"已刪除鎖文件: {lock_file}")
-
-        return True
-    except Exception as e:
-        print(f"解鎖數據庫時出錯: {str(e)}")
-        return False
-
-
-def reset_database():
-    """重置数据库（删除并重建）"""
-    print("正在重置数据库...")
-    try:
-        db_path = os.path.join(project_root, 'instance', 'c2.db')
-        # 首先解锁数据库
-        unlock_database()
-
-        # 删除数据库文件
-        if os.path.exists(db_path):
-            os.remove(db_path)
-            print(f"已删除数据库文件: {db_path}")
-
-        # 删除相关的WAL和SHM文件
-        for ext in ['-shm', '-wal']:
-            file_path = f"{db_path}{ext}"
-            if os.path.exists(file_path):
-                os.remove(file_path)
-                print(f"已删除数据库文件: {file_path}")
-
-        # 创建应用并初始化数据库
-        from app import create_app
-        app = create_app()
-        with app.app_context():
-            from instance.models import db
-            db.create_all()
-            print("数据库已重建成功")
-
-        return True
-    except Exception as e:
-        print(f"重置数据库失败: {str(e)}")
-        traceback.print_exc()
-        return False
-
-
 def main():
     """主執行函數"""
     parser = argparse.ArgumentParser(
@@ -417,14 +351,6 @@ def main():
     # 打印權限狀態
     print_permission_status()
 
-    # 检查是否需要重置数据库
-    if args.reset_db:
-        reset_database()
-        # 如果只需要重置数据库而不启动应用
-        if args.reset_only:
-            print("数据库重置完成，应用未启动")
-            sys.exit(0)
-
     # 检查是否需要进行数据库迁移
     if args.migrate:
         from app import create_app
@@ -455,9 +381,6 @@ def main():
 
     while current_retry < max_app_retries:
         try:
-            # 运行前先解锁数据库
-            unlock_database()
-
             # 尝试创建应用
             from app import create_app
 
@@ -484,10 +407,6 @@ def main():
             print(f"数据库错误 (尝试 {current_retry}/{max_app_retries}): {str(e)}")
 
             if current_retry < max_app_retries:
-                # 尝试解锁数据库
-                print("尝试解锁数据库...")
-                unlock_database()
-
                 print(f"等待 5 秒后重试...")
                 time.sleep(5)
             else:

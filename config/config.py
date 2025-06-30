@@ -16,32 +16,48 @@ from typing import (
 )
 
 
+import os
+
+
 class Config:  # 定義基礎配置類
-    """基本配置類"""  # 類文檔字符串
+    """基本配置類"""
     SECRET_KEY = os.environ.get(
-        # 機密金鑰，首先嘗試從環境變量獲取，否則使用默認值 (用於 Flask 等框架的 session 加密等)
         'SECRET_KEY') or 'a_default_secret_key'
 
-    # 數據庫配置
-    # 獲取項目根目錄的絕對路徑 (假設此文件在項目根目錄的下一級目錄中)
-    BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-    # 構建 SQLite 數據庫文件的絕對路徑，位於 instance 文件夾下，名為 c2.db
-    DB_PATH = os.path.join(BASE_DIR, 'instance', 'c2.db')
-    # SQLAlchemy 數據庫連接 URI，使用 SQLite，並允許不同線程訪問 (通過 check_same_thread=False)
-    SQLALCHEMY_DATABASE_URI = f'sqlite:///{DB_PATH}?check_same_thread=False'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False  # 禁用 Flask-SQLAlchemy 對模型修改的追蹤，以節省資源
-    SQLALCHEMY_POOL_SIZE = 20  # SQLAlchemy 連接池的大小，即同時可以保持的數據庫連接數
-    SQLALCHEMY_MAX_OVERFLOW = 10  # 超出連接池大小後，允許額外創建的最大連接數
-    SQLALCHEMY_POOL_TIMEOUT = 30  # 從連接池獲取連接的超時時間（秒）
-    SQLALCHEMY_POOL_RECYCLE = 3600  # 連接在連接池中的最大存活時間（秒），到期後會被回收（例如 1 小時）
+    # 數據庫配置 - 現在連接 PostgreSQL！
+    # 注意：這些信息應該從環境變量中獲取，更安全和靈活！
+    # 但為了測試，我們先直接寫死
+    POSTGRES_USER = os.environ.get('POSTGRES_USER') or 'myuser'  # 數據庫用戶名
+    POSTGRES_PASSWORD = os.environ.get(
+        'POSTGRES_PASSWORD') or 'secret'  # 數據庫密碼
+    POSTGRES_HOST = os.environ.get('POSTGRES_HOST') or 'localhost'  # 數據庫主機
+    POSTGRES_PORT = os.environ.get('POSTGRES_PORT') or '5432'  # 數據庫端口
+    POSTGRES_DB = os.environ.get('POSTGRES_DB') or 'mydb'  # 數據庫名
+
+    # 修改這裡！連接 PostgreSQL！
+    SQLALCHEMY_DATABASE_URI = (
+        f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@'
+        f'{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}'
+    )
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_POOL_SIZE = 20
+    SQLALCHEMY_MAX_OVERFLOW = 10
+    SQLALCHEMY_POOL_TIMEOUT = 30
+    SQLALCHEMY_POOL_RECYCLE = 3600
+
+    # 你原本的 SQLite 配置可以註釋掉或刪除
+    # BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    # DB_PATH = os.path.join(BASE_DIR, 'instance', 'c2.db')
+    # SQLALCHEMY_DATABASE_URI = f'sqlite:///{DB_PATH}?check_same_thread=False'
 
     # 數據庫自動解鎖 (可能是針對特定數據庫鎖定問題的自定義配置)
-    DB_AUTO_UNLOCK = True  # 啟用數據庫自動解鎖功能，默認為 True
-    DB_MAX_RETRIES = 5  # 數據庫操作（例如解鎖）的最大重試次數
-    DB_RETRY_DELAY = 2  # 每次重試之間的延遲時間（秒）
+    DB_AUTO_UNLOCK = True
+    DB_MAX_RETRIES = 5
+    DB_RETRY_DELAY = 2
 
     # 調試模式，首先嘗試從環境變量獲取 DEBUG 值，如果為 'True' 字符串則設為 True，否則為 False
     DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+    BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
     # 文件路径配置
     # BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) # 重複定義了 BASE_DIR，通常只需定義一次

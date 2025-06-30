@@ -11,6 +11,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./setup_user_db.sh:/docker-entrypoint-initdb.d/setup_user_db.sh
+      - ./sql_scripts:/docker-entrypoint-initdb.d/sql_scripts
     restart: unless-stopped
 volumes:
   postgres_data:
