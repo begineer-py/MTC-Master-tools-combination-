@@ -17,8 +17,8 @@ jobs:
     - name: 啟動所有後勤服務 (Docker Compose)
       run: |
         # 假設你的 docker-compose.yml 在根目錄
-        # 如果在 docker/ 目錄，就 cd docker && docker-compose up -d
-        cd docker && docker-compose up -d
+        # 如果在 docker/ 目錄，就 cd docker && docker compose up -d
+        cd docker && docker compose up -d
         # 等待關鍵服務啟動完成 (Postgres 比較慢)
         echo "Waiting for services to be healthy..."
         sleep 10
@@ -60,5 +60,5 @@ jobs:
       if: always()
       run: |
         cd docker
-        docker-compose down
+        docker compose down
         cd ..
