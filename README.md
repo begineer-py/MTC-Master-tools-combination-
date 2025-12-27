@@ -1,4 +1,18 @@
 ```markdown
+第一部分：核心免責聲明 (中文版)
+【法律免責聲明與使用條約】
+授權與合法性：本工具僅限於「受控環境下的安全研究」與「獲得明確書面授權的滲透測試」。使用者在對任何目標執行掃描、分析或打擊任務前，必須確保擁有該目標的所有權或合法授權。
+刑事責任自負：未經授權的掃描與滲透可能違反《中華民國刑法》第 358 條至第 362 條（妨害電腦使用罪）或其他國家/地區的網路安全法律（如美國 CFAA）。開發者對於使用者之任何違法行為不負任何連帶責任。
+無擔保聲明：本平台「按原樣（As-Is）」提供。開發者不保證工具的穩定性、準確性，亦不對因使用本工具造成的任何直接或間接損失（包括但不限於系統崩潰、數據丟失、業務中斷或法律追訴）承擔責任。
+情報準確性：AI 分析與自動化工具可能存在「誤報（False Positive）」或「漏報（False Negative）」。所有情報僅供參考，使用者應在決策前自行複核。
+使用者承諾：一旦下載、編譯或運行本專案代碼，即代表您已閱讀、理解並完全同意本聲明的所有條款。
+
+LEGAL DISCLAIMER
+FOR EDUCATIONAL AND ETHICAL TESTING PURPOSES ONLY.
+Usage of MTC (Master Tools Combination) for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state, and federal laws.
+Developers assume no liability and are not responsible for any misuse or damage caused by this program.
+By using this software, you agree that you are solely responsible for your own actions.
+The software is provided "as is", without warranty of any kind, express or implied.
 # C2 Django AI - 全方位網路安全掃描平台
 
 ## 項目概述
