@@ -1,0 +1,64 @@
+name: C2-ASM CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 檢出代碼
+      uses: actions/checkout@v4
+
+    - name: 啟動所有後勤服務 (Docker Compose)
+      run: |
+        # 假設你的 docker-compose.yml 在根目錄
+        # 如果在 docker/ 目錄，就 cd docker && docker-compose up -d
+        cd docker && docker-compose up -d
+        # 等待關鍵服務啟動完成 (Postgres 比較慢)
+        echo "Waiting for services to be healthy..."
+        sleep 10
+
+    - name: 設置 Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: 安裝核心依賴
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: 驗證資料庫遷移與應用狀態
+      env:
+        # 這裡的連線資訊必須對應 docker-compose.yml 暴露給 localhost 的端口
+        DB_NAME: mydb
+        DB_USER: myuser
+        DB_PASSWORD: secret
+        DB_HOST: localhost
+        REDIS_HOST: localhost
+        # 你的代碼會去掃 8502，Compose 已經幫你 mapping 好了
+      run: |
+        python manage.py check
+        python manage.py migrate
+
+    - name: 執行單元測試
+      env:
+        DB_NAME: mydb
+        DB_USER: myuser
+        DB_PASSWORD: secret
+        DB_HOST: localhost
+        REDIS_HOST: localhost
+      run: |
+        python manage.py test
+
+    - name: 關閉服務
+      if: always()
+      run: |
+        cd docker
+        docker-compose down
+        cd ..

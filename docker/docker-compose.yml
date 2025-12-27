@@ -1,0 +1,127 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:14-bullseye
+    container_name: postgres
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: mydb
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./setup_user_db.sh:/docker-entrypoint-initdb.d/setup_user_db.sh
+    restart: unless-stopped
+    networks:
+      - c2_network
+
+  redis:
+    image: redis:8.0
+    container_name: redis
+    ports:
+      - "127.0.0.1:6379:6379"
+    restart: unless-stopped
+    networks:
+      - c2_network
+
+  # --- 新增：Hasura GraphQL 引擎 (你的新 API) ---
+  hasura:
+    image: hasura/graphql-engine:v2.36.0
+    container_name: hasura
+    ports:
+      - "127.0.0.1:8085:8080"
+    depends_on:
+      - postgres # 確保 Postgres 先啟動
+    restart: unless-stopped
+    environment:
+      # 1. 連接你的 Postgres
+      # 格式: postgres://[USER]:[PASSWORD]@[SERVICE_NAME]:[PORT]/[DB_NAME]
+      HASURA_GRAPHQL_DATABASE_URL: postgres://myuser:secret@postgres:5432/mydb
+
+      # 2. 開啟 Web Console
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+
+      # 3. 設置你的管理員密鑰 (極度重要)
+      HASURA_GRAPHQL_ADMIN_SECRET: "YourSuperStrongAdminSecretHere" # <-- 務必修改
+
+      # (可選) 開啟開發模式，方便調試
+      HASURA_GRAPHQL_DEV_MODE: "true"
+    networks:
+      - c2_network
+
+  # --- 新增：NocoDB (你的新 Admin 後台) ---
+  nocodb:
+    image: nocodb/nocodb:latest
+    container_name: nocodb
+    ports:
+      - "127.0.0.1:8081:8080"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    environment:
+      # --- 使用這個更明確、更穩定的分段配置 ---
+      NC_DB_TYPE: pg # 告訴 NocoDB 我們用的是 Postgres
+      NC_PG_HOST: postgres # 連接到 Docker 服務名
+      NC_PG_PORT: 5432
+      NC_PG_USER: myuser
+      NC_PG_PASSWORD: secret
+      NC_PG_DATABASE: mydb
+
+      NC_DISABLE_TELE: "true"
+    volumes:
+      - nocodb_data:/usr/app/data
+    networks:
+      - c2_network
+
+  # --- 你現有的 WAF 繞過工具鏈 (保留) ---
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    ports:
+      - "127.0.0.1:8191:8191"
+    environment:
+      - LOG_LEVEL=DEBUG
+      - MAX_SESSIONS=10
+    restart: unless-stopped
+    networks:
+      - c2_network
+
+  flareproxygo:
+    image: ghcr.io/kljensen/flareproxygo:latest
+    container_name: flareproxygo
+    ports:
+      - "127.0.0.1:8192:8080"
+      - "127.0.0.1:1337:1337"
+    environment:
+      - FLARESOLVERR_URL=http://flaresolverr:8191/v1
+      - PORT=8080
+      - DEBUG=true
+      - PROXY_PORT=1337
+    depends_on:
+      - flaresolverr
+    restart: unless-stopped
+    networks:
+      - c2_network
+
+  # --- 你現有的代理池 (保留) ---
+  nyaproxy_spider:
+    image: k3scat/nya-proxy:0.4.6
+    container_name: nyaproxy_spider
+    ports:
+      - "8502:8080"
+    volumes:
+      - ./config.yaml:/app/config.yaml
+    restart: unless-stopped
+    networks:
+      - c2_network
+
+volumes:
+  postgres_data:
+  nocodb_data: # 新增 NocoDB 持久化卷
+
+networks:
+  c2_network:
+    driver: bridge
+    name: c2_network

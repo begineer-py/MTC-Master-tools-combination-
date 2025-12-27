@@ -1,0 +1,40 @@
+# === Core Framework ===
+Django==5.2.9
+django-ninja
+django-simple-history
+django-celery-beat
+django-cors-headers
+django-extensions
+django-timezone-field
+djangorestframework
+# === Database & Task Queue ===
+psycopg2-binary
+celery
+redis
+kombu
+eventlet
+# === Server ===
+uvicorn
+gunicorn
+uvloop
+# === Network & Scraping ===
+requests
+httpx
+curl_cffi
+beautifulsoup4
+gql[all]
+httptools
+# === Security Tools ===
+python-Wappalyzer
+# 注意：如果有用到 python-nmap, wafw00f 等，記得加回來，pipreqs 可能因為你封裝在 orchestrator 裡沒掃到
+python-nmap
+wafw00f
+dnspython
+tldextract
+
+# === Utilities ===
+pydantic
+PyYAML
+loguru
+setuptools
+asgiref

@@ -1,0 +1,247 @@
+/* src/pages/index_page/indexPage.css */
+
+:root {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-main: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --border-color: #333333;
+    
+    --primary: #2196f3;   /* 藍色 - 資訊/導航 */
+    --success: #00c853;   /* 綠色 - 新增/成功 */
+    --warning: #ffab00;   /* 橙色 - 編輯/警告 */
+    --danger: #d32f2f;    /* 紅色 - 刪除/危險 */
+    
+    --font-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
+  }
+  
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-mono); /* 全局等寬字體，看起來才像工具 */
+    margin: 0;
+  }
+  
+  /* 佈局容器 */
+  .dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* 標題區 */
+  .dashboard-header {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  
+  .dashboard-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .status-badge {
+    font-size: 0.9rem;
+    color: var(--success);
+    border: 1px solid var(--success);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  
+  /* 核心佈局：左列表，右操作 */
+  .dashboard-layout {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start; /* 防止右側高度被拉伸 */
+  }
+  
+  /* 左側：列表區 */
+  .target-list-section {
+    flex: 3;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+  }
+  
+  .target-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .target-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .target-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    border-color: var(--primary);
+  }
+  
+  .target-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--primary);
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  
+  .target-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .target-id {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-family: monospace;
+  }
+  
+  .target-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
+  }
+  
+  .card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+  }
+  
+  /* 右側：操作面板 */
+  .action-panel {
+    flex: 1;
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    position: sticky;
+    top: 20px; /* 滾動時固定 */
+  }
+  
+  .panel-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+  }
+  
+  .panel-title.editing {
+    color: var(--warning);
+    border-color: var(--warning);
+  }
+  
+  /* 表單元素 */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .input-field {
+    width: 100%;
+    background-color: #121212;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 10px;
+    font-family: var(--font-mono);
+    box-sizing: border-box; /* 關鍵：防止 padding 撐爆寬度 */
+    border-radius: 4px;
+  }
+  
+  .input-field:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+  
+  textarea.input-field {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  /* 按鈕樣式 */
+  .btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    transition: background-color 0.2s;
+    font-size: 0.9rem;
+  }
+  
+  .btn-sm {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+  
+  .btn-primary { background-color: var(--primary); color: #fff; }
+  .btn-primary:hover { background-color: #1976d2; }
+  
+  .btn-success { background-color: var(--success); color: #121212; }
+  .btn-success:hover { background-color: #00a042; }
+  
+  .btn-warning { background-color: var(--warning); color: #121212; }
+  .btn-warning:hover { background-color: #ff8f00; }
+  
+  .btn-danger { background-color: var(--danger); color: #fff; }
+  .btn-danger:hover { background-color: #b71c1c; }
+  
+  .btn-ghost { background-color: transparent; color: var(--text-muted); border: 1px solid var(--border-color); }
+  .btn-ghost:hover { background-color: #333; color: #fff; }
+  
+  .btn-block { width: 100%; display: block; margin-top: 10px;}
+  
+  /* 輔助類 */
+  .error-banner {
+    background-color: rgba(211, 47, 47, 0.1);
+    border: 1px solid var(--danger);
+    color: #ff8a80;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+    border: 2px dashed var(--border-color);
+    border-radius: 6px;
+  }
