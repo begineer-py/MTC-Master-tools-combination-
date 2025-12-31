@@ -47,10 +47,6 @@ class NmapScan(models.Model):
     which_seed = models.ForeignKey(
         "core.Seed", on_delete=models.CASCADE, related_name="nmap_scans"
     )
-    # 如果是針對特定 IP 的掃描，可以保留這個 FK，但要指向 core.IP
-    target_ip = models.ForeignKey(
-        "core.IP", on_delete=models.CASCADE, null=True, blank=True
-    )
 
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="PENDING")
     nmap_args = models.TextField()

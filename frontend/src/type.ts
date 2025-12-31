@@ -136,3 +136,31 @@ export interface SubdomainIntelResponse {
   core_subdomain_by_pk: SubdomainDetail;
   core_urlresult: UrlResult[];
 }
+export interface GauScan {
+  id: number;
+  status: ScanStatus;
+  created_at: string;
+  completed_at?: string | null;
+  added_count: number;
+}
+
+// URL 扫描发现的结果 (和之前的 UrlResult 可以复用或扩展)
+// 我们这里复用并确保有 id
+export interface UrlResult {
+  id: number; // 确保有 id
+  url: string;
+  content_length?: number;
+  content_fetch_status?: string;
+}
+
+
+// [新增] 聚合 URL Seed 情报的顶级结构
+export interface UrlSeedIntelligence {
+  id: number;
+  value: string;
+  type: string;
+  // 假设 Hasura 中建立了名为 core_gauscans 的关系
+  core_gauscans: GauScan[]; 
+  // 假设 Hasura 中建立了名为 core_urlresults 的关系
+  core_urlresults: UrlResult[];
+}

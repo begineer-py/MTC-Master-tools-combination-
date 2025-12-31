@@ -254,6 +254,27 @@ function TargetDashboard() {
                         </button>
                       )}
 
+                      {/* 3. URL Recon 按鈕 (只有 URL 顯示) */}
+                      {seed.type === "URL" && (
+                        <button
+                          onClick={() =>
+                            navigate(`/target/${target.id}/seed/${seed.id}/url`)
+                          }
+                          style={{
+                            background: "none",
+                            border: "1px solid #4caf50",
+                            color: "#4caf50",
+                            cursor: "pointer",
+                            padding: "4px 8px",
+                            fontSize: "0.8rem",
+                            borderRadius: "3px",
+                          }}
+                          title="Open URL Recon Dashboard"
+                        >
+                          URL RECON 🕷️
+                        </button>
+                      )}
+
                       {/* 2. 刪除按鈕 */}
                       <button
                         className="btn-icon-del"

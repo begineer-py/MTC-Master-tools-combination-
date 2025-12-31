@@ -11,7 +11,6 @@ from .orchestrators.recon_orchestrator import ReconOrchestrator
 from c2_core.config.utils import sanitize_for_db
 
 from core.models import (
-    Seed,
     Subdomain,
     URLScan,
     URLResult,
@@ -29,22 +28,15 @@ logger = logging.getLogger(__name__)
 
 @shared_task(bind=True)
 @log_function_call()
-def perform_scan_for_url(self, seed_id: int, url: str, method: str = "GET"):
+def perform_scan_for_url(self, url: str, method: str = "GET"):
     """
     對指定 URL 執行深度偵察。
     適配：URLScan (target_url/target_subdomain) 和 URLResult (related_subdomains M2M)。
     """
-    logger.info(f"任務啟動: 分析 {url}, 隸屬於 Seed ID: {seed_id}")
 
     scan_task = None
 
     try:
-        # 1. 驗證 Seed
-        try:
-            seed = Seed.objects.get(id=seed_id)
-        except Seed.DoesNotExist:
-            logger.error(f"任務中止：找不到祖先 Seed ID: {seed_id}")
-            return f"Failed: Seed {seed_id} not found."
 
         # 2. 解析 Subdomain (資產上下文)
         hostname = urlparse(url).hostname
@@ -52,7 +44,6 @@ def perform_scan_for_url(self, seed_id: int, url: str, method: str = "GET"):
             raise ValueError(f"URL '{url}' 格式無效，無法解析 hostname。")
 
         subdomain, _ = Subdomain.objects.get_or_create(
-            which_seed=seed,
             name=hostname,
         )
 
@@ -121,7 +112,7 @@ def perform_scan_for_url(self, seed_id: int, url: str, method: str = "GET"):
             # 8. 更新 URLResult 本體數據
             spider_data = result.get("spider_result", {})
 
-            url_result_to_update.final_url = spider_data.get("final_url")
+            url_result_to_update.final_url = result.get("final_url")
             url_result_to_update.is_external_redirect = spider_data.get(
                 "is_external_redirect", False
             )
@@ -144,7 +135,6 @@ def perform_scan_for_url(self, seed_id: int, url: str, method: str = "GET"):
                 "content_fetch_status", "COMPLETED"
             )
             url_result_to_update.raw_response_hash = result.get("raw_response_hash", "")
-
             url_result_to_update.save()
 
             # 9. 批量寫入子表 (Forms, JS, etc.)

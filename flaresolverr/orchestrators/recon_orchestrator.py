@@ -174,10 +174,11 @@ class ReconOrchestrator:
             logger.info("響應內容為空，跳過 Hash 計算。")
         # --- 第六階段：打包最終戰報 ---
         logger.info(f"作戰成功結束 for {self.url}")
+        actual_final_url = spider_json_report.get("response_url", self.url)
 
         return {
             "success": True,
-            "final_url": self.url,
+            "final_url": actual_final_url,
             "error": None,
             "spider_result": spider_json_report,
             "analysis_result": analysis_findings,

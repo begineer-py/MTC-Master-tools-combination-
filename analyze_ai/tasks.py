@@ -42,15 +42,25 @@ URL_PROMPT_TEMPLATE_PATH = (
 
 GET_IPS_DETAILS_QUERY = gql(
     """
-    query GetIPsScanDetails($ip_ids: [bigint!]) {
-      core_ip(where: {id: {_in: $ip_ids}}) {
-        id
-        ipv4
-        ipv6
-        core_ports(where: {state: {_eq: "open"}}) { port_number protocol service_name service_version }
-        core_subdomains { name }
+query GetIPsScanDetails($ip_ids: [bigint!]) {
+  core_ip(where: {id: {_in: $ip_ids}}) {
+    id
+    ipv4
+    ipv6
+    core_ports(where: {state: {_eq: "open"}}) {
+      port_number
+      protocol
+      service_name
+      service_version
+    }
+    core_subdomain_ips {
+      core_subdomain {
+        name
       }
     }
+  }
+}
+
 """
 )
 

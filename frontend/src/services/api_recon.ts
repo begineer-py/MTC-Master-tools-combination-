@@ -57,7 +57,6 @@ export const GET_SEED_ULTIMATE_INTEL_QUERY = `
       created_at
       core_nmapscans(order_by: {completed_at: desc}) {
         completed_at
-        target_ip_id
         status
         id
       }
@@ -94,6 +93,7 @@ export const GET_SEED_ULTIMATE_INTEL_QUERY = `
       content_fetch_status
       content_length
       url
+      id
     }
   }
 `;

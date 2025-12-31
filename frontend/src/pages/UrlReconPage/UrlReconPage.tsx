@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // 雖然 navigate 少用了，但 hook 仍可能需要保留以防擴展
 import { gqlFetcher } from "../../services/api";
 import {
   ReconService,
@@ -12,7 +12,6 @@ import type {
   IP,
   UrlResult,
 } from "../../type";
-import "./SeedReconPage.css";
 
 // 可折疊卡片組件 (保持不變)
 const AssetCard: React.FC<{
@@ -59,7 +58,6 @@ function SeedReconPage() {
     }
   };
 
-  // === [修正] 把開火邏輯加回來！ ===
   const handleStartScan = async () => {
     if (!nSeedId) return;
     setTriggering(true);
@@ -158,14 +156,14 @@ function SeedReconPage() {
                   <td>{sub.name}</td>
                   <td>{new Date(sub.created_at).toLocaleString()}</td>
                   <td>
-                    <button
-                      onClick={() =>
-                        navigate(`/target/${targetId}/subdomain/${sub.id}`)
-                      }
-                      className="btn btn-ghost btn-sm" // 使用全局樣式
+                    {/* [修正] 使用標準 <a> 標籤，保留按鈕樣式 */}
+                    <a
+                      href={`/target/${targetId}/subdomain/${sub.id}`}
+                      className="btn btn-ghost btn-sm"
+                      style={{ textDecoration: "none" }} // 確保按鈕樣式不被下劃線破壞
                     >
                       Detail
-                    </button>
+                    </a>
                   </td>
                   <td>{sub.id}</td>
                 </tr>
@@ -177,23 +175,28 @@ function SeedReconPage() {
         )}
       </AssetCard>
 
-      {/* IP 資產 (保持不變) */}
       <AssetCard title="IP Addresses" count={intel.core_ip.length}>
         {intel.core_ip.length > 0 ? (
           <table className="assets-table">
             <thead>
               <tr>
                 <th>ID</th>
-                <th>IPv4</th>
-                <th>IPv6</th>
+                <th>IP ADDRESS</th>
               </tr>
             </thead>
             <tbody>
               {intel.core_ip.map((ip: IP) => (
                 <tr key={ip.id}>
                   <td>{ip.id}</td>
-                  <td>{ip.ipv4 || "-"}</td>
-                  <td>{ip.ipv6 || "-"}</td>
+                  <td>
+                    {/* [修正] 使用標準 <a> 標籤，移除 onClick 攔截，與 SubdomainDetail 保持一致 */}
+                    <a
+                      href={`/target/${targetId}/ip/${ip.id}`}
+                      className="asset-link ip-link"
+                    >
+                      {ip.ipv4 || ip.ipv6}
+                    </a>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -203,23 +206,40 @@ function SeedReconPage() {
         )}
       </AssetCard>
 
-      {/* URL 資產 (保持不變) */}
+      {/* URL 資產 */}
       <AssetCard title="URLs Found" count={intel.core_urlresult.length}>
         {intel.core_urlresult.length > 0 ? (
           <table className="assets-table">
             <thead>
               <tr>
                 <th>URL</th>
-                <th>Content Length</th>
-                <th>Status</th>
+                <th>DETAILS</th>
               </tr>
             </thead>
             <tbody>
-              {intel.core_urlresult.map((url: UrlResult, index) => (
-                <tr key={index}>
-                  <td>{url.url}</td>
-                  <td>{url.content_length}</td>
-                  <td>{url.content_fetch_status}</td>
+              {intel.core_urlresult.map((url: UrlResult) => (
+                <tr key={url.id}>
+                  <td>
+                    {/* 外部鏈接保持不變 */}
+                    <a
+                      href={url.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="asset-link url-link"
+                    >
+                      {url.url}
+                    </a>
+                  </td>
+                  <td>
+                    {/* [修正] 使用標準 <a> 標籤，指向內部詳情頁 */}
+                    <a
+                      href={`/target/${targetId}/url/${url.id}`}
+                      className="btn btn-ghost btn-sm"
+                      style={{ textDecoration: "none" }}
+                    >
+                      Detail
+                    </a>
+                  </td>
                 </tr>
               ))}
             </tbody>

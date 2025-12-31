@@ -4,13 +4,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // 操！導入你的 Navbar 零件！
 import Navbar from "./components/Navbar";
+import UrlReconPage from "./pages/UrlReconPage/UrlReconPage";
 
 // 導入你的所有「頁面」
 // 操！注意！你現在的檔案名是 TargetListPage.tsx，所以這裡也要改！
 import TargetListPage from "./pages/index_page/index.tsx";
 import TargetDashboard from "./pages/TargetDashboard/TargetDashboard.tsx";
 import ScanResultPage from "./pages/NmapScanResultPage/ScanResultPage.tsx";
-import SeedReconPage from "./pages/SeedReconPage/SeedReconPage";
+import SeedReconPage from "./pages/SeedReconPageSub/SeedReconPage.tsx";
 import SubdomainDetailPage from "./pages/SubdomainDetailPage/SubdomainDetailPage.tsx";
 //import URLScanResultPage from './pages/URLScanResultPage/URLScanResultPage.tsx';
 function App() {
@@ -26,6 +27,10 @@ function App() {
           <Route path="/" element={<TargetListPage />} />
           <Route path="/target/:targetId" element={<TargetDashboard />} />
           <Route path="/target/namp/:targetId" element={<ScanResultPage />} />
+          <Route
+            path="/target/:targetId/seed/:seedId/url"
+            element={<UrlReconPage />}
+          />
 
           <Route
             path="/target/:targetId/seed/:seedId/subdomain"

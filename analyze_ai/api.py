@@ -122,7 +122,7 @@ async def analyze_ai_ips(request, payload: SuccessSendIPSchema):
     # 防線二：確認所有 IP 至少有一次成功的 Nmap 掃描。
     # 我們直接查找那些「合格」的 IP。
     ready_ips_qs = IP.objects.filter(
-        base_query, nmap_scans__status="COMPLETED"
+        base_query, discovered_by_scans__status="COMPLETED"
     ).distinct()  # distinct() 確保如果一個IP有多個成功掃描，它只出現一次
 
     ready_ips_from_db = await sync_to_async(list)(ready_ips_qs)

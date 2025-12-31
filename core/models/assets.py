@@ -54,6 +54,9 @@ class IP(models.Model):
 
     # === 歷史記錄：零配置，開箱即用 ===
     history = HistoricalRecords()
+    discovered_by_scans = models.ManyToManyField(
+        "core.NmapScan", blank=True, related_name="ips_discovered"
+    )
 
     def __str__(self):
         return f"{self.ipv4 or self.ipv6 or 'Unknown IP'}"

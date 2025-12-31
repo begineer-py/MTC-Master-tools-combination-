@@ -21,7 +21,6 @@ from core.models import (
 
 
 class FlaresolverrTriggerSchema(BaseModel):
-    seed_id: int
     url: str
     method: str
     use_tool: str | None = None

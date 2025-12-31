@@ -53,18 +53,7 @@ get_object_or_404 = sync_to_async(django_get_object_or_404, thread_sensitive=Tru
 async def start_crawl(
     request, trigger_data: FlaresolverrTriggerSchema
 ):  # 定義一個異步函數來啟動 FlareSolverr 掃描
-    logger.info(
-        f"準備觸發 FlareSolverr 掃描任務 for Seed ID: {trigger_data.seed_id} URL: {trigger_data.url}"
-    )
-    try:
-        seed = await Seed.objects.aget(id=trigger_data.seed_id)
-    except Seed.DoesNotExist:
-        logger.warning(f"嘗試為不存在的 Seed ID {trigger_data.seed_id} 啟動掃描。")
-        raise HttpError(
-            404, f"根目標 Seed ID {trigger_data.seed_id} 不存在，無法執行任何操作。"
-        )
     perform_scan_for_url.delay(  # 調用 Celery 任務的 delay 方法，將任務異步放入隊列
-        seed_id=trigger_data.seed_id,  # 傳遞目標 ID 參數給任務
         url=trigger_data.url,  # 傳遞 URL 參數給任務
         method=trigger_data.method,  # 傳遞 HTTP 方法參數給任務
     )
