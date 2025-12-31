@@ -119,6 +119,15 @@ class URLScan(models.Model):
 
 
 class NucleiScan(models.Model):
+    STATUS_CHOICES = [
+        ("PENDING", "Pending"),
+        ("RUNNING", "Running"),
+        ("COMPLETED", "Completed"),
+        ("FAILED", "Failed"),
+    ]
+    status = models.CharField(
+        max_length=10, choices=STATUS_CHOICES, default="PENDING", db_index=True
+    )
     ip_asset = models.ForeignKey(
         "core.IP",
         on_delete=models.CASCADE,

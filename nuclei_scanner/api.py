@@ -150,7 +150,7 @@ async def scan_ips(request, payload: SuccessSendIPSchema):
     summary="對一批子域名觸發 nuclei 掃描",
     description="核心流程：驗證子域名存在 -> 提取 ID -> 丟給 Celery 異步處理 (調用 Hasura 獲取詳細 DNS/URL 數據 -> nuclei 掃描)",
 )
-async def scan_subdomains(payload: SuccessSendSubdomainSchema):
+async def scan_subdomains(request, payload: SuccessSendSubdomainSchema):
     subdomains_to_check = payload.subdomains
     logger.info(
         f"接收到 nuclei 掃描請求 for {len(subdomains_to_check)} 個子域名: {subdomains_to_check}"
@@ -199,7 +199,7 @@ async def scan_subdomains(payload: SuccessSendSubdomainSchema):
     },
     summary="對一批 URL 觸發 nuclei 分析",
 )
-async def scan_urls(payload: SuccessSendURLSchema):
+async def scan_urls(request, payload: SuccessSendURLSchema):
     urls_to_check = payload.urls
     requested_urls_set = set(urls_to_check)
     logger.info(f"接收到 nuclei 掃描請求 for {len(requested_urls_set)} 個 URL。")

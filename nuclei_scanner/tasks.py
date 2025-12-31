@@ -6,6 +6,7 @@ from typing import Dict, Any, List
 import json
 from c2_core.config.logging import log_function_call
 from logging import getLogger
+from django.utils import timezone
 
 logger = getLogger(__name__)
 
@@ -14,7 +15,7 @@ def save_nuclei_result_to_db(
     data: Dict[str, Any], asset_id: int, asset_type: str, scan_record_id: int = None
 ) -> Vulnerability:
     """
-    將單條 Nuclei 結果存入 Vulnerability 表，並關聯 NucleiScan 記錄
+    將單條 Nuclei 結果存入 Vulnerability 表
     """
     template_id = data.get("template-id")
     matched_at = data.get("matched-at")
@@ -46,30 +47,34 @@ def save_nuclei_result_to_db(
 @shared_task(bind=True, max_retries=3, default_retry_delay=300)
 @log_function_call()
 def perform_nuclei_scans_for_ip_batch(self, ip_ids: List[int]):
-    # 1. 獲取數據並創建掃描記錄
+    # 1. 獲取數據
     ip_records = IP.objects.filter(id__in=ip_ids).values("id", "ipv4", "ipv6")
     ip_map = {}
+    scan_record_ids = []  # 用於追蹤本批次創建的掃描記錄 ID
 
+    # 2. 創建掃描記錄 (標記為 RUNNING)
     for r in ip_records:
         val = r["ipv4"] or r["ipv6"]
         if val:
             ip_map[val] = r["id"]
-            # 戰術動作：為每個資產創建一個 NucleiScan 啟動記錄
-            NucleiScan.objects.create(
+            scan = NucleiScan.objects.create(
                 ip_asset_id=r["id"],
                 severity_filter="info-crit",
                 template_ids=["network"],
+                status="RUNNING",  # <--- 關鍵：標記正在運行
             )
+            scan_record_ids.append(scan.id)
 
     if not ip_map:
         return
 
-    # 2. 執行掃描 (與之前一致)
+    # 3. 構建命令
     targets = []
     for ip in ip_map.keys():
         targets.extend(["-u", ip])
-    command = ["nuclei"] + targets + ["-t", "network", "-j", "-ni", "-nc"]
+    command = ["nuclei"] + targets + ["-t", "network", "-j", "-ni", "-nc", "-silent"]
 
+    # 4. 執行與狀態更新
     try:
         process = subprocess.Popen(
             command, stdout=subprocess.PIPE, text=True, bufsize=1
@@ -86,8 +91,14 @@ def perform_nuclei_scans_for_ip_batch(self, ip_ids: List[int]):
                 except json.JSONDecodeError:
                     continue
         process.wait()
+
+        # 掃描完成，更新所有記錄為 COMPLETED
+        NucleiScan.objects.filter(id__in=scan_record_ids).update(status="COMPLETED")
+
     except Exception as e:
         logger.exception(f"IP Nuclei 掃描失敗: {e}")
+        # 發生異常，更新記錄為 FAILED
+        NucleiScan.objects.filter(id__in=scan_record_ids).update(status="FAILED")
 
 
 @shared_task(bind=True, max_retries=3, default_retry_delay=300)
@@ -95,13 +106,17 @@ def perform_nuclei_scans_for_ip_batch(self, ip_ids: List[int]):
 def perform_nuclei_scans_for_subdomain_batch(self, subdomain_ids: List[int]):
     sub_records = Subdomain.objects.filter(id__in=subdomain_ids).values("id", "name")
     sub_map = {}
+    scan_record_ids = []
+
     for r in sub_records:
         sub_map[r["name"]] = r["id"]
-        NucleiScan.objects.create(
+        scan = NucleiScan.objects.create(
             subdomain_asset_id=r["id"],
             severity_filter="all",
             template_ids=["dns", "ssl", "takeover", "as"],
+            status="RUNNING",  # <--- 關鍵
         )
+        scan_record_ids.append(scan.id)
 
     if not sub_map:
         return
@@ -109,7 +124,11 @@ def perform_nuclei_scans_for_subdomain_batch(self, subdomain_ids: List[int]):
     targets = []
     for name in sub_map.keys():
         targets.extend(["-u", name])
-    command = ["nuclei"] + targets + ["-as", "-tags", "dns,ssl,takeover", "-j", "-nc"]
+    command = (
+        ["nuclei"]
+        + targets
+        + ["-as", "-tags", "dns,ssl,takeover", "-j", "-nc", "-silent"]
+    )
 
     try:
         process = subprocess.Popen(
@@ -127,8 +146,12 @@ def perform_nuclei_scans_for_subdomain_batch(self, subdomain_ids: List[int]):
                 except json.JSONDecodeError:
                     continue
         process.wait()
+
+        NucleiScan.objects.filter(id__in=scan_record_ids).update(status="COMPLETED")
+
     except Exception as e:
         logger.exception(f"Subdomain Nuclei 掃描失敗: {e}")
+        NucleiScan.objects.filter(id__in=scan_record_ids).update(status="FAILED")
 
 
 @shared_task(bind=True, max_retries=3, default_retry_delay=300)
@@ -136,13 +159,17 @@ def perform_nuclei_scans_for_subdomain_batch(self, subdomain_ids: List[int]):
 def perform_nuclei_scans_for_url_batch(self, url_ids: List[int]):
     url_records = URLResult.objects.filter(id__in=url_ids).values("id", "url")
     url_map = {}
+    scan_record_ids = []
+
     for r in url_records:
         url_map[r["url"]] = r["id"]
-        NucleiScan.objects.create(
+        scan = NucleiScan.objects.create(
             url_asset_id=r["id"],
             severity_filter="low-crit",
             template_ids=["as", "vulnerabilities"],
+            status="RUNNING",  # <--- 關鍵
         )
+        scan_record_ids.append(scan.id)
 
     if not url_map:
         return
@@ -153,7 +180,7 @@ def perform_nuclei_scans_for_url_batch(self, url_ids: List[int]):
     command = (
         ["nuclei"]
         + targets
-        + ["-as", "-severity", "low,medium,high,critical", "-j", "-nc"]
+        + ["-as", "-severity", "low,medium,high,critical", "-j", "-nc", "-silent"]
     )
 
     try:
@@ -165,6 +192,7 @@ def perform_nuclei_scans_for_url_batch(self, url_ids: List[int]):
                 try:
                     result = json.loads(line.strip())
                     matched_url = result.get("matched-at") or result.get("url")
+                    # 處理 URL 末尾斜槓問題
                     target_id = url_map.get(matched_url) or url_map.get(
                         matched_url.rstrip("/")
                     )
@@ -175,5 +203,9 @@ def perform_nuclei_scans_for_url_batch(self, url_ids: List[int]):
                 except json.JSONDecodeError:
                     continue
         process.wait()
+
+        NucleiScan.objects.filter(id__in=scan_record_ids).update(status="COMPLETED")
+
     except Exception as e:
         logger.exception(f"URL Nuclei 掃描失敗: {e}")
+        NucleiScan.objects.filter(id__in=scan_record_ids).update(status="FAILED")
