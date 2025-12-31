@@ -1,4 +1,4 @@
-from ninja import Schema, ModelSchema
+from ninja import Schema, ModelSchema, Field
 from typing import List, Optional
 
 from .models import IP
@@ -131,3 +131,21 @@ class get_ip_by_subdomains(Schema):
     target_id: int
     target_domain: str
     ip: IPSchema
+
+
+class SuccessSendIPSchema(Schema):  # 定義 TargetSchema 類別
+    ips: List[str] = Field(..., description="IP 列表", min_length=1, max_length=10)
+
+
+class SuccessSendSubdomainSchema(Schema):  # 定義 TargetSchema 類別
+    subdomains: List[str] = Field(
+        ..., description="子域名列表", min_length=1, max_length=10
+    )
+
+
+class SuccessSendURLSchema(Schema):  # 定義 TargetSchema 類別
+    urls: List[str] = Field(..., description="URL 列表", min_length=1, max_length=5)
+
+
+class SuccessSendToAISchema(Schema):  # 定義 TargetSchema 類別
+    detail: str

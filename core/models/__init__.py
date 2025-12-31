@@ -19,4 +19,5 @@ from .analyze_ai_models import (
     SubdomainAIAnalysis,
     URLAIAnalysis,
 )
-from .scans_record_modles import NmapScan, SubfinderScan, URLScan
+from .scans_record_modles import NmapScan, SubfinderScan, URLScan, NucleiScan
+from .Vulnerability import Vulnerability

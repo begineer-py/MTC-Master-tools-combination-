@@ -116,3 +116,34 @@ class URLScan(models.Model):
         elif self.target_url:
             return f"[{self.tool}] Scan on URL: {self.target_url.id}"
         return f"[{self.tool}] Orphan Scan {self.id}"
+
+
+class NucleiScan(models.Model):
+    ip_asset = models.ForeignKey(
+        "core.IP",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="nuclei_scans",
+    )
+    subdomain_asset = models.ForeignKey(
+        "core.Subdomain",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="nuclei_scans",
+    )
+    url_asset = models.ForeignKey(
+        "core.URLResult",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="nuclei_scans",
+    )
+    template_ids = models.JSONField(default=list, blank=True)
+    severity_filter = models.CharField(max_length=10, blank=True)
+    output_file = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        app_label = "core"

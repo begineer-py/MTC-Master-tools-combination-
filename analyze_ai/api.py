@@ -12,7 +12,7 @@ from django.db.models import Q
 
 # 媽的，把我們的模型和 Schema 全都叫進來
 from core.models import IP, Subdomain, URLResult, URLScan
-from .schemas import (
+from core.schemas import (
     SuccessSendToAISchema,
     SuccessSendIPSchema,
     SuccessSendSubdomainSchema,

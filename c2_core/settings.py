@@ -57,6 +57,7 @@ INSTALLED_APPS = [  # 註冊 Django 項目中使用的應用程序列表
     "scheduler",
     "django_celery_beat",
     "analyze_ai",  # 操！把指揮中心加在其他 app 前面，或者就加在列表裡
+    "nuclei_scanner",
 ]
 MIDDLEWARE = [  # 中間件列表，處理請求和響應的層次
     "corsheaders.middleware.CorsMiddleware",  # CORS 中間件，處理跨域請求
@@ -273,6 +274,11 @@ LOGGING = {
             "propagate": False,
         },
         "analyze_ai": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "nuclei_scanner": {
             "handlers": ["console"],
             "level": "DEBUG",
             "propagate": False,

@@ -20,6 +20,7 @@ FLARESOLVERR_START_SCANNER_URL = f"{API_BASE_URL}/api/flaresolverr/start_scanner
 AI_ANALYZES_IP = f"{API_BASE_URL}/api/analyze_ai/ips"
 AI_ANALYZES_SUBDOMAINS = f"{API_BASE_URL}/api/analyze_ai/subdomains"
 AI_ANALYZES_URL = f"{API_BASE_URL}/api/analyze_ai/urls"
+NUCLEI_SCAN_URL = f"{API_BASE_URL}/api/nuclei"
 
 
 # 操！這裡！給函數加上一個參數，並給一個合理的預設值
@@ -341,14 +342,14 @@ def trigger_scan_urls_without_ai_results(batch_size: int = 5):
         .exclude(status_code=404)
         .order_by("-id")[:batch_size]
     )
-    taeget_urls = list(urls_qs.values_list("url", flat=True))
-    if not taeget_urls:
+    target_urls = list(urls_qs.values_list("url", flat=True))
+    if not target_urls:
         logger.info("沒有發現符合條件的待分析 URL，任務結束。")
         return
     try:
         response = requests.post(
             AI_ANALYZES_URL,
-            json={"urls": taeget_urls},
+            json={"urls": target_urls},
             timeout=5,
         )
 
@@ -359,3 +360,112 @@ def trigger_scan_urls_without_ai_results(batch_size: int = 5):
     except requests.RequestException as e:
         logger.error(f"連接 API 失敗: {e}")
     return
+
+
+@shared_task(name="scheduler.tasks.trigger_scan_urls_without_nuclei_results")
+@log_function_call()
+def trigger_scan_urls_without_nuclei_results(batch_size: int = 5):
+    logger.info(
+        f"定時任務啟動：開始查找未分析 (No Nuclei Results) 的 URL，本次處理上限為 {batch_size} 個。"
+    )
+    urls_qs = (
+        URLResult.objects.filter(content_fetch_status="SUCCESS_FETCHED")
+        .exclude(nuclei_scans__isnull=False)
+        .order_by("-id")[:batch_size]
+    )
+    target_urls = list(urls_qs.values_list("url", flat=True))
+    if not target_urls:
+        logger.info("沒有發現符合條件的待分析 URL，任務結束。")
+        return
+    try:
+        response = requests.post(
+            f"{NUCLEI_SCAN_URL}/urls",
+            json={"urls": target_urls},
+            timeout=5,
+        )
+
+        if response.status_code == 202:
+            logger.info(f"API 調用成功: {response.json()}")
+        else:
+            logger.error(f"API 調用失敗 [{response.status_code}]: {response.text}")
+    except requests.RequestException as e:
+        logger.error(f"連接 API 失敗: {e}")
+    return
+
+
+@shared_task(name="scheduler.tasks.trigger_scan_subdomains_without_nuclei_results")
+@log_function_call()
+def trigger_scan_subdomains_without_nuclei_results(batch_size: int = 5):
+    logger.info(
+        f"定時任務啟動：開始查找未分析 (No Nuclei Results) 的子域名，本次處理上限為 {batch_size} 個。"
+    )
+    subdomains_qs = (
+        Subdomain.objects.filter(is_active=True)
+        .exclude(nuclei_scans__isnull=False)
+        .order_by("-id")[:batch_size]
+    )
+    target_subdomains = list(subdomains_qs.values_list("name", flat=True))
+
+    if not target_subdomains:
+        logger.info("沒有發現符合條件的待分析子域名，任務結束。")
+        return
+    try:
+        response = requests.post(
+            f"{NUCLEI_SCAN_URL}/subdomains",
+            json={"subdomains": target_subdomains},
+            timeout=5,
+        )
+
+        if response.status_code == 202:
+            logger.info(f"API 調用成功: {response.json()}")
+        else:
+            logger.error(f"API 調用失敗 [{response.status_code}]: {response.text}")
+
+    except requests.RequestException as e:
+        logger.error(f"連接 API 失敗: {e}")
+    return
+
+
+@shared_task(name="scheduler.tasks.trigger_scan_ips_without_nuclei_results")
+@log_function_call()
+def trigger_scan_ips_without_nuclei_results(batch_size: int = 10):
+    """
+    定期巡邏任務：
+    找出指定數量(batch_size)的「未分析」IP。
+    """
+    logger.info(
+        f"定時任務啟動：開始查找未分析 (No Nuclei Results) 的 IP，本次處理上限為 {batch_size} 個。"
+    )
+    ips_qs = IP.objects.filter(nuclei_scans__isnull=True).order_by("-id")[:batch_size]
+
+    target_ip_strings = []
+    for ip_obj in ips_qs:
+        if ip_obj.ipv4:
+            target_ip_strings.append(ip_obj.ipv4)
+        elif ip_obj.ipv6:
+            target_ip_strings.append(ip_obj.ipv6)
+
+    # 去重 (防止一個 IP 既有 v4 又有 v6 導致邏輯重複，雖然目前模型結構不太可能)
+    target_ip_strings = list(set(target_ip_strings))
+
+    if not target_ip_strings:
+        logger.info("沒有發現符合條件的待分析 IP，任務結束。")
+        return
+
+    logger.info(f"鎖定 {len(target_ip_strings)} 個 IP，正在發送 API 請求...")
+
+    # 4. 發送 HTTP 請求
+    try:
+        response = requests.post(
+            f"{NUCLEI_SCAN_URL}/ips",
+            json={"ips": target_ip_strings},
+            timeout=5,  # 務必設置超時，防止定時任務卡死
+        )
+
+        if response.status_code == 202:
+            logger.info(f"API 調用成功: {response.json()}")
+        else:
+            logger.error(f"API 調用失敗 [{response.status_code}]: {response.text}")
+
+    except requests.RequestException as e:
+        logger.error(f"連接 API 失敗: {e}")
