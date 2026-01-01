@@ -164,152 +164,129 @@ def trigger_scan_subdomains_without_ai_results(batch_size: int = 10):
 # ==========================================
 
 
-def get_unique_urls_for_analysis(queryset, check_ai=True):
+def is_content_already_analyzed(url_obj, analysis_type="AI"):
     """
-    通用去重函數：
-    1. 過濾掉 MD5 Hash 重複的 URL
-    2. 過濾掉 Final URL 重複的 URL
+    檢查該 URL 的【內容】或【最終跳轉】在【全局歷史】中是否已經被分析過。
+    analysis_type: "AI" 或 "NUCLEI"
     """
-    unique_urls = []
-    seen_hashes = set()
-    seen_finals = set()
+    # 1. 檢查 Hash (內容指紋)
+    if url_obj.raw_response_hash:
+        query = Q(raw_response_hash=url_obj.raw_response_hash)
 
-    # 這裡我們取大一點的候選集，以便去重後還能剩下一部分
-    # 注意：這裡的 queryset 已經包含 [:batch_size] 限制，
-    # 實際生產中可能需要取 batch_size * 2 來保證填滿隊列，
-    # 但為了防止 N+1，我們先簡單處理當前批次。
+        # 根據類型構造查詢：查找【是否有任何】具有相同 Hash 的 URL 已經完成了分析
+        if analysis_type == "AI":
+            # 查找是否存在 ai_analysis__status='COMPLETED' 的記錄
+            if (
+                URLResult.objects.filter(query, ai_analysis__status="COMPLETED")
+                .exclude(id=url_obj.id)
+                .exists()
+            ):
+                return True
+        elif analysis_type == "NUCLEI":
+            # 查找是否存在 nuclei_scans__status='COMPLETED' 的記錄
+            if (
+                URLResult.objects.filter(query, nuclei_scans__status="COMPLETED")
+                .exclude(id=url_obj.id)
+                .exists()
+            ):
+                return True
 
-    for url_obj in queryset:
-        # 1. 檢查 Hash (內容完全一致)
-        if url_obj.raw_response_hash:
-            if url_obj.raw_response_hash in seen_hashes:
-                logger.debug(f"跳過重複 Hash URL: {url_obj.url}")
-                continue
-            seen_hashes.add(url_obj.raw_response_hash)
+    # 2. 檢查 Final URL (跳轉終點)
+    if url_obj.final_url:
+        # 如果 Final URL 和當前 URL 不同，才需要去查
+        if url_obj.final_url != url_obj.url:
+            query = Q(final_url=url_obj.final_url) | Q(url=url_obj.final_url)
 
-        # 2. 檢查 Final URL (跳轉終點一致)
-        if url_obj.final_url:
-            if url_obj.final_url in seen_finals:
-                logger.debug(f"跳過重複 Final URL: {url_obj.url}")
-                continue
-            seen_finals.add(url_obj.final_url)
+            if analysis_type == "AI":
+                if (
+                    URLResult.objects.filter(query, ai_analysis__status="COMPLETED")
+                    .exclude(id=url_obj.id)
+                    .exists()
+                ):
+                    return True
+            elif analysis_type == "NUCLEI":
+                if (
+                    URLResult.objects.filter(query, nuclei_scans__status="COMPLETED")
+                    .exclude(id=url_obj.id)
+                    .exists()
+                ):
+                    return True
 
-        # 通過篩選
-        unique_urls.append(url_obj.url)
-
-    return unique_urls
+    return False
 
 
-# 6. AI 分析 URL 觸發器 (已升級去重)
+# 6. AI 分析 URL 觸發器 (全局去重版)
 @shared_task(name="scheduler.tasks.trigger_scan_urls_without_ai_results")
 @log_function_call()
 def trigger_scan_urls_without_ai_results(batch_size: int = 5):
-    logger.info(f"定時任務：AI 分析 URL (Limit {batch_size}, 智能去重)")
+    logger.info(f"定時任務：AI 分析 URL (Limit {batch_size}, 全局去重模式)")
 
-    # 獲取候選集：多取一些(x2)，因為去重會篩掉一部分
+    # 1. 初步獲取候選集 (多取一點，因為很多會被過濾掉)
     candidate_qs = (
         URLResult.objects.filter(content_fetch_status="SUCCESS_FETCHED")
         .exclude(ai_analysis__status__in=["COMPLETED", "RUNNING"])
         .exclude(status_code=404)
-        .order_by("-id")[: batch_size * 2]
+        .order_by("-id")[: batch_size * 5]  # 取 5 倍的量來篩選
     )
 
-    # 執行內存級去重
-    target_urls = get_unique_urls_for_analysis(candidate_qs)
+    valid_targets = []
 
-    # 再次截斷到用戶要求的 batch_size
-    target_urls = target_urls[:batch_size]
+    # 2. 逐個進行【全局歷史檢查】
+    for url_obj in candidate_qs:
+        if len(valid_targets) >= batch_size:
+            break
 
-    if not target_urls:
-        return "No unique URLs for AI analysis."
+        # 如果內容已經被分析過了（哪怕是別的 URL），就跳過！
+        if is_content_already_analyzed(url_obj, analysis_type="AI"):
+            # 選項：這裡可以順便把當前 URL 標記為 "SKIPPED_DUPLICATE" 以免下次再查
+            # 但為了性能，我們先只做跳過
+            logger.debug(f"跳過全局重複內容: {url_obj.url}")
+            continue
+
+        valid_targets.append(url_obj.url)
+
+    if not valid_targets:
+        return "No unique URLs for AI analysis (Global Deduplication)."
 
     try:
-        requests.post(AI_ANALYZES_URL, json={"urls": target_urls}, timeout=5)
-        return f"Dispatched {len(target_urls)} Unique URLs to AI."
+        requests.post(AI_ANALYZES_URL, json={"urls": valid_targets}, timeout=5)
+        return f"Dispatched {len(valid_targets)} Unique URLs to AI."
     except Exception as e:
         logger.error(f"AI URL API Failed: {e}")
 
 
-# 7. Nuclei 分析 URL 觸發器 (已升級去重)
+# 7. Nuclei 分析 URL 觸發器 (全局去重版)
 @shared_task(name="scheduler.tasks.trigger_scan_urls_without_nuclei_results")
 @log_function_call()
 def trigger_scan_urls_without_nuclei_results(batch_size: int = 5):
-    logger.info(f"定時任務：Nuclei 掃描 URL (Limit {batch_size}, 智能去重)")
+    logger.info(f"定時任務：Nuclei 掃描 URL (Limit {batch_size}, 全局去重模式)")
 
-    # 使用正確的 related_name 查詢
     candidate_qs = (
         URLResult.objects.filter(content_fetch_status="SUCCESS_FETCHED")
-        .exclude(nuclei_scans__status__in=["COMPLETED", "RUNNING"])  # 包含重試邏輯
-        .order_by("-id")[: batch_size * 2]
+        .exclude(nuclei_scans__status__in=["COMPLETED", "RUNNING"])
+        .order_by("-id")[: batch_size * 5]
     )
 
-    # 執行內存級去重
-    target_urls = get_unique_urls_for_analysis(candidate_qs)
-    target_urls = target_urls[:batch_size]
+    valid_targets = []
 
-    if not target_urls:
+    for url_obj in candidate_qs:
+        if len(valid_targets) >= batch_size:
+            break
+
+        # Nuclei 全局去重檢查
+        if is_content_already_analyzed(url_obj, analysis_type="NUCLEI"):
+            logger.debug(f"跳過全局重複內容: {url_obj.url}")
+            continue
+
+        valid_targets.append(url_obj.url)
+
+    if not valid_targets:
         return "No unique URLs for Nuclei scan."
 
     try:
-        requests.post(f"{NUCLEI_SCAN_URL}/urls", json={"urls": target_urls}, timeout=5)
-        return f"Dispatched {len(target_urls)} Unique URLs to Nuclei."
+        requests.post(
+            f"{NUCLEI_SCAN_URL}/urls", json={"urls": valid_targets}, timeout=5
+        )
+        return f"Dispatched {len(valid_targets)} Unique URLs to Nuclei."
     except Exception as e:
         logger.error(f"Nuclei URL API Failed: {e}")
-
-
-# 8. Nuclei 分析 Subdomain 觸發器
-@shared_task(name="scheduler.tasks.trigger_scan_subdomains_without_nuclei_results")
-@log_function_call()
-def trigger_scan_subdomains_without_nuclei_results(batch_size: int = 5):
-    logger.info(f"定時任務：Nuclei 掃描子域名 (Limit {batch_size})")
-
-    subdomains_qs = (
-        Subdomain.objects.filter(is_active=True)
-        .exclude(nuclei_scans__status__in=["COMPLETED", "RUNNING"])
-        .order_by("-id")[:batch_size]
-    )
-    targets = list(subdomains_qs.values_list("name", flat=True))
-
-    if not targets:
-        return
-
-    try:
-        requests.post(
-            f"{NUCLEI_SCAN_URL}/subdomains", json={"subdomains": targets}, timeout=5
-        )
-    except Exception as e:
-        logger.error(f"Nuclei Subdomain API Failed: {e}")
-
-
-# 9. Nuclei 分析 IP 觸發器 (邏輯修復版)
-@shared_task(name="scheduler.tasks.trigger_scan_ips_without_nuclei_results")
-@log_function_call()
-def trigger_scan_ips_without_nuclei_results(batch_size: int = 10):
-    """
-    IP 發現即掃描：只要 IP 存在且沒有成功的 Nuclei 記錄，就開火。
-    """
-    logger.info(f"定時任務：Nuclei 掃描 IP (Limit {batch_size})")
-
-    # 修正邏輯：使用 exclude status 而不是 isnull，允許重試
-    ips_qs = (
-        IP.objects.all()
-        .exclude(nuclei_scans__status__in=["COMPLETED", "RUNNING"])
-        .order_by("-id")[:batch_size]
-    )
-
-    target_ips = []
-    for ip_obj in ips_qs:
-        val = ip_obj.ipv4 or ip_obj.ipv6
-        if val:
-            target_ips.append(val)
-
-    target_ips = list(set(target_ips))
-
-    if not target_ips:
-        return "No IPs pending for Nuclei scan."
-
-    try:
-        requests.post(f"{NUCLEI_SCAN_URL}/ips", json={"ips": target_ips}, timeout=5)
-        return f"Dispatched {len(target_ips)} IPs to Nuclei."
-    except Exception as e:
-        logger.error(f"Nuclei IP API Failed: {e}")
