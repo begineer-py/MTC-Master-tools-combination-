@@ -215,7 +215,36 @@ def is_content_already_analyzed(url_obj, analysis_type="AI"):
     return False
 
 
-# 6. AI 分析 URL 觸發器 (全局去重版)
+# 6. AI 分析 URL 觸發器 (已升級去重)
+@shared_task(name="scheduler.tasks.trigger_scan_urls_without_ai_results")
+@log_function_call()
+def trigger_scan_urls_without_ai_results(batch_size: int = 5):
+    logger.info(f"定時任務：AI 分析 URL (Limit {batch_size}, 智能去重)")
+
+    # 獲取候選集：多取一些(x2)，因為去重會篩掉一部分
+    candidate_qs = (
+        URLResult.objects.filter(content_fetch_status="SUCCESS_FETCHED")
+        .exclude(ai_analysis__status__in=["COMPLETED", "RUNNING"])
+        .exclude(status_code=404)
+        .order_by("-id")[: batch_size * 2]
+    )
+
+    # 執行內存級去重
+    target_urls = get_unique_urls_for_analysis(candidate_qs)
+
+    # 再次截斷到用戶要求的 batch_size
+    target_urls = target_urls[:batch_size]
+
+    if not target_urls:
+        return "No unique URLs for AI analysis."
+
+    try:
+        requests.post(AI_ANALYZES_URL, json={"urls": target_urls}, timeout=5)
+        return f"Dispatched {len(target_urls)} Unique URLs to AI."
+    except Exception as e:
+        logger.error(f"AI URL API Failed: {e}")
+
+
 @shared_task(name="scheduler.tasks.trigger_scan_urls_without_ai_results")
 @log_function_call()
 def trigger_scan_urls_without_ai_results(batch_size: int = 5):
@@ -290,3 +319,37 @@ def trigger_scan_urls_without_nuclei_results(batch_size: int = 5):
         return f"Dispatched {len(valid_targets)} Unique URLs to Nuclei."
     except Exception as e:
         logger.error(f"Nuclei URL API Failed: {e}")
+
+
+# 9. Nuclei 分析 IP 觸發器 (邏輯修復版)
+@shared_task(name="scheduler.tasks.trigger_scan_ips_without_nuclei_results")
+@log_function_call()
+def trigger_scan_ips_without_nuclei_results(batch_size: int = 10):
+    """
+    IP 發現即掃描：只要 IP 存在且沒有成功的 Nuclei 記錄，就開火。
+    """
+    logger.info(f"定時任務：Nuclei 掃描 IP (Limit {batch_size})")
+
+    # 修正邏輯：使用 exclude status 而不是 isnull，允許重試
+    ips_qs = (
+        IP.objects.all()
+        .exclude(nuclei_scans__status__in=["COMPLETED", "RUNNING"])
+        .order_by("-id")[:batch_size]
+    )
+
+    target_ips = []
+    for ip_obj in ips_qs:
+        val = ip_obj.ipv4 or ip_obj.ipv6
+        if val:
+            target_ips.append(val)
+
+    target_ips = list(set(target_ips))
+
+    if not target_ips:
+        return "No IPs pending for Nuclei scan."
+
+    try:
+        requests.post(f"{NUCLEI_SCAN_URL}/ips", json={"ips": target_ips}, timeout=5)
+        return f"Dispatched {len(target_ips)} IPs to Nuclei."
+    except Exception as e:
+        logger.error(f"Nuclei IP API Failed: {e}")
